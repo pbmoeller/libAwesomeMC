@@ -128,7 +128,7 @@ if(build_tests)
         "test/nbt/end_tag_test.cpp"
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"
-    )
+     "test/nbt/short_tag_test.cpp")
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
         target_link_libraries(tests pthread)
