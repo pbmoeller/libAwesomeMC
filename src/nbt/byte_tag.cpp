@@ -15,8 +15,10 @@ ByteTag::ByteTag()
 }
 
 ByteTag::ByteTag(const ByteTag &other)
+    : AbstractTag(other.m_name)
+    , m_byte{other.m_byte}
 {
-    *this = other;
+    
 }
 
 ByteTag::ByteTag(ByteTag &&other) noexcept
