@@ -121,7 +121,6 @@ if(build_tests)
     add_executable(tests 
         "test/test_main.cpp" 
         "test/types_test.cpp"
-        # "test/output.hpp"
         "test/anvil/region_test.cpp" 
         "test/anvil/chunk_info_test.cpp" 
         "test/nbt/abstract_tag_test.cpp"
