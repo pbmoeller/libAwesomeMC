@@ -4,19 +4,19 @@ namespace nbt
 {
 
 EndTag::EndTag()
-    : AbstractTag(TagType::End)
+    : AbstractTag()
 {
 
 }
 
 EndTag::EndTag(const EndTag &other)
-    : AbstractTag(other.m_name, TagType::End)
+    : AbstractTag(other.m_name)
 {
 
 }
 
 EndTag::EndTag(EndTag &&other) noexcept
-    : AbstractTag(std::move(other.m_name), TagType::End)
+    : AbstractTag(std::move(other.m_name))
 {
 
 }
@@ -30,7 +30,6 @@ EndTag& EndTag::operator=(const EndTag &other)
 {
     if(this != &other) {
         m_name = other.m_name;
-        m_type = other.m_type;
     }
     return *this;
 }
@@ -39,30 +38,13 @@ EndTag& EndTag::operator=(EndTag &&other) noexcept
 {
     if(this != &other) {
         m_name = std::move(other.m_name);
-        m_type = other.m_type;
     }
     return *this;
 }
 
-bool EndTag::operator==(const AbstractTag &other)
+constexpr TagType EndTag::getType() const
 {
-    if(this == &other) {
-        return true;
-    }
-
-    const EndTag *oTag = dynamic_cast<const EndTag*>(&other);
-    if(!oTag) {
-        return false;
-    }
-
-    // TODO: use oTag and make members private again?
-    return m_name == other.m_name
-        && m_type == other.m_type;
-}
-
-bool EndTag::operator!=(const AbstractTag &other)
-{
-    return !(*this == other);
+    return TagType::End;
 }
 
 std::vector<unsigned char> EndTag::getData(bool value)
@@ -71,6 +53,14 @@ std::vector<unsigned char> EndTag::getData(bool value)
     std::vector<unsigned char> data;
     data.insert(data.end(), 0);
     return data;
+}
+
+bool EndTag::isEqual(const AbstractTag &other) const
+{
+    const EndTag &oTag = static_cast<const EndTag&>(other);
+    
+    return m_name == oTag.m_name
+        && getType() == oTag.getType();
 }
 
 } // namespace nbt

@@ -17,10 +17,12 @@ public:
     EndTag& operator=(const EndTag &other);
     EndTag& operator=(EndTag &&other) noexcept;
 
-    bool operator==(const AbstractTag &other);
-    bool operator!=(const AbstractTag &other);
+    constexpr virtual TagType getType() const override;
 
     std::vector<unsigned char> getData(bool value) override;
+
+protected:
+    virtual bool isEqual(const AbstractTag &other) const override;
 };
 
 } // namespace nbt

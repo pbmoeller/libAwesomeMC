@@ -23,7 +23,7 @@ TEST(ByteStream, Constructor)
     EXPECT_EQ(0, stream.availableBytes());
 }
 
-TEST(ByteStream, Constructor_1)
+TEST(ByteStream, Constructor_2)
 {
     util::ByteStream stream(util::ByteStream::Swap::NoSwapEndian);
 

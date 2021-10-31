@@ -30,26 +30,28 @@ public:
     AbstractTag();
     AbstractTag(const AbstractTag &other);
     AbstractTag(AbstractTag &&other) noexcept;
-    AbstractTag(TagType type);
-    AbstractTag(const std::string &name, TagType type);
+    AbstractTag(const std::string &name);
     virtual ~AbstractTag();
 
     AbstractTag& operator=(const AbstractTag &other);
     AbstractTag& operator=(AbstractTag &&other) noexcept;
 
-    virtual bool operator==(const AbstractTag &other);
-    virtual bool operator!=(const AbstractTag &other);
+    constexpr virtual TagType getType() const;
+
+    virtual std::vector<unsigned char> getData(bool isListEntry) = 0;
 
     std::string getName() const;
     void setName(const std::string &name);
 
-    TagType getType() const;
-    void setType(TagType type);
+protected:
+    virtual bool isEqual(const AbstractTag &other) const;
 
-    virtual std::vector<unsigned char> getData(bool isListEntry) = 0;
+    friend bool operator==(const AbstractTag &lhs,
+                           const AbstractTag &rhs);
+    friend bool operator!=(const AbstractTag &lhs,
+                           const AbstractTag &rhs);
 
-public:
-    TagType m_type;
+protected:
     std::string m_name;
 };
 

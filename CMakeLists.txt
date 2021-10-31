@@ -125,6 +125,7 @@ if(build_tests)
         "test/anvil/region_test.cpp" 
         "test/anvil/chunk_info_test.cpp" 
         "test/nbt/abstract_tag_test.cpp"
+        "test/nbt/byte_tag_test.cpp"
         "test/nbt/end_tag_test.cpp"
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"

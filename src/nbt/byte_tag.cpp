@@ -8,7 +8,7 @@ namespace nbt
 {
 
 ByteTag::ByteTag()
-    : AbstractTag(TagType::Byte)
+    : AbstractTag()
     , m_byte{0}
 {
 
@@ -20,28 +20,28 @@ ByteTag::ByteTag(const ByteTag &other)
 }
 
 ByteTag::ByteTag(ByteTag &&other) noexcept
-    : AbstractTag(std::move(other.m_name), TagType::Byte)
+    : AbstractTag(std::move(other.m_name))
     , m_byte{other.m_byte}
 {
     
 }
 
 ByteTag::ByteTag(const std::string &name)
-    : AbstractTag(name, TagType::Byte)
+    : AbstractTag(name)
     , m_byte{0}
 {
 
 }
 
 ByteTag::ByteTag(char value)
-    : AbstractTag(TagType::Byte)
+    : AbstractTag()
     , m_byte{value}
 {
 
 }
 
 ByteTag::ByteTag(const std::string &name, char value)
-    : AbstractTag(name, TagType::Byte)
+    : AbstractTag(name)
     , m_byte{value}
 {
 
@@ -56,7 +56,6 @@ ByteTag& ByteTag::operator=(const ByteTag &other)
 {
     if(this != &other) {
         m_name = other.m_name;
-        m_type = other.m_type;
         m_byte = other.m_byte;
     }
     return *this;
@@ -66,31 +65,14 @@ ByteTag& ByteTag::operator=(ByteTag &&other) noexcept
 {
     if(this != &other) {
         m_name = std::move(other.m_name);
-        m_type = other.m_type;
         m_byte = other.m_byte;
     }
     return *this;
 }
 
-bool ByteTag::operator==(const AbstractTag &other)
+constexpr TagType ByteTag::getType() const
 {
-    if(this == &other) {
-        return true;
-    }
-
-    const ByteTag *oTag = dynamic_cast<const ByteTag*>(&other);
-    if(!oTag) {
-        return false;
-    }
-
-    return m_name == other.m_name
-        && m_type == other.m_type
-        && m_byte == oTag->m_byte;
-}
-
-bool ByteTag::operator!=(const AbstractTag &other)
-{
-    return !(*this == other);
+    return TagType::Byte;
 }
 
 std::vector<unsigned char> ByteTag::getData(bool isListEntry)
@@ -98,11 +80,13 @@ std::vector<unsigned char> ByteTag::getData(bool isListEntry)
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
-        stream << (char) m_type;
+        stream << (char) getType();
+        stream << (int16_t) m_name.size();
+        stream << m_name;
     }
+    stream << m_byte;
 
-
-    return std::vector<unsigned char>();
+    return stream.vbuf();
 }
 
 char ByteTag::getValue() const
@@ -113,6 +97,15 @@ char ByteTag::getValue() const
 void ByteTag::setValue(char value)
 {
     m_byte = value;
+}
+
+bool ByteTag::isEqual(const AbstractTag &other) const
+{
+    const ByteTag &oTag = static_cast<const ByteTag&>(other);
+
+    return m_name == oTag.m_name
+        && getType() == oTag.getType()
+        && m_byte == oTag.m_byte;
 }
 
 } // namespace nbt
