@@ -110,5 +110,4 @@ bool LongTag::isEqual(const AbstractTag &other) const
         && m_value == oTag.m_value;
 }
 
-
 } // namespace nbt
