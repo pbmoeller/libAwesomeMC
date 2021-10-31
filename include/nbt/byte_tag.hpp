@@ -35,7 +35,7 @@ protected:
     virtual bool isEqual(const AbstractTag &other) const override;
 
 private:
-    char m_byte;
+    char m_value;
 };
 
 } // namespace nbt
