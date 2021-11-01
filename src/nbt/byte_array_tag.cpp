@@ -23,7 +23,7 @@ ByteArrayTag::ByteArrayTag(const ByteArrayTag &other)
 
 ByteArrayTag::ByteArrayTag(ByteArrayTag &&other) noexcept
     : AbstractTag(std::move(other.m_name))
-    , m_value{other.m_value}
+    , m_value{std::move(other.m_value)}
 {
 
 }
@@ -57,7 +57,7 @@ ByteArrayTag::~ByteArrayTag()
 ByteArrayTag& ByteArrayTag::operator=(const ByteArrayTag &other)
 {
     if(this != &other) {
-        m_name = other.m_name;
+        m_name  = other.m_name;
         m_value = other.m_value;
     }
     return *this;
@@ -66,8 +66,8 @@ ByteArrayTag& ByteArrayTag::operator=(const ByteArrayTag &other)
 ByteArrayTag& ByteArrayTag::operator=(ByteArrayTag &&other) noexcept
 {
     if(this != &other) {
-        m_name = std::move(other.m_name);
-        m_value = other.m_value;
+        m_name  = std::move(other.m_name);
+        m_value = std::move(other.m_value);
     }
     return *this;
 }
