@@ -208,6 +208,15 @@ bool ByteStream::operator<<(const std::vector<char> &input)
     return true;
 }
 
+bool ByteStream::operator<<(const std::vector<unsigned char> &input)
+{
+    m_buffer.insert(m_buffer.begin() + m_position,
+                    input.begin(),
+                    input.end());
+    m_position += input.size();
+    return true;
+}
+
 bool ByteStream::operator>>(int8_t &input)
 {
     return readStream(input);

@@ -64,6 +64,7 @@ public:
     bool operator<<(double input);
     bool operator<<(const std::string &input);
     bool operator<<(const std::vector<char> &input);
+    bool operator<<(const std::vector<unsigned char> &input);
     bool operator>>(int8_t &input);
     bool operator>>(int16_t &input);
     bool operator>>(int32_t &input);
