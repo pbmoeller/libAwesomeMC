@@ -78,8 +78,9 @@ bool AbstractTag::isEqual(const AbstractTag &other) const
 bool operator==(const AbstractTag &lhs,
                 const AbstractTag &rhs)
 {
-    return typeid(lhs) == typeid(rhs)
-        && lhs.isEqual(rhs);
+    return &lhs == &rhs
+        || (typeid(lhs) == typeid(rhs)
+            && lhs.isEqual(rhs));
 }
 
 bool operator!=(const AbstractTag &lhs,
