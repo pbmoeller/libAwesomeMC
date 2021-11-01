@@ -133,7 +133,7 @@ if(build_tests)
         "test/nbt/int_tag_test.cpp"
         "test/nbt/float_tag_test.cpp" 
         "test/nbt/double_tag_test.cpp"
-        )
+         "test/nbt/byte_array_tag_test.cpp")
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
         target_link_libraries(tests pthread)
@@ -143,6 +143,7 @@ if(build_tests)
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/test
         PRIVATE ${GTEST_INCLUDE_DIRS}
+        PRIVATE ${GMOCK_INCLUDE_DIRS}
     )
     set_property(TARGET tests PROPERTY CXX_STANDARD 20)
 endif()
