@@ -72,6 +72,11 @@ ShortTag& ShortTag::operator=(ShortTag &&other) noexcept
     return *this;
 }
 
+AbstractTag* ShortTag::clone()
+{
+    return new ShortTag(*this);
+}
+
 constexpr TagType ShortTag::getType() const
 {
     return TagType::Short;

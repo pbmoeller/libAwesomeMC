@@ -58,6 +58,14 @@ TEST(DoubleTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(DoubleTag, clone)
+{
+    nbt::DoubleTag doubleTagA("Test1", 3.14);
+
+    nbt::DoubleTag *doubleTagB = (nbt::DoubleTag *)doubleTagA.clone();
+    EXPECT_TRUE(doubleTagA == *doubleTagB);
+}
+
 TEST(DoubleTag, Equal)
 {
     nbt::DoubleTag doubleTagA("Test1", 3.14);

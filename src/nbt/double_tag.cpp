@@ -72,6 +72,11 @@ DoubleTag& DoubleTag::operator=(DoubleTag &&other) noexcept
     return *this;
 }
 
+AbstractTag* DoubleTag::clone()
+{
+    return new DoubleTag(*this);
+}
+
 constexpr TagType DoubleTag::getType() const
 {
     return TagType::Double;

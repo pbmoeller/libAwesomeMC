@@ -60,9 +60,14 @@ StringTag& StringTag::operator=(StringTag &&other) noexcept
 {
     if(this != &other) {
         m_name  = std::move(other.m_name);
-        m_value = other.m_value;
+        m_value = std::move(other.m_value);
     }
     return *this;
+}
+
+AbstractTag* StringTag::clone()
+{
+    return new StringTag(*this);
 }
 
 constexpr TagType StringTag::getType() const

@@ -24,6 +24,8 @@ public:
     LongTag& operator=(const LongTag &other);
     LongTag& operator=(LongTag &&other) noexcept;
 
+    virtual AbstractTag* clone();
+
     constexpr virtual TagType getType() const override;
 
     std::vector<unsigned char> getData(bool isListEntry) override;

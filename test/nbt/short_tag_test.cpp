@@ -58,6 +58,14 @@ TEST(ShortTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(ShortTag, clone)
+{
+    nbt::ShortTag shortTagA("Test1", 1);
+
+    nbt::ShortTag *shortTagB = (nbt::ShortTag *)shortTagA.clone();
+    EXPECT_TRUE(shortTagA == *shortTagB);
+}
+
 TEST(ShortTag, Equal)
 {
     nbt::ShortTag shortTagA("Test1", 1);

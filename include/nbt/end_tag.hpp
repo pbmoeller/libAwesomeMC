@@ -17,6 +17,8 @@ public:
     EndTag& operator=(const EndTag &other);
     EndTag& operator=(EndTag &&other) noexcept;
 
+    virtual AbstractTag* clone();
+
     constexpr virtual TagType getType() const override;
 
     std::vector<unsigned char> getData(bool value) override;

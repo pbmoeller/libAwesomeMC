@@ -32,6 +32,14 @@ TEST(EndTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(EndTag, clone)
+{
+    nbt::EndTag endTagA;
+
+    nbt::EndTag *endTagB = (nbt::EndTag *)endTagA.clone();
+    EXPECT_TRUE(endTagA == *endTagB);
+}
+
 TEST(EndTag, Equal)
 {
     nbt::EndTag byteTagA;

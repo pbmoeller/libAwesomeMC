@@ -50,6 +50,14 @@ TEST(StringTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(StringTag, clone)
+{
+    nbt::StringTag stringTagA("Test1", "ABC");
+
+    nbt::StringTag *stringTagB = (nbt::StringTag *)stringTagA.clone();
+    EXPECT_TRUE(stringTagA == *stringTagB);
+}
+
 TEST(StringTag, Equal)
 {
     nbt::StringTag stringTagA("Test1", "ABC");

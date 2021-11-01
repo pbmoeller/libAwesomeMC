@@ -72,6 +72,11 @@ ByteTag& ByteTag::operator=(ByteTag &&other) noexcept
     return *this;
 }
 
+AbstractTag* ByteTag::clone()
+{
+    return new ByteTag(*this);
+}
+
 constexpr TagType ByteTag::getType() const
 {
     return TagType::Byte;

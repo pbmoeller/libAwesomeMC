@@ -72,6 +72,11 @@ LongTag& LongTag::operator=(LongTag &&other) noexcept
     return *this;
 }
 
+AbstractTag* LongTag::clone()
+{
+    return new LongTag(*this);
+}
+
 constexpr TagType LongTag::getType() const
 {
     return TagType::Long;

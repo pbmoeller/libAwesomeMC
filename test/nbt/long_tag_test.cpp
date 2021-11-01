@@ -58,6 +58,14 @@ TEST(LongTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(LongTag, clone)
+{
+    nbt::LongTag longTagA("Test1", 0x8123456789ABCDEF);
+
+    nbt::LongTag *longTagB = (nbt::LongTag *)longTagA.clone();
+    EXPECT_TRUE(longTagA == *longTagB);
+}
+
 TEST(LongTag, Equal)
 {
     nbt::LongTag longTagA("Test1", 0x8123456789ABCDEF);

@@ -58,6 +58,14 @@ TEST(ByteTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(ByteTag, clone)
+{
+    nbt::ByteTag byteTagA("Test1", 1);
+
+    nbt::ByteTag *byteTagB = (nbt::ByteTag *)byteTagA.clone();
+    EXPECT_TRUE(byteTagA == *byteTagB);
+}
+
 TEST(ByteTag, Equal)
 {
     nbt::ByteTag byteTagA("Test1", 1);

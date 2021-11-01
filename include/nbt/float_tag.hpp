@@ -24,6 +24,8 @@ public:
     FloatTag& operator=(const FloatTag &other);
     FloatTag& operator=(FloatTag &&other) noexcept;
 
+    virtual AbstractTag* clone();
+
     constexpr virtual TagType getType() const override;
 
     std::vector<unsigned char> getData(bool isListEntry) override;

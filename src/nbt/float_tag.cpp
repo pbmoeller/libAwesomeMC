@@ -72,6 +72,11 @@ FloatTag& FloatTag::operator=(FloatTag &&other) noexcept
     return *this;
 }
 
+AbstractTag* FloatTag::clone()
+{
+    return new FloatTag(*this);
+}
+
 constexpr TagType FloatTag::getType() const
 {
     return TagType::Float;

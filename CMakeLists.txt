@@ -46,7 +46,7 @@ set(UTIL_INCLUDES
     "include/util/byte_stream.hpp"
     "include/util/byte_swap.hpp"
     "include/util/compression.hpp"
- "include/util/floating_point.hpp")
+    "include/util/floating_point.hpp")
 
 ### Sources
 # anvil
@@ -133,7 +133,9 @@ if(build_tests)
         "test/nbt/int_tag_test.cpp"
         "test/nbt/float_tag_test.cpp" 
         "test/nbt/double_tag_test.cpp"
-         "test/nbt/byte_array_tag_test.cpp" "test/nbt/string_tag_test.cpp")
+        "test/nbt/byte_array_tag_test.cpp"
+        "test/nbt/string_tag_test.cpp"
+        "test/nbt/list_tag_test.cpp")
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
         target_link_libraries(tests pthread)

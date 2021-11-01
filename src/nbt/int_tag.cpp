@@ -72,6 +72,11 @@ IntTag& IntTag::operator=(IntTag &&other) noexcept
     return *this;
 }
 
+AbstractTag* IntTag::clone()
+{
+    return new IntTag(*this);
+}
+
 constexpr TagType IntTag::getType() const
 {
     return TagType::Int;

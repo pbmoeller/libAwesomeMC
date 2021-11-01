@@ -58,6 +58,14 @@ TEST(IntTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(IntTag, clone)
+{
+    nbt::IntTag intTagA("Test1", 0x81234567);
+
+    nbt::IntTag *intTagB = (nbt::IntTag *)intTagA.clone();
+    EXPECT_TRUE(intTagA == *intTagB);
+}
+
 TEST(IntTag, Equal)
 {
     nbt::IntTag intTagA("Test1", 0x81234567);

@@ -58,6 +58,14 @@ TEST(FloatTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(FloatTag, clone)
+{
+    nbt::FloatTag floatTagA("Test1", 3.14f);
+
+    nbt::FloatTag *floatTagB = (nbt::FloatTag *)floatTagA.clone();
+    EXPECT_TRUE(floatTagA == *floatTagB);
+}
+
 TEST(FloatTag, Equal)
 {
     nbt::FloatTag floatTagA("Test1", 3.14f);

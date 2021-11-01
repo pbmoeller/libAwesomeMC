@@ -69,6 +69,14 @@ TEST(ByteArrayTag, MoveAssignment)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(ByteArrayTag, clone)
+{
+    nbt::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});
+
+    nbt::ByteArrayTag *byteArrayTagB = (nbt::ByteArrayTag *)byteArrayTagA.clone();
+    EXPECT_TRUE(byteArrayTagA == *byteArrayTagB);
+}
+
 TEST(ByteArrayTag, Equal)
 {
     nbt::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});

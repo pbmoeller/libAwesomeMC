@@ -42,6 +42,11 @@ EndTag& EndTag::operator=(EndTag &&other) noexcept
     return *this;
 }
 
+AbstractTag* EndTag::clone()
+{
+    return new EndTag(*this);
+}
+
 constexpr TagType EndTag::getType() const
 {
     return TagType::End;
