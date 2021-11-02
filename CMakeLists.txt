@@ -138,7 +138,7 @@ if(build_tests)
         "test/nbt/list_tag_test.cpp"
         "test/nbt/int_array_tag_test.cpp"
         "test/nbt/long_array_tag_test.cpp"
-    )
+        "test/nbt/compound_tag_test.cpp")
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
         target_link_libraries(tests pthread)
