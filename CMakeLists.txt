@@ -25,20 +25,20 @@ set(ANVIL_INCLUDES
 
 # nbt
 set(NBT_INCLUDES
-    "include/nbt/abstract_tag.hpp"
-    "include/nbt/byte_array_tag.hpp"
-    "include/nbt/byte_tag.hpp"
-    "include/nbt/compound_tag.hpp"
-    "include/nbt/double_tag.hpp"
-    "include/nbt/end_tag.hpp"
-    "include/nbt/float_tag.hpp"
-    "include/nbt/int_array_tag.hpp"
-    "include/nbt/int_tag.hpp"
-    "include/nbt/list_tag.hpp"
-    "include/nbt/long_array_tag.hpp"
-    "include/nbt/long_tag.hpp"
-    "include/nbt/short_tag.hpp"
-    "include/nbt/string_tag.hpp"
+    "include/nbt/tags/abstract_tag.hpp"
+    "include/nbt/tags/byte_array_tag.hpp"
+    "include/nbt/tags/byte_tag.hpp"
+    "include/nbt/tags/compound_tag.hpp"
+    "include/nbt/tags/double_tag.hpp"
+    "include/nbt/tags/end_tag.hpp"
+    "include/nbt/tags/float_tag.hpp"
+    "include/nbt/tags/int_array_tag.hpp"
+    "include/nbt/tags/int_tag.hpp"
+    "include/nbt/tags/list_tag.hpp"
+    "include/nbt/tags/long_array_tag.hpp"
+    "include/nbt/tags/long_tag.hpp"
+    "include/nbt/tags/short_tag.hpp"
+    "include/nbt/tags/string_tag.hpp"
 )
 
 # util
@@ -59,20 +59,20 @@ set(ANVIL_SOURCES
 
 # nbt
 set(NBT_SOURCES
-    "src/nbt/abstract_tag.cpp"
-    "src/nbt/byte_array_tag.cpp"
-    "src/nbt/byte_tag.cpp"
-    "src/nbt/compound_tag.cpp"
-    "src/nbt/double_tag.cpp"
-    "src/nbt/end_tag.cpp"
-    "src/nbt/float_tag.cpp"
-    "src/nbt/int_array_tag.cpp"
-    "src/nbt/int_tag.cpp"
-    "src/nbt/list_tag.cpp"
-    "src/nbt/long_array_tag.cpp"
-    "src/nbt/long_tag.cpp"
-    "src/nbt/short_tag.cpp"
-    "src/nbt/string_tag.cpp"
+    "src/nbt/tags/abstract_tag.cpp"
+    "src/nbt/tags/byte_array_tag.cpp"
+    "src/nbt/tags/byte_tag.cpp"
+    "src/nbt/tags/compound_tag.cpp"
+    "src/nbt/tags/double_tag.cpp"
+    "src/nbt/tags/end_tag.cpp"
+    "src/nbt/tags/float_tag.cpp"
+    "src/nbt/tags/int_array_tag.cpp"
+    "src/nbt/tags/int_tag.cpp"
+    "src/nbt/tags/list_tag.cpp"
+    "src/nbt/tags/long_array_tag.cpp"
+    "src/nbt/tags/long_tag.cpp"
+    "src/nbt/tags/short_tag.cpp"
+    "src/nbt/tags/string_tag.cpp"
 )
 
 # util
@@ -116,29 +116,28 @@ endif()
 
 # tests
 if(build_tests)
-    
-
     add_executable(tests 
         "test/test_main.cpp" 
         "test/types_test.cpp"
+        "test/nbt/tags/abstract_tag_test.cpp"
+        "test/nbt/tags/byte_tag_test.cpp"
+        "test/nbt/tags/end_tag_test.cpp"
+        "test/nbt/tags/short_tag_test.cpp"
+        "test/nbt/tags/long_tag_test.cpp"
+        "test/nbt/tags/int_tag_test.cpp"
+        "test/nbt/tags/float_tag_test.cpp" 
+        "test/nbt/tags/double_tag_test.cpp"
+        "test/nbt/tags/byte_array_tag_test.cpp"
+        "test/nbt/tags/string_tag_test.cpp"
+        "test/nbt/tags/list_tag_test.cpp"
+        "test/nbt/tags/int_array_tag_test.cpp"
+        "test/nbt/tags/long_array_tag_test.cpp"
+        "test/nbt/tags/compound_tag_test.cpp"
         "test/anvil/region_test.cpp" 
         "test/anvil/chunk_info_test.cpp" 
-        "test/nbt/abstract_tag_test.cpp"
-        "test/nbt/byte_tag_test.cpp"
-        "test/nbt/end_tag_test.cpp"
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"
-        "test/nbt/short_tag_test.cpp"
-        "test/nbt/long_tag_test.cpp"
-        "test/nbt/int_tag_test.cpp"
-        "test/nbt/float_tag_test.cpp" 
-        "test/nbt/double_tag_test.cpp"
-        "test/nbt/byte_array_tag_test.cpp"
-        "test/nbt/string_tag_test.cpp"
-        "test/nbt/list_tag_test.cpp"
-        "test/nbt/int_array_tag_test.cpp"
-        "test/nbt/long_array_tag_test.cpp"
-        "test/nbt/compound_tag_test.cpp")
+    )
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
         target_link_libraries(tests pthread)
