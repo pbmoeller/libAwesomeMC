@@ -39,6 +39,7 @@ set(NBT_INCLUDES
     "include/nbt/tags/long_tag.hpp"
     "include/nbt/tags/short_tag.hpp"
     "include/nbt/tags/string_tag.hpp"
+    "include/nbt/tags.hpp"
 )
 
 # util
