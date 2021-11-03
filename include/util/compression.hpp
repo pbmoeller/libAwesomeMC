@@ -7,9 +7,13 @@ namespace util
 {
     constexpr unsigned int ZlibChunkSize = 16384;
 
-    bool deflate(std::vector<char> &data);
+    bool deflate_zlib(std::vector<char> &data);
 
-    bool inflate(std::vector<char> &data);
+    bool inflate_zlib(std::vector<char> &data);
+
+    bool inflate_gzip(std::vector<char> &data);
+
+    bool inflate_gzip2(std::vector<char> &data);
 
 } // namespace util
 
