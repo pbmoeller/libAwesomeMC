@@ -40,7 +40,7 @@ set(NBT_INCLUDES
     "include/nbt/tags/short_tag.hpp"
     "include/nbt/tags/string_tag.hpp"
     "include/nbt/tags.hpp"
-)
+ "include/nbt/nbt_reader.hpp")
 
 # util
 set(UTIL_INCLUDES
@@ -74,7 +74,7 @@ set(NBT_SOURCES
     "src/nbt/tags/long_tag.cpp"
     "src/nbt/tags/short_tag.cpp"
     "src/nbt/tags/string_tag.cpp"
-)
+ "src/nbt/nbt_reader.cpp")
 
 # util
 set(UTIL_SOURCES
@@ -107,12 +107,22 @@ set_property(TARGET AwesomeAnvil PROPERTY CXX_STANDARD 20)
 
 # example
 if(build_examples)
-    add_executable(example1 example/example1.cpp)
+# example 1
+    add_executable(example1 "example/example1.cpp")
     target_include_directories(example1
         PRIVATE ${ZLIB_INCLUDE_DIRS}
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
     target_link_libraries(example1 AwesomeAnvil)
     set_property(TARGET example1 PROPERTY CXX_STANDARD 20)
+# example 2
+    add_executable(example_nbt "example/example_nbt.cpp")
+    target_include_directories(example_nbt
+        PRIVATE ${ZLIB_INCLUDE_DIRS}
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+    target_link_libraries(example_nbt AwesomeAnvil)
+    set_property(TARGET example_nbt PROPERTY CXX_STANDARD 20)
 endif()
 
 # tests
@@ -134,8 +144,8 @@ if(build_tests)
         "test/nbt/tags/int_array_tag_test.cpp"
         "test/nbt/tags/long_array_tag_test.cpp"
         "test/nbt/tags/compound_tag_test.cpp"
-        "test/anvil/region_test.cpp" 
-        "test/anvil/chunk_info_test.cpp" 
+        "test/anvil/region_test.cpp"
+        "test/anvil/chunk_info_test.cpp"
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"
     )
