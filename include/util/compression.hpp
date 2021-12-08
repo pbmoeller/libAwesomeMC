@@ -11,9 +11,9 @@ namespace util
 
     bool inflate_zlib(std::vector<char> &data);
 
-    bool inflate_gzip(std::vector<char> &data);
+    bool inflate_gzip(std::vector<unsigned char> &data);
 
-    bool inflate_gzip2(std::vector<char> &data);
+    bool inflate_gzip2(std::vector<unsigned char> &data);
 
 } // namespace util
 

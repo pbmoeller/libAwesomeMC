@@ -78,7 +78,7 @@ bool inflate_zlib(std::vector<char> &data)
     return true;
 }
 
-bool inflate_gzip(std::vector<char> &data)
+bool inflate_gzip(std::vector<unsigned char> &data)
 {
     if(data.size() == 0) {
         return true;
@@ -86,7 +86,7 @@ bool inflate_gzip(std::vector<char> &data)
 
     int ret = 0;
     bool done = false;
-    std::vector<char> dataOut(data.size(), 0);
+    std::vector<unsigned char> dataOut(data.size(), 0);
     const size_t halfLength = data.size() / 2;
 
     z_stream zstrm;
@@ -127,7 +127,7 @@ bool inflate_gzip(std::vector<char> &data)
 /*
  * https://windrealm.org/tutorials/decompress-gzip-stream.php
  */
-bool inflate_gzip2(std::vector<char> &data)
+bool inflate_gzip2(std::vector<unsigned char> &data)
 {
     if(data.size() == 0) {
         return true;
@@ -176,7 +176,7 @@ bool inflate_gzip2(std::vector<char> &data)
         return false;
     }
 
-    data = std::vector<char>(zstrm.total_out, 0);
+    data = std::vector<unsigned char>(zstrm.total_out, 0);
     memcpy(data.data(), uncompressed, zstrm.total_out);
     free(uncompressed);
     return true;
