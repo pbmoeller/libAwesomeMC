@@ -375,6 +375,16 @@ TEST(ByteStream, vbuf)
 
 TEST(ByteStream, streamOperator_in_int8)
 {
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(ByteStream, streamOperator_in_char)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(ByteStream, streamOperator_in_int8)
+{
     util::ByteStream byteStream;
     ASSERT_EQ(0, byteStream.size());
     ASSERT_EQ(0, byteStream.getPosition());
@@ -495,6 +505,11 @@ TEST(ByteStream, streamOperator_in_vector)
     byteStream << std::vector<char>({0x12, 0x34, 0x56, 0x78, (char)0x90, (char)0xAB, (char)0xCD, (char)0xEF});
     EXPECT_EQ(10, byteStream.size());
     EXPECT_EQ(10, byteStream.getPosition());
+}
+
+TEST(ByteStream, streamOperator_out_char)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
 TEST(ByteStream, streamOperator_out_int8)

@@ -160,6 +160,25 @@ std::vector<unsigned char> ByteStream::vbuf()
     return m_buffer;
 }
 
+bool ByteStream::readString(std::string &str, const int16_t length)
+{
+    if(availableBytes() < length) {
+        return EndOfStream;
+    }
+
+    size_t idx = str.length();
+    str.resize(str.size() + length);
+    std::memcpy(str.data() + idx, &m_buffer[m_position], length);
+    m_position += length;
+
+    return Success;
+}
+
+bool ByteStream::operator<<(char input)
+{
+    return writeStream(input);
+}
+
 bool ByteStream::operator<<(int8_t input)
 {
     return writeStream(input);
@@ -215,6 +234,11 @@ bool ByteStream::operator<<(const std::vector<unsigned char> &input)
                     input.end());
     m_position += input.size();
     return true;
+}
+
+bool ByteStream::operator>>(char &input)
+{
+    return readStream(input);
 }
 
 bool ByteStream::operator>>(int8_t &input)
