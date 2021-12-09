@@ -17,18 +17,13 @@ namespace nbt
 class AbstractTag;
 class CompoundTag;
 
+std::vector<unsigned char> loadNbtData(const std::string &filename, 
+                                       bool isCompressed);
 
 AbstractTag* readNbtData(const std::vector<unsigned char> &data);
 AbstractTag* readSubTag(util::ByteStream &stream, 
                         bool isListItem, 
                         TagType listType);
-
-std::string printNbtData(const AbstractTag *root, 
-                         bool printArrayContent = false);
-void printNextNbtDataLevel(const AbstractTag *tag, 
-                           std::stringstream &sstr,
-                           int indent,
-                           bool printArrayContent = false);
 
 template<typename T>
 T readValue(util::ByteStream &stream)
@@ -61,8 +56,6 @@ std::vector<T> readArrayValues(util::ByteStream &stream)
 }
 
 std::string readStringValue(util::ByteStream &stream);
-
-std::string getTagName(TagType type);
 
 } // namespace nbt
 

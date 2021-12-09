@@ -40,7 +40,8 @@ set(NBT_INCLUDES
     "include/nbt/tags/short_tag.hpp"
     "include/nbt/tags/string_tag.hpp"
     "include/nbt/tags.hpp"
- "include/nbt/nbt_reader.hpp")
+    "include/nbt/nbt_read.hpp"
+    "include/nbt/nbt_print.hpp")
 
 # util
 set(UTIL_INCLUDES
@@ -74,7 +75,8 @@ set(NBT_SOURCES
     "src/nbt/tags/long_tag.cpp"
     "src/nbt/tags/short_tag.cpp"
     "src/nbt/tags/string_tag.cpp"
- "src/nbt/nbt_reader.cpp")
+    "src/nbt/nbt_read.cpp"
+    "src/nbt/nbt_print.cpp")
 
 # util
 set(UTIL_SOURCES
