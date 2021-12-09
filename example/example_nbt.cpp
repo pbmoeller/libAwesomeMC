@@ -24,10 +24,10 @@ int main(int agrc, char **argv)
         strm1.seekg(0);
         strm1.read((char*)&data[0], size);
 
-        nbt::AbstractTag *tag = nbt::NbtReader::readNbtData(data);
+        nbt::AbstractTag *tag = nbt::readNbtData(data);
 
         std::cout << "\n===\n"
-                  << nbt::NbtReader::printNbtData(tag)
+                  << nbt::printNbtData(tag)
                   << "===\n" << std::endl;
     }
 
@@ -50,10 +50,10 @@ int main(int agrc, char **argv)
             std::cerr << "inflate_gzip error." << std::endl;
         }
         
-        nbt::AbstractTag *tag = nbt::NbtReader::readNbtData(data);
+        nbt::AbstractTag *tag = nbt::readNbtData(data);
 
         std::cout << "\n===\n" 
-                  << nbt::NbtReader::printNbtData(tag)
+                  << nbt::printNbtData(tag)
                   << "===\n" << std::endl;
     }
 

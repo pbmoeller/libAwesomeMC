@@ -17,56 +17,52 @@ namespace nbt
 class AbstractTag;
 class CompoundTag;
 
-class NbtReader
+
+AbstractTag* readNbtData(const std::vector<unsigned char> &data);
+AbstractTag* readSubTag(util::ByteStream &stream, 
+                        bool isListItem, 
+                        TagType listType);
+
+std::string printNbtData(const AbstractTag *root, 
+                         bool printArrayContent = false);
+void printNextNbtDataLevel(const AbstractTag *tag, 
+                           std::stringstream &sstr,
+                           int indent,
+                           bool printArrayContent = false);
+
+template<typename T>
+T readValue(util::ByteStream &stream)
 {
-public:
-    static AbstractTag* readNbtData(const std::vector<unsigned char> &data);
-    static AbstractTag* readSubTag(util::ByteStream &stream, 
-                                   bool isListItem, 
-                                   TagType listType);
+    T value;
 
-    static std::string printNbtData(const AbstractTag *root, bool printArrayContent = false);
-
-private:
-    static void printNextNbtDataLevel(const AbstractTag *tag, 
-                                      std::stringstream &sstr,
-                                      int indent,
-                                      bool printArrayContent = false);
-
-    template<typename T>
-    static T readValue(util::ByteStream &stream)
-    {
-        T value;
-
-        if(!stream.good()) {
-            throw std::runtime_error("Unexpected end of stream");
-        }
-
-        stream >> value;
-        return value;
+    if(!stream.good()) {
+        throw std::runtime_error("Unexpected end of stream");
     }
 
-    template<typename T>
-    static std::vector<T> readArrayValues(util::ByteStream &stream)
-    {
-        std::vector<T> values;
+    stream >> value;
+    return value;
+}
 
-        if(!stream.good()) {
-            throw std::runtime_error("Unexpected end of stream");
-        }
+template<typename T>
+std::vector<T> readArrayValues(util::ByteStream &stream)
+{
+    std::vector<T> values;
 
-        int32_t arrayLength = readValue<int32_t>(stream);
-        values.resize(arrayLength);
-        for(int32_t i = 0; i < arrayLength; ++i) {
-            values[i] = readValue<T>(stream);
-        }
-        return values;
+    if(!stream.good()) {
+        throw std::runtime_error("Unexpected end of stream");
     }
 
-    static std::string readStringValue(util::ByteStream &stream);
+    int32_t arrayLength = readValue<int32_t>(stream);
+    values.resize(arrayLength);
+    for(int32_t i = 0; i < arrayLength; ++i) {
+        values[i] = readValue<T>(stream);
+    }
+    return values;
+}
 
-    static std::string getTypeName(TagType type);
-};
+std::string readStringValue(util::ByteStream &stream);
+
+std::string getTagName(TagType type);
 
 } // namespace nbt
 

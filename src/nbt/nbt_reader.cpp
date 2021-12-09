@@ -9,7 +9,7 @@
 namespace nbt
 {
 
-AbstractTag* NbtReader::readNbtData(const std::vector<unsigned char> &data)
+AbstractTag* readNbtData(const std::vector<unsigned char> &data)
 {
     CompoundTag *root = nullptr;
 
@@ -49,9 +49,9 @@ AbstractTag* NbtReader::readNbtData(const std::vector<unsigned char> &data)
     return root;
 }
 
-AbstractTag* NbtReader::readSubTag(util::ByteStream &stream,
-                                   bool isListItem,
-                                   TagType listType)
+AbstractTag* readSubTag(util::ByteStream &stream,
+                        bool isListItem,
+                        TagType listType)
 {
     // Check if stream is good
     if(!stream.good()) {
@@ -147,7 +147,8 @@ AbstractTag* NbtReader::readSubTag(util::ByteStream &stream,
     return tag;
 }
 
-std::string NbtReader::printNbtData(const AbstractTag *root, bool printArrayContent)
+std::string printNbtData(const AbstractTag *root, 
+                         bool printArrayContent)
 {
     std::stringstream sstr;
     
@@ -158,10 +159,10 @@ std::string NbtReader::printNbtData(const AbstractTag *root, bool printArrayCont
     return sstr.str();
 }
 
-void NbtReader::printNextNbtDataLevel(const AbstractTag *tag,
-                                      std::stringstream &sstr,
-                                      int indent,
-                                      bool printArrayContent)
+void printNextNbtDataLevel(const AbstractTag *tag,
+                           std::stringstream &sstr,
+                           int indent,
+                           bool printArrayContent)
 {
     switch(tag->getType())
     {
@@ -238,7 +239,7 @@ void NbtReader::printNextNbtDataLevel(const AbstractTag *tag,
         {
             ListTag *t = (ListTag*)(tag);
             sstr << std::string(indent, ' ') << "TAG_List(\""
-                 << t->getName() << "\"): " << t->size() << " entries of type " << getTypeName(t->getListType()) << "\n";
+                 << t->getName() << "\"): " << t->size() << " entries of type " << getTagName(t->getListType()) << "\n";
             sstr << std::string(indent, ' ') << "{\n";
             for(const AbstractTag *tag : t->getValue()) {
                 printNextNbtDataLevel(tag, sstr, indent + 2);
@@ -299,7 +300,7 @@ void NbtReader::printNextNbtDataLevel(const AbstractTag *tag,
     }
 }
 
-std::string NbtReader::readStringValue(util::ByteStream &stream)
+std::string readStringValue(util::ByteStream &stream)
 {
     // Check if stream is good
     if(!stream.good()) {
@@ -315,7 +316,7 @@ std::string NbtReader::readStringValue(util::ByteStream &stream)
     return name;
 }
 
-std::string NbtReader::getTypeName(TagType type)
+std::string getTagName(TagType type)
 {
     switch(type)
     {
@@ -350,4 +351,4 @@ std::string NbtReader::getTypeName(TagType type)
     }
 }
 
-} // namespace std
+} // namespace nbt
