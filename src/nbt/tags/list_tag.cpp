@@ -189,6 +189,11 @@ std::vector<AbstractTag*>& ListTag::getValue()
     return m_value;
 }
 
+const std::vector<AbstractTag*>& ListTag::getValue() const
+{
+    return m_value;
+}
+
 std::vector<AbstractTag*> ListTag::getValueCopy() const
 {
     std::vector<AbstractTag*> valueCopy(m_value.size(), nullptr);
