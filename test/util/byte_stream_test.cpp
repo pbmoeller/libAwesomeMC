@@ -373,11 +373,6 @@ TEST(ByteStream, vbuf)
     EXPECT_EQ(data[3], data2[3]);
 }
 
-TEST(ByteStream, streamOperator_in_int8)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
 TEST(ByteStream, streamOperator_in_char)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
