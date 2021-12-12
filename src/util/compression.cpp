@@ -9,12 +9,12 @@
 namespace util
 {
 
-bool deflate_zlib(std::vector<char> &data)
+bool deflate_zlib(std::vector<unsigned char> &data)
 {
     int ret = 0;
     z_stream zstrm;
     unsigned char buffer[ZlibChunkSize] = { 0 };
-    std::vector<char> dataOut;
+    std::vector<unsigned char> dataOut;
 
     std::memset(&zstrm, 0, sizeof(zstrm));
     if(deflateInit(&zstrm, Z_BEST_COMPRESSION) != Z_OK) {
@@ -41,7 +41,7 @@ bool deflate_zlib(std::vector<char> &data)
     return true;
 }
 
-bool inflate_zlib(std::vector<char> &data)
+bool inflate_zlib(std::vector<unsigned char> &data)
 {
     int ret = 0;
     unsigned long prevOut = 0;
