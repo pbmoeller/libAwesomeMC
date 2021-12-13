@@ -14,22 +14,42 @@ TEST(EndTag, Constructor)
 
 TEST(EndTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Init
+    nbt::EndTag tagA;
+
+    // Test Copy
+    nbt::EndTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
 }
 
 TEST(EndTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Init
+    nbt::EndTag tagA;
+
+    // Test Copy
+    nbt::EndTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), "");
 }
 
 TEST(EndTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Init
+    nbt::EndTag tagA;
+
+    // Test Copy
+    nbt::EndTag tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
 }
 
 TEST(EndTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Init
+    nbt::EndTag tagA;
+
+    // Test Copy
+    nbt::EndTag tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), "");
 }
 
 TEST(EndTag, clone)

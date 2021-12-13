@@ -40,22 +40,76 @@ TEST(ShortTag, Constructor_4)
 
 TEST(ShortTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+    uint16_t value = 0x1234;
+
+    // Init
+    nbt::ShortTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Test Copy
+    nbt::ShortTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(ShortTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+    uint16_t value = 0x1235;
+
+    // Init
+    nbt::ShortTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Test Move
+    nbt::ShortTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(ShortTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+    uint16_t value = 0x1237;
+
+    // Init A
+    nbt::ShortTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Init B
+    nbt::ShortTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue(), 0);
+
+    // Test Copy Assignment
+    tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(ShortTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+    uint16_t value = 0x1238;
+
+    // Init A
+    nbt::ShortTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Init B
+    nbt::ShortTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue(), 0);
+
+    // Test Move Assignment
+    tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_EQ(tagB.getValue(), value);
 }
 
 TEST(ShortTag, clone)

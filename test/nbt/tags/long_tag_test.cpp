@@ -40,22 +40,76 @@ TEST(LongTag, Constructor_4)
 
 TEST(LongTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+    uint64_t value = 0x0123456789ABCDEF;
+
+    // Init
+    nbt::LongTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Test Copy
+    nbt::LongTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(LongTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+    uint64_t value = 0x0123456789ABCDEE;
+
+    // Init
+    nbt::LongTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Test Move
+    nbt::LongTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(LongTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+    uint64_t value = 0x0123456789ABCDED;
+
+    // Init A
+    nbt::LongTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Init B
+    nbt::LongTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue(), 0);
+
+    // Test Copy Assignment
+    tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(LongTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+    uint64_t value = 0x0123456789ABCDEC;
+
+    // Init A
+    nbt::LongTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Init B
+    nbt::LongTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue(), 0);
+
+    // Test Move Assignment
+    tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_EQ(tagB.getValue(), value);
 }
 
 TEST(LongTag, clone)

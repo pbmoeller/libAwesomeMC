@@ -41,75 +41,75 @@ TEST(ByteTag, Constructor_4)
 TEST(ByteTag, CopyConstructor)
 {
     std::string name = "CopyConstructor";
-    char byte = 0x34;
+    char value = 0x34;
 
     // Init
-    nbt::ByteTag byteTagA(name, byte);
-    ASSERT_STREQ(byteTagA.getName().c_str(), name.c_str());
-    ASSERT_EQ(byteTagA.getValue(), byte);
+    nbt::ByteTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
 
     // Test Copy
-    nbt::ByteTag byteTagB(byteTagA);
-    EXPECT_STREQ(byteTagB.getName().c_str(), byteTagA.getName().c_str());
-    EXPECT_EQ(byteTagB.getValue(), byteTagA.getValue());
+    nbt::ByteTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(ByteTag, MoveConstructor)
 {
     std::string name = "MoveConstructor";
-    char byte = 0x36;
+    char value = 0x36;
 
     // Init
-    nbt::ByteTag byteTagA(name, byte);
-    ASSERT_STREQ(byteTagA.getName().c_str(), name.c_str());
-    ASSERT_EQ(byteTagA.getValue(), byte);
+    nbt::ByteTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
 
     // Test Move
-    nbt::ByteTag byteTagB(std::move(byteTagA));
-    EXPECT_STREQ(byteTagB.getName().c_str(), byteTagA.getName().c_str());
-    EXPECT_EQ(byteTagB.getValue(), byteTagA.getValue());
+    nbt::ByteTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(ByteTag, CopyAssignment)
 {
     std::string name = "CopyAssignment";
-    char byte = 0x37;
+    char value = 0x37;
 
     // Init A
-    nbt::ByteTag byteTagA(name, byte);
-    ASSERT_STREQ(byteTagA.getName().c_str(), name.c_str());
-    ASSERT_EQ(byteTagA.getValue(), byte);
+    nbt::ByteTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
 
     // Init B
-    nbt::ByteTag byteTagB;
-    ASSERT_STREQ(byteTagB.getName().c_str(), "");
-    ASSERT_EQ(byteTagB.getValue(), 0);
+    nbt::ByteTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue(), 0);
 
     // Test Copy Assignment
-    byteTagB = byteTagA;
-    EXPECT_STREQ(byteTagB.getName().c_str(), byteTagA.getName().c_str());
-    EXPECT_EQ(byteTagB.getValue(), byteTagA.getValue());
+    tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(ByteTag, MoveAssignment)
 {
     std::string name = "MoveAssignment";
-    char byte = 0x38;
+    char value = 0x38;
 
     // Init A
-    nbt::ByteTag byteTagA(name, byte);
-    ASSERT_STREQ(byteTagA.getName().c_str(), name.c_str());
-    ASSERT_EQ(byteTagA.getValue(), byte);
+    nbt::ByteTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
 
     // Init B
-    nbt::ByteTag byteTagB;
-    ASSERT_STREQ(byteTagB.getName().c_str(), "");
-    ASSERT_EQ(byteTagB.getValue(), 0);
+    nbt::ByteTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue(), 0);
 
     // Test Move Assignment
-    byteTagB = std::move(byteTagA);
-    EXPECT_STREQ(byteTagB.getName().c_str(), name.c_str());
-    EXPECT_EQ(byteTagB.getValue(), byte);
+    tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_EQ(tagB.getValue(), value);
 }
 
 TEST(ByteTag, clone)
