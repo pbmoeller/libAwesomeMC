@@ -51,22 +51,76 @@ TEST(IntArrayTag, Constructor_4)
 
 TEST(IntArrayTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+    std::vector<int32_t> value = {-0x7123FFFF, 0, 0x7FFFFF23};
+
+    // Init
+    nbt::IntArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Test Copy
+    nbt::IntArrayTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(tagA.getValue().begin(), tagA.getValue().end()));
 }
 
 TEST(IntArrayTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+    std::vector<int32_t> value = {-0x7123FFFF, -5, -1, 0, 1, 2, 3, 5, 0x7FFFFF23};
+
+    // Init
+    nbt::IntArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Test Move
+    nbt::IntArrayTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 }
 
 TEST(IntArrayTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+    std::vector<int32_t> value = {0x7FFFFFFF, -50, -10, 0, 10, 20, 30, 50, 0x7FFFFFFF};
+
+    // Init A
+    nbt::IntArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Init B
+    nbt::IntArrayTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue().size(), 0);
+
+    // Test Copy Assignment
+    tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(tagA.getValue().begin(), tagA.getValue().end()));
 }
 
 TEST(IntArrayTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+    std::vector<int32_t> value = {-0x7FFFFFFF, -33, -11, 0, 11, 22, 33, 55, 0x7FFFFFFF};
+
+    // Init A
+    nbt::IntArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Init B
+    nbt::IntArrayTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue().size(), 0);
+
+    // Test Move Assignment
+    tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 }
 
 TEST(IntArrayTag, clone)

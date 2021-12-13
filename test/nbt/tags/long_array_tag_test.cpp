@@ -51,22 +51,76 @@ TEST(LongArrayTag, Constructor_4)
 
 TEST(LongArrayTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+    std::vector<int64_t> value = {-0x7123FFFFFFFFFFFF, 0, 0x7FFFFFFFFFFFFF23};
+
+    // Init
+    nbt::LongArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Test Copy
+    nbt::LongArrayTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(tagA.getValue().begin(), tagA.getValue().end()));
 }
 
 TEST(LongArrayTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+    std::vector<int64_t> value = {-0x7123FFFFFFFFFFFF, -5, -1, 0, 1, 2, 3, 5, 0x7FFFFFFFFFFFFF23};
+
+    // Init
+    nbt::LongArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Test Move
+    nbt::LongArrayTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 }
 
 TEST(LongArrayTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+    std::vector<int64_t> value = {0x7123FFFFFFFFFFFF, -50, -10, 0, 10, 20, 30, 50, 0x7FFFFFFFFFFFFF23};
+
+    // Init A
+    nbt::LongArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Init B
+    nbt::LongArrayTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue().size(), 0);
+
+    // Test Copy Assignment
+    tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(tagA.getValue().begin(), tagA.getValue().end()));
 }
 
 TEST(LongArrayTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+    std::vector<int64_t> value = {-0x7123FFFFFFFFFFFF, -33, -11, 0, 11, 22, 33, 55, 0x7FFFFFFFFFFFFF23};
+
+    // Init A
+    nbt::LongArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Init B
+    nbt::LongArrayTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue().size(), 0);
+
+    // Test Move Assignment
+    tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 }
 
 TEST(LongArrayTag, clone)

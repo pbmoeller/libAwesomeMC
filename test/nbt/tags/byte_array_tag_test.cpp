@@ -51,22 +51,76 @@ TEST(ByteArrayTag, Constructor_4)
 
 TEST(ByteArrayTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+    std::vector<char> value = {-123, 0, 127};
+
+    // Init
+    nbt::ByteArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Test Copy
+    nbt::ByteArrayTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(tagA.getValue().begin(), tagA.getValue().end()));
 }
 
 TEST(ByteArrayTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+    std::vector<char> value = {-5, -1, 0, 1, 2, 3, 5};
+
+    // Init
+    nbt::ByteArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Test Move
+    nbt::ByteArrayTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 }
 
 TEST(ByteArrayTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+    std::vector<char> value = {-50, -10, 0, 10, 20, 30, 50};
+
+    // Init A
+    nbt::ByteArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Init B
+    nbt::ByteArrayTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue().size(), 0);
+
+    // Test Copy Assignment
+    tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(tagA.getValue().begin(), tagA.getValue().end()));
 }
 
 TEST(ByteArrayTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+    std::vector<char> value = {-33, -11, 0, 11, 22, 33, 55};
+
+    // Init A
+    nbt::ByteArrayTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
+
+    // Init B
+    nbt::ByteArrayTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue().size(), 0);
+
+    // Test Move Assignment
+    tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 }
 
 TEST(ByteArrayTag, clone)
