@@ -66,8 +66,8 @@ TEST(IntTag, MoveConstructor)
 
     // Test Move
     nbt::IntTag tagB(std::move(tagA));
-    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
-    EXPECT_EQ(tagB.getValue(), tagA.getValue());
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_EQ(tagB.getValue(), value);
 }
 
 TEST(IntTag, CopyAssignment)
