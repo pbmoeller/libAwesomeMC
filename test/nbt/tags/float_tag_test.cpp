@@ -40,22 +40,76 @@ TEST(FloatTag, Constructor_4)
 
 TEST(FloatTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+    float value = 1.34e4f;
+
+    // Init
+    nbt::FloatTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Test Copy
+    nbt::FloatTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(FloatTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+    float value = 1.34e-4f;
+
+    // Init
+    nbt::FloatTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Test Move
+    nbt::FloatTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_EQ(tagB.getValue(), value);
 }
 
 TEST(FloatTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+    float value = 1.34e38f;
+
+    // Init A
+    nbt::FloatTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Init B
+    nbt::FloatTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue(), 0);
+
+    // Test Copy Assignment
+    tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
 
 TEST(FloatTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+    float value = -1.34e-15f;
+
+    // Init A
+    nbt::FloatTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(tagA.getValue(), value);
+
+    // Init B
+    nbt::FloatTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_EQ(tagB.getValue(), 0);
+
+    // Test Move Assignment
+    tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_EQ(tagB.getValue(), value);
 }
 
 TEST(FloatTag, clone)

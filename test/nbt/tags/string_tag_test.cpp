@@ -32,22 +32,76 @@ TEST(StringTag, Constructor_3)
 
 TEST(StringTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+    std::string value = "Value CopyConstructor";
+
+    // Init
+    nbt::StringTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_STREQ(tagA.getValue().c_str(), value.c_str());
+
+    // Test Copy
+    nbt::StringTag tagB(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_STREQ(tagB.getValue().c_str(), tagA.getValue().c_str());
 }
 
 TEST(StringTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+    std::string value = "Value MoveConstructor";
+
+    // Init
+    nbt::StringTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_STREQ(tagA.getValue().c_str(), value.c_str());
+
+    // Test Move
+    nbt::StringTag tagB(std::move(tagA));
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_STREQ(tagB.getValue().c_str(), value.c_str());
 }
 
 TEST(StringTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+    std::string value = "Value CopyAssignment";
+
+    // Init A
+    nbt::StringTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_STREQ(tagA.getValue().c_str(), value.c_str());
+
+    // Init B
+    nbt::StringTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_STREQ(tagB.getValue().c_str(), "");
+
+    // Test Copy Assignment
+    tagB = tagA;
+    EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
+    EXPECT_STREQ(tagB.getValue().c_str(), tagA.getValue().c_str());
 }
 
 TEST(StringTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+    std::string value = "Value MoveAssignment";
+
+    // Init A
+    nbt::StringTag tagA(name, value);
+    ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
+    ASSERT_STREQ(tagA.getValue().c_str(), value.c_str());
+
+    // Init B
+    nbt::StringTag tagB;
+    ASSERT_STREQ(tagB.getName().c_str(), "");
+    ASSERT_STREQ(tagB.getValue().c_str(), "");
+
+    // Test Move Assignment
+    tagB = std::move(tagA);
+    EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
+    EXPECT_STREQ(tagB.getValue().c_str(), value.c_str());
 }
 
 TEST(StringTag, clone)
