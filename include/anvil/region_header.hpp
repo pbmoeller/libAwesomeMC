@@ -1,10 +1,11 @@
-#ifndef LIBAWESOMEANVIL_REGION_HEADER_HPP
-#define LIBAWESOMEANVIL_REGION_HEADER_HPP
+#ifndef ANVIL_REGION_HEADER_HPP
+#define ANVIL_REGION_HEADER_HPP
 
 #include "constants.hpp"
 #include "chunk_info.hpp"
 
 // STL
+#include <array>
 #include <vector>
 
 namespace anvil
@@ -16,7 +17,7 @@ public:
     RegionHeader();
     RegionHeader(const RegionHeader &other);
     RegionHeader(RegionHeader &&other) noexcept;
-    RegionHeader(const ChunkInfo (&info)[ChunkCount]);
+    RegionHeader(const std::array<ChunkInfo, ChunkCount> &info);
     virtual ~RegionHeader();
 
     RegionHeader& operator=(const RegionHeader &other);
@@ -28,17 +29,17 @@ public:
     unsigned int getRegionCount() const;
     std::vector<char> getRegionData() const;
 
-    const ChunkInfo (& getChunkInfo() const)[ChunkCount];
+    const std::array<ChunkInfo, ChunkCount>& getChunkInfo() const;
     ChunkInfo& getChunkInfoAt(unsigned int index);
     const ChunkInfo& getChunkInfoAt(unsigned int index) const;
 
-    void setChunkInfo(const ChunkInfo (&info)[ChunkCount]);
+    void setChunkInfo(const std::array<ChunkInfo, ChunkCount> &info);
     void setChunkInfoAt(unsigned int index, const ChunkInfo &info);
 
 private:
-    ChunkInfo m_info[ChunkCount];
+    std::array<ChunkInfo, ChunkCount> m_chunkInfo;
 };
 
 } // namespace anvil
 
-#endif // LIBAWESOMEANVIL_REGION_HEADER_HPP
+#endif // ANVIL_REGION_HEADER_HPP
