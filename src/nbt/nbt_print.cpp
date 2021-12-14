@@ -1,5 +1,5 @@
 #include "nbt/nbt_print.hpp"
-#include "nbt/tags.hpp"
+#include "nbt/tags/tags.hpp"
 
 // STL
 #include <string>
