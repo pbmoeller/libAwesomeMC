@@ -48,22 +48,84 @@ TEST(ListTag, Constructor_4)
 
 TEST(ListTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+
+    // Init A
+    nbt::ListTag listTagA(name, nbt::TagType::Byte);
+    listTagA.pushBack(new nbt::ByteTag("A", 1));
+    listTagA.pushBack(new nbt::ByteTag("B", 2));
+    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    ASSERT_STREQ(listTagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(3, listTagA.size());
+
+    // Test Copy Assignment
+    nbt::ListTag listTagB(listTagA);
+    EXPECT_STREQ(listTagB.getName().c_str(), listTagA.getName().c_str());
+    EXPECT_EQ(3, listTagB.size());
 }
 
 TEST(ListTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+
+    // Init A
+    nbt::ListTag listTagA(name, nbt::TagType::Byte);
+    listTagA.pushBack(new nbt::ByteTag("A", 1));
+    listTagA.pushBack(new nbt::ByteTag("B", 2));
+    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    ASSERT_STREQ(listTagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(3, listTagA.size());
+
+    // Test Copy Assignment
+    nbt::ListTag listTagB(std::move(listTagA));
+    EXPECT_STREQ(listTagB.getName().c_str(), name.c_str());
+    EXPECT_EQ(3, listTagB.size());
 }
 
 TEST(ListTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+
+    // Init A
+    nbt::ListTag listTagA(name, nbt::TagType::Byte);
+    listTagA.pushBack(new nbt::ByteTag("A", 1));
+    listTagA.pushBack(new nbt::ByteTag("B", 2));
+    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    ASSERT_STREQ(listTagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(3, listTagA.size());
+
+    // Init B
+    nbt::ListTag listTagB;
+    ASSERT_STREQ(listTagB.getName().c_str(), "");
+    ASSERT_EQ(0, listTagB.size());
+
+    // Test Copy Assignment
+    listTagB = listTagA;
+    EXPECT_STREQ(listTagB.getName().c_str(), listTagA.getName().c_str());
+    EXPECT_EQ(3, listTagB.size());
 }
 
 TEST(ListTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+
+    // Init A
+    nbt::ListTag listTagA(name, nbt::TagType::Byte);
+    listTagA.pushBack(new nbt::ByteTag("A", 1));
+    listTagA.pushBack(new nbt::ByteTag("B", 2));
+    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    ASSERT_STREQ(listTagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(3, listTagA.size());
+
+    // Init B
+    nbt::ListTag listTagB;
+    ASSERT_STREQ(listTagB.getName().c_str(), "");
+    ASSERT_EQ(0, listTagB.size());
+
+    // Test Move Assignment
+    listTagB = std::move(listTagA);
+    EXPECT_STREQ(listTagB.getName().c_str(), name.c_str());
+    EXPECT_EQ(3, listTagB.size());
 }
 
 TEST(ListTag, clone)

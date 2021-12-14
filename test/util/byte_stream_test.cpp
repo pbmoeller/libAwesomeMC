@@ -375,7 +375,19 @@ TEST(ByteStream, vbuf)
 
 TEST(ByteStream, streamOperator_in_char)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    util::ByteStream byteStream;
+    ASSERT_EQ(0, byteStream.size());
+    ASSERT_EQ(0, byteStream.getPosition());
+    byteStream << static_cast<char>(0xAB);
+    EXPECT_EQ(1, byteStream.size());
+    EXPECT_EQ(1, byteStream.getPosition());
+    byteStream << static_cast<char>(0x34);
+    EXPECT_EQ(2, byteStream.size());
+    EXPECT_EQ(2, byteStream.getPosition());
+
+    std::vector<unsigned char> data = byteStream.vbuf();
+    EXPECT_EQ(0xAB, data[0]);
+    EXPECT_EQ(0x34, data[1]);
 }
 
 TEST(ByteStream, streamOperator_in_int8)
@@ -504,7 +516,39 @@ TEST(ByteStream, streamOperator_in_vector)
 
 TEST(ByteStream, streamOperator_out_char)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Definitions
+    size_t ret      = 0;
+    char value1     = -67;
+    char value2     = 117;
+    char value1_out = 0;
+    char value2_out = 0;
+    char value3_out = 0;
+
+    // Init
+    util::ByteStream byteStream;
+    byteStream << value1;
+    byteStream << value2;
+    ASSERT_EQ(2, byteStream.size());
+    ASSERT_EQ(2, byteStream.getPosition());
+    byteStream.reset();
+
+    // Read 1
+    EXPECT_EQ(2, byteStream.availableBytes());
+    ret = byteStream >> value1_out;
+    EXPECT_EQ(util::ByteStream::Success, ret);
+    EXPECT_EQ(value1, value1_out);
+
+    // Read 2
+    EXPECT_EQ(1, byteStream.availableBytes());
+    ret = byteStream >> value2_out;
+    EXPECT_EQ(util::ByteStream::Success, ret);
+    EXPECT_EQ(value2, value2_out);
+
+    // Read Invalid
+    EXPECT_EQ(0, byteStream.availableBytes());
+    ret = byteStream >> value3_out;
+    EXPECT_EQ(util::ByteStream::EndOfStream, ret);
+    EXPECT_EQ(0, value3_out);
 }
 
 TEST(ByteStream, streamOperator_out_int8)

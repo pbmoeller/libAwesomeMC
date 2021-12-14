@@ -2,6 +2,8 @@
 #include "nbt/tags/end_tag.hpp"
 #include "nbt/tags/byte_tag.hpp"
 #include "nbt/tags/int_tag.hpp"
+#include "nbt/tags/float_tag.hpp"
+#include "nbt/tags/double_tag.hpp"
 #include "nbt/tags/string_tag.hpp"
 
 // gtest
@@ -30,27 +32,115 @@ TEST(CompoundTag, Constructor_2)
 
 TEST(CompoundTag, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyConstructor";
+
+    // Init A
+    nbt::CompoundTag compoundTagA(name);
+    compoundTagA.pushBack(new nbt::IntTag("A", 1));
+    compoundTagA.pushBack(new nbt::FloatTag("B", 2.5f));
+    compoundTagA.pushBack(new nbt::StringTag("C", "Hallo"));
+    ASSERT_STREQ(compoundTagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(3, compoundTagA.size());
+
+    // Test Copy Constructor
+    nbt::CompoundTag compoundTagB(compoundTagA);
+    EXPECT_STREQ(compoundTagB.getName().c_str(), name.c_str());
+    EXPECT_STREQ(compoundTagB.getName().c_str(), compoundTagA.getName().c_str());
+    EXPECT_EQ(3, compoundTagB.size());
+    EXPECT_EQ(compoundTagB.size(), compoundTagA.size());
+
+    EXPECT_EQ(compoundTagB.at(0)->getType(), nbt::TagType::Int);
+    EXPECT_EQ(compoundTagB.at(1)->getType(), nbt::TagType::Float);
+    EXPECT_EQ(compoundTagB.at(2)->getType(), nbt::TagType::String);
+    EXPECT_STREQ(compoundTagB.at(0)->getName().c_str(), "A");
+    EXPECT_STREQ(compoundTagB.at(1)->getName().c_str(), "B");
+    EXPECT_STREQ(compoundTagB.at(2)->getName().c_str(), "C");
 }
 
 TEST(CompoundTag, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveConstructor";
+
+    // Init A
+    nbt::CompoundTag compoundTagA(name);
+    compoundTagA.pushBack(new nbt::IntTag("A", 1));
+    compoundTagA.pushBack(new nbt::FloatTag("B", 2.5f));
+    compoundTagA.pushBack(new nbt::StringTag("C", "Hallo"));
+    ASSERT_STREQ(compoundTagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(3, compoundTagA.size());
+
+    // Test Copy Constructor
+    nbt::CompoundTag compoundTagB(std::move(compoundTagA));
+    EXPECT_STREQ(compoundTagB.getName().c_str(), name.c_str());
+    EXPECT_STREQ(compoundTagA.getName().c_str(), "");
+    EXPECT_EQ(3, compoundTagB.size());
+    EXPECT_EQ(0, compoundTagA.size());
+
+    EXPECT_EQ(compoundTagB.at(0)->getType(), nbt::TagType::Int);
+    EXPECT_EQ(compoundTagB.at(1)->getType(), nbt::TagType::Float);
+    EXPECT_EQ(compoundTagB.at(2)->getType(), nbt::TagType::String);
+    EXPECT_STREQ(compoundTagB.at(0)->getName().c_str(), "A");
+    EXPECT_STREQ(compoundTagB.at(1)->getName().c_str(), "B");
+    EXPECT_STREQ(compoundTagB.at(2)->getName().c_str(), "C");
 }
 
 TEST(CompoundTag, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "CopyAssignment";
+
+    // Init A
+    nbt::CompoundTag compoundTagA(name);
+    compoundTagA.pushBack(new nbt::IntTag("A", 1));
+    compoundTagA.pushBack(new nbt::DoubleTag("B", 2.5));
+    compoundTagA.pushBack(new nbt::StringTag("C", "Hallo"));
+    ASSERT_STREQ(compoundTagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(3, compoundTagA.size());
+
+    // Test Copy Assignment
+    nbt::CompoundTag compoundTagB = compoundTagA;
+    EXPECT_STREQ(compoundTagB.getName().c_str(), name.c_str());
+    EXPECT_STREQ(compoundTagB.getName().c_str(), compoundTagA.getName().c_str());
+    EXPECT_EQ(3, compoundTagB.size());
+    EXPECT_EQ(compoundTagB.size(), compoundTagA.size());
+
+    EXPECT_EQ(compoundTagB.at(0)->getType(), nbt::TagType::Int);
+    EXPECT_EQ(compoundTagB.at(1)->getType(), nbt::TagType::Double);
+    EXPECT_EQ(compoundTagB.at(2)->getType(), nbt::TagType::String);
+    EXPECT_STREQ(compoundTagB.at(0)->getName().c_str(), "A");
+    EXPECT_STREQ(compoundTagB.at(1)->getName().c_str(), "B");
+    EXPECT_STREQ(compoundTagB.at(2)->getName().c_str(), "C");
 }
 
 TEST(CompoundTag, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string name = "MoveAssignment";
+
+    // Init A
+    nbt::CompoundTag compoundTagA(name);
+    compoundTagA.pushBack(new nbt::IntTag("A", 1));
+    compoundTagA.pushBack(new nbt::FloatTag("B", 2.5f));
+    compoundTagA.pushBack(new nbt::StringTag("C", "Hallo"));
+    ASSERT_STREQ(compoundTagA.getName().c_str(), name.c_str());
+    ASSERT_EQ(3, compoundTagA.size());
+
+    // Test Move Assignment
+    nbt::CompoundTag compoundTagB = std::move(compoundTagA);
+    EXPECT_STREQ(compoundTagB.getName().c_str(), name.c_str());
+    EXPECT_STREQ(compoundTagA.getName().c_str(), "");
+    EXPECT_EQ(3, compoundTagB.size());
+    EXPECT_EQ(0, compoundTagA.size());
+
+    EXPECT_EQ(compoundTagB.at(0)->getType(), nbt::TagType::Int);
+    EXPECT_EQ(compoundTagB.at(1)->getType(), nbt::TagType::Float);
+    EXPECT_EQ(compoundTagB.at(2)->getType(), nbt::TagType::String);
+    EXPECT_STREQ(compoundTagB.at(0)->getName().c_str(), "A");
+    EXPECT_STREQ(compoundTagB.at(1)->getName().c_str(), "B");
+    EXPECT_STREQ(compoundTagB.at(2)->getName().c_str(), "C");
 }
 
 TEST(CompoundTag, clone)
 {
-    // Init List A
+    // Init A
     nbt::CompoundTag compoundTagA;
 
     compoundTagA.pushBack(new nbt::IntTag("A", 1));
@@ -65,7 +155,7 @@ TEST(CompoundTag, clone)
 
 TEST(CompoundTag, Equal)
 {
-    // Init List A
+    // Init A
     nbt::CompoundTag compoundTagA;
 
     compoundTagA.pushBack(new nbt::ByteTag("A", 1));
@@ -73,7 +163,7 @@ TEST(CompoundTag, Equal)
     compoundTagA.pushBack(new nbt::ByteTag("C", 3));
     ASSERT_EQ(3, compoundTagA.size());
 
-    // Init List B
+    // Init B
     nbt::CompoundTag compoundTagB;
 
     compoundTagB.pushBack(new nbt::ByteTag("A", 1));
