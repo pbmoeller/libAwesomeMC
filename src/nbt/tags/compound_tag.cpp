@@ -22,7 +22,7 @@ CompoundTag::CompoundTag(const CompoundTag &other)
 }
 
 CompoundTag::CompoundTag(CompoundTag &&other) noexcept
-    : AbstractTag(other.m_name)
+    : AbstractTag(std::move(other.m_name))
     , m_value{std::move(other.m_value)}
 {
 
