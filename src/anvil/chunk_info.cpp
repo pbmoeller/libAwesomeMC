@@ -57,10 +57,10 @@ ChunkInfo& ChunkInfo::operator=(const ChunkInfo &other)
 ChunkInfo& ChunkInfo::operator=(ChunkInfo &&other) noexcept
 {
     if(this != &other) {
-        m_offset        = other.m_offset;
-        m_length        = other.m_length;
-        m_timestamp     = other.m_timestamp;
-        m_compression   = other.m_compression;
+        m_offset        = std::move(other.m_offset);
+        m_length        = std::move(other.m_length);
+        m_timestamp     = std::move(other.m_timestamp);
+        m_compression   = std::move(other.m_compression);
     }
 
     return *this;
