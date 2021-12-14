@@ -1,5 +1,5 @@
 #include "nbt/nbt_read.hpp"
-#include "nbt/tags.hpp"
+#include "nbt/tags/tags.hpp"
 #include "util/byte_stream.hpp"
 #include "util/compression.hpp"
 
@@ -38,7 +38,7 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
     }
 }
 
-AbstractTag* readNbtData(const std::vector<unsigned char> &data)
+CompoundTag* readNbtData(const std::vector<unsigned char> &data)
 {
     CompoundTag *root = nullptr;
 

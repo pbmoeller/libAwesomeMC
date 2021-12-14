@@ -20,7 +20,7 @@ class CompoundTag;
 std::vector<unsigned char> loadNbtData(const std::string &filename, 
                                        bool isCompressed);
 
-AbstractTag* readNbtData(const std::vector<unsigned char> &data);
+CompoundTag* readNbtData(const std::vector<unsigned char> &data);
 AbstractTag* readSubTag(util::ByteStream &stream, 
                         bool isListItem, 
                         TagType listType);
