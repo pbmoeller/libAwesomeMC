@@ -105,56 +105,127 @@ TEST(ChunkInfo, MoveAssignment)
 
 TEST(ChunkInfo, Equal)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Init
+    anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoB(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoC(346, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoD(345, 21, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoE(345, 20, 0x12345679, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoF(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::GZip);
+    anvil::ChunkInfo chunkInfoG;
+
+    // Check
+    EXPECT_TRUE(chunkInfoA == chunkInfoB);
+    EXPECT_FALSE(chunkInfoA == chunkInfoC);
+    EXPECT_FALSE(chunkInfoA == chunkInfoD);
+    EXPECT_FALSE(chunkInfoA == chunkInfoE);
+    EXPECT_FALSE(chunkInfoA == chunkInfoF);
+    EXPECT_FALSE(chunkInfoA == chunkInfoG);
 }
 
 TEST(ChunkInfo, NotEqual)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Init
+    anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoB(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoC(346, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoD(345, 21, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoE(345, 20, 0x12345679, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoF(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::GZip);
+    anvil::ChunkInfo chunkInfoG;
+
+    // Check
+    EXPECT_FALSE(chunkInfoA != chunkInfoB);
+    EXPECT_TRUE(chunkInfoA != chunkInfoC);
+    EXPECT_TRUE(chunkInfoA != chunkInfoD);
+    EXPECT_TRUE(chunkInfoA != chunkInfoE);
+    EXPECT_TRUE(chunkInfoA != chunkInfoF);
+    EXPECT_TRUE(chunkInfoA != chunkInfoG);
 }
 
 TEST(ChunkInfo, isEmpty)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoB(0, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoC;
+
+    EXPECT_FALSE(chunkInfoA.isEmpty());
+    EXPECT_TRUE(chunkInfoB.isEmpty());
+    EXPECT_TRUE(chunkInfoC.isEmpty());
 }
 
 TEST(ChunkInfo, getOffset)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoB(0, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoC;
+
+    EXPECT_EQ(chunkInfoA.getOffset(), 345);
+    EXPECT_EQ(chunkInfoB.getOffset(), 0);
+    EXPECT_EQ(chunkInfoC.getOffset(), 0);
 }
 
 TEST(ChunkInfo, setOffset)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfo;
+    ASSERT_EQ(chunkInfo.getOffset(), 0);
+    chunkInfo.setOffset(8);
+    EXPECT_EQ(chunkInfo.getOffset(), 8);
 }
 
 TEST(ChunkInfo, getLength)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoB(0, 0, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoC;
+
+    EXPECT_EQ(chunkInfoA.getLength(), 20);
+    EXPECT_EQ(chunkInfoB.getLength(), 0);
+    EXPECT_EQ(chunkInfoC.getLength(), 0);
 }
 
 TEST(ChunkInfo, setLength)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfo;
+    ASSERT_EQ(chunkInfo.getLength(), 0);
+    chunkInfo.setLength(8);
+    EXPECT_EQ(chunkInfo.getLength(), 8);
 }
 
 TEST(ChunkInfo, getTimestamp)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoB(0, 0, 0, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoC;
+
+    EXPECT_EQ(chunkInfoA.getTimestamp(), 0x12345678);
+    EXPECT_EQ(chunkInfoB.getTimestamp(), 0);
+    EXPECT_EQ(chunkInfoC.getTimestamp(), 0);
 }
 
 TEST(ChunkInfo, setTimestamp)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfo;
+    ASSERT_EQ(chunkInfo.getTimestamp(), 0);
+    chunkInfo.setTimestamp(8);
+    EXPECT_EQ(chunkInfo.getTimestamp(), 8);
 }
 
 TEST(ChunkInfo, getCompression)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
+    anvil::ChunkInfo chunkInfoB(0, 0, 0, anvil::ChunkInfo::CompressionType::GZip);
+    anvil::ChunkInfo chunkInfoC;
+
+    EXPECT_EQ(chunkInfoA.getCompression(), anvil::ChunkInfo::CompressionType::Zlib);
+    EXPECT_EQ(chunkInfoB.getCompression(), anvil::ChunkInfo::CompressionType::GZip);
+    EXPECT_EQ(chunkInfoC.getCompression(), anvil::ChunkInfo::CompressionType::GZip);
 }
 
 TEST(ChunkInfo, setCompression)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    anvil::ChunkInfo chunkInfo;
+    ASSERT_EQ(chunkInfo.getCompression(), anvil::ChunkInfo::CompressionType::GZip);
+    chunkInfo.setCompression(anvil::ChunkInfo::CompressionType::Zlib);
+    EXPECT_EQ(chunkInfo.getCompression(), anvil::ChunkInfo::CompressionType::Zlib);
 }
-
