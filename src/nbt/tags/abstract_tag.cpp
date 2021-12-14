@@ -29,6 +29,12 @@ AbstractTag::AbstractTag(const std::string &name)
 
 }
 
+AbstractTag::AbstractTag(std::string &&name)
+    : m_name(std::move(name))
+{
+
+}
+
 AbstractTag::~AbstractTag()
 {
 

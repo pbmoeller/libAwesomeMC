@@ -32,6 +32,7 @@ public:
     AbstractTag(const AbstractTag &other);
     AbstractTag(AbstractTag &&other) noexcept;
     AbstractTag(const std::string &name);
+    AbstractTag(std::string &&name);
     virtual ~AbstractTag();
 
     AbstractTag& operator=(const AbstractTag &other);
