@@ -23,8 +23,8 @@ ListTag::ListTag(const ListTag &other)
 }
 
 ListTag::ListTag(ListTag &&other) noexcept
-    : AbstractTag(other.m_name)
-    , m_listType{other.m_listType}
+    : AbstractTag(std::move(other.m_name))
+    , m_listType{std::move(other.m_listType)}
     , m_value{std::move(other.m_value)}
 {
     
