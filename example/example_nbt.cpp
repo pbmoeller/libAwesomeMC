@@ -1,4 +1,4 @@
-#include "nbt/tags.hpp"
+#include "nbt/tags/tags.hpp"
 #include "nbt/nbt_read.hpp"
 #include "nbt/nbt_print.hpp"
 #include "nbt/nbt_read.hpp"
@@ -10,23 +10,31 @@
 #include <fstream>
 #include <iostream>
 
-int main(int agrc, char **argv)
+int main(int argc, char **argv)
 {
-    std::string file1 = R"(..\..\..\data\nbt\hello_world.nbt)";
-    std::vector<unsigned char> data1 = nbt::loadNbtData(file1, false);
+    bool compressed = false;
+    std::string file;;
+
+    if(argc < 3) {
+        std::cout << "Usage: "
+                  << "example_nbt.exe <filename> <compressed>\n"
+                  << "\t filename : path"
+                  << "\t compressed : [1 | 0]" << std::endl;
+
+        file = R"(E:\Coding\Projects\Minecraft\libAwesomeMC\data\world\Forge_BOP_1_16_5\level.dat)";
+        compressed = true;
+    } else {
+        file = argv[1];
+        std::cout << argv[1] << std::endl;
+        std::cout << argv[2] << std::endl;
+        compressed = (std::atoi(argv[2]) == 1);
+    }
+
+    std::vector<unsigned char> data1 = nbt::loadNbtData(file, compressed);
     nbt::AbstractTag *tag1 = nbt::readNbtData(data1);
 
     std::cout << "\n===\n"
         << nbt::printNbtData(tag1)
-        << "===\n" << std::endl;
-
-
-    std::string file2 = R"(..\..\..\data\nbt\bigtest.nbt)";
-    std::vector<unsigned char> data2 = nbt::loadNbtData(file2, true);
-    nbt::AbstractTag *tag2 = nbt::readNbtData(data2);
-
-    std::cout << "\n===\n"
-        << nbt::printNbtData(tag2)
         << "===\n" << std::endl;
 
     return 0;

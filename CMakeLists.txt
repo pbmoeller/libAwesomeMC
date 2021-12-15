@@ -17,10 +17,11 @@ find_package(ZLIB REQUIRED)
 # anvil
 set(ANVIL_INCLUDES
     "include/anvil/chunk_info.hpp"
-    "include/anvil/chunk_tag.hpp"
+    "include/anvil/chunk.hpp"
     "include/anvil/constants.hpp"
     "include/anvil/region.hpp"
     "include/anvil/region_header.hpp"
+    "include/anvil/anvil_read.hpp"
 )
 
 # nbt
@@ -39,24 +40,27 @@ set(NBT_INCLUDES
     "include/nbt/tags/long_tag.hpp"
     "include/nbt/tags/short_tag.hpp"
     "include/nbt/tags/string_tag.hpp"
-    "include/nbt/tags.hpp"
+    "include/nbt/tags/tags.hpp"
     "include/nbt/nbt_read.hpp"
-    "include/nbt/nbt_print.hpp")
+    "include/nbt/nbt_print.hpp"
+)
 
 # util
 set(UTIL_INCLUDES
     "include/util/byte_stream.hpp"
     "include/util/byte_swap.hpp"
     "include/util/compression.hpp"
-    "include/util/floating_point.hpp")
+    "include/util/floating_point.hpp"
+)
 
 ### Sources
 # anvil
 set(ANVIL_SOURCES
     "src/anvil/chunk_info.cpp"
-    "src/anvil/chunk_tag.cpp"
+    "src/anvil/chunk.cpp"
     "src/anvil/region.cpp"
     "src/anvil/region_header.cpp"
+    "src/anvil/anvil_read.cpp"
 )
 
 # nbt
@@ -76,7 +80,8 @@ set(NBT_SOURCES
     "src/nbt/tags/short_tag.cpp"
     "src/nbt/tags/string_tag.cpp"
     "src/nbt/nbt_read.cpp"
-    "src/nbt/nbt_print.cpp")
+    "src/nbt/nbt_print.cpp"
+ )
 
 # util
 set(UTIL_SOURCES
@@ -125,6 +130,14 @@ if(build_examples)
     )
     target_link_libraries(example_nbt AwesomeAnvil)
     set_property(TARGET example_nbt PROPERTY CXX_STANDARD 20)
+# example 3
+    add_executable(example_anvil "example/example_anvil.cpp")
+    target_include_directories(example_anvil
+        PRIVATE ${ZLIB_INCLUDE_DIRS}
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+    target_link_libraries(example_anvil AwesomeAnvil)
+    set_property(TARGET example_anvil PROPERTY CXX_STANDARD 20)
 endif()
 
 # tests
@@ -147,6 +160,7 @@ if(build_tests)
         "test/nbt/tags/long_array_tag_test.cpp"
         "test/nbt/tags/compound_tag_test.cpp"
         "test/anvil/region_test.cpp"
+        "test/anvil/region_header_test.cpp"
         "test/anvil/chunk_info_test.cpp"
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"

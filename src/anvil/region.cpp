@@ -30,16 +30,6 @@ Region::Region(Region &&other) noexcept
     *this = std::move(other);
 }
 
-Region::Region(int x, int z, const RegionHeader &header, const ChunkTag(&tags)[ChunkCount])
-    : m_x{x}
-    , m_z{z}
-    , m_header{header}
-{
-    for(unsigned int i = 0; i < ChunkCount; ++i) {
-        m_tags[i] = tags[i];
-    }
-}
-
 Region::~Region()
 {
 
@@ -48,11 +38,12 @@ Region::~Region()
 Region& Region::operator=(const Region &other)
 {
     if(this != &other) {
-        m_x = other.m_x;
-        m_z = other.m_z;
-        m_header = other.m_header;
+        m_x             = other.m_x;
+        m_z             = other.m_z;
+        m_regionHeader  = other.m_regionHeader;
+
         for(unsigned int i = 0; i < ChunkCount; ++i) {
-            m_tags[i] = other.m_tags[i];
+            m_chunks[i] = other.m_chunks[i];
         }
     }
     return *this;
@@ -61,11 +52,12 @@ Region& Region::operator=(const Region &other)
 Region& Region::operator=(Region &&other) noexcept
 {
     if(this != &other) {
-        m_x = other.m_x;
-        m_z = other.m_z;
-        m_header = other.m_header;
+        m_x             = other.m_x;
+        m_z             = other.m_z;
+        m_regionHeader  = std::move(other.m_regionHeader);
+
         for(unsigned int i = 0; i < ChunkCount; ++i) {
-            m_tags[i] = other.m_tags[i];
+            m_chunks[i] = std::move(other.m_chunks[i]);
         }
     }
     return *this;
@@ -79,11 +71,12 @@ bool Region::operator==(const Region &other)
 
     if(m_x != other.m_x
        || m_z != other.m_z
-       || m_header != other.m_header) {
+       || m_regionHeader != other.m_regionHeader) {
         return false;
     }
+
     for(unsigned int i = 0; i < ChunkCount; ++i) {
-        if(m_tags[i] != other.m_tags[i]) {
+        if(m_chunks[i] != other.m_chunks[i]) {
             return false;
         }
     }
@@ -118,24 +111,32 @@ void Region::setZ(int z)
 
 RegionHeader& Region::getRegionHeader()
 {
-    return m_header;
+    return m_regionHeader;
+}
+
+const RegionHeader& Region::getRegionHeader() const
+{
+    return m_regionHeader;
 }
 
 void Region::setRegionHeader(const RegionHeader &header)
 {
-    m_header = header;
+    m_regionHeader = header;
 }
 
-const ChunkTag (&Region::getChunkTags() const)[ChunkCount]
+const std::array<Chunk, ChunkCount>& Region::getChunks() const
 {
-    return m_tags;
+    return m_chunks;
 }
 
-void Region::setChunkTags(const ChunkTag(&tags)[ChunkCount])
+Chunk& Region::getChunkAt(unsigned int index)
 {
-    for(unsigned int i = 0; i < ChunkCount; ++i) {
-        m_tags[i] = tags[i];
-    }
+    return m_chunks[index];
+}
+
+const Chunk& Region::getChunkAt(unsigned int index) const
+{
+    return m_chunks[index];
 }
 
 } // namespace anvil
