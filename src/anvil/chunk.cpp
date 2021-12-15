@@ -1,4 +1,6 @@
 #include "anvil/chunk.hpp"
+#include "nbt/tags/list_tag.hpp"
+#include "nbt/tags/compound_tag.hpp"
 
 // STL
 #include <utility>
@@ -81,6 +83,41 @@ nbt::CompoundTag* Chunk::getRootTag()
 void Chunk::setRootTag(nbt::CompoundTag *root)
 {
     m_data = root;
+}
+
+std::vector<nbt::AbstractTag*> Chunk::getSubTagsByName(const std::string &name)
+{
+    std::vector<nbt::AbstractTag*> subTags;
+    getSubTagsByName(name, m_data, subTags);
+    return subTags;
+}
+
+std::vector<nbt::AbstractTag*> Chunk::getSubTagsByName(const std::string &name,
+                                                       nbt::AbstractTag *currentSubTag,
+                                                       std::vector<nbt::AbstractTag*> &subTags)
+{
+    // check if this sub tag matches the search name
+    if(currentSubTag->getName() == name) {
+        subTags.push_back(currentSubTag);
+    }
+
+    // iterate through child tags, if this tag is list or compound
+    switch(currentSubTag->getType()) {
+        case nbt::TagType::List:
+            nbt::ListTag *listTag = static_cast<nbt::ListTag*>(currentSubTag);
+            for(unsigned int i = 0; i < listTag->size(); ++i) {
+                getSubTagsByName(name, listTag->at(i), subTags);
+            }
+            break;
+        case nbt::TagType::Compound:
+            nbt::CompoundTag *compoundTag = static_cast<nbt::CompoundTag*>(currentSubTag);
+            for(unsigned int i = 0; i < compoundTag->size(); ++i) {
+                getSubTagsByName(name, compoundTag->at(i), subTags);
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 } // namespace anvil

@@ -3,6 +3,9 @@
 
 #include "nbt/tags/compound_tag.hpp"
 
+// STL
+#include <vector>
+
 namespace anvil
 {
 
@@ -25,6 +28,13 @@ public:
     nbt::CompoundTag* getRootTag();
     // !!! Do not delete or reuse the item - the chunk keeps the ownership !!!
     void setRootTag(nbt::CompoundTag *root);
+
+    std::vector<nbt::AbstractTag*> getSubTagsByName(const std::string &name);
+
+protected:
+    std::vector<nbt::AbstractTag*> getSubTagsByName(const std::string &name,
+                                                    nbt::AbstractTag *currentSubTag,
+                                                    std::vector<nbt::AbstractTag*> &subTags);
 
 private:
     nbt::CompoundTag *m_data;
