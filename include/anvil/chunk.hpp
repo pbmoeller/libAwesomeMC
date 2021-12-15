@@ -23,6 +23,7 @@ public:
     void clear();
 
     nbt::CompoundTag* getRootTag();
+    // !!! Do not delete or reuse the item - the chunk keeps the ownership !!!
     void setRootTag(nbt::CompoundTag *root);
 
 private:
