@@ -52,8 +52,8 @@ Region& Region::operator=(const Region &other)
 Region& Region::operator=(Region &&other) noexcept
 {
     if(this != &other) {
-        m_x             = other.m_x;
-        m_z             = other.m_z;
+        m_x             = std::move(other.m_x);
+        m_z             = std::move(other.m_z);
         m_regionHeader  = std::move(other.m_regionHeader);
 
         for(unsigned int i = 0; i < ChunkCount; ++i) {
