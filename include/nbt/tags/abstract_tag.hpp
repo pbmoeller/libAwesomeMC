@@ -4,10 +4,21 @@
 // STL
 #include <string>
 #include <vector>
+#include <cstdint>
 
 namespace nbt
 {
 
+// Type definitions
+using NbtByte   = int8_t;
+using NbtShort  = int16_t;
+using NbtInt    = int32_t;
+using NbtLong   = int64_t;
+using NbtFloat  = float;
+using NbtDouble = double;
+using NbtString = std::string;
+
+// Tag types to distinguish between types
 enum class TagType : unsigned char
 {
     End         = 0,
