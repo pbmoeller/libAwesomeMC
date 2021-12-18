@@ -165,7 +165,7 @@ if(build_tests)
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"
         "test/anvil/chunk_test.cpp"
-)
+    )
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
         target_link_libraries(tests pthread)
