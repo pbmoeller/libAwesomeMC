@@ -235,3 +235,13 @@ TEST(Chunk, getSubTagsByName)
     EXPECT_EQ(tags5[1], float2);
     EXPECT_EQ(tags5[2], float3);
 }
+
+TEST(Chunk, getBiomes)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(Chunk, getBiomeAt)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}

@@ -30,12 +30,15 @@ public:
     void setRootTag(nbt::CompoundTag *root);
 
     // !!! Do not delete or reuse the item - the chunk keeps the ownership !!!
-    std::vector<nbt::AbstractTag*> getSubTagsByName(const std::string &name);
+    std::vector<nbt::AbstractTag*> getSubTagsByName(const std::string &name) const;
+
+    std::vector<int32_t> getBiomes() const;
+    int32_t getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
 
 protected:
     void getSubTagsByName(const std::string &name,
                           nbt::AbstractTag *currentSubTag,
-                          std::vector<nbt::AbstractTag*> &subTags);
+                          std::vector<nbt::AbstractTag*> &subTags) const;
 
 private:
     nbt::CompoundTag *m_data;

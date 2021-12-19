@@ -2,6 +2,7 @@
 
 // STL
 #include <utility>
+#include <stdexcept>
 
 namespace anvil
 {
@@ -137,6 +138,38 @@ Chunk& Region::getChunkAt(unsigned int index)
 const Chunk& Region::getChunkAt(unsigned int index) const
 {
     return m_chunks[index];
+}
+
+std::vector<int32_t> Region::getBiomesAt(unsigned int x, unsigned int z) const
+{
+    // Check if chunk coodinates are valid
+    if(x >= ChunkWidth || z >= ChunkWidth) {
+        throw std::out_of_range("Coordinates out of range");
+    }
+
+    // Calculate the requested chunk
+    unsigned chunkIdx = z * ChunkWidth + x;
+
+    // Get data from chunk
+    return getChunkAt(chunkIdx).getBiomes();
+}
+
+int32_t Region::getBiomeAt(unsigned int x,
+                           unsigned int z, 
+                           unsigned int blockX, 
+                           int blockY, 
+                           unsigned int blockZ) const
+{
+    // Check if chunk coodinates are valid
+    if(x >= ChunkWidth || z >= ChunkWidth) {
+        throw std::out_of_range("Coordinates out of range");
+    }
+
+    // Calculate the requested chunk
+    unsigned chunkIdx = z * ChunkWidth + x;
+
+    // Get data from chunk
+    return getChunkAt(chunkIdx).getBiomeAt(blockX, blockY, blockZ);
 }
 
 } // namespace anvil

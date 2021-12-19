@@ -7,6 +7,9 @@ namespace anvil
     constexpr unsigned int BlockWidth       = 16;
     constexpr unsigned int BlockHeight      = 256;      // TODO: check value for version >= 1.18
 
+    constexpr int MinimumBlockHeight        = -64;
+    constexpr int MaximumBlockHeight        = 319;
+
     constexpr unsigned int ChunkCount       = 1024;
     constexpr unsigned int ChunkWidth       = 32;
 

@@ -1,9 +1,13 @@
 #include "anvil/chunk.hpp"
+#include "anvil/constants.hpp"
 #include "nbt/tags/list_tag.hpp"
 #include "nbt/tags/compound_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
+#include "nbt/tags/int_array_tag.hpp"
 
 // STL
 #include <utility>
+#include <stdexcept>
 
 namespace anvil
 {
@@ -82,10 +86,14 @@ nbt::CompoundTag* Chunk::getRootTag()
 
 void Chunk::setRootTag(nbt::CompoundTag *root)
 {
+    // Delete old data
+    clear();
+
+    // Set new data
     m_data = root;
 }
 
-std::vector<nbt::AbstractTag*> Chunk::getSubTagsByName(const std::string &name)
+std::vector<nbt::AbstractTag*> Chunk::getSubTagsByName(const std::string &name) const
 {
     std::vector<nbt::AbstractTag*> subTags;
     getSubTagsByName(name, m_data, subTags);
@@ -94,14 +102,14 @@ std::vector<nbt::AbstractTag*> Chunk::getSubTagsByName(const std::string &name)
 
 void Chunk::getSubTagsByName(const std::string &name,
                              nbt::AbstractTag *currentSubTag,
-                             std::vector<nbt::AbstractTag*> &subTags)
+                             std::vector<nbt::AbstractTag*> &subTags) const
 {
-    // check if this sub tag matches the search name
+    // Check if this sub tag matches the search name
     if(currentSubTag->getName() == name) {
         subTags.push_back(currentSubTag);
     }
 
-    // iterate through child tags, if this tag is list or compound
+    // Iterate through child tags, if this tag is list or compound
     switch(currentSubTag->getType()) {
         case nbt::TagType::List:
         {
@@ -122,6 +130,43 @@ void Chunk::getSubTagsByName(const std::string &name,
         default:
             break;
     }
+}
+
+std::vector<int32_t> Chunk::getBiomes() const
+{
+    // Get Biomes array
+    std::vector<nbt::AbstractTag*> biomesArray = getSubTagsByName("Biomes");
+
+    // If Biomes array is empty return empty list.
+    if(biomesArray.empty()) {
+        return std::vector<int32_t>();
+    }
+
+    // Take first item (in errornous case where there are more than 1 "Biomes" sub tag in root tag)
+    return static_cast<nbt::IntArrayTag*>(biomesArray[0])->getValue();
+}
+
+int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const
+{
+    // Check ranges of block coordinates
+    if(blockX >= BlockWidth || blockZ >= BlockWidth
+       || blockY < MinimumBlockHeight || blockY > MaximumBlockHeight) {
+        throw std::out_of_range("Block Coordinates out of range");
+    }
+
+    // Get Biome Array
+    std::vector<nbt::AbstractTag*> biomesArray = getSubTagsByName("Biomes");
+
+    // If Biomes array is empty return 0.
+    if(biomesArray.empty()) {
+        return 0;
+    }
+
+    // Calculate biome index (https://minecraft.fandom.com/wiki/Java_Edition_19w36a#Additions)
+    // Values are arranged by Z, then X, then Y
+    int biomeIndex = (blockY % 4) * 4 + (blockX % 4) * 2 + (blockZ % 4);
+
+    return static_cast<nbt::IntArrayTag*>(biomesArray[0])->at(biomeIndex);
 }
 
 } // namespace anvil
