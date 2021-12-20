@@ -159,12 +159,13 @@ if(build_tests)
         "test/nbt/tags/int_array_tag_test.cpp"
         "test/nbt/tags/long_array_tag_test.cpp"
         "test/nbt/tags/compound_tag_test.cpp"
+        "test/nbt/nbt_read_test.cpp"
         "test/anvil/region_test.cpp"
         "test/anvil/region_header_test.cpp"
         "test/anvil/chunk_info_test.cpp"
+        "test/anvil/chunk_test.cpp"
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"
-        "test/anvil/chunk_test.cpp"
     )
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
