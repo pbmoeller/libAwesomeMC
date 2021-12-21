@@ -184,6 +184,13 @@ const AbstractTag* ListTag::at(size_t index) const
     return m_value.at(index);
 }
 
+AbstractTag* ListTag::takeAt(size_t index)
+{
+    AbstractTag *tag = at(index);
+    m_value.erase(m_value.begin() + index);
+    return tag;
+}
+
 std::vector<AbstractTag*>& ListTag::getValue()
 {
     return m_value;

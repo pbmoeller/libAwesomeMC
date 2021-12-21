@@ -1,6 +1,8 @@
 #include "nbt/tags/list_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
 #include "nbt/tags/byte_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
+#include "nbt/tags/float_tag.hpp"
 #include "nbt/tags/long_tag.hpp"
 #include "util/byte_swap.hpp"
 
@@ -451,6 +453,32 @@ TEST(ListTag, at_const)
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
     EXPECT_TRUE(*c == *v3);
+}
+
+TEST(ListTag, takeAt)
+{
+    nbt::ListTag listTag(nbt::TagType::Float);
+
+    nbt::FloatTag *a = new nbt::FloatTag("A", 1.4f);
+    nbt::FloatTag *b = new nbt::FloatTag("B", 2000.6f);
+    nbt::FloatTag *c = new nbt::FloatTag("C", 3.f);
+
+    // Add 3 Items
+    listTag.pushBack(a);
+    listTag.pushBack(b);
+    listTag.pushBack(c);
+    ASSERT_EQ(3, listTag.size());
+
+    // Test
+    nbt::AbstractTag *bTest = listTag.takeAt(1);
+    EXPECT_EQ(2, listTag.size());
+    EXPECT_EQ(b, bTest);
+    nbt::AbstractTag *aTest = listTag.takeAt(0);
+    EXPECT_EQ(1, listTag.size());
+    EXPECT_EQ(a, aTest);
+    nbt::AbstractTag *cTest = listTag.takeAt(0);
+    EXPECT_EQ(0, listTag.size());
+    EXPECT_EQ(c, cTest);
 }
 
 TEST(ListTag, getValue)

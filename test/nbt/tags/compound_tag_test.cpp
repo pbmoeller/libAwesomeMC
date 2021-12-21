@@ -443,6 +443,32 @@ TEST(CompoundTag, at_const)
     EXPECT_TRUE(*c == *v3);
 }
 
+TEST(CompoundTag, takeAt)
+{
+    nbt::CompoundTag compoundTag;
+
+    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
+    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
+    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+
+    // Add 3 Items
+    compoundTag.pushBack(a);
+    compoundTag.pushBack(b);
+    compoundTag.pushBack(c);
+    ASSERT_EQ(3, compoundTag.size());
+
+    // Test
+    nbt::AbstractTag *bTest = compoundTag.takeAt(1);
+    EXPECT_EQ(2, compoundTag.size());
+    EXPECT_EQ(b, bTest);
+    nbt::AbstractTag *aTest = compoundTag.takeAt(0);
+    EXPECT_EQ(1, compoundTag.size());
+    EXPECT_EQ(a, aTest);
+    nbt::AbstractTag *cTest = compoundTag.takeAt(0);
+    EXPECT_EQ(0, compoundTag.size());
+    EXPECT_EQ(c, cTest);
+}
+
 TEST(CompoundTag, getValue)
 {
     nbt::CompoundTag compoundTag;

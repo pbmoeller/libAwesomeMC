@@ -44,6 +44,8 @@ public:
     AbstractTag* at(size_t index);
     // !!! Do not delete these items - the list keeps the ownership !!!
     const AbstractTag* at(size_t index) const;
+    // !!! This functions removes the item from CompoundTag - transfers ownership !!!
+    AbstractTag* takeAt(size_t index);
 
     // !!! Do not delete these items - the list keeps the ownership 
     //     -> use getValueCopy, if you want to modify the data !!!

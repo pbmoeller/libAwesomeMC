@@ -157,6 +157,13 @@ const AbstractTag* CompoundTag::at(size_t index) const
     return m_value.at(index);
 }
 
+AbstractTag* CompoundTag::takeAt(size_t index)
+{
+    AbstractTag *tag = at(index);
+    m_value.erase(m_value.begin() + index);
+    return tag;
+}
+
 std::vector<AbstractTag*>& CompoundTag::getValue()
 {
     return m_value;
