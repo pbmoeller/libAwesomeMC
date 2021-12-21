@@ -44,6 +44,10 @@ public:
     // !!! This functions removes the item from CompoundTag - transfers ownership !!!
     AbstractTag* takeAt(size_t index);
 
+    AbstractTag* getChildByName(const std::string &name);
+    const AbstractTag* getChildByName(const std::string &name) const;
+    std::vector<AbstractTag*> getChildrenByName(const std::string &name) const;
+
     // !!! Do not delete these items - the CompoundTag keeps the ownership 
     //     -> use getValueCopy, if you want to modify the data !!!
     std::vector<AbstractTag*>& getValue();

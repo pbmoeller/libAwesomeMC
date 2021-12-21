@@ -164,6 +164,37 @@ AbstractTag* CompoundTag::takeAt(size_t index)
     return tag;
 }
 
+AbstractTag* CompoundTag::getChildByName(const std::string &name)
+{
+    for(AbstractTag *tag : m_value) {
+        if(tag->getName() == name) {
+            return tag;
+        }
+    }
+    return nullptr;
+}
+
+const AbstractTag* CompoundTag::getChildByName(const std::string &name) const
+{
+    for(const AbstractTag *tag : m_value) {
+        if(tag->getName() == name) {
+            return tag;
+        }
+    }
+    return nullptr;
+}
+
+std::vector<AbstractTag*> CompoundTag::getChildrenByName(const std::string &name) const
+{
+    std::vector<AbstractTag*> vec;
+    for(AbstractTag *tag : m_value) {
+        if(tag->getName() == name) {
+            vec.push_back(tag);
+        }
+    }
+    return vec;
+}
+
 std::vector<AbstractTag*>& CompoundTag::getValue()
 {
     return m_value;

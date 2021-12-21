@@ -469,6 +469,100 @@ TEST(CompoundTag, takeAt)
     EXPECT_EQ(c, cTest);
 }
 
+TEST(CompoundTag, getChildByName)
+{
+    nbt::CompoundTag compoundTag;
+
+    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
+    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
+    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+
+    // Add 3 Items
+    compoundTag.pushBack(a);
+    compoundTag.pushBack(b);
+    compoundTag.pushBack(c);
+    ASSERT_EQ(3, compoundTag.size());
+
+    // Test
+    nbt::AbstractTag *aTest = compoundTag.getChildByName("A");
+    EXPECT_EQ(3, compoundTag.size());
+    EXPECT_EQ(a, aTest);
+    nbt::AbstractTag *bTest = compoundTag.getChildByName("B");
+    EXPECT_EQ(3, compoundTag.size());
+    EXPECT_EQ(b, bTest);
+    nbt::AbstractTag *cTest = compoundTag.getChildByName("C");
+    EXPECT_EQ(3, compoundTag.size());
+    EXPECT_EQ(c, cTest);
+    nbt::AbstractTag *dTest = compoundTag.getChildByName("D");
+    EXPECT_EQ(3, compoundTag.size());
+    EXPECT_EQ(nullptr, dTest);
+}
+
+TEST(CompoundTag, getChildByName_const)
+{
+    nbt::CompoundTag compoundTag;
+
+    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
+    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
+    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+
+    // Add 3 Items
+    compoundTag.pushBack(a);
+    compoundTag.pushBack(b);
+    compoundTag.pushBack(c);
+    ASSERT_EQ(3, compoundTag.size());
+
+    // Test
+    const nbt::CompoundTag *testTag = &compoundTag;
+    const nbt::AbstractTag *aTest = testTag->getChildByName("A");
+    EXPECT_EQ(3, testTag->size());
+    EXPECT_EQ(a, aTest);
+    const nbt::AbstractTag *bTest = testTag->getChildByName("B");
+    EXPECT_EQ(3, testTag->size());
+    EXPECT_EQ(b, bTest);
+    const nbt::AbstractTag *cTest = testTag->getChildByName("C");
+    EXPECT_EQ(3, testTag->size());
+    EXPECT_EQ(c, cTest);
+    const nbt::AbstractTag *dTest = testTag->getChildByName("D");
+    EXPECT_EQ(3, testTag->size());
+    EXPECT_EQ(nullptr, dTest);
+}
+
+TEST(CompoundTag, getChildrenByName)
+{
+    nbt::CompoundTag compoundTag;
+
+    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
+    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
+    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+    nbt::FloatTag *d    = new nbt::FloatTag("C", 35.f);
+
+    // Add 3 Items
+    compoundTag.pushBack(a);
+    compoundTag.pushBack(b);
+    compoundTag.pushBack(c);
+    compoundTag.pushBack(d);
+    ASSERT_EQ(4, compoundTag.size());
+
+    // Test
+    std::vector<nbt::AbstractTag*> aTest = compoundTag.getChildrenByName("A");
+    EXPECT_EQ(4, compoundTag.size());
+    EXPECT_EQ(1, aTest.size());
+    EXPECT_EQ(a, aTest[0]);
+    std::vector<nbt::AbstractTag*> bTest = compoundTag.getChildrenByName("B");
+    EXPECT_EQ(4, compoundTag.size());
+    EXPECT_EQ(1, bTest.size());
+    EXPECT_EQ(b, bTest[0]);
+    std::vector<nbt::AbstractTag*> cTest = compoundTag.getChildrenByName("C");
+    EXPECT_EQ(4, compoundTag.size());
+    EXPECT_EQ(2, cTest.size());
+    EXPECT_EQ(c, cTest[0]);
+    EXPECT_EQ(d, cTest[1]);
+    std::vector<nbt::AbstractTag*> dTest = compoundTag.getChildrenByName("D");
+    EXPECT_EQ(4, compoundTag.size());
+    EXPECT_EQ(0, dTest.size());
+}
+
 TEST(CompoundTag, getValue)
 {
     nbt::CompoundTag compoundTag;
