@@ -42,7 +42,7 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
 {
     CompoundTag *root = nullptr;
 
-    // Inii the ByteStream object.
+    // Init the ByteStream object.
     util::ByteStream byteStream(data);
     byteStream.setSwap(util::ByteStream::Swap::SwapEndian);
 
