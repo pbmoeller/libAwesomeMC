@@ -1,6 +1,8 @@
 #include "nbt/tags/list_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
 #include "nbt/tags/byte_tag.hpp"
+#include "nbt/tags/long_tag.hpp"
+#include "util/byte_swap.hpp"
 
 // gtest
 #include <gtest/gtest.h>
@@ -227,7 +229,32 @@ TEST(ListTag, getListType)
 
 TEST(ListTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x09, 0x00, 0x0F, 0x6C, 0x69, 0x73, 0x74, 0x54,
+        0x65, 0x73, 0x74, 0x20, 0x28, 0x6C, 0x6F, 0x6E,
+        0x67, 0x29, 0x04, 0x00, 0x00, 0x00, 0x05, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0B, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0C, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0D, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0E, 0x00,
+        0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F
+    };
+
+    nbt::ListTag listTag("listTest (long)", nbt::TagType::Long);
+    listTag.pushBack(new nbt::LongTag(11));
+    listTag.pushBack(new nbt::LongTag(12));
+    listTag.pushBack(new nbt::LongTag(13));
+    listTag.pushBack(new nbt::LongTag(14));
+    listTag.pushBack(new nbt::LongTag(15));
+
+    std::vector<unsigned char> data = listTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = listTag.getData(true);
+    EXPECT_EQ(45, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 18, testData.end()));
 }
 
 TEST(ListTag, isEmpty)

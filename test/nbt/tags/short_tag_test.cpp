@@ -3,6 +3,7 @@
 
 // gtest
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 TEST(ShortTag, Constructor)
 {
@@ -168,7 +169,20 @@ TEST(ShortTag, getType)
 
 TEST(ShortTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x02, 0x00, 0x09, 0x73, 0x68, 0x6F, 0x72, 0x74,
+        0x54, 0x65, 0x73, 0x74, 0x7F, 0xFF
+    };
+
+    nbt::ShortTag shortTag("shortTest", 32767);
+    std::vector<unsigned char> data = shortTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = shortTag.getData(true);
+    EXPECT_EQ(2, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 12, testData.end()));
 }
 
 TEST(ShortTag, getValue)

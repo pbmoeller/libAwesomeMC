@@ -179,7 +179,21 @@ TEST(ByteArrayTag, getType)
 
 TEST(ByteArrayTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x07, 0x00, 0x0C, 0x62, 0x79, 0x74, 0x65, 0x41, 
+        0x72, 0x72, 0x61, 0x79, 0x54, 0x61, 0x67, 0x00, 
+        0x00, 0x00, 0x05, 0x80, 0xFB, 0x00, 0x05, 0x7F
+    };
+
+    nbt::ByteArrayTag byteArrayTag("byteArrayTag", std::vector<char>({-128, -5, 0, 5, 127}));
+    std::vector<unsigned char> data = byteArrayTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = byteArrayTag.getData(true);
+    EXPECT_EQ(9, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 15, testData.end()));
 }
 
 TEST(ByteArrayTag, isEmpty)

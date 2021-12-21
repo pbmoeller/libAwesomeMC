@@ -179,7 +179,22 @@ TEST(IntArrayTag, getType)
 
 TEST(IntArrayTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x0B, 0x00, 0x0B, 0x69, 0x6E, 0x74, 0x41, 0x72, 
+        0x72, 0x61, 0x79, 0x54, 0x61, 0x67, 0x00, 0x00, 
+        0x00, 0x03, 0xFF, 0xFF, 0xEE, 0x29, 0x00, 0x00,
+        0x00, 0x0C, 0x00, 0x00, 0xB2, 0xDD
+    };
+
+    nbt::IntArrayTag intArrayTag("intArrayTag", std::vector<int32_t>({-4567, 12, 45789}));
+    std::vector<unsigned char> data = intArrayTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = intArrayTag.getData(true);
+    EXPECT_EQ(16, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 14, testData.end()));
 }
 
 TEST(IntArrayTag, isEmpty)

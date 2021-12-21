@@ -3,6 +3,7 @@
 
 // gtest
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 TEST(FloatTag, Constructor)
 {
@@ -168,7 +169,20 @@ TEST(FloatTag, getType)
 
 TEST(FloatTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x05, 0x00, 0x09, 0x66, 0x6C, 0x6F, 0x61, 0x74,
+        0x54, 0x65, 0x73, 0x74, 0x3E, 0xFF, 0x18, 0x32
+    };
+
+    nbt::FloatTag floatTag("floatTest", 0.498231471f);
+    std::vector<unsigned char> data = floatTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = floatTag.getData(true);
+    EXPECT_EQ(4, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 12, testData.end()));
 }
 
 TEST(FloatTag, getValue)

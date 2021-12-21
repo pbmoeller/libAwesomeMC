@@ -1,5 +1,6 @@
 #include "nbt/tags/long_array_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
+#include "util/byte_swap.hpp"
 
 // gtest
 #include <gtest/gtest.h>
@@ -179,7 +180,24 @@ TEST(LongArrayTag, getType)
 
 TEST(LongArrayTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x0C, 0x00, 0x0C, 0x6C, 0x6F, 0x6E, 0x67, 0x41,
+        0x72, 0x72, 0x61, 0x79, 0x54, 0x61, 0x67, 0x00,
+        0x00, 0x00, 0x03, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+        0xF0, 0xBD, 0xBF, 0x00, 0x00, 0x00, 0x00, 0x00,
+        0x00, 0x00, 0x04, 0x00, 0x00, 0x00, 0x00, 0x07,
+        0x5B, 0xCD, 0x15
+    };
+
+    nbt::LongArrayTag longArrayTag("longArrayTag", std::vector<int64_t>({-1000001, 4, 123456789}));
+    std::vector<unsigned char> data = longArrayTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = longArrayTag.getData(true);
+    EXPECT_EQ(28, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 15, testData.end()));
 }
 
 TEST(LongArrayTag, isEmpty)

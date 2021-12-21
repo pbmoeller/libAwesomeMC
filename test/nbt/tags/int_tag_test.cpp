@@ -3,6 +3,7 @@
 
 // gtest
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 TEST(IntTag, Constructor)
 {
@@ -168,7 +169,20 @@ TEST(IntTag, getType)
 
 TEST(IntTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x03, 0x00, 0x07, 0x69, 0x6E, 0x74, 0x54, 0x65,
+        0x73, 0x74, 0x7F, 0xFF, 0xFF, 0xFF
+    };
+
+    nbt::IntTag intTag("intTest", 2147483647);
+    std::vector<unsigned char> data = intTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = intTag.getData(true);
+    EXPECT_EQ(4, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 10, testData.end()));
 }
 
 TEST(IntTag, getValue)

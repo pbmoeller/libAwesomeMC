@@ -3,6 +3,7 @@
 
 // gtest
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 TEST(StringTag, Constructor)
 {
@@ -160,7 +161,25 @@ TEST(StringTag, getType)
 
 TEST(StringTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x08, 0x00, 0x0A, 0x73, 0x74, 0x72, 0x69, 0x6E,
+        0x67, 0x54, 0x65, 0x73, 0x74, 0x00, 0x22, 0x48,
+        0x45, 0x4C, 0x4C, 0x4F, 0x20, 0x57, 0x4F, 0x52,
+        0x4C, 0x44, 0x20, 0x54, 0x48, 0x49, 0x53, 0x20,
+        0x49, 0x53, 0x20, 0x41, 0x20, 0x54, 0x45, 0x53,
+        0x54, 0x20, 0x53, 0x54, 0x52, 0x49, 0x4E, 0x47,
+        0x21
+    };
+
+    nbt::StringTag stringTag("stringTest", "HELLO WORLD THIS IS A TEST STRING!");
+    std::vector<unsigned char> data = stringTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = stringTag.getData(true);
+    EXPECT_EQ(36, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 13, testData.end()));
 }
 
 TEST(StringTag, getValue)

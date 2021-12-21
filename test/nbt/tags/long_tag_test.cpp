@@ -3,6 +3,7 @@
 
 // gtest
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 TEST(LongTag, Constructor)
 {
@@ -168,7 +169,21 @@ TEST(LongTag, getType)
 
 TEST(LongTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x04, 0x00, 0x08, 0x6C, 0x6F, 0x6E, 0x67, 0x54,
+        0x65, 0x73, 0x74, 0x7F, 0xFF, 0xFF, 0xFF, 0xFF, 
+        0xFF, 0xFF, 0xFF
+    };
+
+    nbt::LongTag longTag("longTest", 9223372036854775807);
+    std::vector<unsigned char> data = longTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = longTag.getData(true);
+    EXPECT_EQ(8, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 11, testData.end()));
 }
 
 TEST(LongTag, getValue)

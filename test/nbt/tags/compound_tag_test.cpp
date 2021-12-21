@@ -228,7 +228,26 @@ TEST(CompoundTag, getType)
 
 TEST(CompoundTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x0A, 0x00, 0x03, 0x65, 0x67, 0x67, 0x08, 0x00,
+        0x04, 0x6E, 0x61, 0x6D, 0x65, 0x00, 0x07, 0x45,
+        0x67, 0x67, 0x62, 0x65, 0x72, 0x74, 0x05, 0x00,
+        0x05, 0x76, 0x61, 0x6C, 0x75, 0x65, 0x3F, 0x00,
+        0x00, 0x00, 0x00
+    };
+
+    nbt::CompoundTag compoundTag("egg");
+    compoundTag.pushBack(new nbt::StringTag("name", "Eggbert"));
+    compoundTag.pushBack(new nbt::FloatTag("value", 0.5));
+
+    std::vector<unsigned char> data = compoundTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = compoundTag.getData(true);
+    EXPECT_EQ(29, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 6, testData.end()));
 }
 
 TEST(CompoundTag, isEmpty)

@@ -3,6 +3,7 @@
 
 // gtest
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 TEST(DoubleTag, Constructor)
 {
@@ -168,7 +169,21 @@ TEST(DoubleTag, getType)
 
 TEST(DoubleTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x06, 0x00, 0x0A, 0x64, 0x6F, 0x75, 0x62, 0x6C,
+        0x65, 0x54, 0x65, 0x73, 0x74, 0x3F, 0xDF, 0x8F,
+        0x6B, 0xBB, 0xFF, 0x6A, 0x5E
+    };
+
+    nbt::DoubleTag doubleTag("doubleTest", 0.49312871321823148);
+    std::vector<unsigned char> data = doubleTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = doubleTag.getData(true);
+    EXPECT_EQ(8, data2.size());
+    EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 13, testData.end()));
 }
 
 TEST(DoubleTag, getValue)

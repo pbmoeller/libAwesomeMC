@@ -3,6 +3,7 @@
 
 // gtest
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 TEST(ByteTag, Constructor)
 {
@@ -168,7 +169,19 @@ TEST(ByteTag, getType)
 
 TEST(ByteTag, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> testData = {
+        0x01, 0x00, 0x08, 0x62, 0x79, 0x74, 0x65, 0x54, 0x65, 0x73, 0x74, 0x7F
+    };
+
+    nbt::ByteTag byteTag("byteTest", 127);
+    std::vector<unsigned char> data = byteTag.getData(false);
+
+    EXPECT_EQ(data.size(), testData.size());
+    EXPECT_THAT(data, ::testing::ElementsAreArray(testData));
+
+    std::vector<unsigned char> data2 = byteTag.getData(true);
+    EXPECT_EQ(1, data2.size());
+    EXPECT_EQ(127, data2[0]);
 }
 
 TEST(ByteTag, getValue)
