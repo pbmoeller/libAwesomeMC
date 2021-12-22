@@ -187,7 +187,7 @@ TEST(nbt_read, readNbtData_complete)
     ASSERT_EQ(nbt::TagType::Compound, nestedCompoundTmp->getType());
     nbt::CompoundTag *nestedCompound = dynamic_cast<nbt::CompoundTag*>(nestedCompoundTmp);
     ASSERT_TRUE(nestedCompound != nullptr);
-    EXPECT_TRUE(2, nestedCompound.size());
+    EXPECT_EQ(2, nestedCompound->size());
 
     nbt::AbstractTag *eggTest = nestedCompound->getChildByName("egg");
     ASSERT_EQ(nbt::TagType::Compound, eggTest->getType());
