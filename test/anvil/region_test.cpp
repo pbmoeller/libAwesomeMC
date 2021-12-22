@@ -119,3 +119,8 @@ TEST(Region, getBiomeAt)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
+
+TEST(Region, getBlockAt)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}

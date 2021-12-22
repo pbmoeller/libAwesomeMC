@@ -245,3 +245,8 @@ TEST(Chunk, getBiomeAt)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
+
+TEST(Chunk, getBlockAt)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}

@@ -35,6 +35,9 @@ public:
     std::vector<int32_t> getBiomes() const;
     int32_t getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
 
+    // TODO: return value -> temporary : Change Leter to block class or sth else
+    std::string getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
+
 protected:
     void getSubTagsByName(const std::string &name,
                           nbt::AbstractTag *currentSubTag,

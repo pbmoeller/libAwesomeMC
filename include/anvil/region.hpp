@@ -47,6 +47,13 @@ public:
                        int blockY,
                        unsigned int blockZ) const;
 
+    // TODO: return value -> temporary : Change Leter to block class or sth else
+    std::string getBlockAt(unsigned int x,
+                           unsigned int z,
+                           unsigned int blockX,
+                           int blockY,
+                           unsigned int blockZ) const;
+
 private:
     int m_x;
     int m_z;
