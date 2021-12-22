@@ -1,5 +1,6 @@
 #include "nbt/tags/int_array_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
 
 // gtest
 #include <gtest/gtest.h>
@@ -362,4 +363,15 @@ TEST(IntArrayTag, setValue)
     EXPECT_EQ(4, intArrayTag.size());
     std::vector<int32_t> data2 = intArrayTag.getValue();
     ASSERT_THAT(data2, testing::ElementsAre(1, 2, 3, 4));
+}
+
+TEST(IntArrayTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::IntArrayTag("A", std::vector<int32_t>({1, 2, 3}));
+
+    nbt::IntArrayTag *otherTag = tag_cast<nbt::IntArrayTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
 }

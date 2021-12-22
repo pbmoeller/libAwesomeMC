@@ -13,6 +13,8 @@ namespace nbt
 class ByteTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::Byte };
+
     ByteTag();
     ByteTag(const ByteTag &other);
     ByteTag(ByteTag &&other) noexcept;

@@ -14,6 +14,8 @@ namespace nbt
 class ListTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::List };
+
     ListTag();
     ListTag(const ListTag &other);
     ListTag(ListTag &&other) noexcept;

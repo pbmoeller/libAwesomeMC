@@ -14,6 +14,8 @@ namespace nbt
 class ByteArrayTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::ByteArray };
+
     ByteArrayTag();
     ByteArrayTag(const ByteArrayTag &other);
     ByteArrayTag(ByteArrayTag &&other) noexcept;

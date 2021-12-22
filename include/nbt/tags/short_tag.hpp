@@ -13,6 +13,8 @@ namespace nbt
 class ShortTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::Short };
+
     ShortTag();
     ShortTag(const ShortTag &other);
     ShortTag(ShortTag &&other) noexcept;

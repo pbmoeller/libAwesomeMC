@@ -13,6 +13,8 @@ namespace nbt
 class FloatTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::Float };
+
     FloatTag();
     FloatTag(const FloatTag &other);
     FloatTag(FloatTag &&other) noexcept;

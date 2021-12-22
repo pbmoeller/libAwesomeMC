@@ -1,5 +1,6 @@
 #include "nbt/tags/float_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
 
 // gtest
 #include <gtest/gtest.h>
@@ -207,4 +208,15 @@ TEST(FloatTag, setValue)
     EXPECT_EQ(value, floatTag.getValue());
     floatTag.setValue(value2);
     EXPECT_EQ(value2, floatTag.getValue());
+}
+
+TEST(FloatTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::FloatTag("A", 2.f);
+
+    nbt::FloatTag *otherTag = tag_cast<nbt::FloatTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
 }

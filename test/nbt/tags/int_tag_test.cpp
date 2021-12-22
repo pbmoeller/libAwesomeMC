@@ -1,4 +1,5 @@
 #include "nbt/tags/int_tag.hpp"
+#include "nbt/tags/byte_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
 
 // gtest
@@ -207,4 +208,15 @@ TEST(IntTag, setValue)
     EXPECT_EQ(value, intTag.getValue());
     intTag.setValue(value2);
     EXPECT_EQ(value2, intTag.getValue());
+}
+
+TEST(IntTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::IntTag("A", 2);
+
+    nbt::IntTag *otherTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::ByteTag *nullTag = tag_cast<nbt::ByteTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
 }

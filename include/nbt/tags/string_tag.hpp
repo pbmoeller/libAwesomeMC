@@ -13,6 +13,8 @@ namespace nbt
 class StringTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::String };
+
     StringTag();
     StringTag(const StringTag &other);
     StringTag(StringTag &&other) noexcept;

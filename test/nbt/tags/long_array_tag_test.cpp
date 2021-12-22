@@ -1,5 +1,6 @@
 #include "nbt/tags/long_array_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
 #include "util/byte_swap.hpp"
 
 // gtest
@@ -365,4 +366,15 @@ TEST(LongArrayTag, setValue)
     EXPECT_EQ(4, longArrayTag.size());
     std::vector<int64_t> data2 = longArrayTag.getValue();
     ASSERT_THAT(data2, testing::ElementsAre(1, 2, 3, 4));
+}
+
+TEST(LongArrayTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::LongArrayTag("A", std::vector<int64_t>({1, 2, 3}));
+
+    nbt::LongArrayTag *otherTag = tag_cast<nbt::LongArrayTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
 }

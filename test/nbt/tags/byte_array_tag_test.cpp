@@ -1,5 +1,6 @@
 #include "nbt/tags/byte_array_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
 
 // gtest
 #include <gtest/gtest.h>
@@ -361,4 +362,15 @@ TEST(ByteArrayTag, setValue)
     EXPECT_EQ(4, byteArrayTag.size());
     std::vector<char> data2 = byteArrayTag.getValue();
     ASSERT_THAT(data2, testing::ElementsAre(1, 2, 3, 4));
+}
+
+TEST(ByteArrayTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::ByteArrayTag("A", std::vector<char>({1, 2, 3}));
+
+    nbt::ByteArrayTag *otherTag = tag_cast<nbt::ByteArrayTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
 }

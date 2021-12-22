@@ -15,6 +15,8 @@ namespace nbt
 class IntArrayTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::IntArray };
+
     IntArrayTag();
     IntArrayTag(const IntArrayTag &other);
     IntArrayTag(IntArrayTag &&other) noexcept;

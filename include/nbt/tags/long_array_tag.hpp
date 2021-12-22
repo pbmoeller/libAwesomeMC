@@ -15,6 +15,8 @@ namespace nbt
 class LongArrayTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::LongArray };
+
     LongArrayTag();
     LongArrayTag(const LongArrayTag &other);
     LongArrayTag(LongArrayTag &&other) noexcept;

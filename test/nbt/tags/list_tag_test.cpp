@@ -560,3 +560,14 @@ TEST(ListTag, setValue)
     EXPECT_TRUE(*data2[1] == *data[1]);
     EXPECT_TRUE(*data2[2] == *data[2]);
 }
+
+TEST(ListTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::ListTag("A", nbt::TagType::Byte);
+
+    nbt::ListTag *otherTag = tag_cast<nbt::ListTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
+}

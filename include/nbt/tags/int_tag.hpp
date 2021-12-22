@@ -13,6 +13,8 @@ namespace nbt
 class IntTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::Int };
+
     IntTag();
     IntTag(const IntTag &other);
     IntTag(IntTag &&other) noexcept;

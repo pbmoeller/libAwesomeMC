@@ -13,6 +13,8 @@ namespace nbt
 class LongTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::Long };
+
     LongTag();
     LongTag(const LongTag &other);
     LongTag(LongTag &&other) noexcept;

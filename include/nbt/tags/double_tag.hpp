@@ -13,6 +13,8 @@ namespace nbt
 class DoubleTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::Double };
+
     DoubleTag();
     DoubleTag(const DoubleTag &other);
     DoubleTag(DoubleTag &&other) noexcept;

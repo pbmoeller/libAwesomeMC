@@ -9,6 +9,8 @@ namespace nbt
 class EndTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::End };
+
     EndTag();
     EndTag(const EndTag &other);
     EndTag(EndTag &&other) noexcept;

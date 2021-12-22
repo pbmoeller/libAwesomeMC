@@ -1,5 +1,6 @@
 #include "nbt/tags/string_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
 
 // gtest
 #include <gtest/gtest.h>
@@ -204,4 +205,15 @@ TEST(StringTag, setValue)
     EXPECT_STREQ(value.c_str(), stringTag.getValue().c_str());
     stringTag.setValue(value2);
     EXPECT_STREQ(value2.c_str(), stringTag.getValue().c_str());
+}
+
+TEST(StringTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::StringTag("A", "ABC");
+
+    nbt::StringTag *otherTag = tag_cast<nbt::StringTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
 }

@@ -14,6 +14,8 @@ namespace nbt
 class CompoundTag : public AbstractTag
 {
 public:
+    enum { Type = TagType::Compound };
+
     CompoundTag();
     CompoundTag(const CompoundTag &other);
     CompoundTag(CompoundTag &&other) noexcept;

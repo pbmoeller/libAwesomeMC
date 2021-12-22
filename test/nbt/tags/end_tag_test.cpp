@@ -1,5 +1,6 @@
 #include "nbt/tags/end_tag.hpp"
 #include "nbt/tags/byte_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
 
 // gtest
 #include <gtest/gtest.h>
@@ -113,5 +114,16 @@ TEST(EndTag, getData)
     std::vector<unsigned char> data2 = endTag.getData(false);
     EXPECT_EQ(1, data2.size());
     EXPECT_EQ(0, data2[0]);
+}
+
+TEST(EndTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::EndTag();
+
+    nbt::EndTag *otherTag = tag_cast<nbt::EndTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
 }
 

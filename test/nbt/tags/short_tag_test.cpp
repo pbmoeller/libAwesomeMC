@@ -1,5 +1,6 @@
 #include "nbt/tags/short_tag.hpp"
 #include "nbt/tags/end_tag.hpp"
+#include "nbt/tags/int_tag.hpp"
 
 // gtest
 #include <gtest/gtest.h>
@@ -207,4 +208,15 @@ TEST(ShortTag, setValue)
     EXPECT_EQ(value, shortTag.getValue());
     shortTag.setValue(value2);
     EXPECT_EQ(value2, shortTag.getValue());
+}
+
+TEST(ShortTag, tag_cast)
+{
+    nbt::AbstractTag *testTag = new nbt::ShortTag("A", 2);
+
+    nbt::ShortTag *otherTag = tag_cast<nbt::ShortTag*>(testTag);
+    EXPECT_EQ(otherTag, testTag);
+
+    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    EXPECT_EQ(nullTag, nullptr);
 }
