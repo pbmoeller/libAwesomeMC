@@ -34,49 +34,49 @@ void printNextNbtDataLevel(const AbstractTag *tag,
         }
         case TagType::Byte:
         {
-            const ByteTag *t = static_cast<const ByteTag*>(tag);
+            const ByteTag *t = tag_cast<const ByteTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Byte) 
                  << "(\"" << t->getName() << "\"): " << (int)t->getValue() << "\n";
             break;
         }
         case TagType::Short:
         {
-            const ShortTag *t = static_cast<const ShortTag*>(tag);
+            const ShortTag *t = tag_cast<const ShortTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Short)
                  << "(\"" << t->getName() << "\"): " << (int)t->getValue() << "\n";
             break;
         }
         case TagType::Int:
         {
-            const IntTag *t = static_cast<const IntTag*>(tag);
+            const IntTag *t = tag_cast<const IntTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Int)
                  << "(\"" << t->getName() << "\"): " << t->getValue() << "\n";
             break;
         }
         case TagType::Long:
         {
-            const LongTag *t = static_cast<const LongTag*>(tag);
+            const LongTag *t = tag_cast<const LongTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Long)
                  << "(\"" << t->getName() << "\"): " << t->getValue() << "\n";
             break;
         }
         case TagType::Float:
         {
-            const FloatTag *t = static_cast<const FloatTag*>(tag);
+            const FloatTag *t = tag_cast<const FloatTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Float)
                  << "(\"" << t->getName() << "\"): " << std::setprecision(8) << t->getValue() << "\n";
             break;
         }
         case TagType::Double:
         {
-            const DoubleTag *t = static_cast<const DoubleTag*>(tag);
+            const DoubleTag *t = tag_cast<const DoubleTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Double)
                  << "(\"" << t->getName() << "\"): " << std::setprecision(16) << t->getValue() << "\n";
             break;
         }
         case TagType::ByteArray:
         {
-            const ByteArrayTag *t = static_cast<const ByteArrayTag*>(tag);
+            const ByteArrayTag *t = tag_cast<const ByteArrayTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::ByteArray)
                  << "(\"" << t->getName() << "\"):";
             if(printArrayContent) {
@@ -94,14 +94,14 @@ void printNextNbtDataLevel(const AbstractTag *tag,
         }
         case TagType::String:
         {
-            const StringTag *t = static_cast<const StringTag*>(tag);
+            const StringTag *t = tag_cast<const StringTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::String)
                  << "(\"" << t->getName() << "\"): " << t->getValue() << "\n";
             break;
         }
         case TagType::List:
         {
-            const ListTag *t = static_cast<const ListTag*>(tag);
+            const ListTag *t = tag_cast<const ListTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::List)
                  << "(\"" << t->getName() << "\"): " << t->size() << " entries of type " << getTagName(t->getListType()) << "\n";
             sstr << std::string(indent, ' ') << "{\n";
@@ -113,7 +113,7 @@ void printNextNbtDataLevel(const AbstractTag *tag,
         }
         case TagType::Compound:
         {
-            const CompoundTag *t = static_cast<const CompoundTag*>(tag);
+            const CompoundTag *t = tag_cast<const CompoundTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Compound)
                  << "(\"" << t->getName() << "\"): " << t->size() << " entries\n";
             sstr << std::string(indent, ' ') << "{\n";
@@ -125,7 +125,7 @@ void printNextNbtDataLevel(const AbstractTag *tag,
         }
         case TagType::IntArray:
         {
-            const IntArrayTag *t = static_cast<const IntArrayTag*>(tag);
+            const IntArrayTag *t = tag_cast<const IntArrayTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::IntArray)
                  << "(\"" << t->getName() << "\"): ";
             if(printArrayContent) {
@@ -143,7 +143,7 @@ void printNextNbtDataLevel(const AbstractTag *tag,
         }
         case TagType::LongArray:
         {
-            const LongArrayTag *t = static_cast<const LongArrayTag*>(tag);
+            const LongArrayTag *t = tag_cast<const LongArrayTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::LongArray)
                  << "(\"" << t->getName() << "\"): " << t->size() << " entries\n";
             if(printArrayContent) {

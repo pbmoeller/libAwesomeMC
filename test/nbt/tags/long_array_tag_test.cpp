@@ -129,7 +129,7 @@ TEST(LongArrayTag, clone)
 {
     nbt::LongArrayTag longArrayTagA("Test1", {1, 2, 3});
 
-    nbt::LongArrayTag *longArrayTagB = (nbt::LongArrayTag *)longArrayTagA.clone();
+    nbt::LongArrayTag *longArrayTagB = tag_cast<nbt::LongArrayTag*>(longArrayTagA.clone());
     EXPECT_TRUE(longArrayTagA == *longArrayTagB);
 }
 

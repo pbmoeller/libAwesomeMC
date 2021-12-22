@@ -118,7 +118,7 @@ TEST(ShortTag, clone)
 {
     nbt::ShortTag shortTagA("Test1", 1);
 
-    nbt::ShortTag *shortTagB = (nbt::ShortTag *)shortTagA.clone();
+    nbt::ShortTag *shortTagB = tag_cast<nbt::ShortTag*>(shortTagA.clone());
     EXPECT_TRUE(shortTagA == *shortTagB);
 }
 

@@ -118,7 +118,7 @@ TEST(FloatTag, clone)
 {
     nbt::FloatTag floatTagA("Test1", 3.14f);
 
-    nbt::FloatTag *floatTagB = (nbt::FloatTag *)floatTagA.clone();
+    nbt::FloatTag *floatTagB = tag_cast<nbt::FloatTag*>(floatTagA.clone());
     EXPECT_TRUE(floatTagA == *floatTagB);
 }
 

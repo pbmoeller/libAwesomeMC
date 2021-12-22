@@ -39,7 +39,7 @@ Chunk& Chunk::operator=(const Chunk &other)
 {
     if(this != &other) {
         clear();
-        m_data = static_cast<nbt::CompoundTag*>(other.m_data->clone());
+        m_data = tag_cast<nbt::CompoundTag*>(other.m_data->clone());
     }
     return *this;
 }
@@ -113,7 +113,7 @@ void Chunk::getSubTagsByName(const std::string &name,
     switch(currentSubTag->getType()) {
         case nbt::TagType::List:
         {
-            nbt::ListTag *listTag = static_cast<nbt::ListTag*>(currentSubTag);
+            nbt::ListTag *listTag = tag_cast<nbt::ListTag*>(currentSubTag);
             for(unsigned int i = 0; i < listTag->size(); ++i) {
                 getSubTagsByName(name, listTag->at(i), subTags);
             }
@@ -121,7 +121,7 @@ void Chunk::getSubTagsByName(const std::string &name,
         }
         case nbt::TagType::Compound:
         {
-            nbt::CompoundTag *compoundTag = static_cast<nbt::CompoundTag*>(currentSubTag);
+            nbt::CompoundTag *compoundTag = tag_cast<nbt::CompoundTag*>(currentSubTag);
             for(unsigned int i = 0; i < compoundTag->size(); ++i) {
                 getSubTagsByName(name, compoundTag->at(i), subTags);
             }
@@ -143,7 +143,7 @@ std::vector<int32_t> Chunk::getBiomes() const
     }
 
     // Take first item (in errornous case where there are more than 1 "Biomes" sub tag in root tag)
-    return static_cast<nbt::IntArrayTag*>(biomesArray[0])->getValue();
+    return tag_cast<nbt::IntArrayTag*>(biomesArray[0])->getValue();
 }
 
 int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const
@@ -166,7 +166,7 @@ int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) 
     // Values are arranged by Z, then X, then Y
     int biomeIndex = (blockY % 4) * 4 + (blockX % 4) * 2 + (blockZ % 4);
 
-    return static_cast<nbt::IntArrayTag*>(biomesArray[0])->at(biomeIndex);
+    return tag_cast<nbt::IntArrayTag*>(biomesArray[0])->at(biomeIndex);
 }
 
 std::string Chunk::getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) const
@@ -181,7 +181,7 @@ std::string Chunk::getBlockAt(unsigned int blockX, int blockY, unsigned int bloc
     int sectionIndex = blockY / BlockWidth + 5;
 
     // Get BlockStates
-    nbt::CompoundTag *section = static_cast<nbt::CompoundTag*>(getSubTagsByName("sections").at(sectionIndex));
+    nbt::CompoundTag *section = tag_cast<nbt::CompoundTag*>(getSubTagsByName("sections").at(sectionIndex));
 
     return std::string();
 }

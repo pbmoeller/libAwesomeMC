@@ -128,7 +128,7 @@ TEST(ByteArrayTag, clone)
 {
     nbt::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});
 
-    nbt::ByteArrayTag *byteArrayTagB = (nbt::ByteArrayTag *)byteArrayTagA.clone();
+    nbt::ByteArrayTag *byteArrayTagB = tag_cast<nbt::ByteArrayTag*>(byteArrayTagA.clone());
     EXPECT_TRUE(byteArrayTagA == *byteArrayTagB);
 }
 

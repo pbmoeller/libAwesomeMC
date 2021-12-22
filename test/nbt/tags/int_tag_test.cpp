@@ -118,7 +118,7 @@ TEST(IntTag, clone)
 {
     nbt::IntTag intTagA("Test1", 0x81234567);
 
-    nbt::IntTag *intTagB = (nbt::IntTag *)intTagA.clone();
+    nbt::IntTag *intTagB = tag_cast<nbt::IntTag*>(intTagA.clone());
     EXPECT_TRUE(intTagA == *intTagB);
 }
 

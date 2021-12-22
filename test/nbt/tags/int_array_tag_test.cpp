@@ -128,7 +128,7 @@ TEST(IntArrayTag, clone)
 {
     nbt::IntArrayTag intArrayTagA("Test1", {1, 2, 3});
 
-    nbt::IntArrayTag *intArrayTagB = (nbt::IntArrayTag *)intArrayTagA.clone();
+    nbt::IntArrayTag *intArrayTagB = tag_cast<nbt::IntArrayTag*>(intArrayTagA.clone());
     EXPECT_TRUE(intArrayTagA == *intArrayTagB);
 }
 

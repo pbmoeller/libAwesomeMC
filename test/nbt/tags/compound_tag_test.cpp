@@ -148,7 +148,7 @@ TEST(CompoundTag, clone)
     compoundTagA.pushBack(new nbt::IntTag("C", 3));
     ASSERT_EQ(3, compoundTagA.size());
 
-    nbt::CompoundTag *clone = (nbt::CompoundTag *)compoundTagA.clone();
+    nbt::CompoundTag *clone = tag_cast<nbt::CompoundTag*>(compoundTagA.clone());
 
     EXPECT_TRUE(compoundTagA == *clone);
 }
@@ -294,10 +294,10 @@ TEST(CompoundTag, erase)
 
     // Check that item 1 and 3 remain
     std::vector<nbt::AbstractTag*> data = compoundTag.getValue();
-    nbt::ByteTag *bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
-    bt = dynamic_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<nbt::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
 
@@ -307,7 +307,7 @@ TEST(CompoundTag, erase)
 
     // Check remaining item
     data = compoundTag.getValue();
-    bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
 
@@ -341,13 +341,13 @@ TEST(CompoundTag, insert)
 
     // Test correct order
     std::vector<nbt::AbstractTag*> data = compoundTag.getValue();
-    nbt::ByteTag *bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
-    bt = dynamic_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<nbt::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
-    bt = dynamic_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<nbt::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
 
@@ -408,9 +408,9 @@ TEST(CompoundTag, at)
     ASSERT_EQ(3, compoundTag.size());
 
     // Test at
-    nbt::ByteTag *v1 = dynamic_cast<nbt::ByteTag*>(compoundTag.at(0));
-    nbt::ByteTag *v2 = dynamic_cast<nbt::ByteTag*>(compoundTag.at(1));
-    nbt::ByteTag *v3 = dynamic_cast<nbt::ByteTag*>(compoundTag.at(2));
+    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(compoundTag.at(0));
+    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(compoundTag.at(1));
+    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(compoundTag.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -434,9 +434,9 @@ TEST(CompoundTag, at_const)
     const nbt::CompoundTag compoundTag2(compoundTag);
 
     // Test at
-    const nbt::ByteTag *v1 = dynamic_cast<const nbt::ByteTag*>(compoundTag2.at(0));
-    const nbt::ByteTag *v2 = dynamic_cast<const nbt::ByteTag*>(compoundTag2.at(1));
-    const nbt::ByteTag *v3 = dynamic_cast<const nbt::ByteTag*>(compoundTag2.at(2));
+    const nbt::ByteTag *v1 = tag_cast<const nbt::ByteTag*>(compoundTag2.at(0));
+    const nbt::ByteTag *v2 = tag_cast<const nbt::ByteTag*>(compoundTag2.at(1));
+    const nbt::ByteTag *v3 = tag_cast<const nbt::ByteTag*>(compoundTag2.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -580,19 +580,19 @@ TEST(CompoundTag, getValue)
     // Test items
     std::vector<nbt::AbstractTag*> data = compoundTag.getValue();
 
-    nbt::ByteTag *bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(nbt::TagType::Byte, bt->getType());
     EXPECT_EQ(1, bt->getValue());
     EXPECT_STREQ("A", bt->getName().c_str());
 
-    nbt::IntTag *it = dynamic_cast<nbt::IntTag*>(data[1]);
+    nbt::IntTag *it = tag_cast<nbt::IntTag*>(data[1]);
     EXPECT_TRUE(it != nullptr);
     EXPECT_EQ(nbt::TagType::Int, it->getType());
     EXPECT_EQ(2, it->getValue());
     EXPECT_STREQ("B", it->getName().c_str());
 
-    nbt::StringTag *st = dynamic_cast<nbt::StringTag*>(data[2]);
+    nbt::StringTag *st = tag_cast<nbt::StringTag*>(data[2]);
     EXPECT_TRUE(st != nullptr);
     EXPECT_EQ(nbt::TagType::String, st->getType());
     EXPECT_STREQ("B", st->getValue().c_str());
@@ -614,15 +614,15 @@ TEST(CompoundTag, getValueCopy)
     ASSERT_EQ(3, compoundTag.size());
 
     std::vector<nbt::AbstractTag*> data = compoundTag.getValueCopy();
-    nbt::ByteTag *bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
     EXPECT_STREQ("A", bt->getName().c_str());
-    bt = dynamic_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<nbt::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
     EXPECT_STREQ("B", bt->getName().c_str());
-    bt = dynamic_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<nbt::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
     EXPECT_STREQ("C", bt->getName().c_str());

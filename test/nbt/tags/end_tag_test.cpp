@@ -57,7 +57,7 @@ TEST(EndTag, clone)
 {
     nbt::EndTag endTagA;
 
-    nbt::EndTag *endTagB = (nbt::EndTag *)endTagA.clone();
+    nbt::EndTag *endTagB = tag_cast<nbt::EndTag*>(endTagA.clone());
     EXPECT_TRUE(endTagA == *endTagB);
 }
 

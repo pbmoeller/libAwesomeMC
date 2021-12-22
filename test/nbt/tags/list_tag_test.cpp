@@ -142,7 +142,7 @@ TEST(ListTag, clone)
     listTagA.pushBack(new nbt::ByteTag("C", 3));
     ASSERT_EQ(3, listTagA.size());
 
-    nbt::ListTag *listClone = (nbt::ListTag *)listTagA.clone();
+    nbt::ListTag *listClone = tag_cast<nbt::ListTag*>(listTagA.clone());
 
     EXPECT_TRUE(listTagA == *listClone);
 }
@@ -303,10 +303,10 @@ TEST(ListTag, erase)
 
     // Check that item 1 and 3 remain
     std::vector<nbt::AbstractTag*> data = listTag.getValue();
-    nbt::ByteTag *bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
-    bt = dynamic_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<nbt::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
 
@@ -316,7 +316,7 @@ TEST(ListTag, erase)
 
     // Check remaining item
     data = listTag.getValue();
-    bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
 
@@ -353,13 +353,13 @@ TEST(ListTag, insert)
 
     // Test correct order
     std::vector<nbt::AbstractTag*> data = listTag.getValue();
-    nbt::ByteTag *bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
-    bt = dynamic_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<nbt::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
-    bt = dynamic_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<nbt::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
 
@@ -420,9 +420,9 @@ TEST(ListTag, at)
     ASSERT_EQ(3, listTag.size());
 
     // Test at
-    nbt::ByteTag *v1 = dynamic_cast<nbt::ByteTag*>(listTag.at(0));
-    nbt::ByteTag *v2 = dynamic_cast<nbt::ByteTag*>(listTag.at(1));
-    nbt::ByteTag *v3 = dynamic_cast<nbt::ByteTag*>(listTag.at(2));
+    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(listTag.at(0));
+    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(listTag.at(1));
+    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(listTag.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -446,9 +446,9 @@ TEST(ListTag, at_const)
     const nbt::ListTag listTag2(listTag);
 
     // Test at
-    const nbt::ByteTag *v1 = dynamic_cast<const nbt::ByteTag*>(listTag2.at(0));
-    const nbt::ByteTag *v2 = dynamic_cast<const nbt::ByteTag*>(listTag2.at(1));
-    const nbt::ByteTag *v3 = dynamic_cast<const nbt::ByteTag*>(listTag2.at(2));
+    const nbt::ByteTag *v1 = tag_cast<const nbt::ByteTag*>(listTag2.at(0));
+    const nbt::ByteTag *v2 = tag_cast<const nbt::ByteTag*>(listTag2.at(1));
+    const nbt::ByteTag *v3 = tag_cast<const nbt::ByteTag*>(listTag2.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -497,15 +497,15 @@ TEST(ListTag, getValue)
 
     // Test items
     std::vector<nbt::AbstractTag*> data = listTag.getValue();
-    nbt::ByteTag *bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
     EXPECT_STREQ("A", bt->getName().c_str());
-    bt = dynamic_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<nbt::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
     EXPECT_STREQ("B", bt->getName().c_str());
-    bt = dynamic_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<nbt::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
     EXPECT_STREQ("C", bt->getName().c_str());
@@ -526,15 +526,15 @@ TEST(ListTag, getValueCopy)
     ASSERT_EQ(3, listTag.size());
 
     std::vector<nbt::AbstractTag*> data = listTag.getValueCopy();
-    nbt::ByteTag *bt = dynamic_cast<nbt::ByteTag*>(data[0]);
+    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
     EXPECT_STREQ("A", bt->getName().c_str());
-    bt = dynamic_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<nbt::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
     EXPECT_STREQ("B", bt->getName().c_str());
-    bt = dynamic_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<nbt::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
     EXPECT_STREQ("C", bt->getName().c_str());

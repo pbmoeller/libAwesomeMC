@@ -118,7 +118,7 @@ TEST(DoubleTag, clone)
 {
     nbt::DoubleTag doubleTagA("Test1", 3.14);
 
-    nbt::DoubleTag *doubleTagB = (nbt::DoubleTag *)doubleTagA.clone();
+    nbt::DoubleTag *doubleTagB = tag_cast<nbt::DoubleTag*>(doubleTagA.clone());
     EXPECT_TRUE(doubleTagA == *doubleTagB);
 }
 
