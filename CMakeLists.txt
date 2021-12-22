@@ -22,6 +22,7 @@ set(ANVIL_INCLUDES
     "include/anvil/region.hpp"
     "include/anvil/region_header.hpp"
     "include/anvil/anvil_read.hpp"
+    "include/anvil/block.hpp"
 )
 
 # nbt
@@ -61,6 +62,7 @@ set(ANVIL_SOURCES
     "src/anvil/region.cpp"
     "src/anvil/region_header.cpp"
     "src/anvil/anvil_read.cpp"
+    "src/anvil/block.cpp"
 )
 
 # nbt
@@ -166,6 +168,7 @@ if(build_tests)
         "test/anvil/chunk_test.cpp"
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"
+        "test/anvil/block_test.cpp"
     )
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
