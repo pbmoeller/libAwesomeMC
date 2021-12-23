@@ -169,7 +169,7 @@ int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) 
     return tag_cast<nbt::IntArrayTag*>(biomesArray[0])->at(biomeIndex);
 }
 
-std::string Chunk::getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) const
+Block Chunk::getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) const
 {
     // Check ranges of block coordinates
     if(blockX >= BlockWidth || blockZ >= BlockWidth
@@ -183,7 +183,7 @@ std::string Chunk::getBlockAt(unsigned int blockX, int blockY, unsigned int bloc
     // Get BlockStates
     nbt::CompoundTag *section = tag_cast<nbt::CompoundTag*>(getSubTagsByName("sections").at(sectionIndex));
 
-    return std::string();
+    return Block();
 }
 
 } // namespace anvil

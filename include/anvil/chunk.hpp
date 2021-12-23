@@ -2,6 +2,7 @@
 #define ANVIL_CHUNK_HPP
 
 #include "nbt/tags/compound_tag.hpp"
+#include "anvil/block.hpp"
 
 // STL
 #include <vector>
@@ -35,8 +36,7 @@ public:
     std::vector<int32_t> getBiomes() const;
     int32_t getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
 
-    // TODO: return value -> temporary : Change Leter to block class or sth else
-    std::string getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
+    Block getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
 
 protected:
     void getSubTagsByName(const std::string &name,

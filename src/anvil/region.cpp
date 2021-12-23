@@ -172,11 +172,11 @@ int32_t Region::getBiomeAt(unsigned int x,
     return getChunkAt(chunkIdx).getBiomeAt(blockX, blockY, blockZ);
 }
 
-std::string Region::getBlockAt(unsigned int x,
-                               unsigned int z,
-                               unsigned int blockX,
-                               int blockY,
-                               unsigned int blockZ) const
+Block Region::getBlockAt(unsigned int x,
+                         unsigned int z,
+                         unsigned int blockX,
+                         int blockY,
+                         unsigned int blockZ) const
 {
     // Check if chunk coodinates are valid
     if(x >= ChunkWidth || z >= ChunkWidth) {
