@@ -250,3 +250,8 @@ TEST(Chunk, getBlockAt)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
+
+TEST(Chunk, getPaletteAt)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}

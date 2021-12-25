@@ -186,4 +186,18 @@ Block Chunk::getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) co
     return Block();
 }
 
+std::vector<nbt::AbstractTag*> Chunk::getPaletteAt(unsigned int blockX, int blockY, unsigned int blockZ) const
+{
+    // Check ranges of block coordinates
+    if(blockX >= BlockWidth || blockZ >= BlockWidth
+       || blockY < MinimumBlockHeight || blockY > MaximumBlockHeight) {
+        throw std::out_of_range("Block Coordinates out of range");
+    }
+
+    // Calculate Section
+    int sectionIndex = blockY / BlockWidth + 5;
+
+    return std::vector<nbt::AbstractTag*>();
+}
+
 } // namespace anvil
