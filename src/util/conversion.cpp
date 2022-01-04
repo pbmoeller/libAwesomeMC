@@ -1,14 +1,17 @@
 #include "util/conversion.hpp"
 #include "anvil/constants.hpp"
 
+// STL
+#include <cmath>
+
 namespace util
 {
 
 void convertCoordinates_Block2Region(const int blockX, const int blockY, const int blockZ,
                                      int &regionX, int &regionZ)
 {
-    regionX = blockX / (anvil::BlockWidth * anvil::ChunkWidth);
-    regionZ = blockZ / (anvil::BlockWidth * anvil::ChunkWidth);
+    regionX = static_cast<int>(std::floor(blockX / static_cast<float>(anvil::RegionWidth)));
+    regionZ = static_cast<int>(std::floor(blockZ / static_cast<float>(anvil::RegionWidth)));
 }
 
 void convertCoordinates_Block2Chunk(const int blockX, const int blockY, const int blockZ,

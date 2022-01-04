@@ -15,6 +15,8 @@ namespace anvil
     constexpr unsigned int ChunkCount       = 1024;
     constexpr unsigned int ChunkWidth       = 32;
 
+    constexpr unsigned int RegionWidth      = 512;
+
     // Region File
     constexpr unsigned int HeaderOffset     = 0;
     constexpr unsigned int ChunkDataOffset  = 8192;

@@ -52,6 +52,7 @@ set(UTIL_INCLUDES
     "include/util/byte_swap.hpp"
     "include/util/compression.hpp"
     "include/util/floating_point.hpp"
+    "include/util/conversion.hpp"
 )
 
 ### Sources
@@ -89,6 +90,7 @@ set(NBT_SOURCES
 set(UTIL_SOURCES
     "src/util/byte_stream.cpp"
     "src/util/compression.cpp"
+    "src/util/conversion.cpp"
 )
 
 ### Library
@@ -140,6 +142,14 @@ if(build_examples)
     )
     target_link_libraries(example_anvil AwesomeAnvil)
     set_property(TARGET example_anvil PROPERTY CXX_STANDARD 20)
+# example 4
+    add_executable(load_testmap "example/load_testmap.cpp")
+    target_include_directories(load_testmap
+        PRIVATE ${ZLIB_INCLUDE_DIRS}
+        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
+    )
+    target_link_libraries(load_testmap AwesomeAnvil)
+    set_property(TARGET load_testmap PROPERTY CXX_STANDARD 20)
 endif()
 
 # tests
@@ -169,6 +179,7 @@ if(build_tests)
         "test/util/byte_swap_test.cpp"
         "test/util/byte_stream_test.cpp"
         "test/anvil/block_test.cpp"
+        "test/util/conversion_test.cpp"
     )
     target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
     if(UNIX)
