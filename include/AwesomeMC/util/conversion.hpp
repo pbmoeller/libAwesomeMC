@@ -7,11 +7,16 @@
 namespace util
 {
 
-void convertCoordinates_Block2Region(const int blockX, const int blockY, const int blockZ,
-                                     int &chunkX, int &chunkZ);
+void convertBlockWorld2Region(const int blockX, const int blockY, const int blockZ,
+                              int &chunkX, int &chunkZ);
 
-void convertCoordinates_Block2Chunk(const int blockX, const int blockY, const int blockZ,
-                                    int &chunkX, int &chunkY, int &chunkZ);
+void convertBlockWorld2BlockChunk(const int blockXW, const int blockYW, const int blockZW,
+                                  int &blockXC, int &blockYC, int &blockZC,
+                                  int &chunkX, int &chunkY, int &chunkZ);
+void convertBlockWorld2BlockChunk(const int blockXW, const int blockYW, const int blockZW,
+                                  int &blockXC, int &blockYC, int &blockZC);
+void convertBlockWorld2Chunk(const int blockXW, const int blockYW, const int blockZW,
+                             int &chunkX, int &chunkY, int &chunkZ);
 
 } // namespace util
 
