@@ -1,5 +1,5 @@
-#ifndef NBT_NBT_PRINTER_HPP
-#define NBT_NBT_PRINTER_HPP
+#ifndef AWESOMEMC_NBT_NBT_PRINT_HPP
+#define AWESOMEMC_NBT_NBT_PRINT_HPP
 
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/tags.hpp>
@@ -33,4 +33,4 @@ void printSimpleDataType(const T *tag,
 
 } // namespace nbt
 
-#endif // NBT_NBT_PRINTER_HPP
+#endif // AWESOMEMC_NBT_NBT_PRINT_HPP

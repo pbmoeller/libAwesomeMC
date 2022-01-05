@@ -1,5 +1,5 @@
-#ifndef ANVIL_BLOCK_HPP
-#define ANVIL_BLOCK_HPP
+#ifndef AWESOMEMC_ANVIL_BLOCK_HPP
+#define AWESOMEMC_ANVIL_BLOCK_HPP
 
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/compound_tag.hpp>
@@ -53,4 +53,4 @@ private:
 
 } // namespace anvil
 
-#endif // ANVIL_BLOCK_HPP
+#endif // AWESOMEMC_ANVIL_BLOCK_HPP

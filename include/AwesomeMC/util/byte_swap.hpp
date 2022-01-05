@@ -1,5 +1,5 @@
-#ifndef LIBAWESOMEANVIL_UTIL_BYTE_SWAP_HPP
-#define LIBAWESOMEANVIL_UTIL_BYTE_SWAP_HPP
+#ifndef AWESOMEMC_UTIL_BYTE_SWAP_HPP
+#define AWESOMEMC_UTIL_BYTE_SWAP_HPP
 
 // STL
 #include <cstdint>
@@ -57,4 +57,4 @@ inline auto bswap(std::floating_point auto value) noexcept {
 
 } // namespace util
 
-#endif // LIBAWESOMEANVIL_UTIL_BYTE_SWAP_HPP
+#endif // AWESOMEMC_UTIL_BYTE_SWAP_HPP

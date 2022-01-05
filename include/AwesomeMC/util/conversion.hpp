@@ -1,5 +1,5 @@
-#ifndef LIBAWESOMEANVIL_UTIL_CONVERSION_HPP
-#define LIBAWESOMEANVIL_UTIL_CONVERSION_HPP
+#ifndef AWESOMEMC_UTIL_CONVERSION_HPP
+#define AWESOMEMC_UTIL_CONVERSION_HPP
 
 // STL
 #include <cstdint>
@@ -15,4 +15,4 @@ void convertCoordinates_Block2Chunk(const int blockX, const int blockY, const in
 
 } // namespace util
 
-#endif // LIBAWESOMEANVIL_UTIL_CONVERSION_HPP
+#endif // AWESOMEMC_UTIL_CONVERSION_HPP

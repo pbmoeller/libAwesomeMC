@@ -1,5 +1,5 @@
-#ifndef NBT_NBT_READER_HPP
-#define NBT_NBT_READER_HPP
+#ifndef AWESOMEMC_NBT_NBT_READ_HPP
+#define AWESOMEMC_NBT_NBT_READ_HPP
 
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/abstract_tag.hpp>
@@ -59,4 +59,4 @@ std::string readStringValue(util::ByteStream &stream);
 
 } // namespace nbt
 
-#endif // NBT_NBT_READER_HPP
+#endif // AWESOMEMC_NBT_NBT_READ_HPP

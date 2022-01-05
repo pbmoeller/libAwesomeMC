@@ -1,5 +1,5 @@
-#ifndef NBT_TAGS_HPP
-#define NBT_TAGS_HPP
+#ifndef AWESOMEMC_NBT_TAGS_TAGS_HPP
+#define AWESOMEMC_NBT_TAGS_TAGS_HPP
 
 #include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 #include <AwesomeMC/nbt/tags/byte_array_tag.hpp>
@@ -16,4 +16,4 @@
 #include <AwesomeMC/nbt/tags/short_tag.hpp>
 #include <AwesomeMC/nbt/tags/string_tag.hpp>
 
-#endif // NBT_TAGS_HPP
+#endif // AWESOMEMC_NBT_TAGS_TAGS_HPP

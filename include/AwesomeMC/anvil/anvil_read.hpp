@@ -1,5 +1,5 @@
-#ifndef ANVIL_ANVIL_READ_HPP
-#define ANVIL_ANVIL_READ_HPP
+#ifndef AWESOMEMC_ANVIL_ANVIL_READ_HPP
+#define AWESOMEMC_ANVIL_ANVIL_READ_HPP
 
 // AwesomeMC
 #include <AwesomeMC/anvil/region.hpp>
@@ -19,4 +19,4 @@ bool readRegionChunks(std::ifstream &filestream, Region &region);
 
 } // namespace anvil
 
-#endif // ANVIL_ANVIL_READ_HPP
+#endif // AWESOMEMC_ANVIL_ANVIL_READ_HPP

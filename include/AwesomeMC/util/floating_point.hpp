@@ -1,5 +1,5 @@
-#ifndef UTIL_FLOATING_POINT_HPP
-#define UTIL_FLOATING_POINT_HPP
+#ifndef AWESOMEMC_UTIL_FLOATING_POINT_HPP
+#define AWESOMEMC_UTIL_FLOATING_POINT_HPP
 
 namespace util
 {
@@ -41,4 +41,4 @@ bool floatCompare(float lhs, float rhs)
 
 } // namespace util
 
-#endif // UTIL_FLOATING_POINT_HPP
+#endif // AWESOMEMC_UTIL_FLOATING_POINT_HPP

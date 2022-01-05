@@ -1,5 +1,5 @@
-#ifndef ANVIL_REGION_HPP
-#define ANVIL_REGION_HPP
+#ifndef AWESOMEMC_ANVIL_REGION_HPP
+#define AWESOMEMC_ANVIL_REGION_HPP
 
 // AwesomeMC
 #include <AwesomeMc/anvil/constants.hpp>
@@ -64,4 +64,4 @@ private:
 
 } // namespace anvil
 
-#endif // ANVIL_REGION_HPP
+#endif // AWESOMEMC_ANVIL_REGION_HPP

@@ -1,5 +1,5 @@
-#ifndef LIBAWESOMEANVIL_UTIL_BYTE_STREAM_HPP
-#define LIBAWESOMEANVIL_UTIL_BYTE_STREAM_HPP
+#ifndef AWESOMEMC_UTIL_BYTE_STREAM_HPP
+#define AWESOMEMC_UTIL_BYTE_STREAM_HPP
 
 // AwesomeMC
 #include <AwesomeMC/util/byte_swap.hpp>
@@ -116,4 +116,4 @@ private:
 
 } // namespace util
 
-#endif // LIBAWESOMEANVIL_UTIL_BYTE_STREAM_HPP
+#endif // AWESOMEMC_UTIL_BYTE_STREAM_HPP

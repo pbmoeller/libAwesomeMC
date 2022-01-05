@@ -1,5 +1,5 @@
-#ifndef NBT_TAGS_ABSTRACT_TAG_HPP
-#define NBT_TAGS_ABSTRACT_TAG_HPP
+#ifndef AWESOMEMC_NBT_TAGS_ABSTRACT_TAG_HPP
+#define AWESOMEMC_NBT_TAGS_ABSTRACT_TAG_HPP
 
 // STL
 #include <string>
@@ -89,4 +89,4 @@ template<typename T> inline T tag_cast(const AbstractTag *item)
 
 } // namespace nbt
 
-#endif // NBT_TAGS_ABSTRACT_TAG_HPP
+#endif // AWESOMEMC_NBT_TAGS_ABSTRACT_TAG_HPP

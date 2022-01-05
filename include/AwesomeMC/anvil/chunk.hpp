@@ -1,5 +1,5 @@
-#ifndef ANVIL_CHUNK_HPP
-#define ANVIL_CHUNK_HPP
+#ifndef AWESOMEMC_ANVIL_CHUNK_HPP
+#define AWESOMEMC_ANVIL_CHUNK_HPP
 
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/compound_tag.hpp>
@@ -51,4 +51,4 @@ private:
 
 } // namespace anvil
 
-#endif // ANVIL_CHUNK_HPP
+#endif // AWESOMEMC_ANVIL_CHUNK_HPP

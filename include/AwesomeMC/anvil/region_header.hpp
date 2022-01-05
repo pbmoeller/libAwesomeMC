@@ -1,5 +1,5 @@
-#ifndef ANVIL_REGION_HEADER_HPP
-#define ANVIL_REGION_HEADER_HPP
+#ifndef AWESOMEMC_ANVIL_REGION_HEADER_HPP
+#define AWESOMEMC_ANVIL_REGION_HEADER_HPP
 
 // AwesomeMC
 #include <AwesomeMC/anvil/constants.hpp>
@@ -43,4 +43,4 @@ private:
 
 } // namespace anvil
 
-#endif // ANVIL_REGION_HEADER_HPP
+#endif // AWESOMEMC_ANVIL_REGION_HEADER_HPP

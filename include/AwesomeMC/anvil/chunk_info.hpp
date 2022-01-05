@@ -1,5 +1,5 @@
-#ifndef ANVIL_CHUNK_INFO_HPP
-#define ANVIL_CHUNK_INFO_HPP
+#ifndef AWESOMEMC_ANVIL_CHUNK_INFO_HPP
+#define AWESOMEMC_ANVIL_CHUNK_INFO_HPP
 
 namespace anvil
 {
@@ -52,4 +52,4 @@ private:
 
 } // namespace anvil
 
-#endif // ANVIL_CHUNK_INFO_HPP
+#endif // AWESOMEMC_ANVIL_CHUNK_INFO_HPP

@@ -1,5 +1,5 @@
-#ifndef ANVIL_CONSTANTS_HPP
-#define ANVIL_CONSTANTS_HPP
+#ifndef AWESOMEMC_ANVIL_CONSTANTS_HPP
+#define AWESOMEMC_ANVIL_CONSTANTS_HPP
 
 namespace anvil
 {
@@ -24,4 +24,4 @@ namespace anvil
     constexpr unsigned int SectorSize       = 4096;
 }
 
-#endif // ANVIL_CONSTANTS_HPP
+#endif // AWESOMEMC_ANVIL_CONSTANTS_HPP
