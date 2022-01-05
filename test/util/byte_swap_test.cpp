@@ -1,4 +1,5 @@
-#include "util/byte_swap.hpp"
+// AwesomeMC
+#include <AwesomeMC/util/byte_swap.hpp>
 
 // gtest
 #include <gtest/gtest.h>

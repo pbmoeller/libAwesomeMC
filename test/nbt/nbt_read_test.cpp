@@ -1,5 +1,6 @@
-#include "nbt/nbt_read.hpp"
-#include "nbt/tags/tags.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/nbt_read.hpp>
+#include <AwesomeMC/nbt/tags/tags.hpp>
 
 // gtest
 #include <gtest/gtest.h>

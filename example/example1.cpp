@@ -1,6 +1,8 @@
-#include <iostream>
-
+// ZLIB
 #include <zlib.h>
+
+// STL
+#include <iostream>
 
 int main(int argc, char **argv)
 {

@@ -1,4 +1,5 @@
-#include "anvil/region.hpp"
+// AwesomeMC
+#include <AwesomeMC/anvil/region.hpp>
 
 // gtest
 #include <gtest/gtest.h>

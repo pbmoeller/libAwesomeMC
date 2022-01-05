@@ -1,4 +1,4 @@
-#include "nbt/tags/abstract_tag.hpp"
+#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 
 // STL
 #include <utility>

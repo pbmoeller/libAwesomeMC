@@ -1,6 +1,8 @@
-#include "nbt/tags/compound_tag.hpp"
-#include "nbt/tags/end_tag.hpp"
-#include "util/byte_stream.hpp"
+#include <AwesomeMC/nbt/tags/compound_tag.hpp>
+
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/end_tag.hpp>
+#include <AwesomeMC/util/byte_stream.hpp>
 
 // STL
 #include <utility>

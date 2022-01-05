@@ -1,8 +1,10 @@
-#include "anvil/anvil_read.hpp"
-#include "anvil/constants.hpp"
-#include "nbt/nbt_read.hpp"
-#include "util/byte_swap.hpp"
-#include "util/compression.hpp"
+#include <AwesomeMC/anvil/anvil_read.hpp>
+
+// AwesomeMC
+#include <AwesomeMC/anvil/constants.hpp>
+#include <AwesomeMC/nbt/nbt_read.hpp>
+#include <AwesomeMC/util/byte_swap.hpp>
+#include <AwesomeMC/util/compression.hpp>
 
 // STL
 #include <fstream>

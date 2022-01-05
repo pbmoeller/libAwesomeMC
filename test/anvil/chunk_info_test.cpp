@@ -1,4 +1,5 @@
-#include "anvil/chunk_info.hpp"
+// AwesomeMC
+#include <AwesomeMC/anvil/chunk_info.hpp>
 
 // gtest
 #include <gtest/gtest.h>

@@ -1,6 +1,7 @@
-#include "anvil/chunk.hpp"
-#include "nbt/tags/int_tag.hpp"
-#include "nbt/tags/float_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/anvil/chunk.hpp>
+#include <AwesomeMC/nbt/tags/int_tag.hpp>
+#include <AwesomeMC/nbt/tags/float_tag.hpp>
 
 // gtest
 #include <gtest/gtest.h>

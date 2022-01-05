@@ -1,6 +1,7 @@
-#include "nbt/tags/byte_array_tag.hpp"
-#include "nbt/tags/end_tag.hpp"
-#include "nbt/tags/int_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/byte_array_tag.hpp>
+#include <AwesomeMC/nbt/tags/end_tag.hpp>
+#include <AwesomeMC/nbt/tags/int_tag.hpp>
 
 // gtest
 #include <gtest/gtest.h>

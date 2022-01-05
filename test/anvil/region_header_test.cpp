@@ -1,5 +1,6 @@
-#include "anvil/region_header.hpp"
-#include "anvil/chunk_info.hpp"
+// AwesomeMC
+#include <AwesomeMC/anvil/region_header.hpp>
+#include <AwesomeMC/anvil/chunk_info.hpp>
 
 // gtest
 #include <gtest/gtest.h>

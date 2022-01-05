@@ -1,11 +1,12 @@
-#include <anvil/anvil_read.hpp>
-#include <anvil/constants.hpp>
-#include <nbt/nbt_print.hpp>
+// AwesomeMC
+#include <AwesomeMC/anvil/anvil_read.hpp>
+#include <AwesomeMC/anvil/constants.hpp>
+#include <AwesomeMC/nbt/nbt_print.hpp>
 
+// STL
 #include <iostream>
 #include <string>
 #include <fstream>
-
 
 int main(int argc, char **argv)
 {
