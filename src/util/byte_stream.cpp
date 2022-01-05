@@ -1,4 +1,4 @@
-#include "util/byte_stream.hpp"
+#include <AwesomeMC/util/byte_stream.hpp>
 
 // STL
 #include <utility>

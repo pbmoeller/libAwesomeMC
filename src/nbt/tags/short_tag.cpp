@@ -1,5 +1,7 @@
-#include "nbt/tags/short_tag.hpp"
-#include "util/byte_stream.hpp"
+#include <AwesomeMC/nbt/tags/short_tag.hpp>
+
+// AwesomeMC
+#include <AwesomeMC/util/byte_stream.hpp>
 
 // STL
 #include <utility>

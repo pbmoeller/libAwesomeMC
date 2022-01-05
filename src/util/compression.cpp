@@ -1,4 +1,4 @@
-#include "util/compression.hpp"
+#include <AwesomeMC/util/compression.hpp>
 
 // ZLIB
 #include <zlib.h>

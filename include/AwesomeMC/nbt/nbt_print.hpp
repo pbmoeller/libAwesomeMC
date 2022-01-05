@@ -1,8 +1,8 @@
 #ifndef NBT_NBT_PRINTER_HPP
 #define NBT_NBT_PRINTER_HPP
 
-//nbt
-#include <nbt/tags/tags.hpp>
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/tags.hpp>
 
 // STL
 #include <sstream>

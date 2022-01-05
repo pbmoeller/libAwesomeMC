@@ -1,8 +1,8 @@
 #ifndef NBT_TAGS_LONG_TAG_HPP
 #define NBT_TAGS_LONG_TAG_HPP
 
-// nbt
-#include "abstract_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 
 // STL
 #include <string>

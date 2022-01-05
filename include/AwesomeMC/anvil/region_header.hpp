@@ -1,8 +1,9 @@
 #ifndef ANVIL_REGION_HEADER_HPP
 #define ANVIL_REGION_HEADER_HPP
 
-#include "constants.hpp"
-#include "chunk_info.hpp"
+// AwesomeMC
+#include <AwesomeMC/anvil/constants.hpp>
+#include <AwesomeMC/anvil/chunk_info.hpp>
 
 // STL
 #include <array>

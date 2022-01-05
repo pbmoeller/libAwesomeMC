@@ -1,7 +1,9 @@
-#include "nbt/nbt_read.hpp"
-#include "nbt/tags/tags.hpp"
-#include "util/byte_stream.hpp"
-#include "util/compression.hpp"
+#include <AwesomeMC/nbt/nbt_read.hpp>
+
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/tags.hpp>
+#include <AwesomeMC/util/byte_stream.hpp>
+#include <AwesomeMC/util/compression.hpp>
 
 // STL
 #include <sstream>

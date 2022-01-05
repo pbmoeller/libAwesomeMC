@@ -1,4 +1,5 @@
-#include "nbt/tags/abstract_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 
 // gtest
 #include <gtest/gtest.h>

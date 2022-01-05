@@ -1,10 +1,11 @@
-#include "nbt/tags/compound_tag.hpp"
-#include "nbt/tags/end_tag.hpp"
-#include "nbt/tags/byte_tag.hpp"
-#include "nbt/tags/int_tag.hpp"
-#include "nbt/tags/float_tag.hpp"
-#include "nbt/tags/double_tag.hpp"
-#include "nbt/tags/string_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/compound_tag.hpp>
+#include <AwesomeMC/nbt/tags/end_tag.hpp>
+#include <AwesomeMC/nbt/tags/byte_tag.hpp>
+#include <AwesomeMC/nbt/tags/int_tag.hpp>
+#include <AwesomeMC/nbt/tags/float_tag.hpp>
+#include <AwesomeMC/nbt/tags/double_tag.hpp>
+#include <AwesomeMC/nbt/tags/string_tag.hpp>
 
 // gtest
 #include <gtest/gtest.h>

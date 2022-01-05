@@ -1,7 +1,8 @@
-#include "anvil/block.hpp"
-#include "nbt/tags/compound_tag.hpp"
-#include "nbt/tags/string_tag.hpp"
-#include "nbt/tags/int_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/anvil/block.hpp>
+#include <AwesomeMC/nbt/tags/compound_tag.hpp>
+#include <AwesomeMC/nbt/tags/string_tag.hpp>
+#include <AwesomeMC/nbt/tags/int_tag.hpp>
 
 // gtest
 #include <gtest/gtest.h>

@@ -1,4 +1,4 @@
-#include "anvil/block.hpp"
+#include <AwesomeMC/anvil/block.hpp>
 
 namespace anvil
 {

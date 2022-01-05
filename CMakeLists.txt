@@ -16,43 +16,43 @@ find_package(ZLIB REQUIRED)
 ### Includes
 # anvil
 set(ANVIL_INCLUDES
-    "include/anvil/chunk_info.hpp"
-    "include/anvil/chunk.hpp"
-    "include/anvil/constants.hpp"
-    "include/anvil/region.hpp"
-    "include/anvil/region_header.hpp"
-    "include/anvil/anvil_read.hpp"
-    "include/anvil/block.hpp"
+    "include/AwesomeMC/anvil/chunk_info.hpp"
+    "include/AwesomeMC/anvil/chunk.hpp"
+    "include/AwesomeMC/anvil/constants.hpp"
+    "include/AwesomeMC/anvil/region.hpp"
+    "include/AwesomeMC/anvil/region_header.hpp"
+    "include/AwesomeMC/anvil/anvil_read.hpp"
+    "include/AwesomeMC/anvil/block.hpp"
 )
 
 # nbt
 set(NBT_INCLUDES
-    "include/nbt/tags/abstract_tag.hpp"
-    "include/nbt/tags/byte_array_tag.hpp"
-    "include/nbt/tags/byte_tag.hpp"
-    "include/nbt/tags/compound_tag.hpp"
-    "include/nbt/tags/double_tag.hpp"
-    "include/nbt/tags/end_tag.hpp"
-    "include/nbt/tags/float_tag.hpp"
-    "include/nbt/tags/int_array_tag.hpp"
-    "include/nbt/tags/int_tag.hpp"
-    "include/nbt/tags/list_tag.hpp"
-    "include/nbt/tags/long_array_tag.hpp"
-    "include/nbt/tags/long_tag.hpp"
-    "include/nbt/tags/short_tag.hpp"
-    "include/nbt/tags/string_tag.hpp"
-    "include/nbt/tags/tags.hpp"
-    "include/nbt/nbt_read.hpp"
-    "include/nbt/nbt_print.hpp"
+    "include/AwesomeMC/nbt/tags/abstract_tag.hpp"
+    "include/AwesomeMC/nbt/tags/byte_array_tag.hpp"
+    "include/AwesomeMC/nbt/tags/byte_tag.hpp"
+    "include/AwesomeMC/nbt/tags/compound_tag.hpp"
+    "include/AwesomeMC/nbt/tags/double_tag.hpp"
+    "include/AwesomeMC/nbt/tags/end_tag.hpp"
+    "include/AwesomeMC/nbt/tags/float_tag.hpp"
+    "include/AwesomeMC/nbt/tags/int_array_tag.hpp"
+    "include/AwesomeMC/nbt/tags/int_tag.hpp"
+    "include/AwesomeMC/nbt/tags/list_tag.hpp"
+    "include/AwesomeMC/nbt/tags/long_array_tag.hpp"
+    "include/AwesomeMC/nbt/tags/long_tag.hpp"
+    "include/AwesomeMC/nbt/tags/short_tag.hpp"
+    "include/AwesomeMC/nbt/tags/string_tag.hpp"
+    "include/AwesomeMC/nbt/tags/tags.hpp"
+    "include/AwesomeMC/nbt/nbt_read.hpp"
+    "include/AwesomeMC/nbt/nbt_print.hpp"
 )
 
 # util
 set(UTIL_INCLUDES
-    "include/util/byte_stream.hpp"
-    "include/util/byte_swap.hpp"
-    "include/util/compression.hpp"
-    "include/util/floating_point.hpp"
-    "include/util/conversion.hpp"
+    "include/AwesomeMC/util/byte_stream.hpp"
+    "include/AwesomeMC/util/byte_swap.hpp"
+    "include/AwesomeMC/util/compression.hpp"
+    "include/AwesomeMC/util/floating_point.hpp"
+    "include/AwesomeMC/util/conversion.hpp"
 )
 
 ### Sources

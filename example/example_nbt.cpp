@@ -1,8 +1,9 @@
-#include "nbt/tags/tags.hpp"
-#include "nbt/nbt_read.hpp"
-#include "nbt/nbt_print.hpp"
-#include "nbt/nbt_read.hpp"
-#include "util/compression.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/tags.hpp>
+#include <AwesomeMC/nbt/nbt_read.hpp>
+#include <AwesomeMC/nbt/nbt_print.hpp>
+#include <AwesomeMC/nbt/nbt_read.hpp>
+#include <AwesomeMC/util/compression.hpp>
 
 // STL
 #include <string>

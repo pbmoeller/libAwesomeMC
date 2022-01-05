@@ -1,4 +1,5 @@
-#include "util/byte_stream.hpp"
+// AwesomeMC
+#include <AwesomeMC/util/byte_stream.hpp>
 
 // gtest
 #include <gtest/gtest.h>

@@ -1,8 +1,9 @@
 #ifndef ANVIL_CHUNK_HPP
 #define ANVIL_CHUNK_HPP
 
-#include "nbt/tags/compound_tag.hpp"
-#include "anvil/block.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/compound_tag.hpp>
+#include <AwesomeMC/anvil/block.hpp>
 
 // STL
 #include <vector>

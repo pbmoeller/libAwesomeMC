@@ -1,7 +1,8 @@
 #ifndef NBT_TAGS_END_TAG_HPP
 #define NBT_TAGS_END_TAG_HPP
 
-#include "abstract_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 
 namespace nbt
 {

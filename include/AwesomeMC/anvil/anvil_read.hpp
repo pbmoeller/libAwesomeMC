@@ -1,7 +1,8 @@
 #ifndef ANVIL_ANVIL_READ_HPP
 #define ANVIL_ANVIL_READ_HPP
 
-#include "region.hpp"
+// AwesomeMC
+#include <AwesomeMC/anvil/region.hpp>
 
 // STL
 #include <string>

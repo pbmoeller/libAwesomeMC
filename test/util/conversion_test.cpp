@@ -1,4 +1,5 @@
-#include "util/conversion.hpp"
+// AwesomeMC
+#include <AwesomeMC/util/conversion.hpp>
 
 // gtest
 #include <gtest/gtest.h>

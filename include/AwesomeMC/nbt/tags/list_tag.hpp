@@ -1,8 +1,8 @@
-#ifndef NBT_TAGS_COMPOUND_TAG_HPP
-#define NBT_TAGS_COMPOUND_TAG_HPP
+#ifndef NBT_TAGS_LIST_TAG_HPP
+#define NBT_TAGS_LIST_TAG_HPP
 
-// nbt
-#include "abstract_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 
 // STL
 #include <vector>
@@ -11,23 +11,26 @@
 namespace nbt
 {
 
-class CompoundTag : public AbstractTag
+class ListTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::Compound };
+    enum { Type = TagType::List };
 
-    CompoundTag();
-    CompoundTag(const CompoundTag &other);
-    CompoundTag(CompoundTag &&other) noexcept;
-    CompoundTag(const std::string &name);
-    virtual ~CompoundTag();
+    ListTag();
+    ListTag(const ListTag &other);
+    ListTag(ListTag &&other) noexcept;
+    ListTag(const std::string &name);
+    ListTag(TagType listType);
+    ListTag(const std::string &name, TagType listType);
+    virtual ~ListTag();
 
-    CompoundTag& operator=(const CompoundTag &other);
-    CompoundTag& operator=(CompoundTag &&other) noexcept;
+    ListTag& operator=(const ListTag &other);
+    ListTag& operator=(ListTag &&other) noexcept;
 
     virtual AbstractTag* clone();
 
     constexpr virtual TagType getType() const override;
+    TagType getListType() const;
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 
@@ -46,13 +49,10 @@ public:
     // !!! This functions removes the item from CompoundTag - transfers ownership !!!
     AbstractTag* takeAt(size_t index);
 
-    AbstractTag* getChildByName(const std::string &name);
-    const AbstractTag* getChildByName(const std::string &name) const;
-    std::vector<AbstractTag*> getChildrenByName(const std::string &name) const;
-
-    // !!! Do not delete these items - the CompoundTag keeps the ownership 
+    // !!! Do not delete these items - the list keeps the ownership 
     //     -> use getValueCopy, if you want to modify the data !!!
     std::vector<AbstractTag*>& getValue();
+    const std::vector<AbstractTag*>& getValue() const;
     std::vector<AbstractTag*> getValueCopy() const;
     // !!! Takes ownership of value - do not delete the object after !!!
     void setValue(std::vector<AbstractTag*> &value);
@@ -62,9 +62,10 @@ protected:
     void copy(const std::vector<AbstractTag*> &otherValue);
 
 private:
+    TagType m_listType;
     std::vector<AbstractTag*> m_value;
 };
 
 } // namespace nbt
 
-#endif // NBT_TAGS_COMPOUND_TAG_HPP
+#endif // NBT_TAGS_LIST_TAG_HPP

@@ -1,7 +1,8 @@
 #ifndef ANVIL_BLOCK_HPP
 #define ANVIL_BLOCK_HPP
 
-#include "nbt/tags/compound_tag.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/compound_tag.hpp>
 
 // STL
 #include <string>

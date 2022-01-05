@@ -1,9 +1,9 @@
 #ifndef NBT_NBT_READER_HPP
 #define NBT_NBT_READER_HPP
 
-// nbt
-#include "nbt/tags/abstract_tag.hpp"
-#include "util/byte_stream.hpp"
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
+#include <AwesomeMC/util/byte_stream.hpp>
 
 // STL
 #include <string>

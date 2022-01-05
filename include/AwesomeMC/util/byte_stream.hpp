@@ -1,8 +1,8 @@
 #ifndef LIBAWESOMEANVIL_UTIL_BYTE_STREAM_HPP
 #define LIBAWESOMEANVIL_UTIL_BYTE_STREAM_HPP
 
-// util
-#include "util/byte_swap.hpp"
+// AwesomeMC
+#include <AwesomeMC/util/byte_swap.hpp>
 
 // STL
 #include <cstdint>

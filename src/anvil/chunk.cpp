@@ -1,9 +1,11 @@
-#include "anvil/chunk.hpp"
-#include "anvil/constants.hpp"
-#include "nbt/tags/list_tag.hpp"
-#include "nbt/tags/compound_tag.hpp"
-#include "nbt/tags/int_tag.hpp"
-#include "nbt/tags/int_array_tag.hpp"
+#include <AwesomeMC/anvil/chunk.hpp>
+
+// AwesomeMC
+#include <AwesomeMC/anvil/constants.hpp>
+#include <AwesomeMC/nbt/tags/list_tag.hpp>
+#include <AwesomeMC/nbt/tags/compound_tag.hpp>
+#include <AwesomeMC/nbt/tags/int_tag.hpp>
+#include <AwesomeMC/nbt/tags/int_array_tag.hpp>
 
 // STL
 #include <utility>

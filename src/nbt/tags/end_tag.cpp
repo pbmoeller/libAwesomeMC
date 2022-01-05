@@ -1,4 +1,4 @@
-#include "nbt/tags/end_tag.hpp"
+#include <AwesomeMC/nbt/tags/end_tag.hpp>
 
 namespace nbt
 {

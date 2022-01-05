@@ -1,5 +1,7 @@
-#include "util/conversion.hpp"
-#include "anvil/constants.hpp"
+#include <AwesomeMC/util/conversion.hpp>
+
+// AwesomeMC
+#include <AwesomeMC/anvil/constants.hpp>
 
 // STL
 #include <cmath>

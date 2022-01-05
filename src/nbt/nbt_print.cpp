@@ -1,5 +1,7 @@
-#include "nbt/nbt_print.hpp"
-#include "nbt/tags/tags.hpp"
+#include <AwesomeMC/nbt/nbt_print.hpp>
+
+// AwesomeMC
+#include <AwesomeMC/nbt/tags/tags.hpp>
 
 // STL
 #include <string>
