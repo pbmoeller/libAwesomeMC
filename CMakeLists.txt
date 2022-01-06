@@ -2,6 +2,32 @@ cmake_minimum_required(VERSION 3.12)
 
 project(AwesomeAnvil C CXX)
 
+### Version
+set(AWESOMEMC_VERSION_MAJOR 0)
+set(AWESOMEMC_VERSION_MINOR 1)
+set(AWESOMEMC_VERSION_PATCH 0)
+set(AWESOMEMC_VERSION ${AWESOMEMC_VERSION_MAJOR}.${AWESOMEMC_VERSION_MINOR}.${AWESOMEMC_VERSION_PATCH})
+
+execute_process(
+  COMMAND git rev-parse --abbrev-ref HEAD
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  OUTPUT_VARIABLE AWESOMEMC_GIT_BRANCH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_QUIET
+)
+execute_process(
+  COMMAND git log -1 --format=%h
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+  OUTPUT_VARIABLE AWESOMEMC_GIT_HASH
+  OUTPUT_STRIP_TRAILING_WHITESPACE
+  ERROR_QUIET
+)
+
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/version.h.in
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/AwesomeMC/version.h
+)
+
 ### LIBRARIES
 
 # GTEST
@@ -53,6 +79,7 @@ set(UTIL_INCLUDES
     "include/AwesomeMC/util/compression.hpp"
     "include/AwesomeMC/util/floating_point.hpp"
     "include/AwesomeMC/util/conversion.hpp"
+    "include/AwesomeMC/version.h"
 )
 
 ### Sources
