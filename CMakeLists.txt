@@ -40,12 +40,6 @@ configure_file(
 
 ### LIBRARIES
 
-# GTEST
-if(BUILD_TESTS)
-    enable_testing()
-    find_package(GTest REQUIRED)
-endif()
-
 # ZLIB
 find_package(ZLIB REQUIRED)
 
@@ -189,45 +183,7 @@ if(BUILD_EXAMPLES)
     set_property(TARGET load_testmap PROPERTY CXX_STANDARD 20)
 endif()
 
-# tests
+# Build Unit Tests
 if(BUILD_TESTS)
-    add_executable(tests 
-        "test/test_main.cpp" 
-        "test/types_test.cpp"
-        "test/nbt/tags/abstract_tag_test.cpp"
-        "test/nbt/tags/byte_tag_test.cpp"
-        "test/nbt/tags/end_tag_test.cpp"
-        "test/nbt/tags/short_tag_test.cpp"
-        "test/nbt/tags/long_tag_test.cpp"
-        "test/nbt/tags/int_tag_test.cpp"
-        "test/nbt/tags/float_tag_test.cpp" 
-        "test/nbt/tags/double_tag_test.cpp"
-        "test/nbt/tags/byte_array_tag_test.cpp"
-        "test/nbt/tags/string_tag_test.cpp"
-        "test/nbt/tags/list_tag_test.cpp"
-        "test/nbt/tags/int_array_tag_test.cpp"
-        "test/nbt/tags/long_array_tag_test.cpp"
-        "test/nbt/tags/compound_tag_test.cpp"
-        "test/nbt/nbt_read_test.cpp"
-        "test/anvil/region_test.cpp"
-        "test/anvil/region_header_test.cpp"
-        "test/anvil/chunk_info_test.cpp"
-        "test/anvil/chunk_test.cpp"
-        "test/util/byte_swap_test.cpp"
-        "test/util/byte_stream_test.cpp"
-        "test/anvil/block_test.cpp"
-        "test/util/conversion_test.cpp"
-    )
-    target_link_libraries(tests AwesomeMC ${GTEST_LIBRARIES})
-    if(UNIX)
-        target_link_libraries(tests pthread)
-    endif()
-
-    target_include_directories(tests
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/test
-        PRIVATE ${GTEST_INCLUDE_DIRS}
-        PRIVATE ${GMOCK_INCLUDE_DIRS}
-    )
-    set_property(TARGET tests PROPERTY CXX_STANDARD 20)
+    add_subdirectory(test)
 endif()
