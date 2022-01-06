@@ -147,40 +147,9 @@ target_include_directories(AwesomeMC
 target_link_libraries(AwesomeMC ${ZLIB_LIBRARIES})
 set_property(TARGET AwesomeMC PROPERTY CXX_STANDARD 20)
 
-# example
+# Build examples
 if(BUILD_EXAMPLES)
-# example 1
-    add_executable(example1 "example/example1.cpp")
-    target_include_directories(example1
-        PRIVATE ${ZLIB_INCLUDE_DIRS}
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
-    )
-    target_link_libraries(example1 AwesomeMC)
-    set_property(TARGET example1 PROPERTY CXX_STANDARD 20)
-# example 2
-    add_executable(example_nbt "example/example_nbt.cpp")
-    target_include_directories(example_nbt
-        PRIVATE ${ZLIB_INCLUDE_DIRS}
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
-    )
-    target_link_libraries(example_nbt AwesomeMC)
-    set_property(TARGET example_nbt PROPERTY CXX_STANDARD 20)
-# example 3
-    add_executable(example_anvil "example/example_anvil.cpp")
-    target_include_directories(example_anvil
-        PRIVATE ${ZLIB_INCLUDE_DIRS}
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
-    )
-    target_link_libraries(example_anvil AwesomeMC)
-    set_property(TARGET example_anvil PROPERTY CXX_STANDARD 20)
-# example 4
-    add_executable(load_testmap "example/load_testmap.cpp")
-    target_include_directories(load_testmap
-        PRIVATE ${ZLIB_INCLUDE_DIRS}
-        PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
-    )
-    target_link_libraries(load_testmap AwesomeMC)
-    set_property(TARGET load_testmap PROPERTY CXX_STANDARD 20)
+    add_subdirectory(example)
 endif()
 
 # Build Unit Tests
