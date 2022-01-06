@@ -1,11 +1,21 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(AwesomeAnvil C CXX)
+project(AwesomeMC
+    VERSION 0.1.0
+    LANGUAGES C CXX
+)
+
+### Options
+option(BUILD_TESTS "Build unit tests for AwesomeMC" TRUE)
+option(BUILD_EXAMPLES "Build example programs for AwesomeMC" TRUE)
+
+### Additional flags
+set(CMAKE_CXX_STANDARD 20)
 
 ### Version
-set(AWESOMEMC_VERSION_MAJOR 0)
-set(AWESOMEMC_VERSION_MINOR 1)
-set(AWESOMEMC_VERSION_PATCH 0)
+set(AWESOMEMC_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(AWESOMEMC_VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(AWESOMEMC_VERSION_PATCH ${PROJECT_VERSION_PATCH})
 set(AWESOMEMC_VERSION ${AWESOMEMC_VERSION_MAJOR}.${AWESOMEMC_VERSION_MINOR}.${AWESOMEMC_VERSION_PATCH})
 
 execute_process(
@@ -31,7 +41,7 @@ configure_file(
 ### LIBRARIES
 
 # GTEST
-if(build_tests)
+if(BUILD_TESTS)
     enable_testing()
     find_package(GTest REQUIRED)
 endif()
@@ -127,7 +137,7 @@ endif()
 
 ### Targets
 # lib
-add_library(AwesomeAnvil SHARED 
+add_library(AwesomeMC SHARED 
     ${ANVIL_SOURCES} 
     ${NBT_SOURCES} 
     ${UTIL_SOURCES} 
@@ -135,23 +145,23 @@ add_library(AwesomeAnvil SHARED
     ${NBT_INCLUDES} 
     ${UTIL_INCLUDES}
 )
-target_compile_definitions(AwesomeAnvil PUBLIC TEST_EXPORT)
-target_include_directories(AwesomeAnvil
+target_compile_definitions(AwesomeMC PUBLIC TEST_EXPORT)
+target_include_directories(AwesomeMC
     PRIVATE ${ZLIB_INCLUDE_DIRS}
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
-target_link_libraries(AwesomeAnvil ${ZLIB_LIBRARIES})
-set_property(TARGET AwesomeAnvil PROPERTY CXX_STANDARD 20)
+target_link_libraries(AwesomeMC ${ZLIB_LIBRARIES})
+set_property(TARGET AwesomeMC PROPERTY CXX_STANDARD 20)
 
 # example
-if(build_examples)
+if(BUILD_EXAMPLES)
 # example 1
     add_executable(example1 "example/example1.cpp")
     target_include_directories(example1
         PRIVATE ${ZLIB_INCLUDE_DIRS}
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
-    target_link_libraries(example1 AwesomeAnvil)
+    target_link_libraries(example1 AwesomeMC)
     set_property(TARGET example1 PROPERTY CXX_STANDARD 20)
 # example 2
     add_executable(example_nbt "example/example_nbt.cpp")
@@ -159,7 +169,7 @@ if(build_examples)
         PRIVATE ${ZLIB_INCLUDE_DIRS}
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
-    target_link_libraries(example_nbt AwesomeAnvil)
+    target_link_libraries(example_nbt AwesomeMC)
     set_property(TARGET example_nbt PROPERTY CXX_STANDARD 20)
 # example 3
     add_executable(example_anvil "example/example_anvil.cpp")
@@ -167,7 +177,7 @@ if(build_examples)
         PRIVATE ${ZLIB_INCLUDE_DIRS}
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
-    target_link_libraries(example_anvil AwesomeAnvil)
+    target_link_libraries(example_anvil AwesomeMC)
     set_property(TARGET example_anvil PROPERTY CXX_STANDARD 20)
 # example 4
     add_executable(load_testmap "example/load_testmap.cpp")
@@ -175,12 +185,12 @@ if(build_examples)
         PRIVATE ${ZLIB_INCLUDE_DIRS}
         PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include
     )
-    target_link_libraries(load_testmap AwesomeAnvil)
+    target_link_libraries(load_testmap AwesomeMC)
     set_property(TARGET load_testmap PROPERTY CXX_STANDARD 20)
 endif()
 
 # tests
-if(build_tests)
+if(BUILD_TESTS)
     add_executable(tests 
         "test/test_main.cpp" 
         "test/types_test.cpp"
@@ -208,7 +218,7 @@ if(build_tests)
         "test/anvil/block_test.cpp"
         "test/util/conversion_test.cpp"
     )
-    target_link_libraries(tests AwesomeAnvil ${GTEST_LIBRARIES})
+    target_link_libraries(tests AwesomeMC ${GTEST_LIBRARIES})
     if(UNIX)
         target_link_libraries(tests pthread)
     endif()
