@@ -1,6 +1,6 @@
 // AwesomeMC
 #include <AwesomeMC/anvil/anvil_read.hpp>
-#include <AwesomeMC/anvil/constants.hpp>
+#include <AwesomeMC/constants.hpp>
 #include <AwesomeMC/nbt/nbt_print.hpp>
 
 // STL

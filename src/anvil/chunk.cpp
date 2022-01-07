@@ -1,7 +1,7 @@
 #include <AwesomeMC/anvil/chunk.hpp>
 
 // AwesomeMC
-#include <AwesomeMC/anvil/constants.hpp>
+#include <AwesomeMC/constants.hpp>
 #include <AwesomeMC/nbt/tags/list_tag.hpp>
 #include <AwesomeMC/nbt/tags/compound_tag.hpp>
 #include <AwesomeMC/nbt/tags/int_tag.hpp>

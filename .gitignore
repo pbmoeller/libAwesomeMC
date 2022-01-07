@@ -1,4 +1,4 @@
 .vs
 /out
 CMakeSettings.json
-/include/AwesomeMC/version.h
+/include/AwesomeMC/version.hpp

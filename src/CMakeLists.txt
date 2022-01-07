@@ -6,7 +6,6 @@ find_package(ZLIB REQUIRED)
 set(ANVIL_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk_info.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/constants.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region_header.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/anvil_read.hpp"
@@ -41,7 +40,14 @@ set(UTIL_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/compression.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/floating_point.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/conversion.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/version.h"
+)
+
+set(AWESOMEMC_INCLUDES
+    ${ANVIL_INCLUDES}
+    ${NBT_INCLUDES}
+    ${UTIL_INCLUDES}
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/constants.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/version.hpp"
 )
 
 ### Sources
@@ -93,9 +99,7 @@ add_library(AwesomeMC SHARED
     ${ANVIL_SOURCES} 
     ${NBT_SOURCES} 
     ${UTIL_SOURCES} 
-    ${ANVIL_INCLUDES} 
-    ${NBT_INCLUDES} 
-    ${UTIL_INCLUDES}
+    ${AWESOMEMC_INCLUDES}
 )
 target_compile_definitions(AwesomeMC PUBLIC TEST_EXPORT)
 target_include_directories(AwesomeMC

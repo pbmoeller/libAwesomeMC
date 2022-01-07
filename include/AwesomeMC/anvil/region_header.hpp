@@ -2,7 +2,7 @@
 #define AWESOMEMC_ANVIL_REGION_HEADER_HPP
 
 // AwesomeMC
-#include <AwesomeMC/anvil/constants.hpp>
+#include <AwesomeMC/constants.hpp>
 #include <AwesomeMC/anvil/chunk_info.hpp>
 
 // STL

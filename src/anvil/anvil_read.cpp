@@ -1,7 +1,7 @@
 #include <AwesomeMC/anvil/anvil_read.hpp>
 
 // AwesomeMC
-#include <AwesomeMC/anvil/constants.hpp>
+#include <AwesomeMC/constants.hpp>
 #include <AwesomeMC/nbt/nbt_read.hpp>
 #include <AwesomeMC/util/byte_swap.hpp>
 #include <AwesomeMC/util/compression.hpp>
