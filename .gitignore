@@ -1,3 +1,4 @@
 .vs
 /out
 CMakeSettings.json
+/include/AwesomeMC/version.h
