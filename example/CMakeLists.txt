@@ -1,3 +1,6 @@
+# ZLIB
+find_package(ZLIB REQUIRED)
+
 ### Example 1
 add_executable(example1 "example1.cpp")
 target_include_directories(example1
