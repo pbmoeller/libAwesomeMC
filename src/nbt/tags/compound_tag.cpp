@@ -151,11 +151,13 @@ size_t CompoundTag::size() const
 
 AbstractTag* CompoundTag::at(size_t index)
 {
+    // TODO: Check invalid index
     return m_value.at(index);
 }
 
 const AbstractTag* CompoundTag::at(size_t index) const
 {
+    // TODO: Check invalid index
     return m_value.at(index);
 }
 

@@ -7,6 +7,7 @@ The current library version targets Minecraft 1.18.1.
 
 Data format references:
 * [Chunk-Format](https://minecraft.fandom.com/wiki/Chunk_format)
+* [Chunk Format 2](https://wiki.vg/Chunk_Format)
 * [Region-Format](https://minecraft.fandom.com/wiki/Region_file_format)
 * [Anvil-Format](https://minecraft.fandom.com/wiki/Anvil_file_format)
 * [NBT-Format](https://minecraft.fandom.com/wiki/NBT_format)
@@ -47,6 +48,8 @@ Data format references:
   - Add Minecraft Target Version (1.18.1) + DataVersion (Current 2865)
 - Source Code
   - Unify the use of `char` / `unsigned char` for byte data
+  - CompoundTag / ListTag
+    - Add operator[]
   - Check namespaces, eventually put everything in a common library namespace, i.e. `AwesomeMC`, `amc`, ...
   - Round vs. curly braces
   - Use size_t when dealing with sizes of containers
