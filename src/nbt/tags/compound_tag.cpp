@@ -38,6 +38,28 @@ CompoundTag::CompoundTag(const std::string &name)
 
 }
 
+CompoundTag::CompoundTag(std::initializer_list<AbstractTag*> items)
+    : AbstractTag()
+    , m_value{}
+{
+    for(AbstractTag *item : items) {
+        if(item) {
+            m_value.push_back(item);
+        }
+    }
+}
+
+CompoundTag::CompoundTag(const std::string &name, std::initializer_list<AbstractTag*> items)
+    : AbstractTag(name)
+    , m_value{}
+{
+    for(AbstractTag *item : items) {
+        if(item) {
+            m_value.push_back(item);
+        }
+    }
+}
+
 CompoundTag::~CompoundTag()
 {
     clear();

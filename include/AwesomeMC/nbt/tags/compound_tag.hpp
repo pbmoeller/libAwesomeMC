@@ -7,6 +7,7 @@
 // STL
 #include <vector>
 #include <string>
+#include <initializer_list>
 
 namespace nbt
 {
@@ -20,6 +21,8 @@ public:
     CompoundTag(const CompoundTag &other);
     CompoundTag(CompoundTag &&other) noexcept;
     CompoundTag(const std::string &name);
+    CompoundTag(std::initializer_list<AbstractTag*> items);
+    CompoundTag(const std::string &name, std::initializer_list<AbstractTag*> items);
     virtual ~CompoundTag();
 
     CompoundTag& operator=(const CompoundTag &other);

@@ -31,6 +31,54 @@ TEST(CompoundTag, Constructor_2)
     EXPECT_TRUE(compoundTag.isEmpty());
 }
 
+TEST(CompoundTag, Constructor_3)
+{
+    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
+    nbt::ByteTag *a2    = new nbt::ByteTag("A", 1);
+    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
+    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+
+    nbt::CompoundTag compoundTag({a, b, c});
+    EXPECT_EQ(3, compoundTag.size());
+
+    nbt::AbstractTag *aTest = compoundTag.getChildByName("A");
+    EXPECT_EQ(a, aTest);
+    nbt::AbstractTag *bTest = compoundTag.getChildByName("B");
+    EXPECT_EQ(b, bTest);
+    nbt::AbstractTag *cTest = compoundTag.getChildByName("C");
+    EXPECT_EQ(c, cTest);
+
+    nbt::CompoundTag compoundTag2({a2, nullptr});
+    EXPECT_EQ(1, compoundTag2.size());
+    nbt::AbstractTag *aTest2 = compoundTag2.getChildByName("A");
+    EXPECT_EQ(a2, aTest2);
+}
+
+TEST(CompoundTag, Constructor_4)
+{
+    std::string name    = "Constructor_4";
+    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
+    nbt::ByteTag *a2    = new nbt::ByteTag("A", 1);
+    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
+    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+
+    nbt::CompoundTag compoundTag(name, {a, b, c});
+    EXPECT_EQ(3, compoundTag.size());
+    EXPECT_STREQ(name.c_str(), compoundTag.getName().c_str());
+
+    nbt::AbstractTag *aTest = compoundTag.getChildByName("A");
+    EXPECT_EQ(a, aTest);
+    nbt::AbstractTag *bTest = compoundTag.getChildByName("B");
+    EXPECT_EQ(b, bTest);
+    nbt::AbstractTag *cTest = compoundTag.getChildByName("C");
+    EXPECT_EQ(c, cTest);
+
+    nbt::CompoundTag compoundTag2(name, {a2, nullptr});
+    EXPECT_EQ(1, compoundTag2.size());
+    nbt::AbstractTag *aTest2 = compoundTag2.getChildByName("A");
+    EXPECT_EQ(a2, aTest2);
+}
+
 TEST(CompoundTag, CopyConstructor)
 {
     std::string name = "CopyConstructor";
