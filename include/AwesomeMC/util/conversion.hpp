@@ -7,16 +7,31 @@
 namespace util
 {
 
-void convertBlockWorld2Region(const int blockX, const int blockY, const int blockZ,
-                              int &chunkX, int &chunkZ);
+bool isValidWorldCoordinate(const int worldXx, const int worldY, const int worldZ);
+bool isValidRegionCoordinate(const int regionX, const int regionY, const int regionZ);
+bool isValidChunkCoordinate(const int chunkX, const int chunkY, const int chunkZ);
+bool isValidSectionCoordinate(const int sectionX, const int sectionY, const int sectionZ);
 
-void convertBlockWorld2BlockChunk(const int blockXW, const int blockYW, const int blockZW,
-                                  int &blockXC, int &blockYC, int &blockZC,
-                                  int &chunkX, int &chunkY, int &chunkZ);
-void convertBlockWorld2BlockChunk(const int blockXW, const int blockYW, const int blockZW,
-                                  int &blockXC, int &blockYC, int &blockZC);
-void convertBlockWorld2Chunk(const int blockXW, const int blockYW, const int blockZW,
-                             int &chunkX, int &chunkY, int &chunkZ);
+int calculateSection(const int blockY);
+int calculateSectionIndex(const int blockY);
+
+void convertBlockWorld2Region(const int blockWorldX, const int blockWorldZ,
+                              int &regionX, int &regionZ);
+void convertBlockWorld2ChunkWorld(const int blockWorldX, const int blockWorldZ,
+                                  int &chunkWorldX, int &chunkWorldZ);
+void convertBlockWorld2ChunkRegion(const int blockWorldX, const int blockWorldZ,
+                                   int &chunkRegionX, int &chunkRegionZ);
+void convertBlockWorld2BlockRegion(const int blockWorldX, const int blockWorldZ,
+                                   int &blockRegionX, int &blockRegionZ);
+void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldZ,
+                                  int &blockChunkX, int &blockChunkZ);
+void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldY, const int blockWorldZ,
+                                  int &blockChunkX, int &blockChunkY, int &blockChunkZ);
+
+
+
+
+
 
 } // namespace util
 

@@ -1,4 +1,5 @@
 #include <AwesomeMC/anvil/region.hpp>
+#include <AwesomeMC/util/conversion.hpp>
 
 // STL
 #include <utility>
@@ -172,19 +173,20 @@ int32_t Region::getBiomeAt(unsigned int x,
     return getChunkAt(chunkIdx).getBiomeAt(blockX, blockY, blockZ);
 }
 
-Block Region::getBlockAt(unsigned int x,
-                         unsigned int z,
-                         unsigned int blockX,
-                         int blockY,
-                         unsigned int blockZ) const
+Block Region::getBlockAt(const int blockX,
+                         const int blockY,
+                         const int blockZ) const
 {
     // Check if chunk coodinates are valid
-    if(x >= ChunkWidth || z >= ChunkWidth) {
-        throw std::out_of_range("Coordinates out of range");
-    }
+    //if(x >= ChunkWidth || z >= ChunkWidth) {
+    //    throw std::out_of_range("Coordinates out of range");
+    //}
 
     // Calculate the requested chunk
-    unsigned chunkIdx = z * ChunkWidth + x;
+    int xRegion = 0;
+    int zRegion = 0;
+    util::convertBlockWorld2ChunkRegion(blockX, blockZ, xRegion, zRegion);
+    unsigned chunkIdx = zRegion * ChunkWidth + xRegion;
 
     // Get data from chunk
     return getChunkAt(chunkIdx).getBlockAt(blockX, blockY, blockZ);

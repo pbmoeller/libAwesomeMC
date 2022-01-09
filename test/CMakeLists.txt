@@ -27,7 +27,7 @@ add_executable(tests
     "util/byte_stream_test.cpp"
     "anvil/block_test.cpp"
     "util/conversion_test.cpp"
-)
+ "util/bit_test.cpp")
 target_link_libraries(tests AwesomeMC ${GTEST_LIBRARIES})
 
 if(UNIX)

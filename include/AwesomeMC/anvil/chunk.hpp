@@ -37,7 +37,7 @@ public:
     std::vector<int32_t> getBiomes() const;
     int32_t getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
 
-    Block getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
+    Block getBlockAt(const int blockX, const int blockY, const int blockZ) const;
     std::vector<nbt::AbstractTag*> getPaletteAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
 
 protected:

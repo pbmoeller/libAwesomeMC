@@ -16,6 +16,7 @@ namespace anvil
     constexpr unsigned int ChunkWidth       = 32;
 
     constexpr unsigned int RegionWidth      = 512;
+    constexpr int WorldBorder               = 29999984;
 
     // Region File
     constexpr unsigned int HeaderOffset     = 0;

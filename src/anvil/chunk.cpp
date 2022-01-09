@@ -6,8 +6,14 @@
 #include <AwesomeMC/nbt/tags/compound_tag.hpp>
 #include <AwesomeMC/nbt/tags/int_tag.hpp>
 #include <AwesomeMC/nbt/tags/int_array_tag.hpp>
+#include <AwesomeMC/nbt/tags/long_array_tag.hpp>
+#include <AwesomeMC/nbt/tags/string_tag.hpp>
+#include <AwesomeMC/util/bit.hpp>
+#include <AwesomeMC/util/byte_swap.hpp>
+#include <AwesomeMC/util/conversion.hpp>
 
 // STL
+#include <bit>
 #include <utility>
 #include <stdexcept>
 
@@ -171,21 +177,87 @@ int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) 
     return tag_cast<nbt::IntArrayTag*>(biomesArray[0])->at(biomeIndex);
 }
 
-Block Chunk::getBlockAt(unsigned int blockX, int blockY, unsigned int blockZ) const
+Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) const
 {
     // Check ranges of block coordinates
-    if(blockX >= BlockWidth || blockZ >= BlockWidth
-       || blockY < MinimumBlockHeight || blockY > MaximumBlockHeight) {
-        throw std::out_of_range("Block Coordinates out of range");
-    }
+    //if(blockX >= BlockWidth || blockZ >= BlockWidth
+    //   || blockY < MinimumBlockHeight || blockY > MaximumBlockHeight) {
+    //    throw std::out_of_range("Block Coordinates out of range");
+    //}
 
     // Calculate Section
-    int sectionIndex = blockY / BlockWidth + 5;
+
+    int sectionIndex = util::calculateSectionIndex(blockY);
 
     // Get BlockStates
-    nbt::CompoundTag *section = tag_cast<nbt::CompoundTag*>(getSubTagsByName("sections").at(sectionIndex));
+    auto vecTmp = getSubTagsByName("sections");
+    if(vecTmp.size() == 0) {
+        throw std::runtime_error("\"sections\" not found!");
+    }
+    nbt::ListTag *sections = tag_cast<nbt::ListTag*>(vecTmp.at(0));
+    if(!sections) {
+        throw std::runtime_error("\"sections\" is not a list!");
+    }
+    nbt::CompoundTag *section = tag_cast<nbt::CompoundTag*>(sections->at(sectionIndex));
+    if(!section) {
+        throw std::runtime_error(std::string("\"section\" at index \"") + std::to_string(sectionIndex) + std::string("\" not found!"));
+    }
+    nbt::CompoundTag *blockStates = tag_cast<nbt::CompoundTag*>(section->getChildByName("block_states"));
+    if(!blockStates) {
+        throw std::runtime_error("\"block_states\" not found!");
+    }
+    nbt::ListTag *palette = tag_cast<nbt::ListTag*>(blockStates->getChildByName("palette"));
+    if(!palette) {
+        throw std::runtime_error("\"palette\" not found!");
+    }
 
-    return Block();
+    // Get Block data
+    size_t paletteIndex = 0;
+    nbt::LongArrayTag *blockData = tag_cast<nbt::LongArrayTag*>(blockStates->getChildByName("data"));
+    if(blockData) {
+        int localX = 0;
+        int localY = 0;
+        int localZ = 0;
+        util::convertBlockWorld2BlockChunk(blockX, blockY, blockZ, localX, localY, localZ);
+        int bitWidth = std::bit_width(palette->size() - 1);
+        int blocksPerLong = static_cast<int>(64 / bitWidth);
+
+        int blockIndex = localY * anvil::BlockCount + localZ * anvil::BlockWidth + localX;
+        int longIndex = blockIndex / blocksPerLong;
+        int blockInLong = blockIndex % blocksPerLong;
+        if(longIndex >= blockData->size()) {
+            throw std::runtime_error("Long index out of range!");
+        }
+        int64_t longValue = blockData->at(longIndex);
+        int64_t mask = util::setNLeastSignificantBits64(bitWidth);
+        int64_t placedMask = mask << (blockInLong * bitWidth);
+        int64_t maskedValue = longValue & placedMask;
+        int64_t idxValue = maskedValue >> (blockInLong * bitWidth);
+        
+        paletteIndex = idxValue;
+
+    } else {
+        // Valid case => this section must be full of air (or on other block, see palette entry TODO: (check!!))
+        paletteIndex = 0;
+    }
+
+    nbt::CompoundTag *paletteEntry = tag_cast<nbt::CompoundTag*>(palette->at(paletteIndex));
+    if(!paletteEntry) {
+        throw std::runtime_error("\"palette\" is empty!");
+    }
+    nbt::StringTag *entryName = tag_cast<nbt::StringTag*>(paletteEntry->getChildByName("Name"));
+    if(!entryName) {
+        throw std::runtime_error("\"Name\" of palette entry not found!");
+    }
+
+    // If the palette entyr has a Properties field add it to the Block data
+    nbt::CompoundTag *properties = tag_cast<nbt::CompoundTag*>(paletteEntry->getChildByName("Properties"));
+    if(properties) {
+        nbt::CompoundTag props(*properties);
+        return Block(blockX, blockY, blockZ, entryName->getValue(), props);
+    } else {
+        return Block(blockX, blockY, blockZ, entryName->getValue());
+    }
 }
 
 std::vector<nbt::AbstractTag*> Chunk::getPaletteAt(unsigned int blockX, int blockY, unsigned int blockZ) const

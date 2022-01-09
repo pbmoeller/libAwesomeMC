@@ -48,11 +48,9 @@ public:
                        int blockY,
                        unsigned int blockZ) const;
 
-    Block getBlockAt(unsigned int x,
-                     unsigned int z,
-                     unsigned int blockX,
-                     int blockY,
-                     unsigned int blockZ) const;
+    Block getBlockAt(const int blockX,
+                     const int blockY,
+                     const int blockZ) const;
 
 private:
     int m_x;
