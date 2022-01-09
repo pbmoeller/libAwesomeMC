@@ -7,6 +7,7 @@
 // STL
 #include <vector>
 #include <string>
+#include <initializer_list>
 
 namespace nbt
 {
@@ -21,7 +22,11 @@ public:
     ListTag(ListTag &&other) noexcept;
     ListTag(const std::string &name);
     ListTag(TagType listType);
+    // !!! Takes ownership of value - do not delete the object after !!!
+    ListTag(TagType listType, std::initializer_list<AbstractTag*> items);
     ListTag(const std::string &name, TagType listType);
+    // !!! Takes ownership of value - do not delete the object after !!!
+    ListTag(const std::string &name, TagType listType, std::initializer_list<AbstractTag*> items);
     virtual ~ListTag();
 
     ListTag& operator=(const ListTag &other);
@@ -42,14 +47,23 @@ public:
     // !!! Takes ownership of value - do not delete the object after !!!
     bool pushBack(AbstractTag* value);
     size_t size() const;
-    // !!! Do not delete these items - the list keeps the ownership !!!
+    // !!! Do not delete these items - the ListTag keeps the ownership !!!
+    // Does range checking -> throws
     AbstractTag* at(size_t index);
-    // !!! Do not delete these items - the list keeps the ownership !!!
+    // !!! Do not delete these items - the ListTag keeps the ownership !!!
+    // Does range checking -> throws
     const AbstractTag* at(size_t index) const;
-    // !!! This functions removes the item from CompoundTag - transfers ownership !!!
+    // !!! This functions removes the item from ListTag - transfers ownership !!!
     AbstractTag* takeAt(size_t index);
 
-    // !!! Do not delete these items - the list keeps the ownership 
+    // !!! Do not delete these items - the ListTag keeps the ownership !!!
+    // Does not do range checking
+    AbstractTag* operator[](const size_t index);
+    // !!! Do not delete these items - the ListTag keeps the ownership !!!
+    // Does not do range checking
+    const AbstractTag* operator[](const size_t index) const;
+
+    // !!! Do not delete these items - the ListTag keeps the ownership 
     //     -> use getValueCopy, if you want to modify the data !!!
     std::vector<AbstractTag*>& getValue();
     const std::vector<AbstractTag*>& getValue() const;

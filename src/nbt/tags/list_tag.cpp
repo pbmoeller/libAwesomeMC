@@ -5,6 +5,7 @@
 
 // STL
 #include <utility>
+#include <stdexcept>
 
 namespace nbt
 {
@@ -48,12 +49,36 @@ ListTag::ListTag(TagType listType)
 
 }
 
+ListTag::ListTag(TagType listType, std::initializer_list<AbstractTag*> items)
+    : AbstractTag()
+    , m_listType{listType}
+    , m_value{}
+{
+    for(AbstractTag *item : items) {
+        if(item && item->getType() == listType) {
+            m_value.push_back(item);
+        }
+    }
+}
+
 ListTag::ListTag(const std::string &name, TagType listType)
     : AbstractTag(name)
     , m_listType{listType}
     , m_value{}
 {
 
+}
+
+ListTag::ListTag(const std::string &name, TagType listType, std::initializer_list<AbstractTag*> items)
+    : AbstractTag(name)
+    , m_listType{listType}
+    , m_value{}
+{
+    for(AbstractTag *item : items) {
+        if(item && item->getType() == listType) {
+            m_value.push_back(item);
+        }
+    }
 }
 
 ListTag::~ListTag()
@@ -178,11 +203,17 @@ size_t ListTag::size() const
 
 AbstractTag* ListTag::at(size_t index)
 {
+    if(index >= m_value.size()) {
+        throw std::out_of_range("Index out of range!");
+    }
     return m_value.at(index);
 }
 
 const AbstractTag* ListTag::at(size_t index) const
 {
+    if(index >= m_value.size()) {
+        throw std::out_of_range("Index out of range!");
+    }
     return m_value.at(index);
 }
 
@@ -191,6 +222,16 @@ AbstractTag* ListTag::takeAt(size_t index)
     AbstractTag *tag = at(index);
     m_value.erase(m_value.begin() + index);
     return tag;
+}
+
+AbstractTag* ListTag::operator[](const size_t index)
+{
+    return m_value.at(index);
+}
+
+const AbstractTag* ListTag::operator[](const size_t index) const
+{
+    return m_value.at(index);
 }
 
 std::vector<AbstractTag*>& ListTag::getValue()

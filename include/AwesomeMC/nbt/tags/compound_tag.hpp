@@ -21,7 +21,9 @@ public:
     CompoundTag(const CompoundTag &other);
     CompoundTag(CompoundTag &&other) noexcept;
     CompoundTag(const std::string &name);
+    // !!! Takes ownership of value - do not delete the object after !!!
     CompoundTag(std::initializer_list<AbstractTag*> items);
+    // !!! Takes ownership of value - do not delete the object after !!!
     CompoundTag(const std::string &name, std::initializer_list<AbstractTag*> items);
     virtual ~CompoundTag();
 

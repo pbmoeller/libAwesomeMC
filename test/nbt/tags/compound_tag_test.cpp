@@ -495,7 +495,7 @@ TEST(CompoundTag, at_const)
     EXPECT_TRUE(*c == *v3);
 
     // Test exception
-    EXPECT_THROW(compoundTag.at(3), std::out_of_range);
+    EXPECT_THROW(compoundTag2.at(3), std::out_of_range);
 }
 
 TEST(CompoundTag, takeAt)
