@@ -416,6 +416,9 @@ TEST(CompoundTag, at)
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
     EXPECT_TRUE(*c == *v3);
+
+    // Test exception
+    EXPECT_THROW(compoundTag.at(3), std::out_of_range);
 }
 
 TEST(CompoundTag, at_const)
@@ -442,6 +445,9 @@ TEST(CompoundTag, at_const)
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
     EXPECT_TRUE(*c == *v3);
+
+    // Test exception
+    EXPECT_THROW(compoundTag.at(3), std::out_of_range);
 }
 
 TEST(CompoundTag, takeAt)
@@ -468,6 +474,56 @@ TEST(CompoundTag, takeAt)
     nbt::AbstractTag *cTest = compoundTag.takeAt(0);
     EXPECT_EQ(0, compoundTag.size());
     EXPECT_EQ(c, cTest);
+}
+
+TEST(CompoundTag, subscript)
+{
+    nbt::CompoundTag compoundTag;
+
+    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
+    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
+    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+
+    // Add 3 Items
+    compoundTag.pushBack(a);
+    compoundTag.pushBack(b);
+    compoundTag.pushBack(c);
+    ASSERT_EQ(3, compoundTag.size());
+
+    // Test at
+    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(compoundTag[0]);
+    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(compoundTag[1]);
+    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(compoundTag[2]);
+
+    EXPECT_TRUE(*a == *v1);
+    EXPECT_TRUE(*b == *v2);
+    EXPECT_TRUE(*c == *v3);
+}
+
+TEST(CompoundTag, subscript_const)
+{
+    nbt::CompoundTag compoundTag;
+
+    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
+    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
+    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+
+    // Add 3 Items
+    compoundTag.pushBack(a);
+    compoundTag.pushBack(b);
+    compoundTag.pushBack(c);
+    ASSERT_EQ(3, compoundTag.size());
+
+    const nbt::CompoundTag compoundTag2(compoundTag);
+
+    // Test at
+    const nbt::ByteTag *v1 = tag_cast<const nbt::ByteTag*>(compoundTag2[0]);
+    const nbt::ByteTag *v2 = tag_cast<const nbt::ByteTag*>(compoundTag2[1]);
+    const nbt::ByteTag *v3 = tag_cast<const nbt::ByteTag*>(compoundTag2[2]);
+
+    EXPECT_TRUE(*a == *v1);
+    EXPECT_TRUE(*b == *v2);
+    EXPECT_TRUE(*c == *v3);
 }
 
 TEST(CompoundTag, getChildByName)

@@ -39,12 +39,21 @@ public:
     // !!! Takes ownership of value - do not delete the object after !!!
     bool pushBack(AbstractTag* value);
     size_t size() const;
-    // !!! Do not delete these items - the list keeps the ownership !!!
+    // !!! Do not delete these items - the CompoundTag keeps the ownership !!!
+    // Does range checking -> throws
     AbstractTag* at(size_t index);
-    // !!! Do not delete these items - the list keeps the ownership !!!
+    // !!! Do not delete these items - the CompoundTag keeps the ownership !!!
+    // Does range checking -> throws
     const AbstractTag* at(size_t index) const;
     // !!! This functions removes the item from CompoundTag - transfers ownership !!!
     AbstractTag* takeAt(size_t index);
+
+    // !!! Do not delete these items - the CompoundTag keeps the ownership !!!
+    // Does not do range checking
+    AbstractTag* operator[](const size_t index);
+    // !!! Do not delete these items - the CompoundTag keeps the ownership !!!
+    // Does not do range checking
+    const AbstractTag* operator[](const size_t index) const;
 
     AbstractTag* getChildByName(const std::string &name);
     const AbstractTag* getChildByName(const std::string &name) const;

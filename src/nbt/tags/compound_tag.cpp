@@ -6,6 +6,7 @@
 
 // STL
 #include <utility>
+#include <stdexcept>
 
 namespace nbt
 {
@@ -151,13 +152,17 @@ size_t CompoundTag::size() const
 
 AbstractTag* CompoundTag::at(size_t index)
 {
-    // TODO: Check invalid index
+    if(index >= m_value.size()) {
+        throw std::out_of_range("Index out of range!");
+    }
     return m_value.at(index);
 }
 
 const AbstractTag* CompoundTag::at(size_t index) const
 {
-    // TODO: Check invalid index
+    if(index >= m_value.size()) {
+        throw std::out_of_range("Index out of range!");
+    }
     return m_value.at(index);
 }
 
@@ -166,6 +171,16 @@ AbstractTag* CompoundTag::takeAt(size_t index)
     AbstractTag *tag = at(index);
     m_value.erase(m_value.begin() + index);
     return tag;
+}
+
+AbstractTag* CompoundTag::operator[](const size_t index)
+{
+    return m_value.at(index);
+}
+
+const AbstractTag* CompoundTag::operator[](const size_t index) const
+{
+    return m_value.at(index);
 }
 
 AbstractTag* CompoundTag::getChildByName(const std::string &name)
