@@ -4,12 +4,12 @@ find_package(ZLIB REQUIRED)
 ### Includes
 # anvil
 set(ANVIL_INCLUDES
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk_info.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region_header.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/anvil_read.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/block.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk_info.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region_header.hpp"
 )
 
 # nbt
@@ -29,17 +29,18 @@ set(NBT_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/short_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/string_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/tags.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/nbt_read.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/nbt_print.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/nbt_read.hpp"
 )
 
 # util
 set(UTIL_INCLUDES
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/bit.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/byte_stream.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/byte_swap.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/compression.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/floating_point.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/conversion.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/floating_point.hpp"
 )
 
 set(AWESOMEMC_INCLUDES
@@ -53,12 +54,12 @@ set(AWESOMEMC_INCLUDES
 ### Sources
 # anvil
 set(ANVIL_SOURCES
-    "anvil/chunk_info.cpp"
-    "anvil/chunk.cpp"
-    "anvil/region.cpp"
-    "anvil/region_header.cpp"
     "anvil/anvil_read.cpp"
     "anvil/block.cpp"
+    "anvil/chunk.cpp"
+    "anvil/chunk_info.cpp"
+    "anvil/region.cpp"
+    "anvil/region_header.cpp"
 )
 
 # nbt
@@ -77,12 +78,13 @@ set(NBT_SOURCES
     "nbt/tags/long_tag.cpp"
     "nbt/tags/short_tag.cpp"
     "nbt/tags/string_tag.cpp"
-    "nbt/nbt_read.cpp"
     "nbt/nbt_print.cpp"
+    "nbt/nbt_read.cpp"
  )
 
 # util
 set(UTIL_SOURCES
+    "util/bit.cpp"
     "util/byte_stream.cpp"
     "util/compression.cpp"
     "util/conversion.cpp"
