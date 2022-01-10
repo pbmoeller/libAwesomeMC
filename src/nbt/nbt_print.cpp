@@ -107,8 +107,8 @@ void printNextNbtDataLevel(const AbstractTag *tag,
             sstr << std::string(indent, ' ') << getTagName(TagType::List)
                  << "(\"" << t->getName() << "\"): " << t->size() << " entries of type " << getTagName(t->getListType()) << "\n";
             sstr << std::string(indent, ' ') << "{\n";
-            for(const AbstractTag *tag : t->getValue()) {
-                printNextNbtDataLevel(tag, sstr, indent + 2);
+            for(const AbstractTag *subTag : t->getValue()) {
+                printNextNbtDataLevel(subTag, sstr, indent + 2);
             }
             sstr << std::string(indent, ' ') << "}\n";
             break;

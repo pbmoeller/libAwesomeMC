@@ -137,13 +137,13 @@ AbstractTag* readSubTag(util::ByteStream &stream,
             break;
         case TagType::List:
         {
-            TagType type = static_cast<TagType>(readValue<char>(stream));
+            TagType listTagType = static_cast<TagType>(readValue<char>(stream));
             int32_t listLength = readValue<int32_t>(stream);
-            ListTag *listTag = new ListTag(name, type);
+            ListTag *listTag = new ListTag(name, listTagType);
 
             // read the sub tags
             for(int i = 0; i < listLength; ++i) {
-                subTag = readSubTag(stream, true, type);
+                subTag = readSubTag(stream, true, listTagType);
                 listTag->pushBack(subTag);
             }
             tag = listTag;
