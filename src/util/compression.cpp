@@ -84,7 +84,6 @@ bool inflate_gzip(std::vector<unsigned char> &data)
         return true;
     }
 
-    int ret = 0;
     bool done = false;
     std::vector<unsigned char> dataOut(data.size(), 0);
     const size_t halfLength = data.size() / 2;
