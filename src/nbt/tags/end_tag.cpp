@@ -52,7 +52,7 @@ constexpr TagType EndTag::getType() const
     return TagType::End;
 }
 
-std::vector<unsigned char> EndTag::getData(bool value)
+std::vector<unsigned char> EndTag::getData(bool isListEntry)
 {
     // TODO: Constructor init data(1, 0) instead of insert
     std::vector<unsigned char> data;

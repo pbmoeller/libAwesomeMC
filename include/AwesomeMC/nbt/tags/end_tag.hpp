@@ -24,7 +24,7 @@ public:
 
     constexpr virtual TagType getType() const override;
 
-    std::vector<unsigned char> getData(bool value) override;
+    std::vector<unsigned char> getData(bool isListEntry) override;
 
 protected:
     virtual bool isEqual(const AbstractTag &other) const override;
