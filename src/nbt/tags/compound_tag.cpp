@@ -205,6 +205,16 @@ const AbstractTag* CompoundTag::operator[](const size_t index) const
     return m_value.at(index);
 }
 
+bool CompoundTag::hasChild(const std::string &name) const
+{
+    for(AbstractTag *tag : m_value) {
+        if(tag->getName() == name) {
+            return true;
+        }
+    }
+    return false;
+}
+
 AbstractTag* CompoundTag::getChildByName(const std::string &name)
 {
     for(AbstractTag *tag : m_value) {

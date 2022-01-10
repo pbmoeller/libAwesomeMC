@@ -574,6 +574,21 @@ TEST(CompoundTag, subscript_const)
     EXPECT_TRUE(*c == *v3);
 }
 
+TEST(CompoundTag, hasChild)
+{
+    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
+    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
+    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+
+    nbt::CompoundTag compoundTag({a, b, c});
+    ASSERT_EQ(3, compoundTag.size());
+
+    EXPECT_TRUE(compoundTag.hasChild("A"));
+    EXPECT_TRUE(compoundTag.hasChild("B"));
+    EXPECT_TRUE(compoundTag.hasChild("C"));
+    EXPECT_FALSE(compoundTag.hasChild("D"));
+}
+
 TEST(CompoundTag, getChildByName)
 {
     nbt::CompoundTag compoundTag;

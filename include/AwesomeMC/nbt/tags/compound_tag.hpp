@@ -60,6 +60,7 @@ public:
     // Does not do range checking
     const AbstractTag* operator[](const size_t index) const;
 
+    bool hasChild(const std::string &name) const;
     AbstractTag* getChildByName(const std::string &name);
     const AbstractTag* getChildByName(const std::string &name) const;
     std::vector<AbstractTag*> getChildrenByName(const std::string &name) const;
