@@ -230,12 +230,9 @@ Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) co
         }
         int64_t longValue = blockData->at(longIndex);
         int64_t mask = util::setNLeastSignificantBits64(bitWidth);
-        int64_t placedMask = mask << (blockInLong * bitWidth);
-        int64_t maskedValue = longValue & placedMask;
-        int64_t idxValue = maskedValue >> (blockInLong * bitWidth);
-        
-        paletteIndex = idxValue;
 
+        longValue = longValue >> (blockInLong * bitWidth);
+        paletteIndex = longValue & mask;
     } else {
         // Valid case => this section must be full of air (or on other block, see palette entry TODO: (check!!))
         paletteIndex = 0;
