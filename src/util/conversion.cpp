@@ -104,5 +104,4 @@ void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldY, 
     blockChunkZ = (anvil::BlockWidth + (blockWorldZ % anvil::BlockWidth)) & 0x0000000F;
 }
 
-
 } // namespace util

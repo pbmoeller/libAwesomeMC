@@ -28,11 +28,6 @@ void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldZ,
 void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldY, const int blockWorldZ,
                                   int &blockChunkX, int &blockChunkY, int &blockChunkZ);
 
-
-
-
-
-
 } // namespace util
 
 #endif // AWESOMEMC_UTIL_CONVERSION_HPP
