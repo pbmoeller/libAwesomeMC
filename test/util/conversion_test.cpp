@@ -67,9 +67,9 @@ const std::vector<std::vector<int>> relativeChunkCoordinates1 = {
     { 31, 31 },
     { 0, 31 },
     { 0, 0 },
-    { 16, 0 },
-    { 0, 31 },
-    { 0, 26 }
+    { 5, 0 },
+    { 14, 31 },
+    { 0, 9 }
 };
 
 TEST(conversion, convertBlockWorld2Region)
