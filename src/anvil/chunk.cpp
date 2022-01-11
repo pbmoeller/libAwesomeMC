@@ -223,7 +223,7 @@ Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) co
         int blocksPerLong = static_cast<int>(64 / bitWidth);
 
         int blockIndex = localY * anvil::BlockCount + localZ * anvil::BlockWidth + localX;
-        int longIndex = blockIndex / blocksPerLong;
+        unsigned int longIndex = blockIndex / blocksPerLong;
         int blockInLong = blockIndex % blocksPerLong;
         if(longIndex >= blockData->size()) {
             throw std::runtime_error("Long index out of range!");
