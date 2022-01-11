@@ -109,7 +109,6 @@ target_include_directories(AwesomeMC
     PRIVATE ${CMAKE_SOURCE_DIR}/include
 )
 target_link_libraries(AwesomeMC ${ZLIB_LIBRARIES})
-set_property(TARGET AwesomeMC PROPERTY CXX_STANDARD 20)
 set_target_properties(AwesomeMC PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 target_compile_options(AwesomeMC PRIVATE
      $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:

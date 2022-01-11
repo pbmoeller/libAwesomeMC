@@ -8,7 +8,6 @@ target_include_directories(example1
     PRIVATE ${CMAKE_SOURCE_DIR}/include
 )
 target_link_libraries(example1 AwesomeMC)
-set_property(TARGET example1 PROPERTY CXX_STANDARD 20)
 set_target_properties(example1 PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 ### Example 2
@@ -18,7 +17,6 @@ target_include_directories(example_nbt
     PRIVATE ${CMAKE_SOURCE_DIR}/include
 )
 target_link_libraries(example_nbt AwesomeMC)
-set_property(TARGET example_nbt PROPERTY CXX_STANDARD 20)
 set_target_properties(example_nbt PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 ### Example 3
@@ -28,7 +26,6 @@ target_include_directories(example_anvil
     PRIVATE ${CMAKE_SOURCE_DIR}/include
 )
 target_link_libraries(example_anvil AwesomeMC)
-set_property(TARGET example_anvil PROPERTY CXX_STANDARD 20)
 set_target_properties(example_anvil PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 
 ### Example 4
@@ -38,5 +35,4 @@ target_include_directories(load_testmap
     PRIVATE ${CMAKE_SOURCE_DIR}/include
 )
 target_link_libraries(load_testmap AwesomeMC)
-set_property(TARGET load_testmap PROPERTY CXX_STANDARD 20)
 set_target_properties(load_testmap PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})

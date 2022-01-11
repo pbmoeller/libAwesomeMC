@@ -40,7 +40,6 @@ target_include_directories(tests
     PRIVATE ${GTEST_INCLUDE_DIRS}
     PRIVATE ${GMOCK_INCLUDE_DIRS}
 )
-set_property(TARGET tests PROPERTY CXX_STANDARD 20)
 
 set_target_properties(tests 
     PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
