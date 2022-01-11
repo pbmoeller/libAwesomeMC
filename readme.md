@@ -8,6 +8,7 @@ The current library version targets Minecraft 1.18.1.
 Data format references:
 * [Chunk-Format](https://minecraft.fandom.com/wiki/Chunk_format)
 * [Chunk Format 2](https://wiki.vg/Chunk_Format)
+* [Chunk Format Changes 1.18](https://minecraft.fandom.com/wiki/Java_Edition_1.18#General_2)
 * [Region-Format](https://minecraft.fandom.com/wiki/Region_file_format)
 * [Anvil-Format](https://minecraft.fandom.com/wiki/Anvil_file_format)
 * [NBT-Format](https://minecraft.fandom.com/wiki/NBT_format)
@@ -29,9 +30,6 @@ Data format references:
 # TODO
 
 - Project Management
-  - Check library naming
-    - Linux => `libAwesomeMC.so`
-    - Windows => `AwesomeMC.dll`
   - Extend support for other compiler and processors
     - Win64
     - Win32
@@ -58,7 +56,6 @@ Data format references:
     - Abstract Intermediate class `ArrayTag` for array tags : byte array, int array, long array
     - Use instanciated unit tests to test the template types.
   - Use correct floating point comparison
-  - Evaluate the use of `std::bit_cast` instead of `reinterpret_cast`
   - Evaluate Header initialization instead of Initialization in constructors
   - (Evaluate Custom data types, eg. `NbtShort` for `char` etc.)
   - Check if StringTag is Unicode or ASCII (general implementation)
