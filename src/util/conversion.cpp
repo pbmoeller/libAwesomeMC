@@ -78,8 +78,8 @@ void convertBlockWorld2ChunkWorld(const int blockWorldX, const int blockWorldZ,
 void convertBlockWorld2ChunkRegion(const int blockWorldX, const int blockWorldZ,
                                    int &chunkRegionX, int &chunkRegionZ)
 {
-    chunkRegionX = (anvil::ChunkWidth + (blockWorldX / anvil::BlockWidth)) & 0x0000001F;
-    chunkRegionZ = (anvil::ChunkWidth + (blockWorldZ / anvil::BlockWidth)) & 0x0000001F;
+    chunkRegionX = (anvil::ChunkWidth + (blockWorldX / static_cast<unsigned int>(anvil::BlockWidth))) & 0x0000001F;
+    chunkRegionZ = (anvil::ChunkWidth + (blockWorldZ / static_cast<unsigned int>(anvil::BlockWidth))) & 0x0000001F;
 }
 
 void convertBlockWorld2BlockRegion(const int blockWorldX, const int blockWorldZ,

@@ -5,17 +5,17 @@ namespace anvil
 {
     constexpr unsigned int DataVersion      = 2865;
 
-    constexpr unsigned int BlockCount       = 256;
-    constexpr unsigned int BlockWidth       = 16;
-    constexpr unsigned int BlockHeight      = 384;
+    constexpr int BlockCount                = 256;
+    constexpr int BlockWidth                = 16;
+    constexpr int BlockHeight               = 384;
 
     constexpr int MinimumBlockHeight        = -64;
     constexpr int MaximumBlockHeight        = 319;
 
-    constexpr unsigned int ChunkCount       = 1024;
-    constexpr unsigned int ChunkWidth       = 32;
+    constexpr int ChunkCount                = 1024;
+    constexpr int ChunkWidth                = 32;
 
-    constexpr unsigned int RegionWidth      = 512;
+    constexpr int RegionWidth               = 512;
     constexpr int WorldBorder               = 29999984;
 
     // Region File
