@@ -7,6 +7,7 @@
 // STL
 #include <cstdint>
 #include <string>
+#include <cstring>
 #include <vector>
 #include <algorithm>
 
