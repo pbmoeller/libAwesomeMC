@@ -31,17 +31,17 @@ ByteStream::ByteStream(Swap swap)
 }
 
 ByteStream::ByteStream(const std::string &buffer)
-    : m_position{0}
+    : m_buffer{std::vector<unsigned char>(buffer.begin(), buffer.end())}
+    , m_position{0}
     , m_swap{Swap::NoSwapEndian}
-    , m_buffer{std::vector<unsigned char>(buffer.begin(), buffer.end())}
 {
     
 }
 
 ByteStream::ByteStream(const std::vector<unsigned char> &buffer)
-    : m_position{0}
+    : m_buffer{buffer}
+    , m_position{0}
     , m_swap{Swap::NoSwapEndian}
-    , m_buffer{buffer}
 {
 
 }
@@ -162,7 +162,7 @@ std::vector<unsigned char> ByteStream::vbuf()
 
 bool ByteStream::readString(std::string &str, const int16_t length)
 {
-    if(availableBytes() < length) {
+    if(availableBytes() < static_cast<size_t>(length)) {
         return EndOfStream;
     }
 
