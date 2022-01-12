@@ -13,7 +13,7 @@ namespace nbt
 class ByteTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::Byte };
+    enum { Type = static_cast<int>(TagType::Byte) };
 
     ByteTag();
     ByteTag(const ByteTag &other);
@@ -28,7 +28,9 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::Byte;
+    }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 

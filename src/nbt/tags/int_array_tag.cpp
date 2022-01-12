@@ -79,11 +79,6 @@ AbstractTag* IntArrayTag::clone()
     return new IntArrayTag(*this);
 }
 
-constexpr TagType IntArrayTag::getType() const
-{
-    return TagType::IntArray;
-}
-
 std::vector<unsigned char> IntArrayTag::getData(bool isListEntry)
 {
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);

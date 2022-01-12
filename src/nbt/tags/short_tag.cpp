@@ -79,11 +79,6 @@ AbstractTag* ShortTag::clone()
     return new ShortTag(*this);
 }
 
-constexpr TagType ShortTag::getType() const
-{
-    return TagType::Short;
-}
-
 std::vector<unsigned char> ShortTag::getData(bool isListEntry)
 {
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);

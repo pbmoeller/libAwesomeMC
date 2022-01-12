@@ -15,7 +15,7 @@ namespace nbt
 class ListTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::List };
+    enum { Type = static_cast<int>(TagType::List) };
 
     ListTag();
     ListTag(const ListTag &other);
@@ -34,7 +34,10 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::List;
+    }
+
     TagType getListType() const;
 
     std::vector<unsigned char> getData(bool isListEntry) override;

@@ -79,11 +79,6 @@ AbstractTag* IntTag::clone()
     return new IntTag(*this);
 }
 
-constexpr TagType IntTag::getType() const
-{
-    return TagType::Int;
-}
-
 std::vector<unsigned char> IntTag::getData(bool isListEntry)
 {
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);

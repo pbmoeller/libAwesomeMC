@@ -40,7 +40,7 @@ enum class TagType : unsigned char
 class AbstractTag
 {
 public:
-    enum { Type = TagType::Unknown};
+    enum { Type = static_cast<int>(TagType::Unknown) };
 
     AbstractTag();
     AbstractTag(const AbstractTag &other);
@@ -54,7 +54,9 @@ public:
 
     virtual AbstractTag* clone() = 0;
 
-    constexpr virtual TagType getType() const;
+    constexpr virtual TagType getType() const {
+        return TagType::End;
+    }
 
     virtual std::vector<unsigned char> getData(bool isListEntry) = 0;
 

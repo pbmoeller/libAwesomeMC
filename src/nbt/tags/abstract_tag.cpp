@@ -56,11 +56,6 @@ AbstractTag& AbstractTag::operator=(AbstractTag &&other) noexcept
     return *this;
 }
 
-constexpr TagType AbstractTag::getType() const
-{
-    return TagType::End;
-}
-
 std::string AbstractTag::getName() const
 {
     return m_name;

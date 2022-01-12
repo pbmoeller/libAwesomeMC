@@ -79,11 +79,6 @@ AbstractTag* FloatTag::clone()
     return new FloatTag(*this);
 }
 
-constexpr TagType FloatTag::getType() const
-{
-    return TagType::Float;
-}
-
 std::vector<unsigned char> FloatTag::getData(bool isListEntry)
 {
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);

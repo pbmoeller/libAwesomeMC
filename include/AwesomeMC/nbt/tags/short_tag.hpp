@@ -13,7 +13,7 @@ namespace nbt
 class ShortTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::Short };
+    enum { Type = static_cast<int>(TagType::Short) };
 
     ShortTag();
     ShortTag(const ShortTag &other);
@@ -28,7 +28,9 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::Short;
+    }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 

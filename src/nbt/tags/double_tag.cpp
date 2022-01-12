@@ -79,11 +79,6 @@ AbstractTag* DoubleTag::clone()
     return new DoubleTag(*this);
 }
 
-constexpr TagType DoubleTag::getType() const
-{
-    return TagType::Double;
-}
-
 std::vector<unsigned char> DoubleTag::getData(bool isListEntry)
 {
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);

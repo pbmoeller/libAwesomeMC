@@ -47,17 +47,9 @@ AbstractTag* EndTag::clone()
     return new EndTag(*this);
 }
 
-constexpr TagType EndTag::getType() const
-{
-    return TagType::End;
-}
-
 std::vector<unsigned char> EndTag::getData(bool isListEntry)
 {
-    // TODO: Constructor init data(1, 0) instead of insert
-    std::vector<unsigned char> data;
-    data.insert(data.end(), 0);
-    return data;
+    return std::vector<unsigned char>(1, 0);
 }
 
 bool EndTag::isEqual(const AbstractTag &other) const

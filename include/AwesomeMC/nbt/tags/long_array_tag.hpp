@@ -15,7 +15,7 @@ namespace nbt
 class LongArrayTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::LongArray };
+    enum { Type = static_cast<int>(TagType::LongArray) };
 
     LongArrayTag();
     LongArrayTag(const LongArrayTag &other);
@@ -30,7 +30,9 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::LongArray;
+    }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 

@@ -79,11 +79,6 @@ AbstractTag* ByteArrayTag::clone()
     return new ByteArrayTag(*this);
 }
 
-constexpr TagType ByteArrayTag::getType() const
-{
-    return TagType::ByteArray;
-}
-
 std::vector<unsigned char> ByteArrayTag::getData(bool isListEntry)
 {
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);

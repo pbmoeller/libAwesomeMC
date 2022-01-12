@@ -115,11 +115,6 @@ AbstractTag* ListTag::clone()
     return new ListTag(*this);
 }
 
-constexpr TagType ListTag::getType() const
-{
-    return TagType::List;
-}
-
 TagType ListTag::getListType() const
 {
     return m_listType;

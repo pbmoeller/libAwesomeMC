@@ -92,11 +92,6 @@ AbstractTag* CompoundTag::clone()
     return new CompoundTag(*this);
 }
 
-constexpr TagType CompoundTag::getType() const
-{
-    return TagType::Compound;
-}
-
 std::vector<unsigned char> CompoundTag::getData(bool isListEntry)
 {
     nbt::EndTag endTag;

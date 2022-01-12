@@ -10,7 +10,7 @@ namespace nbt
 class EndTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::End };
+    enum { Type = static_cast<int>(TagType::End) };
 
     EndTag();
     EndTag(const EndTag &other);
@@ -22,7 +22,9 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::End;
+    }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 

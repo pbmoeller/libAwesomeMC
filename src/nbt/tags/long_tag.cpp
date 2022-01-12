@@ -79,11 +79,6 @@ AbstractTag* LongTag::clone()
     return new LongTag(*this);
 }
 
-constexpr TagType LongTag::getType() const
-{
-    return TagType::Long;
-}
-
 std::vector<unsigned char> LongTag::getData(bool isListEntry)
 {
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);

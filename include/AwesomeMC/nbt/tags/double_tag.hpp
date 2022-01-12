@@ -13,7 +13,7 @@ namespace nbt
 class DoubleTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::Double };
+    enum { Type = static_cast<int>(TagType::Double) };
 
     DoubleTag();
     DoubleTag(const DoubleTag &other);
@@ -28,7 +28,9 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::Double;
+    }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 

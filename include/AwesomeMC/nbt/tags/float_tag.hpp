@@ -13,7 +13,7 @@ namespace nbt
 class FloatTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::Float };
+    enum { Type = static_cast<int>(TagType::Float) };
 
     FloatTag();
     FloatTag(const FloatTag &other);
@@ -28,7 +28,9 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::Float;
+    }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 

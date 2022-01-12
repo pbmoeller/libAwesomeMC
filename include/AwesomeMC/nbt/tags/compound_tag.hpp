@@ -15,7 +15,7 @@ namespace nbt
 class CompoundTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::Compound };
+    enum { Type = static_cast<int>(TagType::Compound) };
 
     CompoundTag();
     CompoundTag(const CompoundTag &other);
@@ -32,7 +32,9 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::Compound;
+    }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 

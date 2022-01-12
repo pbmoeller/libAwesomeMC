@@ -72,11 +72,6 @@ AbstractTag* StringTag::clone()
     return new StringTag(*this);
 }
 
-constexpr TagType StringTag::getType() const
-{
-    return TagType::String;
-}
-
 std::vector<unsigned char> StringTag::getData(bool isListEntry)
 {
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);

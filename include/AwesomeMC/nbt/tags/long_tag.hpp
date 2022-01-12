@@ -13,7 +13,7 @@ namespace nbt
 class LongTag : public AbstractTag
 {
 public:
-    enum { Type = TagType::Long };
+    enum { Type = static_cast<int>(TagType::Long) };
 
     LongTag();
     LongTag(const LongTag &other);
@@ -28,7 +28,9 @@ public:
 
     virtual AbstractTag* clone();
 
-    constexpr virtual TagType getType() const override;
+    constexpr virtual TagType getType() const override {
+        return TagType::Long;
+    }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 
