@@ -170,7 +170,7 @@ TEST(nbt_read, readNbtData_empty)
 {
     std::vector<unsigned char> data;
 
-    nbt::CompoundTag *compoundTag;
+    nbt::CompoundTag *compoundTag = nullptr;;
     EXPECT_THROW(compoundTag = nbt::readNbtData(data), std::runtime_error);
 }
 

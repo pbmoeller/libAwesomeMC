@@ -223,9 +223,9 @@ TEST(ByteStream, size)
 {
     util::ByteStream byteStream;
     EXPECT_EQ(0, byteStream.size());
-    byteStream << (int8_t)0x45;
+    byteStream << static_cast<int8_t>(0x45);
     EXPECT_EQ(1, byteStream.size());
-    byteStream << (int16_t)0x6789;
+    byteStream << static_cast<int16_t>(0x6789);
     EXPECT_EQ(3, byteStream.size());
 
     byteStream.clear();

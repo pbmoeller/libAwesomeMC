@@ -98,8 +98,8 @@ std::vector<unsigned char> CompoundTag::getData(bool isListEntry)
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
-        stream << (char)getType();
-        stream << (int16_t)m_name.size();
+        stream << static_cast<char>(getType());
+        stream << static_cast<int16_t>(m_name.size());
         stream << m_name;
     }
 

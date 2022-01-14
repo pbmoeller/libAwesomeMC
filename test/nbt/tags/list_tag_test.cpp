@@ -75,7 +75,7 @@ TEST(ListTag, Constructor_4)
 
     // Test nullptr
     nbt::ByteTag *a3 = new nbt::ByteTag("A", 1);
-    nbt::ListTag listTag3(nbt::TagType::Byte, {a2, nullptr});
+    nbt::ListTag listTag3(nbt::TagType::Byte, {a3, nullptr});
     EXPECT_STREQ("", listTag3.getName().c_str());
     EXPECT_EQ(nbt::TagType::List, listTag3.getType());
     EXPECT_EQ(nbt::TagType::Byte, listTag3.getListType());

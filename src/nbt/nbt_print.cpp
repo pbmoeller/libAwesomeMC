@@ -38,14 +38,14 @@ void printNextNbtDataLevel(const AbstractTag *tag,
         {
             const ByteTag *t = tag_cast<const ByteTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Byte) 
-                 << "(\"" << t->getName() << "\"): " << (int)t->getValue() << "\n";
+                 << "(\"" << t->getName() << "\"): " << static_cast<int>(t->getValue()) << "\n";
             break;
         }
         case TagType::Short:
         {
             const ShortTag *t = tag_cast<const ShortTag*>(tag);
             sstr << std::string(indent, ' ') << getTagName(TagType::Short)
-                 << "(\"" << t->getName() << "\"): " << (int)t->getValue() << "\n";
+                 << "(\"" << t->getName() << "\"): " << static_cast<int>(t->getValue()) << "\n";
             break;
         }
         case TagType::Int:
@@ -85,9 +85,9 @@ void printNextNbtDataLevel(const AbstractTag *tag,
                 sstr << "\n" << std::string(indent, ' ') << "{\n";
                 size_t i = 0;
                 for(i = 0; i < t->size() - 1; ++i) {
-                    sstr << " " << (int)t->at(i) << ",";
+                    sstr << " " << static_cast<int>(t->at(i)) << ",";
                 }
-                sstr << " " << (int)t->at(i) << "\n";
+                sstr << " " << static_cast<int>(t->at(i)) << "\n";
                 sstr << std::string(indent, ' ') << "}\n";
             } else {
                 sstr << " [" << t->size() << " bytes]\n";
@@ -134,9 +134,9 @@ void printNextNbtDataLevel(const AbstractTag *tag,
                 sstr << "\n" << std::string(indent, ' ') << "{\n";
                 size_t i = 0;
                 for(i = 0; i < t->size() - 1; ++i) {
-                    sstr << " " << (int)t->at(i) << ",";
+                    sstr << " " << static_cast<int>(t->at(i)) << ",";
                 }
-                sstr << " " << (int)t->at(i) << "\n";
+                sstr << " " << static_cast<int>(t->at(i)) << "\n";
                 sstr << std::string(indent, ' ') << "}\n";
             } else {
                 sstr << " [" << t->size() * 2 << " bytes]\n";
@@ -152,9 +152,9 @@ void printNextNbtDataLevel(const AbstractTag *tag,
                 sstr << "\n" << std::string(indent, ' ') << "{\n";
                 size_t i = 0;
                 for(i = 0; i < t->size() - 1; ++i) {
-                    sstr << " " << (int)t->at(i) << ",";
+                    sstr << " " << static_cast<int>(t->at(i)) << ",";
                 }
-                sstr << " " << (int)t->at(i) << "\n";
+                sstr << " " << static_cast<int>(t->at(i)) << "\n";
                 sstr << std::string(indent, ' ') << "}\n";
             } else {
                 sstr << " [" << t->size() * 4 << " bytes]\n";

@@ -58,7 +58,7 @@ int calculateSection(const int blockY)
 
 int calculateSectionIndex(const int blockY)
 {
-    return (blockY / (int)anvil::BlockWidth) + 5;
+    return (blockY / static_cast<int>(anvil::BlockWidth)) + 5;
 }
 
 void convertBlockWorld2Region(const int blockWorldX, const int blockWorldZ,

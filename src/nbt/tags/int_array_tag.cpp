@@ -84,12 +84,12 @@ std::vector<unsigned char> IntArrayTag::getData(bool isListEntry)
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
-        stream << (char)getType();
-        stream << (int16_t)m_name.size();
+        stream << static_cast<char>(getType());
+        stream << static_cast<int16_t>(m_name.size());
         stream << m_name;
     }
 
-    stream << (int32_t)m_value.size();
+    stream << static_cast<int32_t>(m_value.size());
     for(size_t i = 0; i < m_value.size(); ++i) {
         stream << m_value[i];
     }

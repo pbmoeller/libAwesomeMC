@@ -77,11 +77,11 @@ std::vector<unsigned char> StringTag::getData(bool isListEntry)
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
-        stream << (char)getType();
-        stream << (int16_t)m_name.size();
+        stream << static_cast<char>(getType());
+        stream << static_cast<int16_t>(m_name.size());
         stream << m_name;
     }
-    stream << (int16_t)m_value.size();
+    stream << static_cast<int16_t>(m_value.size());
     stream << m_value;
 
     return stream.vbuf();

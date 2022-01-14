@@ -49,6 +49,7 @@ AbstractTag* EndTag::clone()
 
 std::vector<unsigned char> EndTag::getData(bool isListEntry)
 {
+    (void)(isListEntry);
     return std::vector<unsigned char>(1, 0);
 }
 

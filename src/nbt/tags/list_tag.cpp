@@ -125,13 +125,13 @@ std::vector<unsigned char> ListTag::getData(bool isListEntry)
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
-        stream << (char)getType();
-        stream << (int16_t)m_name.size();
+        stream << static_cast<char>(getType());
+        stream << static_cast<int16_t>(m_name.size());
         stream << m_name;
     }
 
-    stream << (int8_t)m_listType;
-    stream << (int32_t)m_value.size();
+    stream << static_cast<int8_t>(m_listType);
+    stream << static_cast<int32_t>(m_value.size());
     for(size_t i = 0; i < m_value.size(); ++i) {
         stream << m_value[i]->getData(true);
     }

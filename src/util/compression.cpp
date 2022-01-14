@@ -21,7 +21,7 @@ bool deflate_zlib(std::vector<unsigned char> &data)
         return false;
     }
     zstrm.next_in   = (Bytef*)data.data();
-    zstrm.avail_in  = data.size();
+    zstrm.avail_in  = static_cast<uInt>(data.size());
 
     // deflate
     do {
@@ -56,7 +56,7 @@ bool inflate_zlib(std::vector<unsigned char> &data)
 
     dataIn.insert(dataIn.end(), data.begin(), data.end());
     zstrm.next_in = (Bytef*)dataIn.data();
-    zstrm.avail_in = dataIn.size();
+    zstrm.avail_in = static_cast<uInt>(dataIn.size());
 
     do {
         std::vector<char> buffer(ZlibChunkSize, 0);
@@ -90,7 +90,7 @@ bool inflate_gzip(std::vector<unsigned char> &data)
 
     z_stream zstrm;
     zstrm.next_in   = (Bytef*)data.data();
-    zstrm.avail_in  = data.size();
+    zstrm.avail_in  = static_cast<uInt>(data.size());
     zstrm.total_out = 0;
     zstrm.zalloc    = Z_NULL;
     zstrm.zfree     = Z_NULL;
@@ -104,7 +104,7 @@ bool inflate_gzip(std::vector<unsigned char> &data)
             dataOut.resize(dataOut.size() + halfLength);
         }
         zstrm.next_out = (Bytef*)(dataOut.data() + zstrm.total_out);
-        zstrm.avail_out = dataOut.size() - zstrm.total_out;
+        zstrm.avail_out = static_cast<uInt>(dataOut.size() - zstrm.total_out);
 
         int err = inflate(&zstrm, Z_SYNC_FLUSH);
         if(err == Z_STREAM_END) {
@@ -140,7 +140,7 @@ bool inflate_gzip2(std::vector<unsigned char> &data)
 
     z_stream zstrm;
     zstrm.next_in = (Bytef*)data.data();
-    zstrm.avail_in = data.size();
+    zstrm.avail_in = static_cast<uInt>(data.size());
     zstrm.total_out = 0;
     zstrm.zalloc = Z_NULL;
     zstrm.zfree = Z_NULL;
@@ -160,7 +160,7 @@ bool inflate_gzip2(std::vector<unsigned char> &data)
             uncompressed = uncompressed2;
         }
         zstrm.next_out = (Bytef*)(uncompressed + zstrm.total_out);
-        zstrm.avail_out = uncompressedLength - zstrm.total_out;
+        zstrm.avail_out = static_cast<uInt>(uncompressedLength - zstrm.total_out);
 
         int err = inflate(&zstrm, Z_SYNC_FLUSH);
         if(err == Z_STREAM_END) {

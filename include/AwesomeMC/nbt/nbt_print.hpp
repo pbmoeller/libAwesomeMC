@@ -28,7 +28,7 @@ void printSimpleDataType(const T *tag,
                          int indent)
 {
     sstr << std::string(indent, ' ') << getTagName(tag->getType())
-         << "(\"" << tag->getName() << "\"): " << (int64_t)tag->getValue() << "\n";
+         << "(\"" << tag->getName() << "\"): " << static_cast<int64_t>(tag->getValue()) << "\n";
 }
 
 } // namespace nbt
