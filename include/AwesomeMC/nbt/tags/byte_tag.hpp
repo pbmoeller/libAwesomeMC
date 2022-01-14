@@ -5,6 +5,7 @@
 #include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 
 // STL
+#include <cstdint>
 #include <string>
 
 namespace nbt
@@ -19,8 +20,8 @@ public:
     ByteTag(const ByteTag &other);
     ByteTag(ByteTag &&other) noexcept;
     ByteTag(const std::string &name);
-    ByteTag(char value);
-    ByteTag(const std::string &name, char value);
+    ByteTag(int8_t value);
+    ByteTag(const std::string &name, int8_t value);
     virtual ~ByteTag();
 
     ByteTag& operator=(const ByteTag &other);
@@ -34,14 +35,14 @@ public:
 
     std::vector<unsigned char> getData(bool isListEntry) override;
 
-    char getValue() const;
-    void setValue(char value);
+    int8_t getValue() const;
+    void setValue(int8_t value);
 
 protected:
     virtual bool isEqual(const AbstractTag &other) const override;
 
 private:
-    char m_value;
+    int8_t m_value;
 };
 
 } // namespace nbt

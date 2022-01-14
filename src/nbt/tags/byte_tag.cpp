@@ -37,14 +37,14 @@ ByteTag::ByteTag(const std::string &name)
 
 }
 
-ByteTag::ByteTag(char value)
+ByteTag::ByteTag(int8_t value)
     : AbstractTag()
     , m_value{value}
 {
 
 }
 
-ByteTag::ByteTag(const std::string &name, char value)
+ByteTag::ByteTag(const std::string &name, int8_t value)
     : AbstractTag(name)
     , m_value{value}
 {
@@ -93,12 +93,12 @@ std::vector<unsigned char> ByteTag::getData(bool isListEntry)
     return stream.vbuf();
 }
 
-char ByteTag::getValue() const
+int8_t ByteTag::getValue() const
 {
     return m_value;
 }
 
-void ByteTag::setValue(char value)
+void ByteTag::setValue(int8_t value)
 {
     m_value = value;
 }

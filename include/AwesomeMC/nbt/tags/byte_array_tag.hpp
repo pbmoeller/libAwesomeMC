@@ -5,6 +5,7 @@
 #include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 
 // STL
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -20,8 +21,8 @@ public:
     ByteArrayTag(const ByteArrayTag &other);
     ByteArrayTag(ByteArrayTag &&other) noexcept;
     ByteArrayTag(const std::string &name);
-    ByteArrayTag(const std::vector<char> &value);
-    ByteArrayTag(const std::string &name, const std::vector<char> &value);
+    ByteArrayTag(const std::vector<int8_t> &value);
+    ByteArrayTag(const std::string &name, const std::vector<int8_t> &value);
     virtual ~ByteArrayTag();
 
     ByteArrayTag& operator=(const ByteArrayTag &other);
@@ -39,20 +40,20 @@ public:
     bool isEmpty() const;
     void clear();
     bool erase(size_t index);
-    bool insert(size_t index, char value);
-    void pushBack(char value);
+    bool insert(size_t index, int8_t value);
+    void pushBack(int8_t value);
     size_t size() const;
-    char& at(size_t index);
-    const char& at(size_t index) const;
+    int8_t& at(size_t index);
+    const int8_t& at(size_t index) const;
 
-    std::vector<char>& getValue();
-    void setValue(const std::vector<char> &value);
+    std::vector<int8_t>& getValue();
+    void setValue(const std::vector<int8_t> &value);
 
 protected:
     virtual bool isEqual(const AbstractTag &other) const override;
 
 private:
-    std::vector<char> m_value;
+    std::vector<int8_t> m_value;
 };
 
 } // namespace nbt

@@ -130,7 +130,7 @@ AbstractTag* readSubTag(util::ByteStream &stream,
             tag = new DoubleTag(name, readValue<double>(stream));
             break;
         case TagType::ByteArray:
-            tag = new ByteArrayTag(name, readArrayValues<char>(stream));
+            tag = new ByteArrayTag(name, readArrayValues<int8_t>(stream));
             break;
         case TagType::String:
             tag = new StringTag(name, readStringValue(stream));

@@ -12,7 +12,7 @@ TEST(ByteArrayTag, Constructor)
     nbt::ByteArrayTag byteArrayTag;
     EXPECT_STREQ("", byteArrayTag.getName().c_str());
     EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
-    std::vector<char> data = byteArrayTag.getValue();
+    std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(0, data.size());
 }
 
@@ -21,17 +21,17 @@ TEST(ByteArrayTag, Constructor_2)
     nbt::ByteArrayTag byteArrayTag("TagName");
     EXPECT_STREQ("TagName", byteArrayTag.getName().c_str());
     EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
-    std::vector<char> data = byteArrayTag.getValue();
+    std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(0, data.size());
 }
 
 TEST(ByteArrayTag, Constructor_3)
 {
-    std::vector<char> value = {-123, 0, 127};
+    std::vector<int8_t> value = {-123, 0, 127};
     nbt::ByteArrayTag byteArrayTag(value);
     EXPECT_STREQ("", byteArrayTag.getName().c_str());
     EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
-    std::vector<char> data = byteArrayTag.getValue();
+    std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(3, data.size());
     EXPECT_EQ(value[0], data[0]);
     EXPECT_EQ(value[1], data[1]);
@@ -40,11 +40,11 @@ TEST(ByteArrayTag, Constructor_3)
 
 TEST(ByteArrayTag, Constructor_4)
 {
-    std::vector<char> value = {-123, 0, 127};
+    std::vector<int8_t> value = {-123, 0, 127};
     nbt::ByteArrayTag byteArrayTag("TagName", value);
     EXPECT_STREQ("TagName", byteArrayTag.getName().c_str());
     EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
-    std::vector<char> data = byteArrayTag.getValue();
+    std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(3, data.size());
     EXPECT_EQ(value[0], data[0]);
     EXPECT_EQ(value[1], data[1]);
@@ -54,7 +54,7 @@ TEST(ByteArrayTag, Constructor_4)
 TEST(ByteArrayTag, CopyConstructor)
 {
     std::string name = "CopyConstructor";
-    std::vector<char> value = {-123, 0, 127};
+    std::vector<int8_t> value = {-123, 0, 127};
 
     // Init
     nbt::ByteArrayTag tagA(name, value);
@@ -70,7 +70,7 @@ TEST(ByteArrayTag, CopyConstructor)
 TEST(ByteArrayTag, MoveConstructor)
 {
     std::string name = "MoveConstructor";
-    std::vector<char> value = {-5, -1, 0, 1, 2, 3, 5};
+    std::vector<int8_t> value = {-5, -1, 0, 1, 2, 3, 5};
 
     // Init
     nbt::ByteArrayTag tagA(name, value);
@@ -86,7 +86,7 @@ TEST(ByteArrayTag, MoveConstructor)
 TEST(ByteArrayTag, CopyAssignment)
 {
     std::string name = "CopyAssignment";
-    std::vector<char> value = {-50, -10, 0, 10, 20, 30, 50};
+    std::vector<int8_t> value = {-50, -10, 0, 10, 20, 30, 50};
 
     // Init A
     nbt::ByteArrayTag tagA(name, value);
@@ -107,7 +107,7 @@ TEST(ByteArrayTag, CopyAssignment)
 TEST(ByteArrayTag, MoveAssignment)
 {
     std::string name = "MoveAssignment";
-    std::vector<char> value = {-33, -11, 0, 11, 22, 33, 55};
+    std::vector<int8_t> value = {-33, -11, 0, 11, 22, 33, 55};
 
     // Init A
     nbt::ByteArrayTag tagA(name, value);
@@ -187,7 +187,7 @@ TEST(ByteArrayTag, getData)
         0x00, 0x00, 0x05, 0x80, 0xFB, 0x00, 0x05, 0x7F
     };
 
-    nbt::ByteArrayTag byteArrayTag("byteArrayTag", std::vector<char>({-128, -5, 0, 5, 127}));
+    nbt::ByteArrayTag byteArrayTag("byteArrayTag", std::vector<int8_t>({-128, -5, 0, 5, 127}));
     std::vector<unsigned char> data = byteArrayTag.getData(false);
 
     EXPECT_EQ(data.size(), testData.size());
@@ -237,10 +237,10 @@ TEST(ByteArrayTag, erase)
     // Erase from middle
     nbt::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
     ASSERT_EQ(3, byteArrayTagB.size());
-    std::vector<char> data1 = byteArrayTagB.getValue();
+    std::vector<int8_t> data1 = byteArrayTagB.getValue();
     EXPECT_THAT(data1, testing::ElementsAre(1, 2, 3));
     byteArrayTagB.erase(1);
-    std::vector<char> data2 = byteArrayTagB.getValue();
+    std::vector<int8_t> data2 = byteArrayTagB.getValue();
     ASSERT_EQ(2, byteArrayTagB.size());
     EXPECT_THAT(data2, testing::ElementsAre(1, 3));
     
@@ -264,7 +264,7 @@ TEST(ByteArrayTag, insert)
     ASSERT_EQ(2, byteArrayTagB.size());
     EXPECT_TRUE(byteArrayTagB.insert(1, 2));
     EXPECT_EQ(3, byteArrayTagB.size());
-    std::vector<char> data1 = byteArrayTagB.getValue();
+    std::vector<int8_t> data1 = byteArrayTagB.getValue();
     EXPECT_THAT(data1, testing::ElementsAre(1, 2, 3));
 }
 
@@ -314,7 +314,7 @@ TEST(ByteArrayTag, at)
     // Test reference
     nbt::ByteArrayTag byteArrayTagB("TestTag", {value1_in});
     ASSERT_EQ(1, byteArrayTagB.size());
-    char &value1_out_ref = byteArrayTagA.at(0);
+    int8_t &value1_out_ref = byteArrayTagA.at(0);
     EXPECT_EQ(value1_out_ref, value1_in);
     value1_out_ref = value2_in;
     value1_out = byteArrayTagA.at(0);
@@ -340,34 +340,34 @@ TEST(ByteArrayTag, at_const)
 
 TEST(ByteArrayTag, getValue)
 {
-    std::vector<char> value     = {1, 2, 3, 4};
-    std::vector<char> value2    = {1, 2, 3, 5};
+    std::vector<int8_t> value     = {1, 2, 3, 4};
+    std::vector<int8_t> value2    = {1, 2, 3, 5};
     nbt::ByteArrayTag byteArrayTag;
 
-    std::vector<char> data = byteArrayTag.getValue();
+    std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(0, data.size());
     byteArrayTag.setValue(value);
-    std::vector<char> data2 = byteArrayTag.getValue();
+    std::vector<int8_t> data2 = byteArrayTag.getValue();
     ASSERT_THAT(data2, testing::ElementsAre(1, 2, 3, 4));
     byteArrayTag.setValue(value2);
-    std::vector<char> data3 = byteArrayTag.getValue();
+    std::vector<int8_t> data3 = byteArrayTag.getValue();
     ASSERT_THAT(data3, testing::ElementsAre(1, 2, 3, 5));
 }
 
 TEST(ByteArrayTag, setValue)
 {
-    std::vector<char> value = {1, 2, 3, 4};
+    std::vector<int8_t> value = {1, 2, 3, 4};
     nbt::ByteArrayTag byteArrayTag;
     EXPECT_EQ(0, byteArrayTag.size());
     byteArrayTag.setValue(value);
     EXPECT_EQ(4, byteArrayTag.size());
-    std::vector<char> data2 = byteArrayTag.getValue();
+    std::vector<int8_t> data2 = byteArrayTag.getValue();
     ASSERT_THAT(data2, testing::ElementsAre(1, 2, 3, 4));
 }
 
 TEST(ByteArrayTag, tag_cast)
 {
-    nbt::AbstractTag *testTag = new nbt::ByteArrayTag("A", std::vector<char>({1, 2, 3}));
+    nbt::AbstractTag *testTag = new nbt::ByteArrayTag("A", std::vector<int8_t>({1, 2, 3}));
 
     nbt::ByteArrayTag *otherTag = tag_cast<nbt::ByteArrayTag*>(testTag);
     EXPECT_EQ(otherTag, testTag);

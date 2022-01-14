@@ -37,14 +37,14 @@ ByteArrayTag::ByteArrayTag(const std::string &name)
 
 }
 
-ByteArrayTag::ByteArrayTag(const std::vector<char> &value)
+ByteArrayTag::ByteArrayTag(const std::vector<int8_t> &value)
     : AbstractTag()
     , m_value{value}
 {
 
 }
 
-ByteArrayTag::ByteArrayTag(const std::string &name, const std::vector<char> &value)
+ByteArrayTag::ByteArrayTag(const std::string &name, const std::vector<int8_t> &value)
     : AbstractTag(name)
     , m_value{value}
 {
@@ -117,7 +117,7 @@ bool ByteArrayTag::erase(size_t index)
     }
 }
 
-bool ByteArrayTag::insert(size_t index, char value)
+bool ByteArrayTag::insert(size_t index, int8_t value)
 {
     if(index > m_value.size()) {
         return false;
@@ -127,7 +127,7 @@ bool ByteArrayTag::insert(size_t index, char value)
     }
 }
 
-void ByteArrayTag::pushBack(char value)
+void ByteArrayTag::pushBack(int8_t value)
 {
     m_value.push_back(value);
 }
@@ -137,22 +137,22 @@ size_t ByteArrayTag::size() const
     return m_value.size();
 }
 
-char& ByteArrayTag::at(size_t index)
+int8_t& ByteArrayTag::at(size_t index)
 {
     return m_value.at(index);
 }
 
-const char& ByteArrayTag::at(size_t index) const
+const int8_t& ByteArrayTag::at(size_t index) const
 {
     return m_value.at(index);
 }
 
-std::vector<char>& ByteArrayTag::getValue()
+std::vector<int8_t>& ByteArrayTag::getValue()
 {
     return m_value;
 }
 
-void ByteArrayTag::setValue(const std::vector<char> &value)
+void ByteArrayTag::setValue(const std::vector<int8_t> &value)
 {
     m_value = value;
 }

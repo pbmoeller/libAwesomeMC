@@ -25,7 +25,7 @@ TEST(ByteTag, Constructor_2)
 
 TEST(ByteTag, Constructor_3)
 {
-    char value = 123;
+    int8_t value = 123;
     nbt::ByteTag byteTag(value);
     EXPECT_STREQ("", byteTag.getName().c_str());
     EXPECT_EQ(nbt::TagType::Byte, byteTag.getType());
@@ -34,7 +34,7 @@ TEST(ByteTag, Constructor_3)
 
 TEST(ByteTag, Constructor_4)
 {
-    char value = -5;
+    int8_t value = -5;
     nbt::ByteTag byteTag("TagName", value);
     EXPECT_STREQ("TagName", byteTag.getName().c_str());
     EXPECT_EQ(nbt::TagType::Byte, byteTag.getType());
@@ -44,7 +44,7 @@ TEST(ByteTag, Constructor_4)
 TEST(ByteTag, CopyConstructor)
 {
     std::string name = "CopyConstructor";
-    char value = 0x34;
+    int8_t value = 0x34;
 
     // Init
     nbt::ByteTag tagA(name, value);
@@ -60,7 +60,7 @@ TEST(ByteTag, CopyConstructor)
 TEST(ByteTag, MoveConstructor)
 {
     std::string name = "MoveConstructor";
-    char value = 0x36;
+    int8_t value = 0x36;
 
     // Init
     nbt::ByteTag tagA(name, value);
@@ -76,7 +76,7 @@ TEST(ByteTag, MoveConstructor)
 TEST(ByteTag, CopyAssignment)
 {
     std::string name = "CopyAssignment";
-    char value = 0x37;
+    int8_t value = 0x37;
 
     // Init A
     nbt::ByteTag tagA(name, value);
@@ -97,7 +97,7 @@ TEST(ByteTag, CopyAssignment)
 TEST(ByteTag, MoveAssignment)
 {
     std::string name = "MoveAssignment";
-    char value = 0x38;
+    int8_t value = 0x38;
 
     // Init A
     nbt::ByteTag tagA(name, value);
@@ -188,8 +188,8 @@ TEST(ByteTag, getData)
 
 TEST(ByteTag, getValue)
 {
-    char value = 123;
-    char value2 = -128;
+    int8_t value = 123;
+    int8_t value2 = -128;
     nbt::ByteTag byteTag;
     EXPECT_EQ(0, byteTag.getValue());
     byteTag.setValue(value);
@@ -200,8 +200,8 @@ TEST(ByteTag, getValue)
 
 TEST(ByteTag, setValue)
 {
-    char value = 123;
-    char value2 = -128;
+    int8_t value = 123;
+    int8_t value2 = -128;
     nbt::ByteTag byteTag;
     EXPECT_EQ(0, byteTag.getValue());
     byteTag.setValue(value);
