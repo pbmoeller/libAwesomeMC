@@ -33,8 +33,15 @@ Data format references:
   - Extend support for other compiler and processors
     - Win64
     - Win32
-    - Linux64 (WSL)
-    - ARM (RPi)
+    - Linux64 (WSL) GCC 10.3
+    - ARM (RaspberryPi) GCC 10.x
+  - Github Workflow?
+  - Improve Readme
+    - Requirements + Version
+    - Tested Versions
+    - Use cool batches.
+    - Image?
+    - Usage example
   - Compileroptions
     - Set Warnings are Errors
     - Add more Warnings for cleaner code
@@ -42,13 +49,18 @@ Data format references:
   - Test for memory leaks
   - Add clang_format
     - Extend Guidelines
+  - CMake bring CMakeSettings.json information to CMakeLists-txt in root directory -> build, install, bin dir.
 - Library Version
   - Add Minecraft Target Version (1.18.1) + DataVersion (Current 2865)
 - Source Code
+  - Improve Examples.
+    - Naming, functional test code.
+  - Add HeightMap get/set
+  - Evaluate iterator for ListTag / CompoundTag? Useful?
+  - value_type for tags? -> see STL.
   - Unify the use of `char` / `unsigned char` for byte data
-  - CompoundTag / ListTag
-    - Add operator[]
-  - Check namespaces, eventually put everything in a common library namespace, i.e. `AwesomeMC`, `amc`, ...
+  - Check namespaces, eventually put everything in a common library namespace, i.e. `AwesomeMC`, `amc`, ..., 
+    - Remove anvil namespace
   - Round vs. curly braces
   - Use size_t when dealing with sizes of containers
   - Use templates for tags
