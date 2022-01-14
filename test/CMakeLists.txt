@@ -44,3 +44,8 @@ target_include_directories(tests
 set_target_properties(tests 
     PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}
 )
+target_compile_options(tests PRIVATE
+     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:
+          -std=c++20 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual -Wpedantic -Wno-psabi>
+     $<$<CXX_COMPILER_ID:MSVC>:
+          /W4>)
