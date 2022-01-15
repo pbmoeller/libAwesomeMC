@@ -71,7 +71,7 @@ public:
     std::vector<AbstractTag*>& getValue();
     const std::vector<AbstractTag*>& getValue() const;
     std::vector<AbstractTag*> getValueCopy() const;
-    // !!! Takes ownership of value - do not delete the object after !!!
+
     void setValue(std::vector<AbstractTag*> &value);
 
 protected:
