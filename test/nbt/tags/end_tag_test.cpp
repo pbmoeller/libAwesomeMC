@@ -60,6 +60,7 @@ TEST(EndTag, clone)
 
     nbt::EndTag *endTagB = tag_cast<nbt::EndTag*>(endTagA.clone());
     EXPECT_TRUE(endTagA == *endTagB);
+    delete endTagB;
 }
 
 TEST(EndTag, Equal)
@@ -126,5 +127,7 @@ TEST(EndTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }
 

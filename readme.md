@@ -34,7 +34,7 @@ Data format references:
     - Win64
     - Win32
     - Linux64 (WSL) GCC 10.3
-    - ARM (RaspberryPi) GCC 10.x
+    - ARM (RaspberryPi) GCC 10.3
   - Github Workflow?
   - Improve Readme
     - Requirements + Version
@@ -45,7 +45,6 @@ Data format references:
   - Compileroptions
     - Set Warnings are Errors
     - Add more Warnings for cleaner code
-  - Choose and add licence information
   - Test for memory leaks
   - Add clang_format
     - Extend Guidelines
@@ -71,8 +70,7 @@ Data format references:
   - Evaluate Header initialization instead of Initialization in constructors
   - (Evaluate Custom data types, eg. `NbtShort` for `char` etc.)
   - Check if StringTag is Unicode or ASCII (general implementation)
-  - Check all pointers in NBT tags
-    - set passed pointers to `nullptr` after transfering ownership? Does this increase safety?
+  - set passed pointers to `nullptr` after transfering ownership? Does this increase safety?
   - ByteStream should use templated stream operators instead of multiple overrides.
 - Format & Documentation
   - Check all Comments for style, typos, case, etc.

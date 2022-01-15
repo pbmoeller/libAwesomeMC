@@ -121,6 +121,8 @@ TEST(FloatTag, clone)
 
     nbt::FloatTag *floatTagB = tag_cast<nbt::FloatTag*>(floatTagA.clone());
     EXPECT_TRUE(floatTagA == *floatTagB);
+
+    delete floatTagB;
 }
 
 TEST(FloatTag, Equal)
@@ -220,4 +222,6 @@ TEST(FloatTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }

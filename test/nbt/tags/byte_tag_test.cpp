@@ -121,6 +121,8 @@ TEST(ByteTag, clone)
 
     nbt::ByteTag *byteTagB = tag_cast<nbt::ByteTag*>(byteTagA.clone());
     EXPECT_TRUE(byteTagA == *byteTagB);
+
+    delete byteTagB;
 }
 
 TEST(ByteTag, Equal)
@@ -219,4 +221,6 @@ TEST(ByteTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }

@@ -131,6 +131,8 @@ TEST(IntArrayTag, clone)
 
     nbt::IntArrayTag *intArrayTagB = tag_cast<nbt::IntArrayTag*>(intArrayTagA.clone());
     EXPECT_TRUE(intArrayTagA == *intArrayTagB);
+
+    delete intArrayTagB;
 }
 
 TEST(IntArrayTag, Equal)
@@ -375,4 +377,6 @@ TEST(IntArrayTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }

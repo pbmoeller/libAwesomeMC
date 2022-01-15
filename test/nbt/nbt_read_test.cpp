@@ -300,4 +300,6 @@ TEST(nbt_read, readNbtData_complete)
     nbt::StringTag *stringTag2 = tag_cast<nbt::StringTag*>(listItem2->at(0));
     EXPECT_STREQ(stringTag2->getName().c_str(), "name");
     EXPECT_STREQ(stringTag2->getValue().c_str(), "Compound tag #1");
+
+    delete compoundTag;
 }

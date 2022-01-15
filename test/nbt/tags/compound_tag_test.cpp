@@ -200,6 +200,8 @@ TEST(CompoundTag, clone)
     nbt::CompoundTag *clone = tag_cast<nbt::CompoundTag*>(compoundTagA.clone());
 
     EXPECT_TRUE(compoundTagA == *clone);
+
+    delete clone;
 }
 
 TEST(CompoundTag, Equal)
@@ -374,7 +376,9 @@ TEST(CompoundTag, insert)
     EXPECT_FALSE(compoundTag.insert(0, nullptr));
 
     // Test adding a new Item at invalid index
-    EXPECT_FALSE(compoundTag.insert(1, new nbt::ByteTag("Value", 1)));
+    nbt::AbstractTag *invalidTag = new nbt::ByteTag("Value", 1);
+    EXPECT_FALSE(compoundTag.insert(1, invalidTag));
+    delete invalidTag;
 
     // Add correct item
     EXPECT_TRUE(compoundTag.insert(0, new nbt::ByteTag("Value", 1)));
@@ -522,6 +526,10 @@ TEST(CompoundTag, takeAt)
     nbt::AbstractTag *cTest = compoundTag.takeAt(0);
     EXPECT_EQ(0, compoundTag.size());
     EXPECT_EQ(c, cTest);
+
+    delete aTest;
+    delete bTest;
+    delete cTest;
 }
 
 TEST(CompoundTag, subscript)
@@ -746,6 +754,10 @@ TEST(CompoundTag, getValueCopy)
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
     EXPECT_STREQ("C", bt->getName().c_str());
+
+    delete data[0];
+    delete data[1];
+    delete data[2];
 }
 
 TEST(CompoundTag, setValue)
@@ -767,6 +779,10 @@ TEST(CompoundTag, setValue)
     EXPECT_TRUE(*data2[0] == *data[0]);
     EXPECT_TRUE(*data2[1] == *data[1]);
     EXPECT_TRUE(*data2[2] == *data[2]);
+
+    delete a;
+    delete b;
+    delete c;
 }
 
 TEST(CompoundTag, tag_cast)
@@ -778,4 +794,6 @@ TEST(CompoundTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }

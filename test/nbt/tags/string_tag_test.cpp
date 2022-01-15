@@ -113,6 +113,8 @@ TEST(StringTag, clone)
 
     nbt::StringTag *stringTagB = tag_cast<nbt::StringTag*>(stringTagA.clone());
     EXPECT_TRUE(stringTagA == *stringTagB);
+
+    delete stringTagB;
 }
 
 TEST(StringTag, Equal)
@@ -217,4 +219,6 @@ TEST(StringTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }

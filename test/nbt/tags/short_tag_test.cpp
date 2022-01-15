@@ -121,6 +121,8 @@ TEST(ShortTag, clone)
 
     nbt::ShortTag *shortTagB = tag_cast<nbt::ShortTag*>(shortTagA.clone());
     EXPECT_TRUE(shortTagA == *shortTagB);
+
+    delete shortTagB;
 }
 
 TEST(ShortTag, Equal)
@@ -220,4 +222,6 @@ TEST(ShortTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }

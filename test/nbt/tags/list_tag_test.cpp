@@ -72,6 +72,9 @@ TEST(ListTag, Constructor_4)
     EXPECT_EQ(nbt::TagType::Float, listTag2.getListType());
     std::vector<nbt::AbstractTag*> data2 = listTag2.getValue();
     EXPECT_EQ(0, data2.size());
+    delete a2;
+    delete b2;
+    delete c2;
 
     // Test nullptr
     nbt::ByteTag *a3 = new nbt::ByteTag("A", 1);
@@ -124,6 +127,9 @@ TEST(ListTag, Constructor_6)
     EXPECT_EQ(nbt::TagType::Float, listTag2.getListType());
     std::vector<nbt::AbstractTag*> data2 = listTag2.getValue();
     EXPECT_EQ(0, data2.size());
+    delete a2;
+    delete b2;
+    delete c2;
 
     // Test nullptr
     nbt::ByteTag *a3 = new nbt::ByteTag("A", 1);
@@ -230,6 +236,7 @@ TEST(ListTag, clone)
     nbt::ListTag *listClone = tag_cast<nbt::ListTag*>(listTagA.clone());
 
     EXPECT_TRUE(listTagA == *listClone);
+    delete listClone;
 }
 
 TEST(ListTag, Equal)
@@ -419,10 +426,14 @@ TEST(ListTag, insert)
     EXPECT_FALSE(listTag.insert(0, nullptr));
 
     // Test insert invalid type
-    EXPECT_FALSE(listTag.insert(0, new nbt::EndTag()));
+    nbt::AbstractTag *invalidTag = new nbt::EndTag();
+    EXPECT_FALSE(listTag.insert(0, invalidTag));
+    delete invalidTag;
 
     // Test adding a new Item at invalid index
-    EXPECT_FALSE(listTag.insert(1, new nbt::ByteTag("Value", 1)));
+    nbt::AbstractTag *invalidTag2 = new nbt::ByteTag("Value", 1);
+    EXPECT_FALSE(listTag.insert(1, invalidTag2));
+    delete invalidTag2;
 
     // Add correct item
     EXPECT_TRUE(listTag.insert(0, new nbt::ByteTag("Value", 1)));
@@ -458,8 +469,10 @@ TEST(ListTag, pushBack)
     EXPECT_EQ(1, listTag.size());
 
     // Test adding an invalid item.
-    EXPECT_FALSE(listTag.pushBack(new nbt::EndTag()));
+    nbt::AbstractTag *invalidTag = new nbt::EndTag();
+    EXPECT_FALSE(listTag.pushBack(invalidTag));
     EXPECT_EQ(1, listTag.size());
+    delete invalidTag;
 
     // Test adding a nullptr
     EXPECT_FALSE(listTag.pushBack(nullptr));
@@ -570,6 +583,10 @@ TEST(ListTag, takeAt)
     nbt::AbstractTag *cTest = listTag.takeAt(0);
     EXPECT_EQ(0, listTag.size());
     EXPECT_EQ(c, cTest);
+
+    delete aTest;
+    delete bTest;
+    delete cTest;
 }
 
 TEST(ListTag, subscript)
@@ -679,6 +696,10 @@ TEST(ListTag, getValueCopy)
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
     EXPECT_STREQ("C", bt->getName().c_str());
+
+    delete data[0];
+    delete data[1];
+    delete data[2];
 }
 
 TEST(ListTag, setValue)
@@ -700,6 +721,10 @@ TEST(ListTag, setValue)
     EXPECT_TRUE(*data2[0] == *data[0]);
     EXPECT_TRUE(*data2[1] == *data[1]);
     EXPECT_TRUE(*data2[2] == *data[2]);
+
+    delete a;
+    delete b;
+    delete c;
 }
 
 TEST(ListTag, tag_cast)
@@ -711,4 +736,6 @@ TEST(ListTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }

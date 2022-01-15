@@ -121,6 +121,8 @@ TEST(DoubleTag, clone)
 
     nbt::DoubleTag *doubleTagB = tag_cast<nbt::DoubleTag*>(doubleTagA.clone());
     EXPECT_TRUE(doubleTagA == *doubleTagB);
+
+    delete doubleTagB;
 }
 
 TEST(DoubleTag, Equal)
@@ -221,4 +223,6 @@ TEST(DoubleTag, tag_cast)
 
     nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
+
+    delete testTag;
 }
