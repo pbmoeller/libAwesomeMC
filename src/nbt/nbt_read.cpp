@@ -75,6 +75,7 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
                 root->pushBack(subTag);
             }
         } while(subTag->getType() != TagType::End);
+        delete subTag;
     }
 
     return root;
@@ -163,6 +164,7 @@ AbstractTag* readSubTag(util::ByteStream &stream,
                 }
             } while(subTag->getType() != TagType::End);
             tag = compTag;
+            delete subTag;
             break;
         }
         case TagType::IntArray:
