@@ -63,7 +63,7 @@ private:
     int m_z;
 
     RegionHeader m_regionHeader;
-    std::array<Chunk, ChunkCount> m_chunks;
+    std::array<Chunk, ChunkCount> *m_chunks;
 };
 
 } // namespace anvil

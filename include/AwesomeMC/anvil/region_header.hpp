@@ -38,7 +38,7 @@ public:
     void setChunkInfoAt(unsigned int index, const ChunkInfo &info);
 
 private:
-    std::array<ChunkInfo, ChunkCount> m_chunkInfo;
+    std::array<ChunkInfo, ChunkCount> *m_chunkInfo;
 };
 
 } // namespace anvil

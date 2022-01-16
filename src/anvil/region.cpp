@@ -11,6 +11,7 @@ namespace anvil
 Region::Region()
     : m_x{0}
     , m_z{0}
+    , m_chunks{new std::array<Chunk, ChunkCount>()}
 {
 
 }
@@ -18,23 +19,28 @@ Region::Region()
 Region::Region(int x, int z)
     : m_x{x}
     , m_z{z}
+    , m_chunks{new std::array<Chunk, ChunkCount>()}
 {
 
 }
 
 Region::Region(const Region &other)
+    : m_chunks{new std::array<Chunk, ChunkCount>()}
 {
     *this = other;
 }
 
 Region::Region(Region &&other) noexcept
+    : m_chunks(nullptr)
 {
     *this = std::move(other);
 }
 
 Region::~Region()
 {
-
+    if(m_chunks) {
+        delete m_chunks;
+    }
 }
 
 Region& Region::operator=(const Region &other)
@@ -45,7 +51,7 @@ Region& Region::operator=(const Region &other)
         m_regionHeader  = other.m_regionHeader;
 
         for(unsigned int i = 0; i < ChunkCount; ++i) {
-            m_chunks[i] = other.m_chunks[i];
+            (*m_chunks)[i] = (*other.m_chunks)[i];
         }
     }
     return *this;
@@ -57,10 +63,7 @@ Region& Region::operator=(Region &&other) noexcept
         m_x             = std::move(other.m_x);
         m_z             = std::move(other.m_z);
         m_regionHeader  = std::move(other.m_regionHeader);
-
-        for(unsigned int i = 0; i < ChunkCount; ++i) {
-            m_chunks[i] = std::move(other.m_chunks[i]);
-        }
+        std::swap(m_chunks, other.m_chunks);
     }
     return *this;
 }
@@ -78,7 +81,7 @@ bool Region::operator==(const Region &other)
     }
 
     for(unsigned int i = 0; i < ChunkCount; ++i) {
-        if(m_chunks[i] != other.m_chunks[i]) {
+        if((*m_chunks)[i] != (*other.m_chunks)[i]) {
             return false;
         }
     }
@@ -128,17 +131,17 @@ void Region::setRegionHeader(const RegionHeader &header)
 
 const std::array<Chunk, ChunkCount>& Region::getChunks() const
 {
-    return m_chunks;
+    return *m_chunks;
 }
 
 Chunk& Region::getChunkAt(unsigned int index)
 {
-    return m_chunks[index];
+    return (*m_chunks)[index];
 }
 
 const Chunk& Region::getChunkAt(unsigned int index) const
 {
-    return m_chunks[index];
+    return (*m_chunks)[index];
 }
 
 std::vector<int32_t> Region::getBiomesAt(unsigned int x, unsigned int z) const
