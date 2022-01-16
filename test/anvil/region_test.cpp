@@ -7,6 +7,9 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <tuple>
+
 const std::string testFolder = "../../../test/testdata/world/";
 
 class RegionFixture : public ::testing::Test
@@ -45,6 +48,64 @@ protected:
         64, 68, 73, 73, 73, 73,  73,  73,  73,  73, 73, 73, 73, 73, 68, 64, // 13
         64, 68, 68, 68, 68, 68,  68,  68,  68,  68, 68, 68, 68, 68, 68, 64, // 14
         64, 64, 64, 64, 64, 64,  64,  64,  64,  64, 64, 64, 64, 64, 64, 64  // 15
+    };
+
+    const std::vector<int> yCoordinates1 = {-16, 0, 16, 32, 48};
+    const std::vector<std::tuple<int, int, std::string>> expectedBlocksRow1 = {
+        {-16, -48, "minecraft:white_wool"},
+        {-15, -48, "minecraft:orange_wool"},
+        {-14, -48, "minecraft:magenta_wool"},
+        {-13, -48, "minecraft:light_blue_wool"},
+        {-12, -48, "minecraft:yellow_wool"},
+        {-11, -48, "minecraft:lime_wool"},
+        {-10, -48, "minecraft:pink_wool"},
+        {-9,  -48, "minecraft:gray_wool"},
+        {-8,  -48, "minecraft:light_gray_wool"},
+        {-7,  -48, "minecraft:cyan_wool"},
+        {-6,  -48, "minecraft:purple_wool"},
+        {-5,  -48, "minecraft:blue_wool"},
+        {-4,  -48, "minecraft:brown_wool"},
+        {-3,  -48, "minecraft:green_wool"},
+        {-2,  -48, "minecraft:red_wool"},
+        {-1,  -48, "minecraft:black_wool"}
+    };
+    const std::vector<int> yCoordinates2 = {0, 16, 32, 48};
+    const std::vector<std::tuple<int, int, std::string>> expectedBlocksRow2 = {
+        {-16, -47, "minecraft:stone"},
+        {-15, -47, "minecraft:granite"},
+        {-14, -47, "minecraft:polished_granite"},
+        {-13, -47, "minecraft:diorite"},
+        {-12, -47, "minecraft:polished_diorite"},
+        {-11, -47, "minecraft:andesite"},
+        {-10, -47, "minecraft:polished_andesite"},
+        {-9,  -47, "minecraft:deepslate"},
+        {-8,  -47, "minecraft:polished_deepslate"},
+        {-7,  -47, "minecraft:calcite"},
+        {-6,  -47, "minecraft:tuff"},
+        {-5,  -47, "minecraft:grass_block"},
+        {-4,  -47, "minecraft:dripstone_block"},
+        {-3,  -47, "minecraft:dirt"},
+        {-2,  -47, "minecraft:coarse_dirt"},
+        {-1,  -47, "minecraft:podzol"}
+    };
+    const std::vector<int> yCoordinates16 = {48};
+    const std::vector<std::tuple<int, int, std::string>> expectedBlocksRow16 = {
+        {-16, -33, "minecraft:white_terracotta"},
+        {-15, -33, "minecraft:orange_terracotta"},
+        {-14, -33, "minecraft:magenta_terracotta"},
+        {-13, -33, "minecraft:light_blue_terracotta"},
+        {-12, -33, "minecraft:yellow_terracotta"},
+        {-11, -33, "minecraft:lime_terracotta"},
+        {-10, -33, "minecraft:pink_terracotta"},
+        {-9,  -33, "minecraft:gray_terracotta"},
+        {-8,  -33, "minecraft:light_gray_terracotta"},
+        {-7,  -33, "minecraft:cyan_terracotta"},
+        {-6,  -33, "minecraft:purple_terracotta"},
+        {-5,  -33, "minecraft:blue_terracotta"},
+        {-4,  -33, "minecraft:brown_terracotta"},
+        {-3,  -33, "minecraft:green_terracotta"},
+        {-2,  -33, "minecraft:red_terracotta"},
+        {-1,  -33, "minecraft:black_terracotta"}
     };
 
     static anvil::Region region;
@@ -168,9 +229,38 @@ TEST(Region, getBiomeAt)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
-TEST(Region, getBlockAt)
+TEST_F(RegionFixture, getBlockAt)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Test Row 1 Blocks
+    for(const int y : yCoordinates1) {
+        for(int xOffset = 0; xOffset < 16; ++xOffset) {
+            anvil::Block block = region.getBlockAt(-16 + xOffset, y, -48);
+            auto [expectedX, expectedZ, expectedName] = expectedBlocksRow1[xOffset];
+            EXPECT_EQ(block.getX(), expectedX);
+            EXPECT_EQ(block.getZ(), expectedZ);
+            EXPECT_STREQ(block.getName().c_str(), expectedName.c_str());
+        }
+    }
+
+    // Test Row 2 Blocks
+    for(const int y : yCoordinates2) {
+        for(int xOffset = 0; xOffset < 16; ++xOffset) {
+            anvil::Block block = region.getBlockAt(-16 + xOffset, y, -47);
+            auto [expectedX, expectedZ, expectedName] = expectedBlocksRow2[xOffset];
+            EXPECT_EQ(block.getX(), expectedX);
+            EXPECT_EQ(block.getZ(), expectedZ);
+            EXPECT_STREQ(block.getName().c_str(), expectedName.c_str());
+        }
+    }
+
+    // Test Row 16 Blocks
+    for(int xOffset = 0; xOffset < 16; ++xOffset) {
+        anvil::Block block = region.getBlockAt(-16 + xOffset, yCoordinates16[0], -33);
+        auto [expectedX, expectedZ, expectedName] = expectedBlocksRow16[xOffset];
+        EXPECT_EQ(block.getX(), expectedX);
+        EXPECT_EQ(block.getZ(), expectedZ);
+        EXPECT_STREQ(block.getName().c_str(), expectedName.c_str());
+    }
 }
 
 TEST_F(RegionFixture, getHeightMap)
