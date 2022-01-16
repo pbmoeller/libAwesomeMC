@@ -257,18 +257,76 @@ Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) co
     }
 }
 
-std::vector<nbt::AbstractTag*> Chunk::getPaletteAt(unsigned int blockX, int blockY, unsigned int blockZ) const
+HeightMap Chunk::getHeightMap(HeightMap::HeightMapType mapType) const
 {
-    // Check ranges of block coordinates
-    if(blockX >= BlockWidth || blockZ >= BlockWidth
-       || blockY < MinimumBlockHeight || blockY > MaximumBlockHeight) {
-        throw std::out_of_range("Block Coordinates out of range");
+    // Get Heightmaps CompoundTag
+    auto vecTmp = getSubTagsByName("Heightmaps");
+    if(vecTmp.size() == 0) {
+        throw std::runtime_error("\"Heightmaps\" not found!");
+    } else if(vecTmp.size() != 1) {
+        throw std::runtime_error("Invalid count of Heightmaps!");
+    }
+    nbt::CompoundTag *heightmaps = tag_cast<nbt::CompoundTag*>(vecTmp.at(0));
+    if(!heightmaps) {
+        throw std::runtime_error("Invalid tag type of Heightmaps!");
     }
 
-    // Calculate Section
-    int sectionIndex = blockY / BlockWidth + 5;
+    // Get LongArrayTag depending on type.
+    nbt::AbstractTag *tmp = nullptr;
+    switch(mapType)
+    {
+        case HeightMap::HeightMapType::MotionBlocking:
+            tmp = heightmaps->getChildByName("MOTION_BLOCKING");
+            break;
+        case HeightMap::HeightMapType::MotionBlockingNoLeaves:
+            tmp = heightmaps->getChildByName("MOTION_BLOCKING_NO_LEAVES");
+            break;
+        case HeightMap::HeightMapType::OceanFloor:
+            tmp = heightmaps->getChildByName("OCEAN_FLOOR");
+            break;
+        case HeightMap::HeightMapType::WorldSurface:
+            tmp = heightmaps->getChildByName("WORLD_SURFACE");
+            break;
+        case HeightMap::HeightMapType::Unknown:
+        default:
+            break;
+    }
 
-    return std::vector<nbt::AbstractTag*>();
+    nbt::LongArrayTag *heightmapData = tag_cast<nbt::LongArrayTag*>(tmp);
+    if(!heightmapData) {
+        throw std::runtime_error("Empty Heightmap data!");
+    }
+    if(heightmapData->size() != 37) {
+        throw std::runtime_error("Invalid size of Heightmap!");
+    }
+
+    // Get height values.
+    HeightMap heightmap;
+    int currenBlockIndex = 0;
+    const int64_t mask = util::setNLeastSignificantBits64(9);
+    for(int i = 0; i < 37 && currenBlockIndex < BlockCount; ++i) {
+        int64_t longValue = heightmapData->at(i);
+        for(int j = 0; j < 7 && currenBlockIndex < BlockCount; ++j) {
+            int heightValue = (longValue & mask);
+            heightValue += MinimumBlockHeight - 1;
+            heightmap.setAt(currenBlockIndex++, heightValue);
+            longValue >>= 9;
+        }
+    }
+
+    // Set X and Z coordinate of chunk if available
+    auto vecTmpX = getSubTagsByName("xPos");
+    auto vecTmpZ = getSubTagsByName("zPos");
+    if(vecTmpX.size() > 0 && vecTmpZ.size() > 0) {
+        nbt::IntTag *intTagX = tag_cast<nbt::IntTag*>(vecTmpX[0]);
+        nbt::IntTag *intTagZ = tag_cast<nbt::IntTag*>(vecTmpZ[0]);
+        if(intTagX && intTagZ) {
+            heightmap.setChunkX(intTagX->getValue());
+            heightmap.setChunkZ(intTagZ->getValue());
+        }
+    }
+
+    return heightmap;
 }
 
 } // namespace anvil

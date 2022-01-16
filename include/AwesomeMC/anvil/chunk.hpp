@@ -4,6 +4,7 @@
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/compound_tag.hpp>
 #include <AwesomeMC/anvil/block.hpp>
+#include <AwesomeMC/anvil/heightmap.hpp>
 
 // STL
 #include <vector>
@@ -38,7 +39,8 @@ public:
     int32_t getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
 
     Block getBlockAt(const int blockX, const int blockY, const int blockZ) const;
-    std::vector<nbt::AbstractTag*> getPaletteAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
+
+    HeightMap getHeightMap(HeightMap::HeightMapType mapType = HeightMap::HeightMapType::WorldSurface) const;
 
 protected:
     void getSubTagsByName(const std::string &name,

@@ -192,4 +192,14 @@ Block Region::getBlockAt(const int blockX,
     return getChunkAt(chunkIdx).getBlockAt(blockX, blockY, blockZ);
 }
 
+HeightMap Region::getHeightMap(const int chunkWorldX,
+                               const int chunkWorldZ,
+                               HeightMap::HeightMapType mapType) const
+{
+    int chunkX = 0;
+    int chunkZ = 0;
+    util::convertChunkWorld2ChunkRegion(chunkWorldX, chunkWorldZ, chunkX, chunkZ);
+    return getChunkAt(chunkZ * ChunkWidth + chunkX).getHeightMap(mapType);
+}
+
 } // namespace anvil

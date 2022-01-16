@@ -27,6 +27,8 @@ void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldZ,
                                   int &blockChunkX, int &blockChunkZ);
 void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldY, const int blockWorldZ,
                                   int &blockChunkX, int &blockChunkY, int &blockChunkZ);
+void convertChunkWorld2ChunkRegion(const int chunkWorldX, const int chunkWorldZ,
+                                   int &cunkRegionX, int &chunKRegionZ);
 
 } // namespace util
 

@@ -5,9 +5,11 @@
 #include <AwesomeMC/constants.hpp>
 #include <AwesomeMC/anvil/region_header.hpp>
 #include <AwesomeMC/anvil/chunk.hpp>
+#include <AwesomeMC/anvil/heightmap.hpp>
 
 // STL
 #include <array>
+#include <vector>
 
 namespace anvil
 {
@@ -51,6 +53,10 @@ public:
     Block getBlockAt(const int blockX,
                      const int blockY,
                      const int blockZ) const;
+    
+    HeightMap getHeightMap(const int chunkX,
+                           const int chunkZ,
+                           HeightMap::HeightMapType mapType = HeightMap::HeightMapType::WorldSurface) const;
 
 private:
     int m_x;

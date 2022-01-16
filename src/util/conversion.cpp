@@ -104,4 +104,11 @@ void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldY, 
     blockChunkZ = (anvil::BlockWidth + (blockWorldZ % anvil::BlockWidth)) & 0x0000000F;
 }
 
+void convertChunkWorld2ChunkRegion(const int chunkWorldX, const int chunkWorldZ,
+                                   int &chunkRegionX, int &chunkRegionZ)
+{
+    chunkRegionX = anvil::ChunkWidth + (chunkWorldX % anvil::ChunkWidth) & 0x0000001F;
+    chunkRegionZ = anvil::ChunkWidth + (chunkWorldZ % anvil::ChunkWidth) & 0x0000001F;
+}
+
 } // namespace util

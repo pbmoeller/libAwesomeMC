@@ -8,6 +8,7 @@ set(ANVIL_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/block.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk_info.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/heightmap.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region_header.hpp"
 )
@@ -58,6 +59,7 @@ set(ANVIL_SOURCES
     "anvil/block.cpp"
     "anvil/chunk.cpp"
     "anvil/chunk_info.cpp"
+    "anvil/heightmap.cpp"
     "anvil/region.cpp"
     "anvil/region_header.cpp"
 )
