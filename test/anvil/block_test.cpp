@@ -12,7 +12,7 @@ class BlockFixture : public ::testing::Test
 {
 protected:
     nbt::CompoundTag compound;
-    nbt::CompoundTag *compoundPtr;
+    nbt::CompoundTag *compoundPtr = nullptr;
 
     virtual void SetUp()
     {
