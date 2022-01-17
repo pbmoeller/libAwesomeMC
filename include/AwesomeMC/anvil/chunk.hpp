@@ -40,7 +40,7 @@ public:
 
     Block getBlockAt(const int blockX, const int blockY, const int blockZ) const;
 
-    HeightMap getHeightMap(HeightMap::HeightMapType mapType = HeightMap::HeightMapType::WorldSurface) const;
+    HeightMap getHeightMap(HeightMap::MapType mapType = HeightMap::MapType::WorldSurface) const;
 
 protected:
     void getSubTagsByName(const std::string &name,

@@ -56,7 +56,7 @@ public:
     
     HeightMap getHeightMap(const int chunkX,
                            const int chunkZ,
-                           HeightMap::HeightMapType mapType = HeightMap::HeightMapType::WorldSurface) const;
+                           HeightMap::MapType mapType = HeightMap::MapType::WorldSurface) const;
 
 private:
     int m_x;

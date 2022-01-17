@@ -257,7 +257,7 @@ Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) co
     }
 }
 
-HeightMap Chunk::getHeightMap(HeightMap::HeightMapType mapType) const
+HeightMap Chunk::getHeightMap(HeightMap::MapType mapType) const
 {
     // Get Heightmaps CompoundTag
     auto vecTmp = getSubTagsByName("Heightmaps");
@@ -275,19 +275,19 @@ HeightMap Chunk::getHeightMap(HeightMap::HeightMapType mapType) const
     nbt::AbstractTag *tmp = nullptr;
     switch(mapType)
     {
-        case HeightMap::HeightMapType::MotionBlocking:
+        case HeightMap::MapType::MotionBlocking:
             tmp = heightmaps->getChildByName("MOTION_BLOCKING");
             break;
-        case HeightMap::HeightMapType::MotionBlockingNoLeaves:
+        case HeightMap::MapType::MotionBlockingNoLeaves:
             tmp = heightmaps->getChildByName("MOTION_BLOCKING_NO_LEAVES");
             break;
-        case HeightMap::HeightMapType::OceanFloor:
+        case HeightMap::MapType::OceanFloor:
             tmp = heightmaps->getChildByName("OCEAN_FLOOR");
             break;
-        case HeightMap::HeightMapType::WorldSurface:
+        case HeightMap::MapType::WorldSurface:
             tmp = heightmaps->getChildByName("WORLD_SURFACE");
             break;
-        case HeightMap::HeightMapType::Unknown:
+        case HeightMap::MapType::Unknown:
         default:
             break;
     }

@@ -197,7 +197,7 @@ Block Region::getBlockAt(const int blockX,
 
 HeightMap Region::getHeightMap(const int chunkWorldX,
                                const int chunkWorldZ,
-                               HeightMap::HeightMapType mapType) const
+                               HeightMap::MapType mapType) const
 {
     int chunkX = 0;
     int chunkZ = 0;

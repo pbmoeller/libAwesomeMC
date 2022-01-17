@@ -13,7 +13,7 @@ HeightMap::HeightMap()
     : m_chunkX{std::numeric_limits<int>::max()}
     , m_chunkZ{std::numeric_limits<int>::max()}
     , m_data{0}
-    , m_mapType{HeightMapType::Unknown}
+    , m_mapType{MapType::Unknown}
 {
 
 }
@@ -40,7 +40,30 @@ HeightMap::HeightMap(const int chunkX, const int chunkZ)
     : m_chunkX{chunkX}
     , m_chunkZ{chunkZ}
     , m_data{0}
-    , m_mapType{HeightMapType::Unknown}
+    , m_mapType{MapType::Unknown}
+{
+
+}
+
+HeightMap::HeightMap(const int chunkX,
+                     const int chunkZ,
+                     const MapType mapType)
+    : m_chunkX{chunkX}
+    , m_chunkZ{chunkZ}
+    , m_data{0}
+    , m_mapType{mapType}
+{
+
+}
+
+HeightMap::HeightMap(const int chunkX,
+                     const int chunkZ,
+                     const MapType mapType,
+                     const std::array<int, BlockCount> &data)
+    : m_chunkX{chunkX}
+    , m_chunkZ{chunkZ}
+    , m_data{data}
+    , m_mapType{mapType}
 {
 
 }
@@ -78,7 +101,7 @@ bool HeightMap::operator==(const HeightMap &other)
         return true;
     }
 
-    if(m_chunkX != other.m_chunkZ
+    if(m_chunkX != other.m_chunkX
        || m_chunkZ != other.m_chunkZ
        || m_data != other.m_data
        || m_mapType != other.m_mapType) {
@@ -91,6 +114,16 @@ bool HeightMap::operator==(const HeightMap &other)
 bool HeightMap::operator!=(const HeightMap &other)
 {
     return !(*this == other);
+}
+
+void HeightMap::setMapType(const HeightMap::MapType mapType)
+{
+    m_mapType = mapType;
+}
+
+HeightMap::MapType HeightMap::getMapType() const
+{
+    return m_mapType;
 }
 
 void HeightMap::setChunkX(const int chunkX)
@@ -145,12 +178,12 @@ int HeightMap::getAt(const int x, const int z) const
     return m_data[z * BlockWidth + x];
 }
 
-const std::array<int, BlockCount>& HeightMap::getData() const
+std::array<int, BlockCount>& HeightMap::getData()
 {
     return m_data;
 }
 
-std::array<int, BlockCount>& HeightMap::getData()
+const std::array<int, BlockCount>& HeightMap::getData() const
 {
     return m_data;
 }

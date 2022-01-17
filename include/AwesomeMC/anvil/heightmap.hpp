@@ -13,19 +13,26 @@ namespace anvil
 class HeightMap
 {
 public:
-    enum class HeightMapType
+    enum class MapType : int
     {
-        MotionBlocking,
-        MotionBlockingNoLeaves,
-        OceanFloor,
-        WorldSurface,
-        Unknown,
+        Unknown                     = -1,
+        MotionBlocking              = 0,
+        MotionBlockingNoLeaves      = 1,
+        OceanFloor                  = 2,
+        WorldSurface                = 3,
     };
 
     HeightMap();
     HeightMap(const HeightMap &other);
     HeightMap(HeightMap &&other) noexcept;
     HeightMap(const int chunkX, const int chunkZ);
+    HeightMap(const int chunkX,
+              const int chunkZ,
+              const MapType mapType);
+    HeightMap(const int chunkX,
+              const int chunkZ, 
+              const MapType mapType, 
+              const std::array<int, BlockCount> &data);
     ~HeightMap();
 
     HeightMap& operator=(const HeightMap &other);
@@ -33,6 +40,9 @@ public:
 
     bool operator==(const HeightMap &other);
     bool operator!=(const HeightMap &other);
+
+    void setMapType(const MapType type);
+    MapType getMapType() const;
 
     void setChunkX(const int chunkX);
     int getChunkX() const;
@@ -44,14 +54,14 @@ public:
     int getAt(const int index) const;
     int getAt(const int x, const int z) const;
 
-    const std::array<int, BlockCount>& getData() const;
     std::array<int, BlockCount>& getData();
+    const std::array<int, BlockCount>& getData() const;
 
 private:
     int m_chunkX;
     int m_chunkZ;
     std::array<int, BlockCount> m_data;
-    HeightMapType m_mapType;
+    MapType m_mapType;
 };
 
 }
