@@ -2,6 +2,7 @@
 
 // AwesomeMC
 #include <AwesomeMC/util/byte_stream.hpp>
+#include <AwesomeMC/util/floating_point.hpp>
 
 // STL
 #include <utility>
@@ -109,9 +110,7 @@ bool DoubleTag::isEqual(const AbstractTag &other) const
 
     return m_name == oTag.m_name
         && getType() == oTag.getType()
-        && m_value == oTag.m_value; // This comparison is wrong, however we test the object 
-                                    // and not the number. So we expect the numbers to be equal
-                                    // at the bits, if the objects are equal. TODO: better comparison.
+        && util::almostEqualUlps(m_value, oTag.m_value, static_cast<int64_t>(10));
 }
 
 } // namespace nbt
