@@ -9,41 +9,6 @@
 namespace util
 {
 
-namespace detail
-{
-
-template <typename T>
-constexpr inline T abs(const T &value) 
-{ 
-    return value >= 0 ? value : -value;
-}
-
-template <typename T>
-constexpr inline const T &min(const T &a, const T &b) 
-{ 
-    return (a < b) ? a : b;
-}
-
-template <typename T>
-constexpr inline const T &max(const T &a, const T &b)
-{ 
-    return (a < b) ? b : a;
-}
-
-} // namespace detail
-
-/*
- * https://embeddeduse.com/2019/08/26/qt-compare-two-floats/ 
- */
-//bool floatCompare(float lhs, float rhs)
-//{
-//    static constexpr auto epsilon = 1.0e-05f;
-//    if(detail::abs(lhs - rhs) <= epsilon) {
-//        return true;
-//    }
-//    return detail::abs(lhs - rhs) <= epsilon * detail::max(detail::abs(lhs), detail::abs(rhs));
-//}
-
 inline bool almostEqualUlps(float a, float b, int32_t maxUlps)
 {
     if(std::isinf(a) || std::isinf(b)) {
