@@ -16,9 +16,9 @@ TEST(ChunkInfo, Constructor)
 {
     anvil::ChunkInfo chunkInfo;
 
-    EXPECT_EQ(0, chunkInfo.getOffset());
-    EXPECT_EQ(0, chunkInfo.getLength());
-    EXPECT_EQ(0, chunkInfo.getTimestamp());
+    EXPECT_EQ(0u, chunkInfo.getOffset());
+    EXPECT_EQ(0u, chunkInfo.getLength());
+    EXPECT_EQ(0u, chunkInfo.getTimestamp());
     EXPECT_EQ(anvil::ChunkInfo::CompressionType::GZip, chunkInfo.getCompression());
 }
 
@@ -26,9 +26,9 @@ TEST(ChunkInfo, Constructor_2)
 {
     anvil::ChunkInfo chunkInfo(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
 
-    EXPECT_EQ(345, chunkInfo.getOffset());
-    EXPECT_EQ(20, chunkInfo.getLength());
-    EXPECT_EQ(0x12345678, chunkInfo.getTimestamp());
+    EXPECT_EQ(345u, chunkInfo.getOffset());
+    EXPECT_EQ(20u, chunkInfo.getLength());
+    EXPECT_EQ(0x12345678u, chunkInfo.getTimestamp());
     EXPECT_EQ(anvil::ChunkInfo::CompressionType::Zlib, chunkInfo.getCompression());
 }
 
@@ -37,9 +37,9 @@ TEST(ChunkInfo, CopyConstructor)
     // Init A
     anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
 
-    ASSERT_EQ(345, chunkInfoA.getOffset());
-    ASSERT_EQ(20, chunkInfoA.getLength());
-    ASSERT_EQ(0x12345678, chunkInfoA.getTimestamp());
+    ASSERT_EQ(345u, chunkInfoA.getOffset());
+    ASSERT_EQ(20u, chunkInfoA.getLength());
+    ASSERT_EQ(0x12345678u, chunkInfoA.getTimestamp());
     ASSERT_EQ(anvil::ChunkInfo::CompressionType::Zlib, chunkInfoA.getCompression());
 
     // Test Copy
@@ -55,9 +55,9 @@ TEST(ChunkInfo, MoveConstructor)
     // Init A
     anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
 
-    ASSERT_EQ(345, chunkInfoA.getOffset());
-    ASSERT_EQ(20, chunkInfoA.getLength());
-    ASSERT_EQ(0x12345678, chunkInfoA.getTimestamp());
+    ASSERT_EQ(345u, chunkInfoA.getOffset());
+    ASSERT_EQ(20u, chunkInfoA.getLength());
+    ASSERT_EQ(0x12345678u, chunkInfoA.getTimestamp());
     ASSERT_EQ(anvil::ChunkInfo::CompressionType::Zlib, chunkInfoA.getCompression());
 
     // Test Move
@@ -73,9 +73,9 @@ TEST(ChunkInfo, CopyAssignment)
     // Init A
     anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
 
-    ASSERT_EQ(345, chunkInfoA.getOffset());
-    ASSERT_EQ(20, chunkInfoA.getLength());
-    ASSERT_EQ(0x12345678, chunkInfoA.getTimestamp());
+    ASSERT_EQ(345u, chunkInfoA.getOffset());
+    ASSERT_EQ(20u, chunkInfoA.getLength());
+    ASSERT_EQ(0x12345678u, chunkInfoA.getTimestamp());
     ASSERT_EQ(anvil::ChunkInfo::CompressionType::Zlib, chunkInfoA.getCompression());
 
     // Test Copy
@@ -91,9 +91,9 @@ TEST(ChunkInfo, MoveAssignment)
     // Init A
     anvil::ChunkInfo chunkInfoA(345, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
 
-    ASSERT_EQ(345, chunkInfoA.getOffset());
-    ASSERT_EQ(20, chunkInfoA.getLength());
-    ASSERT_EQ(0x12345678, chunkInfoA.getTimestamp());
+    ASSERT_EQ(345u, chunkInfoA.getOffset());
+    ASSERT_EQ(20u, chunkInfoA.getLength());
+    ASSERT_EQ(0x12345678u, chunkInfoA.getTimestamp());
     ASSERT_EQ(anvil::ChunkInfo::CompressionType::Zlib, chunkInfoA.getCompression());
 
     // Test Move
@@ -161,17 +161,17 @@ TEST(ChunkInfo, getOffset)
     anvil::ChunkInfo chunkInfoB(0, 20, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
     anvil::ChunkInfo chunkInfoC;
 
-    EXPECT_EQ(chunkInfoA.getOffset(), 345);
-    EXPECT_EQ(chunkInfoB.getOffset(), 0);
-    EXPECT_EQ(chunkInfoC.getOffset(), 0);
+    EXPECT_EQ(chunkInfoA.getOffset(), 345u);
+    EXPECT_EQ(chunkInfoB.getOffset(), 0u);
+    EXPECT_EQ(chunkInfoC.getOffset(), 0u);
 }
 
 TEST(ChunkInfo, setOffset)
 {
     anvil::ChunkInfo chunkInfo;
-    ASSERT_EQ(chunkInfo.getOffset(), 0);
-    chunkInfo.setOffset(8);
-    EXPECT_EQ(chunkInfo.getOffset(), 8);
+    ASSERT_EQ(chunkInfo.getOffset(), 0u);
+    chunkInfo.setOffset(8u);
+    EXPECT_EQ(chunkInfo.getOffset(), 8u);
 }
 
 TEST(ChunkInfo, getLength)
@@ -180,17 +180,17 @@ TEST(ChunkInfo, getLength)
     anvil::ChunkInfo chunkInfoB(0, 0, 0x12345678, anvil::ChunkInfo::CompressionType::Zlib);
     anvil::ChunkInfo chunkInfoC;
 
-    EXPECT_EQ(chunkInfoA.getLength(), 20);
-    EXPECT_EQ(chunkInfoB.getLength(), 0);
-    EXPECT_EQ(chunkInfoC.getLength(), 0);
+    EXPECT_EQ(chunkInfoA.getLength(), 20u);
+    EXPECT_EQ(chunkInfoB.getLength(), 0u);
+    EXPECT_EQ(chunkInfoC.getLength(), 0u);
 }
 
 TEST(ChunkInfo, setLength)
 {
     anvil::ChunkInfo chunkInfo;
-    ASSERT_EQ(chunkInfo.getLength(), 0);
-    chunkInfo.setLength(8);
-    EXPECT_EQ(chunkInfo.getLength(), 8);
+    ASSERT_EQ(chunkInfo.getLength(), 0u);
+    chunkInfo.setLength(8u);
+    EXPECT_EQ(chunkInfo.getLength(), 8u);
 }
 
 TEST(ChunkInfo, getTimestamp)
@@ -199,17 +199,17 @@ TEST(ChunkInfo, getTimestamp)
     anvil::ChunkInfo chunkInfoB(0, 0, 0, anvil::ChunkInfo::CompressionType::Zlib);
     anvil::ChunkInfo chunkInfoC;
 
-    EXPECT_EQ(chunkInfoA.getTimestamp(), 0x12345678);
-    EXPECT_EQ(chunkInfoB.getTimestamp(), 0);
-    EXPECT_EQ(chunkInfoC.getTimestamp(), 0);
+    EXPECT_EQ(chunkInfoA.getTimestamp(), 0x12345678u);
+    EXPECT_EQ(chunkInfoB.getTimestamp(), 0u);
+    EXPECT_EQ(chunkInfoC.getTimestamp(), 0u);
 }
 
 TEST(ChunkInfo, setTimestamp)
 {
     anvil::ChunkInfo chunkInfo;
-    ASSERT_EQ(chunkInfo.getTimestamp(), 0);
-    chunkInfo.setTimestamp(8);
-    EXPECT_EQ(chunkInfo.getTimestamp(), 8);
+    ASSERT_EQ(chunkInfo.getTimestamp(), 0u);
+    chunkInfo.setTimestamp(8u);
+    EXPECT_EQ(chunkInfo.getTimestamp(), 8u);
 }
 
 TEST(ChunkInfo, getCompression)

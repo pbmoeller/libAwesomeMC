@@ -237,15 +237,16 @@ TEST(ByteArrayTag, erase)
     EXPECT_FALSE(byteArrayTagA.erase(0));
 
     // Erase from middle
+    std::vector<int8_t> values1 = {1, 2, 3};
+    std::vector<int8_t> values2 = {1, 3};
     nbt::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
     ASSERT_EQ(3, byteArrayTagB.size());
     std::vector<int8_t> data1 = byteArrayTagB.getValue();
-    EXPECT_THAT(data1, testing::ElementsAre(1, 2, 3));
+    EXPECT_THAT(data1, testing::ElementsAreArray(values1.begin(), values1.end()));
     byteArrayTagB.erase(1);
     std::vector<int8_t> data2 = byteArrayTagB.getValue();
     ASSERT_EQ(2, byteArrayTagB.size());
-    EXPECT_THAT(data2, testing::ElementsAre(1, 3));
-    
+    EXPECT_THAT(data2, testing::ElementsAreArray(values2.begin(), values2.end()));
 }
 
 TEST(ByteArrayTag, insert)
@@ -262,12 +263,13 @@ TEST(ByteArrayTag, insert)
     EXPECT_EQ(1, byteArrayTagA.size());
 
     // Insert in the middle
+    std::vector<int8_t> values1 = {1, 2, 3};
     nbt::ByteArrayTag byteArrayTagB("TestTag", {1, 3});
     ASSERT_EQ(2, byteArrayTagB.size());
     EXPECT_TRUE(byteArrayTagB.insert(1, 2));
     EXPECT_EQ(3, byteArrayTagB.size());
     std::vector<int8_t> data1 = byteArrayTagB.getValue();
-    EXPECT_THAT(data1, testing::ElementsAre(1, 2, 3));
+    EXPECT_THAT(data1, testing::ElementsAreArray(values1.begin(), values1.end()));
 }
 
 TEST(ByteArrayTag, pushBack)
@@ -350,10 +352,10 @@ TEST(ByteArrayTag, getValue)
     EXPECT_EQ(0, data.size());
     byteArrayTag.setValue(value);
     std::vector<int8_t> data2 = byteArrayTag.getValue();
-    ASSERT_THAT(data2, testing::ElementsAre(1, 2, 3, 4));
+    ASSERT_THAT(data2, testing::ElementsAreArray(value.begin(), value.end()));
     byteArrayTag.setValue(value2);
     std::vector<int8_t> data3 = byteArrayTag.getValue();
-    ASSERT_THAT(data3, testing::ElementsAre(1, 2, 3, 5));
+    ASSERT_THAT(data3, testing::ElementsAreArray(value2.begin(), value2.end()));
 }
 
 TEST(ByteArrayTag, setValue)
@@ -364,7 +366,7 @@ TEST(ByteArrayTag, setValue)
     byteArrayTag.setValue(value);
     EXPECT_EQ(4, byteArrayTag.size());
     std::vector<int8_t> data2 = byteArrayTag.getValue();
-    ASSERT_THAT(data2, testing::ElementsAre(1, 2, 3, 4));
+    ASSERT_THAT(data2, testing::ElementsAreArray(value.begin(), value.end()));
 }
 
 TEST(ByteArrayTag, tag_cast)

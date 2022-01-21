@@ -32,7 +32,7 @@ TEST(ReagionHeader, Constructor_2)
         EXPECT_EQ((*info)[i].getTimestamp(),   regionHeader.getChunkInfoAt(i).getTimestamp());
         EXPECT_EQ((*info)[i].getCompression(), regionHeader.getChunkInfoAt(i).getCompression());
     }
-    EXPECT_EQ(anvil::ChunkCount, regionHeader.getRegionCount());
+    EXPECT_EQ(anvil::ChunkCount, static_cast<int>(regionHeader.getRegionCount()));
 
     delete info;
 }
