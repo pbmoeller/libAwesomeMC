@@ -46,13 +46,13 @@ protected:
     const U one = 1;
     const T zero1 = 0.0f;
     const T zero2 = 0.0f;
-    T nan1;
-    T nan2;
-    T inf;
-    T nan3 = inf - inf;
-    T nan4 = nan3;
-    T negZero = 0;
-    T smallestDenormal;
+    T nan1 = 0.0f;
+    T nan2 = 0.0f;
+    T inf = 0.0f;
+    T nan3 = 0.0f;
+    T nan4 = 0.0f;
+    T negZero = 0.0f;
+    T smallestDenormal = 0.0f;;
 };
 
 using FloatFixture = FloatingPointFixture<float, int32_t>;
@@ -77,7 +77,7 @@ TEST_F(FloatFixture, nearbyNumbers)
 
 TEST_F(FloatFixture, nearbyNumbersSwitched)
 {
-    EXPECT_TRUE(util::almostEqualUlps(2.0f, 1.9999999f, 10));
+    EXPECT_TRUE(util::almostEqualUlps(1.9999999f, 2.0f, 10));
 }
 
 TEST_F(FloatFixture, closeNumbers)
@@ -88,6 +88,13 @@ TEST_F(FloatFixture, closeNumbers)
 TEST_F(FloatFixture, closeNumbersSwitched)
 {
     EXPECT_TRUE(util::almostEqualUlps(1.9999995f, 2.0f, 10));
+}
+
+TEST_F(FloatFixture, closeNumbers_10ulp)
+{
+    EXPECT_FALSE(util::almostEqualUlps(2.0f, 1.9999988f, 9));
+    EXPECT_FALSE(util::almostEqualUlps(2.0f, 1.9999988f, 10));
+    EXPECT_TRUE(util::almostEqualUlps(2.0f, 1.9999988f, 11));
 }
 
 TEST_F(FloatFixture, inf_negInf)
@@ -119,32 +126,39 @@ TEST_F(FloatFixture, smallestDenormal)
 
 TEST_F(DoubleFixture, zero_negZero)
 {
-    EXPECT_TRUE(util::almostEqualUlps(zero1, negZero, (int64_t)10));
+    EXPECT_TRUE(util::almostEqualUlps(zero1, negZero, 10ULL));
 }
 
 TEST_F(DoubleFixture, negZero_zero)
 {
-    EXPECT_TRUE(util::almostEqualUlps(negZero, zero1, (int64_t)10));
+    EXPECT_TRUE(util::almostEqualUlps(negZero, zero1, 10ULL));
 }
 
 TEST_F(DoubleFixture, nearbyNumbers)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_TRUE(util::almostEqualUlps(2.0, 1.9999999999999999, 9ULL));
 }
 
 TEST_F(DoubleFixture, nearbyNumbersSwitched)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_TRUE(util::almostEqualUlps(1.9999999999999999, 2.0, 9ULL));
 }
 
 TEST_F(DoubleFixture, closeNumbers)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_TRUE(util::almostEqualUlps(2.0, 1.9999999999999995, 9ULL));
 }
 
 TEST_F(DoubleFixture, closeNumbersSwitched)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_TRUE(util::almostEqualUlps(1.9999999999999995, 2.0, 9ULL));
+}
+
+TEST_F(DoubleFixture, closeNumbers_10ulp)
+{
+    EXPECT_FALSE(util::almostEqualUlps(2.0, 1.9999999999999977, 9ULL));
+    EXPECT_FALSE(util::almostEqualUlps(2.0, 1.9999999999999977, 10ULL));
+    EXPECT_TRUE(util::almostEqualUlps(2.0, 1.9999999999999977, 11ULL));
 }
 
 TEST_F(DoubleFixture, inf_negInf)
@@ -154,20 +168,20 @@ TEST_F(DoubleFixture, inf_negInf)
 
 TEST_F(DoubleFixture, max_inf)
 {
-    EXPECT_FALSE(util::almostEqualUlps(DBL_MAX, inf, (int64_t)10));
+    EXPECT_FALSE(util::almostEqualUlps(DBL_MAX, inf, 10ULL));
 }
 
 TEST_F(DoubleFixture, same_nan)
 {
-    EXPECT_FALSE(util::almostEqualUlps(nan2, nan2, (int64_t)10));
+    EXPECT_FALSE(util::almostEqualUlps(nan2, nan2, 10ULL));
 }
 
 TEST_F(DoubleFixture, different_nan)
 {
-    EXPECT_FALSE(util::almostEqualUlps(nan2, nan3, (int64_t)10));
+    EXPECT_FALSE(util::almostEqualUlps(nan2, nan3, 10ULL));
 }
 
 TEST_F(DoubleFixture, smallestDenormal)
 {
-    EXPECT_FALSE(util::almostEqualUlps(smallestDenormal, -smallestDenormal, (int64_t)10));
+    EXPECT_FALSE(util::almostEqualUlps(smallestDenormal, -smallestDenormal, 10ULL));
 }
