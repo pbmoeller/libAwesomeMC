@@ -116,12 +116,12 @@ TEST_F(HeightMapFixture, CopyConstructor)
         data[i] = i;
     }
     anvil::HeightMap map(3, 4, anvil::HeightMap::MapType::WorldSurface, data);
-    anvil::HeightMap map2(map);
-    EXPECT_EQ(map2.getChunkX(), 3);
-    EXPECT_EQ(map2.getChunkZ(), 4);
-    EXPECT_EQ(map2.getMapType(), anvil::HeightMap::MapType::WorldSurface);
+    anvil::HeightMap mapCopy(map);
+    EXPECT_EQ(mapCopy.getChunkX(), 3);
+    EXPECT_EQ(mapCopy.getChunkZ(), 4);
+    EXPECT_EQ(mapCopy.getMapType(), anvil::HeightMap::MapType::WorldSurface);
     for(int i = 0; i < anvil::BlockCount; ++i) {
-        EXPECT_EQ(map.getAt(i), map2.getAt(i));
+        EXPECT_EQ(map.getAt(i), mapCopy.getAt(i));
     }
 }
 
@@ -132,12 +132,12 @@ TEST_F(HeightMapFixture, MoveConstructor)
         data[i] = i;
     }
     anvil::HeightMap map(3, 4, anvil::HeightMap::MapType::WorldSurface, data);
-    anvil::HeightMap map2(std::move(map));
-    EXPECT_EQ(map2.getChunkX(), 3);
-    EXPECT_EQ(map2.getChunkZ(), 4);
-    EXPECT_EQ(map2.getMapType(), anvil::HeightMap::MapType::WorldSurface);
+    anvil::HeightMap mapMove(std::move(map));
+    EXPECT_EQ(mapMove.getChunkX(), 3);
+    EXPECT_EQ(mapMove.getChunkZ(), 4);
+    EXPECT_EQ(mapMove.getMapType(), anvil::HeightMap::MapType::WorldSurface);
     for(int i = 0; i < anvil::BlockCount; ++i) {
-        EXPECT_EQ(map.getAt(i), map2.getAt(i));
+        EXPECT_EQ(map.getAt(i), mapMove.getAt(i));
     }
 }
 
@@ -148,12 +148,12 @@ TEST_F(HeightMapFixture, CopyAssignment)
         data[i] = i;
     }
     anvil::HeightMap map(3, 4, anvil::HeightMap::MapType::WorldSurface, data);
-    anvil::HeightMap map2 = map;
-    EXPECT_EQ(map2.getChunkX(), 3);
-    EXPECT_EQ(map2.getChunkZ(), 4);
-    EXPECT_EQ(map2.getMapType(), anvil::HeightMap::MapType::WorldSurface);
+    anvil::HeightMap mapCopy = map;
+    EXPECT_EQ(mapCopy.getChunkX(), 3);
+    EXPECT_EQ(mapCopy.getChunkZ(), 4);
+    EXPECT_EQ(mapCopy.getMapType(), anvil::HeightMap::MapType::WorldSurface);
     for(int i = 0; i < anvil::BlockCount; ++i) {
-        EXPECT_EQ(map.getAt(i), map2.getAt(i));
+        EXPECT_EQ(map.getAt(i), mapCopy.getAt(i));
     }
 }
 
@@ -164,12 +164,12 @@ TEST_F(HeightMapFixture, MoveAssignment)
         data[i] = i;
     }
     anvil::HeightMap map(3, 4, anvil::HeightMap::MapType::WorldSurface, data);
-    anvil::HeightMap map2 = std::move(map);
-    EXPECT_EQ(map2.getChunkX(), 3);
-    EXPECT_EQ(map2.getChunkZ(), 4);
-    EXPECT_EQ(map2.getMapType(), anvil::HeightMap::MapType::WorldSurface);
+    anvil::HeightMap mapMove = std::move(map);
+    EXPECT_EQ(mapMove.getChunkX(), 3);
+    EXPECT_EQ(mapMove.getChunkZ(), 4);
+    EXPECT_EQ(mapMove.getMapType(), anvil::HeightMap::MapType::WorldSurface);
     for(int i = 0; i < anvil::BlockCount; ++i) {
-        EXPECT_EQ(map.getAt(i), map2.getAt(i));
+        EXPECT_EQ(map.getAt(i), mapMove.getAt(i));
     }
 }
 
