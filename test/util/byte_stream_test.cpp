@@ -238,7 +238,6 @@ TEST(ByteStream, good)
     size_t ret = 0;
     int16_t value1 = 0x1234;
     int16_t value1_out = 0;
-    int16_t value2_out = 0;
 
     // Init
     util::ByteStream byteStream;
@@ -510,7 +509,7 @@ TEST(ByteStream, streamOperator_in_vector)
     byteStream << std::vector<char>({0x12, 0x34});
     EXPECT_EQ(2, byteStream.size());
     EXPECT_EQ(2, byteStream.getPosition());
-    byteStream << std::vector<char>({0x12, 0x34, 0x56, 0x78, (char)0x90, (char)0xAB, (char)0xCD, (char)0xEF});
+    byteStream << std::vector<char>({0x12, 0x34, 0x56, 0x78, (char)0x90u, (char)0xABu, (char)0xCDu, (char)0xEFu});
     EXPECT_EQ(10, byteStream.size());
     EXPECT_EQ(10, byteStream.getPosition());
 }
