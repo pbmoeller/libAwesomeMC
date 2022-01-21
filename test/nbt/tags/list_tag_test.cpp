@@ -351,6 +351,70 @@ TEST(ListTag, getData)
     EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 18, testData.end()));
 }
 
+TEST(ListTag, begin)
+{
+    nbt::ListTag listTag(nbt::TagType::Byte, {
+        new nbt::ByteTag("A", 1),
+        new nbt::ByteTag("B", 2),
+        new nbt::ByteTag("C", 3)
+    });
+
+    nbt::ListTag::iterator it = listTag.begin();
+    nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    ASSERT_TRUE(b != nullptr);
+    EXPECT_EQ(*b, nbt::ByteTag("A", 1));
+}
+
+TEST(ListTag, end)
+{
+    nbt::ListTag listTag(nbt::TagType::Byte, {
+        new nbt::ByteTag("A", 1),
+        new nbt::ByteTag("B", 2),
+        new nbt::ByteTag("C", 3)
+    });
+
+    int idx = 0;
+    std::string strArray[3] = {"A", "B", "C"};
+    for(nbt::ListTag::iterator it = listTag.begin(); it != listTag.end(); ++it) {
+        nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+        ASSERT_TRUE(b != nullptr);
+        EXPECT_EQ(*b, nbt::ByteTag(strArray[idx], idx + 1));
+        idx++;
+    }
+}
+
+TEST(ListTag, begin_const)
+{
+    const nbt::ListTag listTag(nbt::TagType::Byte, {
+        new nbt::ByteTag("A", 1),
+        new nbt::ByteTag("B", 2),
+        new nbt::ByteTag("C", 3)
+    });
+
+    nbt::ListTag::const_iterator it = listTag.begin();
+    nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    ASSERT_TRUE(b != nullptr);
+    EXPECT_TRUE(*b == nbt::ByteTag("A", 1));
+}
+
+TEST(ListTag, end_const)
+{
+    const nbt::ListTag listTag(nbt::TagType::Byte, {
+        new nbt::ByteTag("A", 1),
+        new nbt::ByteTag("B", 2),
+        new nbt::ByteTag("C", 3)
+    });
+
+    int idx = 0;
+    std::string strArray[3] = {"A", "B", "C"};
+    for(nbt::ListTag::const_iterator it = listTag.begin(); it != listTag.end(); ++it) {
+        nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+        ASSERT_TRUE(b != nullptr);
+        EXPECT_EQ(*b, nbt::ByteTag(strArray[idx], idx + 1));
+        idx++;
+    }
+}
+
 TEST(ListTag, isEmpty)
 {
     nbt::ListTag listTag(nbt::TagType::Byte);

@@ -15,8 +15,12 @@ namespace nbt
 class CompoundTag : public AbstractTag
 {
 public:
+    using iterator = typename std::vector<AbstractTag*>::iterator;
+    using const_iterator = typename std::vector<AbstractTag*>::const_iterator;
+
     enum { Type = static_cast<int>(TagType::Compound) };
 
+public:
     CompoundTag();
     CompoundTag(const CompoundTag &other);
     CompoundTag(CompoundTag &&other) noexcept;
@@ -37,6 +41,11 @@ public:
     }
 
     std::vector<unsigned char> getData(bool isListEntry) override;
+
+    iterator begin();
+    iterator end();
+    const_iterator begin() const;
+    const_iterator end() const;
 
     bool isEmpty() const;
     void clear();

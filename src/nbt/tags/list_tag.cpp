@@ -139,6 +139,26 @@ std::vector<unsigned char> ListTag::getData(bool isListEntry)
     return stream.vbuf();
 }
 
+ListTag::iterator ListTag::begin()
+{
+    return m_value.begin();
+}
+
+ListTag::iterator ListTag::end()
+{
+    return m_value.end();
+}
+
+ListTag::const_iterator ListTag::begin() const
+{
+    return m_value.begin();
+}
+
+ListTag::const_iterator ListTag::end() const
+{
+    return m_value.end();
+}
+
 bool ListTag::isEmpty() const
 {
     return m_value.empty();

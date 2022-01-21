@@ -301,6 +301,70 @@ TEST(CompoundTag, getData)
     EXPECT_THAT(data2, ::testing::ElementsAreArray(testData.begin() + 6, testData.end()));
 }
 
+TEST(CompoundTag, begin)
+{
+    nbt::CompoundTag compoundTag({
+        new nbt::ByteTag("A", 1),
+        new nbt::ByteTag("B", 2),
+        new nbt::ByteTag("C", 3)
+    });
+
+    nbt::CompoundTag::iterator it = compoundTag.begin();
+    nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    ASSERT_TRUE(b != nullptr);
+    EXPECT_EQ(*b, nbt::ByteTag("A", 1));
+}
+
+TEST(CompoundTag, end)
+{
+    nbt::CompoundTag compoundTag({
+        new nbt::ByteTag("A", 1),
+        new nbt::ByteTag("B", 2),
+        new nbt::ByteTag("C", 3)
+    });
+
+    int idx = 0;
+    std::string strArray[3] = {"A", "B", "C"};
+    for(nbt::CompoundTag::iterator it = compoundTag.begin(); it != compoundTag.end(); ++it) {
+        nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+        ASSERT_TRUE(b != nullptr);
+        EXPECT_EQ(*b, nbt::ByteTag(strArray[idx], idx + 1));
+        idx++;
+    }
+}
+
+TEST(CompoundTag, begin_const)
+{
+    const nbt::CompoundTag compoundTag({ 
+        new nbt::ByteTag("A", 1),
+        new nbt::ByteTag("B", 2),
+        new nbt::ByteTag("C", 3)
+    });
+
+    nbt::CompoundTag::const_iterator it = compoundTag.begin();
+    nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    ASSERT_TRUE(b != nullptr);
+    EXPECT_TRUE(*b == nbt::ByteTag("A", 1));
+}
+
+TEST(CompoundTag, end_const)
+{
+    const nbt::CompoundTag compoundTag({
+        new nbt::ByteTag("A", 1),
+        new nbt::ByteTag("B", 2),
+        new nbt::ByteTag("C", 3)
+    });
+
+    int idx = 0;
+    std::string strArray[3] = {"A", "B", "C"};
+    for(nbt::CompoundTag::const_iterator it = compoundTag.begin(); it != compoundTag.end(); ++it) {
+        nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+        ASSERT_TRUE(b != nullptr);
+        EXPECT_EQ(*b, nbt::ByteTag(strArray[idx], idx + 1));
+        idx++;
+    }
+}
+
 TEST(CompoundTag, isEmpty)
 {
     nbt::CompoundTag compoundTag;

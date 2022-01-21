@@ -111,6 +111,26 @@ std::vector<unsigned char> CompoundTag::getData(bool isListEntry)
     return stream.vbuf();
 }
 
+CompoundTag::iterator CompoundTag::begin()
+{
+    return m_value.begin();
+}
+
+CompoundTag::iterator CompoundTag::end()
+{
+    return m_value.end();
+}
+
+CompoundTag::const_iterator CompoundTag::begin() const
+{
+    return m_value.begin();
+}
+
+CompoundTag::const_iterator CompoundTag::end() const
+{
+    return m_value.end();
+}
+
 bool CompoundTag::isEmpty() const
 {
     return m_value.empty();

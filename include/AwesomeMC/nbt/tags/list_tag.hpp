@@ -15,8 +15,12 @@ namespace nbt
 class ListTag : public AbstractTag
 {
 public:
+    using iterator = typename std::vector<AbstractTag*>::iterator;
+    using const_iterator = typename std::vector<AbstractTag*>::const_iterator;
+
     enum { Type = static_cast<int>(TagType::List) };
 
+public:
     ListTag();
     ListTag(const ListTag &other);
     ListTag(ListTag &&other) noexcept;
@@ -41,6 +45,11 @@ public:
     TagType getListType() const;
 
     std::vector<unsigned char> getData(bool isListEntry) override;
+
+    iterator begin();
+    iterator end();
+    const_iterator begin() const;
+    const_iterator end() const;
 
     bool isEmpty() const;
     void clear();
