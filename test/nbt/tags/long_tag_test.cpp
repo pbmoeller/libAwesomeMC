@@ -44,7 +44,7 @@ TEST(LongTag, Constructor_4)
 TEST(LongTag, CopyConstructor)
 {
     std::string name = "CopyConstructor";
-    uint64_t value = 0x0123456789ABCDEF;
+    int64_t value = 0x0123456789ABCDEF;
 
     // Init
     nbt::LongTag tagA(name, value);
@@ -60,7 +60,7 @@ TEST(LongTag, CopyConstructor)
 TEST(LongTag, MoveConstructor)
 {
     std::string name = "MoveConstructor";
-    uint64_t value = 0x0123456789ABCDEE;
+    int64_t value = 0x0123456789ABCDEE;
 
     // Init
     nbt::LongTag tagA(name, value);
@@ -76,7 +76,7 @@ TEST(LongTag, MoveConstructor)
 TEST(LongTag, CopyAssignment)
 {
     std::string name = "CopyAssignment";
-    uint64_t value = 0x0123456789ABCDED;
+    int64_t value = 0x0123456789ABCDED;
 
     // Init A
     nbt::LongTag tagA(name, value);
@@ -97,7 +97,7 @@ TEST(LongTag, CopyAssignment)
 TEST(LongTag, MoveAssignment)
 {
     std::string name = "MoveAssignment";
-    uint64_t value = 0x0123456789ABCDEC;
+    int64_t value = 0x0123456789ABCDEC;
 
     // Init A
     nbt::LongTag tagA(name, value);

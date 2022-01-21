@@ -44,7 +44,7 @@ TEST(ShortTag, Constructor_4)
 TEST(ShortTag, CopyConstructor)
 {
     std::string name = "CopyConstructor";
-    uint16_t value = 0x1234;
+    int16_t value = 0x1234;
 
     // Init
     nbt::ShortTag tagA(name, value);
@@ -60,7 +60,7 @@ TEST(ShortTag, CopyConstructor)
 TEST(ShortTag, MoveConstructor)
 {
     std::string name = "MoveConstructor";
-    uint16_t value = 0x1235;
+    int16_t value = 0x1235;
 
     // Init
     nbt::ShortTag tagA(name, value);
@@ -76,7 +76,7 @@ TEST(ShortTag, MoveConstructor)
 TEST(ShortTag, CopyAssignment)
 {
     std::string name = "CopyAssignment";
-    uint16_t value = 0x1237;
+    int16_t value = 0x1237;
 
     // Init A
     nbt::ShortTag tagA(name, value);
@@ -97,7 +97,7 @@ TEST(ShortTag, CopyAssignment)
 TEST(ShortTag, MoveAssignment)
 {
     std::string name = "MoveAssignment";
-    uint16_t value = 0x1238;
+    int16_t value = 0x1238;
 
     // Init A
     nbt::ShortTag tagA(name, value);

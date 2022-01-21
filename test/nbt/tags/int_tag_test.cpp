@@ -44,7 +44,7 @@ TEST(IntTag, Constructor_4)
 TEST(IntTag, CopyConstructor)
 {
     std::string name = "CopyConstructor";
-    uint32_t value = 0x12345678;
+    int32_t value = 0x12345678;
 
     // Init
     nbt::IntTag tagA(name, value);
@@ -60,7 +60,7 @@ TEST(IntTag, CopyConstructor)
 TEST(IntTag, MoveConstructor)
 {
     std::string name = "MoveConstructor";
-    uint32_t value = 0x12345679;
+    int32_t value = 0x12345679;
 
     // Init
     nbt::IntTag tagA(name, value);
@@ -76,7 +76,7 @@ TEST(IntTag, MoveConstructor)
 TEST(IntTag, CopyAssignment)
 {
     std::string name = "CopyAssignment";
-    uint32_t value = 0x1234567A;
+    int32_t value = 0x1234567A;
 
     // Init A
     nbt::IntTag tagA(name, value);
@@ -97,7 +97,7 @@ TEST(IntTag, CopyAssignment)
 TEST(IntTag, MoveAssignment)
 {
     std::string name = "MoveAssignment";
-    uint32_t value = 0x1234567B;
+    int32_t value = 0x1234567B;
 
     // Init A
     nbt::IntTag tagA(name, value);
