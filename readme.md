@@ -25,7 +25,9 @@ Data format references:
 2. All header includes are based on library 'root/include' dir.
 3. Include paths must not be relative => '..'
 4. Include Guards 
-5. Header files path should be used with library name eg. `include/libname/headers` 
+5. Header files path should be used with library name eg. `include/libname/headers`
+6. Use signed types where unsigned is not explicitly necessary.
+    * "In particular, do not use unsigned types to say a number will never be negative. Instead, use assertions for this." - Google C++ Style Guide
 
 # TODO
 
@@ -54,8 +56,6 @@ Data format references:
 - Source Code
   - Improve Examples.
     - Naming, functional test code.
-  - Add HeightMap get/set
-  - Evaluate iterator for ListTag / CompoundTag? Useful?
   - value_type for tags? -> see STL.
   - Unify the use of `char` / `unsigned char` for byte data
   - Check namespaces, eventually put everything in a common library namespace, i.e. `AwesomeMC`, `amc`, ..., 
@@ -66,9 +66,9 @@ Data format references:
     - Abstract Intermediate class `NumberTag` for number tags : char, short, int, long, float, double
     - Abstract Intermediate class `ArrayTag` for array tags : byte array, int array, long array
     - Use instanciated unit tests to test the template types.
-  - Use correct floating point comparison
   - Evaluate Header initialization instead of Initialization in constructors
-  - (Evaluate Custom data types, eg. `NbtShort` for `char` etc.)
+  - Evaluate getter/setter in hpp/cpp, inline?
+  - Evaluate getter name without "get" and just the Type name, see. Qt
   - Check if StringTag is Unicode or ASCII (general implementation)
   - set passed pointers to `nullptr` after transfering ownership? Does this increase safety?
   - ByteStream should use templated stream operators instead of multiple overrides.
