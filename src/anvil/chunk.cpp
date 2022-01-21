@@ -307,7 +307,7 @@ HeightMap Chunk::getHeightMap(HeightMap::MapType mapType) const
     for(int i = 0; i < 37 && currenBlockIndex < BlockCount; ++i) {
         int64_t longValue = heightmapData->at(i);
         for(int j = 0; j < 7 && currenBlockIndex < BlockCount; ++j) {
-            int heightValue = (longValue & mask);
+            int heightValue = static_cast<int>(longValue & mask);
             heightValue += MinimumBlockHeight - 1;
             heightmap.setAt(currenBlockIndex++, heightValue);
             longValue >>= 9;
