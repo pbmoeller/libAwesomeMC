@@ -17,7 +17,7 @@ namespace nbt
 std::vector<unsigned char> loadNbtData(const std::string &filename,
                                        bool isCompressed)
 {
-    // open filestream
+    // Open filestream
     std::ifstream stream(filename, std::ios::binary);
 
     if(!stream.is_open()) {
@@ -48,7 +48,7 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
     util::ByteStream byteStream(data);
     byteStream.setSwap(util::ByteStream::Swap::SwapEndian);
 
-    // The first tag must not be an end tag, which means the compound tag must be empty.
+    // The first tag must not be an EndTag, which means the CompoundTag must be empty.
     char type = readValue<char>(byteStream);
     if(type == static_cast<char>(TagType::End)) {
         return root;
@@ -65,7 +65,7 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
         root = new CompoundTag(name);
         AbstractTag *subTag = nullptr;
 
-        // Keep reading sub tags as long there is no end tag.
+        // Keep reading sub tags as long there is no EndTag.
         do {
             subTag = readSubTag(byteStream, false, TagType::End);
             if(!subTag) {
@@ -90,7 +90,7 @@ AbstractTag* readSubTag(util::ByteStream &stream,
         throw std::runtime_error("Unexpected end of stream");
     }
 
-    // read tag header data
+    // Read tag header data
     TagType     type;
     std::string name;
     if(isListItem) {
@@ -105,8 +105,8 @@ AbstractTag* readSubTag(util::ByteStream &stream,
         }
     }
 
-    // read data based on type
-    AbstractTag *tag = nullptr;
+    // Read data based on type
+    AbstractTag *tag    = nullptr;
     AbstractTag *subTag = nullptr;
     switch(type) {
         case TagType::End:
@@ -142,7 +142,7 @@ AbstractTag* readSubTag(util::ByteStream &stream,
             int32_t listLength = readValue<int32_t>(stream);
             ListTag *listTag = new ListTag(name, listTagType);
 
-            // read the sub tags
+            // Read the sub tags
             for(int i = 0; i < listLength; ++i) {
                 subTag = readSubTag(stream, true, listTagType);
                 listTag->pushBack(subTag);
@@ -152,7 +152,7 @@ AbstractTag* readSubTag(util::ByteStream &stream,
         }
         case TagType::Compound:
         {
-            // parse sub tags
+            // Read all sub tags
             CompoundTag *compTag = new CompoundTag(name);
             do {
                 subTag = readSubTag(stream, false, TagType::End);
