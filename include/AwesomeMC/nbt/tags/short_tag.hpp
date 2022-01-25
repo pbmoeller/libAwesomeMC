@@ -2,7 +2,7 @@
 #define AWESOMEMC_NBT_TAGS_SHORT_TAG_HPP
 
 // AwesomeMC
-#include <AwesomeMC/nbt/tags/abstract_number_tag.hpp>
+#include <AwesomeMC/nbt/tags/number_tag.hpp>
 
 // STL
 #include <cstdint>
@@ -10,7 +10,7 @@
 namespace nbt
 {
 
-using ShortTag = AbstractNumberTag<int16_t, TagType::Short>;
+using ShortTag = NumberTag<int16_t, TagType::Short>;
 
 } // namespace nbt
 

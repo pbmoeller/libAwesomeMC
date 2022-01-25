@@ -2,7 +2,7 @@
 #define AWESOMEMC_NBT_TAGS_INT_TAG_HPP
 
 // AwesomeMC
-#include <AwesomeMC/nbt/tags/abstract_number_tag.hpp>
+#include <AwesomeMC/nbt/tags/number_tag.hpp>
 
 // STL
 #include <cstdint>
@@ -10,7 +10,7 @@
 namespace nbt
 {
 
-using IntTag = AbstractNumberTag<int32_t, TagType::Int>;
+using IntTag = NumberTag<int32_t, TagType::Int>;
 
 } // namespace nbt
 

@@ -2,7 +2,7 @@
 #define AWESOMEMC_NBT_TAGS_LONG_TAG_HPP
 
 // AwesomeMC
-#include <AwesomeMC/nbt/tags/abstract_number_tag.hpp>
+#include <AwesomeMC/nbt/tags/number_tag.hpp>
 
 // STL
 #include <cstdint>
@@ -10,7 +10,7 @@
 namespace nbt
 {
 
-using LongTag = AbstractNumberTag<int64_t, TagType::Long>;
+using LongTag = NumberTag<int64_t, TagType::Long>;
 
 } // namespace nbt
 

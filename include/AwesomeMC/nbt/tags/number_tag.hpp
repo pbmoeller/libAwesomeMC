@@ -1,5 +1,5 @@
-#ifndef AWESOMEMC_NBT_TAGS_ABSTRACT_NUMBER_TAG
-#define AWESOMEMC_NBT_TAGS_ABSTRACT_NUMBER_TAG
+#ifndef AWESOMEMC_NBT_TAGS_NUMBER_TAG
+#define AWESOMEMC_NBT_TAGS_NUMBER_TAG
 
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/abstract_tag.hpp>
@@ -12,39 +12,39 @@ namespace nbt
 {
 
 template<typename T, TagType TAG>
-class AbstractNumberTag : public AbstractTag
+class NumberTag : public AbstractTag
 {
 public:
     enum { Type = static_cast<int>(TAG) };
 
-    AbstractNumberTag() 
+    NumberTag()
         : AbstractTag()
         , m_value()
     { }
-    AbstractNumberTag(const AbstractNumberTag &other)
+    NumberTag(const NumberTag &other)
         : AbstractTag(other.m_name)
         , m_value(other.m_value)
     { }
-    AbstractNumberTag(AbstractNumberTag &&other) noexcept
+    NumberTag(NumberTag &&other) noexcept
         : AbstractTag(std::move(other.m_name))
         , m_value(other.m_value)
     { }
-    AbstractNumberTag(const std::string &name)
+    NumberTag(const std::string &name)
         : AbstractTag(name)
         , m_value()
     { }
-    AbstractNumberTag(T value)
+    NumberTag(T value)
         : AbstractTag()
         , m_value(value)
     { }
-    AbstractNumberTag(const std::string &name, T value)
+    NumberTag(const std::string &name, T value)
         : AbstractTag(name)
         , m_value(value)
     { }
-    virtual ~AbstractNumberTag()
+    virtual ~NumberTag()
     { }
 
-    AbstractNumberTag<T, TAG>& operator=(const AbstractNumberTag<T, TAG> &other)
+    NumberTag<T, TAG>& operator=(const NumberTag<T, TAG> &other)
     {
         if(this != &other) {
             m_name = other.m_name;
@@ -53,7 +53,7 @@ public:
         return *this;
     }
 
-    AbstractNumberTag<T, TAG>& operator=(AbstractNumberTag<T, TAG> &&other) noexcept
+    NumberTag<T, TAG>& operator=(NumberTag<T, TAG> &&other) noexcept
     {
         if(this != &other) {
             m_name = std::move(other.m_name);
@@ -64,7 +64,7 @@ public:
     
     virtual AbstractTag* clone() 
     {
-        return new AbstractNumberTag<T, TAG>(*this);
+        return new NumberTag<T, TAG>(*this);
     }
 
     constexpr virtual TagType getType() const override {
@@ -98,7 +98,7 @@ public:
 protected:
     virtual bool isEqual(const AbstractTag &other) const override
     {
-        const AbstractNumberTag<T, TAG> &otherTag = static_cast<const AbstractNumberTag<T, TAG>&>(other);
+        const NumberTag<T, TAG> &otherTag = static_cast<const NumberTag<T, TAG>&>(other);
 
         return m_name == otherTag.m_name
             && getType() == otherTag.getType()
@@ -111,4 +111,4 @@ private:
 
 } // namespace nbt
 
-#endif // AWESOMEMC_NBT_TAGS_ABSTRACT_NUMBER_TAG
+#endif // AWESOMEMC_NBT_TAGS_NUMBER_TAG
