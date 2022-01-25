@@ -2,47 +2,23 @@
 #define AWESOMEMC_NBT_TAGS_DOUBLE_TAG_HPP
 
 // AwesomeMC
-#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
-
-// STL
-#include <string>
+#include <AwesomeMC/nbt/tags/abstract_number_tag.hpp>
+#include <AwesomeMC/util/floating_point.hpp>
 
 namespace nbt
 {
 
-class DoubleTag : public AbstractTag
+template<>
+inline bool AbstractNumberTag<double, TagType::Double>::isEqual(const AbstractTag &other) const
 {
-public:
-    enum { Type = static_cast<int>(TagType::Double) };
+    const AbstractNumberTag<double, TagType::Double> &otherTag = static_cast<const AbstractNumberTag<double, TagType::Double>&>(other);
 
-    DoubleTag();
-    DoubleTag(const DoubleTag &other);
-    DoubleTag(DoubleTag &&other) noexcept;
-    DoubleTag(const std::string &name);
-    DoubleTag(double value);
-    DoubleTag(const std::string &name, double value);
-    virtual ~DoubleTag();
+    return m_name == otherTag.m_name
+        && getType() == otherTag.getType()
+        && util::almostEqualUlps(m_value, otherTag.m_value, static_cast<int64_t>(10));
+}
 
-    DoubleTag& operator=(const DoubleTag &other);
-    DoubleTag& operator=(DoubleTag &&other) noexcept;
-
-    virtual AbstractTag* clone();
-
-    constexpr virtual TagType getType() const override {
-        return TagType::Double;
-    }
-
-    std::vector<unsigned char> getData(bool isListEntry) override;
-
-    double getValue() const;
-    void setValue(double value);
-
-protected:
-    virtual bool isEqual(const AbstractTag &other) const override;
-
-private:
-    double m_value;
-};
+using DoubleTag = AbstractNumberTag<double, TagType::Double>;
 
 } // namespace nbt
 
