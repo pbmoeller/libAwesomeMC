@@ -47,7 +47,7 @@ public:
     NumberTag<T, TAG>& operator=(const NumberTag<T, TAG> &other)
     {
         if(this != &other) {
-            m_name = other.m_name;
+            m_name  = other.m_name;
             m_value = other.m_value;
         }
         return *this;
@@ -56,7 +56,7 @@ public:
     NumberTag<T, TAG>& operator=(NumberTag<T, TAG> &&other) noexcept
     {
         if(this != &other) {
-            m_name = std::move(other.m_name);
+            m_name  = std::move(other.m_name);
             m_value = other.m_value;
         }
         return *this;
@@ -67,7 +67,8 @@ public:
         return new NumberTag<T, TAG>(*this);
     }
 
-    constexpr virtual TagType getType() const override {
+    constexpr virtual TagType getType() const override
+    {
         return TAG;
     }
 

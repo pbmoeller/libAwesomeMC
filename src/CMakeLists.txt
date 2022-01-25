@@ -16,6 +16,7 @@ set(ANVIL_INCLUDES
 # nbt
 set(NBT_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/abstract_tag.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/array_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/byte_array_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/byte_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/compound_tag.hpp"
@@ -27,6 +28,7 @@ set(NBT_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/list_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/long_array_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/long_tag.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/number_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/short_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/string_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/tags.hpp"
@@ -67,18 +69,9 @@ set(ANVIL_SOURCES
 # nbt
 set(NBT_SOURCES
     "nbt/tags/abstract_tag.cpp"
-    "nbt/tags/byte_array_tag.cpp"
-    "nbt/tags/byte_tag.cpp"
     "nbt/tags/compound_tag.cpp"
-    "nbt/tags/double_tag.cpp"
     "nbt/tags/end_tag.cpp"
-    "nbt/tags/float_tag.cpp"
-    "nbt/tags/int_array_tag.cpp"
-    "nbt/tags/int_tag.cpp"
     "nbt/tags/list_tag.cpp"
-    "nbt/tags/long_array_tag.cpp"
-    "nbt/tags/long_tag.cpp"
-    "nbt/tags/short_tag.cpp"
     "nbt/tags/string_tag.cpp"
     "nbt/nbt_print.cpp"
     "nbt/nbt_read.cpp"
