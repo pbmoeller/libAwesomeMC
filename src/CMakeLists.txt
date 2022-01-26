@@ -29,10 +29,10 @@ set(NBT_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/list_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/long_array_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/long_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/number_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/short_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/string_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/tags.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/value_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/nbt_print.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/nbt_read.hpp"
 )
@@ -74,7 +74,6 @@ set(NBT_SOURCES
     "nbt/tags/compound_tag.cpp"
     "nbt/tags/end_tag.cpp"
     "nbt/tags/list_tag.cpp"
-    "nbt/tags/string_tag.cpp"
     "nbt/nbt_print.cpp"
     "nbt/nbt_read.cpp"
 )
