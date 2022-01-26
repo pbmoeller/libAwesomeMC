@@ -16,6 +16,7 @@ set(ANVIL_INCLUDES
 # nbt
 set(NBT_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/abstract_tag.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/abstract_vector_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/array_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/byte_array_tag.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/byte_tag.hpp"
@@ -69,13 +70,14 @@ set(ANVIL_SOURCES
 # nbt
 set(NBT_SOURCES
     "nbt/tags/abstract_tag.cpp"
+    "nbt/tags/abstract_vector_tag.cpp"
     "nbt/tags/compound_tag.cpp"
     "nbt/tags/end_tag.cpp"
     "nbt/tags/list_tag.cpp"
     "nbt/tags/string_tag.cpp"
     "nbt/nbt_print.cpp"
     "nbt/nbt_read.cpp"
- )
+)
 
 # util
 set(UTIL_SOURCES
