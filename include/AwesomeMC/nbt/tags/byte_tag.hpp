@@ -10,7 +10,7 @@
 namespace nbt
 {
 
-using ByteTag = NumberTag<int8_t, TagType::Byte>;
+using ByteTag = ValueTag<int8_t, TagType::Byte>;
 
 } // namespace nbt
 

@@ -9,16 +9,16 @@ namespace nbt
 {
 
 template<>
-inline bool NumberTag<double, TagType::Double>::isEqual(const AbstractTag &other) const
+inline bool ValueTag<double, TagType::Double>::isEqual(const AbstractTag &other) const
 {
-    const NumberTag<double, TagType::Double> &otherTag = static_cast<const NumberTag<double, TagType::Double>&>(other);
+    const ValueTag<double, TagType::Double> &otherTag = static_cast<const ValueTag<double, TagType::Double>&>(other);
 
     return m_name == otherTag.m_name
         && getType() == otherTag.getType()
         && util::almostEqualUlps(m_value, otherTag.m_value, static_cast<int64_t>(10));
 }
 
-using DoubleTag = NumberTag<double, TagType::Double>;
+using DoubleTag = ValueTag<double, TagType::Double>;
 
 } // namespace nbt
 

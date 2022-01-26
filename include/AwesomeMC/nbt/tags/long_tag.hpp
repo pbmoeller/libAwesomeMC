@@ -10,7 +10,7 @@
 namespace nbt
 {
 
-using LongTag = NumberTag<int64_t, TagType::Long>;
+using LongTag = ValueTag<int64_t, TagType::Long>;
 
 } // namespace nbt
 

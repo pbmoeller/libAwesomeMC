@@ -10,7 +10,7 @@
 namespace nbt
 {
 
-using ShortTag = NumberTag<int16_t, TagType::Short>;
+using ShortTag = ValueTag<int16_t, TagType::Short>;
 
 } // namespace nbt
 
