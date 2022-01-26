@@ -48,7 +48,7 @@ public:
     { }
 
     // Assignments
-    ArrayTag& operator=(const ArrayTag & other)
+    ArrayTag& operator=(const ArrayTag &other)
     {
         if(this != &other) {
             m_name  = other.m_name;
@@ -56,7 +56,7 @@ public:
         }
         return *this;
     }
-    ArrayTag& operator=(ArrayTag && other) noexcept
+    ArrayTag& operator=(ArrayTag &&other) noexcept
     {
         if(this != &other) {
             m_name  = std::move(other.m_name);
