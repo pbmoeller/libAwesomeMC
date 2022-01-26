@@ -2,7 +2,7 @@
 #define AWESOMEMC_NBT_TAGS_SHORT_TAG_HPP
 
 // AwesomeMC
-#include <AwesomeMC/nbt/tags/number_tag.hpp>
+#include <AwesomeMC/nbt/tags/value_tag.hpp>
 
 // STL
 #include <cstdint>
