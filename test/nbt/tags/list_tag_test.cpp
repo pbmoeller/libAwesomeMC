@@ -373,7 +373,7 @@ TEST(ListTag, end)
         new nbt::ByteTag("C", 3)
     });
 
-    int idx = 0;
+    int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
     for(nbt::ListTag::iterator it = listTag.begin(); it != listTag.end(); ++it) {
         nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
@@ -405,7 +405,7 @@ TEST(ListTag, end_const)
         new nbt::ByteTag("C", 3)
     });
 
-    int idx = 0;
+    int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
     for(nbt::ListTag::const_iterator it = listTag.begin(); it != listTag.end(); ++it) {
         nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);

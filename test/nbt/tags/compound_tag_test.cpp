@@ -323,7 +323,7 @@ TEST(CompoundTag, end)
         new nbt::ByteTag("C", 3)
     });
 
-    int idx = 0;
+    int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
     for(nbt::CompoundTag::iterator it = compoundTag.begin(); it != compoundTag.end(); ++it) {
         nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
@@ -355,7 +355,7 @@ TEST(CompoundTag, end_const)
         new nbt::ByteTag("C", 3)
     });
 
-    int idx = 0;
+    int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
     for(nbt::CompoundTag::const_iterator it = compoundTag.begin(); it != compoundTag.end(); ++it) {
         nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
