@@ -168,13 +168,13 @@ const AbstractTag* AbstractVectorTag::at(size_t index) const
 
 AbstractTag* AbstractVectorTag::operator[](const size_t index)
 {
-    assert(index <= m_value.size());
+    assert(index < m_value.size());
     return m_value[index];
 }
 
 const AbstractTag* AbstractVectorTag::operator[](const size_t index) const
 {
-    assert(index <= m_value.size());
+    assert(index < m_value.size());
     return m_value[index];
 }
 
