@@ -97,7 +97,7 @@ ListTag& ListTag::operator=(ListTag &&other) noexcept
     return *this;
 }
 
-AbstractTag* ListTag::clone()
+AbstractTag* ListTag::clone() const
 {
     return new ListTag(*this);
 }

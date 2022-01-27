@@ -42,7 +42,7 @@ EndTag& EndTag::operator=(EndTag &&other) noexcept
     return *this;
 }
 
-AbstractTag* EndTag::clone()
+AbstractTag* EndTag::clone() const
 {
     return new EndTag(*this);
 }

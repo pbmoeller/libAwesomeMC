@@ -18,7 +18,7 @@ public:
     enum { Type = static_cast<int>(TagType::List) };
 
 public:
-    // Constructors, Destructors & Assignments
+    // Constructors, Destructor & Assignments
     ListTag();
     ListTag(const ListTag &other);
     ListTag(ListTag &&other) noexcept;
@@ -42,7 +42,7 @@ public:
         return m_listType;
     }
 
-    virtual AbstractTag* clone() override;
+    virtual AbstractTag* clone() const override;
     std::vector<unsigned char> getData(bool isListEntry) override;
 
 protected:
@@ -50,8 +50,8 @@ protected:
 
 public:
     // Vector Operations
-    bool insert(size_t index, AbstractTag *value) override;
-    bool pushBack(AbstractTag* value) override;
+    virtual bool insert(size_t index, AbstractTag *value) override;
+    virtual bool pushBack(AbstractTag* value) override;
 
 private:
     TagType m_listType;

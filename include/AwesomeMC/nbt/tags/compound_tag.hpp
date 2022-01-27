@@ -18,7 +18,7 @@ public:
     enum { Type = static_cast<int>(TagType::Compound) };
 
 public:
-    // Constructors, Destructors & Assignments
+    // Constructors, Destructor & Assignments
     CompoundTag();
     CompoundTag(const CompoundTag &other);
     CompoundTag(CompoundTag &&other) noexcept;
@@ -37,9 +37,10 @@ public:
         return TagType::Compound;
     }
 
-    virtual AbstractTag* clone() override;
+    virtual AbstractTag* clone() const override;
     std::vector<unsigned char> getData(bool isListEntry) override;
 
+    // CompoundTag
     bool hasChild(const std::string &name) const;
     AbstractTag* getChildByName(const std::string &name);
     const AbstractTag* getChildByName(const std::string &name) const;

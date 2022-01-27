@@ -43,7 +43,7 @@ public:
     AbstractTag& operator=(const AbstractTag &other);
     AbstractTag& operator=(AbstractTag &&other) noexcept;
 
-    virtual AbstractTag* clone() = 0;
+    virtual AbstractTag* clone() const = 0;
 
     constexpr virtual TagType getType() const {
         return TagType::End;

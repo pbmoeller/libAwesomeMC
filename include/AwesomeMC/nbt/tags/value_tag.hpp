@@ -17,6 +17,8 @@ class ValueTag : public AbstractTag
 public:
     enum { Type = static_cast<int>(TAG) };
 
+public:
+    // Constructors, Destructor & Assignments
     ValueTag()
         : AbstractTag()
         , m_value()
@@ -62,7 +64,7 @@ public:
         return *this;
     }
     
-    virtual AbstractTag* clone() 
+    virtual AbstractTag* clone() const override
     {
         return new ValueTag<T, TAG>(*this);
     }

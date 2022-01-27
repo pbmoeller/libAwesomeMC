@@ -17,7 +17,7 @@ public:
     using const_iterator    = typename std::vector<AbstractTag*>::const_iterator;
 
 public:
-    // Constructors, Destructors & Assignments
+    // Constructors, Destructor & Assignments
     AbstractVectorTag();
     AbstractVectorTag(const AbstractVectorTag &other);
     AbstractVectorTag(AbstractVectorTag &&other) noexcept;
@@ -30,7 +30,7 @@ public:
     // Tag Stuff
     constexpr virtual TagType getType() const override = 0;
 
-    virtual AbstractTag* clone() override = 0;
+    virtual AbstractTag* clone() const override = 0;
     virtual std::vector<unsigned char> getData(bool isListEntry) override = 0;
 
     void setValue(std::vector<AbstractTag*> &value);
@@ -42,7 +42,7 @@ public:
 
     void clear();
 protected:
-    bool isEqual(const AbstractTag &other) const;
+    virtual bool isEqual(const AbstractTag &other) const override;
     void copy(const std::vector<AbstractTag*> &otherValue);
 
 public:

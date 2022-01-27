@@ -76,7 +76,7 @@ CompoundTag& CompoundTag::operator=(CompoundTag &&other) noexcept
     return *this;
 }
 
-AbstractTag* CompoundTag::clone()
+AbstractTag* CompoundTag::clone() const
 {
     return new CompoundTag(*this);
 }

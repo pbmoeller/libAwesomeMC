@@ -20,7 +20,7 @@ public:
     EndTag& operator=(const EndTag &other);
     EndTag& operator=(EndTag &&other) noexcept;
 
-    virtual AbstractTag* clone();
+    virtual AbstractTag* clone() const;
 
     constexpr virtual TagType getType() const override {
         return TagType::End;

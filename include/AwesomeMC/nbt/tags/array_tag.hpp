@@ -19,7 +19,8 @@ class ArrayTag : public AbstractTag
 public:
     enum { Type = static_cast<int>(TAG) };
 
-    // Constructors and Destructors
+public:
+    // Constructors, Destructor & Assignments
     ArrayTag()
         : AbstractTag()
         , m_value{}
@@ -47,7 +48,6 @@ public:
     virtual ~ArrayTag()
     { }
 
-    // Assignments
     ArrayTag& operator=(const ArrayTag &other)
     {
         if(this != &other) {
@@ -65,7 +65,8 @@ public:
         return *this;
     }
 
-    virtual AbstractTag* clone()
+    // Tag functions
+    virtual AbstractTag* clone() const
     {
         return new ArrayTag<T, TAG>(*this);
     }
