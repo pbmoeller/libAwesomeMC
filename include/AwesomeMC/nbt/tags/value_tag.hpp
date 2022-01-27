@@ -64,13 +64,12 @@ public:
         return *this;
     }
     
-    virtual AbstractTag* clone() const override
-    {
+    // Tag functions
+    virtual AbstractTag* clone() const override {
         return new ValueTag<T, TAG>(*this);
     }
 
-    constexpr virtual TagType getType() const override
-    {
+    constexpr virtual TagType getType() const override {
         return TAG;
     }
 
@@ -88,13 +87,11 @@ public:
         return stream.vbuf();
     }
 
-    T getValue() const 
-    {
+    T getValue() const {
         return m_value;
     }
     
-    void setValue(const T &value)
-    {
+    void setValue(const T &value) {
         m_value = value;
     }
 

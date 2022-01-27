@@ -9,6 +9,8 @@
 #include <vector>
 #include <utility>
 #include <cstdint>
+#include <cassert>
+#include <stdexcept>
 
 namespace nbt
 {
@@ -66,13 +68,11 @@ public:
     }
 
     // Tag functions
-    virtual AbstractTag* clone() const
-    {
+    virtual AbstractTag* clone() const override {
         return new ArrayTag<T, TAG>(*this);
     }
 
-    constexpr virtual TagType getType() const override
-    {
+    constexpr virtual TagType getType() const override {
         return TAG;
     }
 
@@ -94,29 +94,26 @@ public:
         return stream.vbuf();
     }
 
-    std::vector<T>& getValue()
-    {
+    std::vector<T>& getValue() {
         return m_value;
     }
-
-    const std::vector<T>& getValue() const
-    {
+    const std::vector<T>& getValue() const {
         return m_value;
     }
-
-    void setValue(const std::vector<T> &value)
-    {
+    void setValue(const std::vector<T> &value) {
         m_value = value;
     }
 
     // Vector Operations
-    constexpr bool isEmpty() const noexcept
-    {
+    constexpr bool isEmpty() const noexcept {
         return m_value.empty();
     }
 
-    constexpr void clear() noexcept
-    {
+    constexpr size_t size() const noexcept{
+        return m_value.size();
+    }
+
+    constexpr void clear() noexcept {
         m_value.clear();
     }
 
@@ -140,29 +137,39 @@ public:
         }
     }
 
-    constexpr void pushBack(const T &value)
-    {
+    constexpr void pushBack(const T &value) {
         m_value.push_back(value);
     }
-
-    constexpr void pushBack(T &&value)
-    {
+    constexpr void pushBack(T &&value) {
         m_value.push_back(std::move(value));
-    }
-
-    size_t size() const
-    {
-        return m_value.size();
     }
 
     T& at(size_t index)
     {
+        if(index >= m_value.size()) {
+            throw std::out_of_range("Index out of range!");
+        }
         return m_value.at(index);
     }
 
     const T& at(size_t index) const
     {
+        if(index >= m_value.size()) {
+            throw std::out_of_range("Index out of range!");
+        }
         return m_value.at(index);
+    }
+
+    T& operator[](size_t index)
+    {
+        assert(index < m_value.size());
+        return m_value[index];
+    }
+
+    const T& operator[](size_t index) const
+    {
+        assert(index < m_value.size());
+        return m_value[index];
     }
 
 protected:
