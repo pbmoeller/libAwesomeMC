@@ -60,6 +60,7 @@ public:
     bool readString(std::string &str, const int16_t length);
 
     bool operator<<(char input);
+    bool operator<<(unsigned char input);
     bool operator<<(int8_t input);
     bool operator<<(int16_t input);
     bool operator<<(int32_t input);
@@ -70,6 +71,7 @@ public:
     bool operator<<(const std::vector<char> &input);
     bool operator<<(const std::vector<unsigned char> &input);
     bool operator>>(char &input);
+    bool operator>>(unsigned char &input);
     bool operator>>(int8_t &input);
     bool operator>>(int16_t &input);
     bool operator>>(int32_t &input);

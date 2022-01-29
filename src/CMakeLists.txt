@@ -45,6 +45,7 @@ set(UTIL_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/compression.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/conversion.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/floating_point.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/indent.hpp"
 )
 
 set(AWESOMEMC_INCLUDES
@@ -84,6 +85,7 @@ set(UTIL_SOURCES
     "util/byte_stream.cpp"
     "util/compression.cpp"
     "util/conversion.cpp"
+    "util/indent.cpp"
 )
 
 ### Library

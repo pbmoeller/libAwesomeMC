@@ -21,7 +21,7 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
                                        bool isCompressed);
 
 CompoundTag* readNbtData(const std::vector<unsigned char> &data);
-AbstractTag* readSubTag(util::ByteStream &stream, 
+AbstractTag* readChildTag(util::ByteStream &stream, 
                         bool isListItem, 
                         TagType listType);
 
@@ -31,7 +31,7 @@ T readValue(util::ByteStream &stream)
     T value;
 
     if(!stream.good()) {
-        throw std::runtime_error("Unexpected end of stream");
+        throw std::runtime_error("Unexpected end of stream.");
     }
 
     stream >> value;
@@ -44,7 +44,7 @@ std::vector<T> readArrayValues(util::ByteStream &stream)
     std::vector<T> values;
 
     if(!stream.good()) {
-        throw std::runtime_error("Unexpected end of stream");
+        throw std::runtime_error("Unexpected end of stream.");
     }
 
     int32_t arrayLength = readValue<int32_t>(stream);
