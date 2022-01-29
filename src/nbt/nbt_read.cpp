@@ -21,7 +21,7 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
     std::ifstream stream(filename, std::ios::binary);
 
     if(!stream.is_open()) {
-        throw std::runtime_error(std::string("Could not open file for reading: ").append(filename));
+        throw std::runtime_error(std::string("Could not open file for reading: ").append(filename).append("!"));
     } else {
         stream.seekg(0, std::ios::end);
         size_t size = stream.tellg();
@@ -48,72 +48,68 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
     util::ByteStream byteStream(data);
     byteStream.setSwap(util::ByteStream::Swap::SwapEndian);
 
-    // The first tag must not be an EndTag, which means the CompoundTag must be empty.
-    char type = readValue<char>(byteStream);
-    if(type == static_cast<char>(TagType::End)) {
+    // The first tag must not be an EndTag or an invalid (Unknown) tag, which means the CompoundTag must be empty.
+    // TODO: Check!! => In fact the first Tag must be a CompoundTag by definition.
+    unsigned char type = readValue<unsigned char>(byteStream);
+    if(type == static_cast<unsigned char>(TagType::Unknown)) {
+        throw std::runtime_error("Invalid tag type.");
+    } else if(type == static_cast<unsigned char>(TagType::End)) {
         return root;
     } else {
         // Get the name
-        int16_t nameLength = readValue<int16_t>(byteStream);
-        std::string name;
-        if(!byteStream.readString(name, nameLength)) {
-            throw std::runtime_error("Error reading name");
-        }
+        std::string name = readStringValue(byteStream);
 
-        // The first tag should always be a compound tag.
-        // So we expect to read sub tags from here on.
+        // The first tag always is a CompoundTag.
+        // So we expect to read child tags from here on.
         root = new CompoundTag(name);
-        AbstractTag *subTag = nullptr;
+        AbstractTag *childTag = nullptr;
 
         // Keep reading sub tags as long there is no EndTag.
         do {
-            subTag = readSubTag(byteStream, false, TagType::End);
-            if(!subTag) {
-                throw std::runtime_error("Failed to parse Sub Tag");
+            childTag = readChildTag(byteStream, false, TagType::End);
+            if(!childTag) {
+                throw std::runtime_error("Failed to read child tag.");
             }
-            if(subTag->getType() != TagType::End) {
-                root->pushBack(subTag);
+            if(childTag->getType() != TagType::End) {
+                root->pushBack(childTag);
             }
-        } while(subTag->getType() != TagType::End);
-        delete subTag;
+        } while(childTag->getType() != TagType::End);
+        delete childTag;
     }
 
     return root;
 }
 
-AbstractTag* readSubTag(util::ByteStream &stream,
-                        bool isListItem,
-                        TagType listType)
+AbstractTag* readChildTag(util::ByteStream &stream,
+                          bool isListItem,
+                          TagType listType)
 {
     // Check if stream is good
     if(!stream.good()) {
-        throw std::runtime_error("Unexpected end of stream");
+        throw std::runtime_error("Unexpected end of stream.");
     }
 
-    // Read tag header data
+    // Read tag header data if tag is not a list item
     TagType     type;
     std::string name;
     if(isListItem) {
         type = listType;
     } else {
-        type = static_cast<TagType>(readValue<char>(stream));
+        type = static_cast<TagType>(readValue<unsigned char>(stream));
         if(type != TagType::End) {
-            int16_t nameLength = readValue<int16_t>(stream);
-            if(!stream.readString(name, nameLength)) {
-                throw std::runtime_error("Error reading name");
-            }
+            name = readStringValue(stream);
         }
     }
 
     // Read data based on type
-    AbstractTag *tag    = nullptr;
-    AbstractTag *subTag = nullptr;
+    AbstractTag *tag        = nullptr;
+    AbstractTag *childTag   = nullptr;
     switch(type) {
         case TagType::End:
             tag = new EndTag();
             break;
         case TagType::Byte:
-            tag = new ByteTag(name, readValue<char>(stream));
+            tag = new ByteTag(name, readValue<int8_t>(stream));
             break;
         case TagType::Short:
             tag = new ShortTag(name, readValue<int16_t>(stream));
@@ -138,14 +134,14 @@ AbstractTag* readSubTag(util::ByteStream &stream,
             break;
         case TagType::List:
         {
-            TagType listTagType = static_cast<TagType>(readValue<char>(stream));
-            int32_t listLength = readValue<int32_t>(stream);
-            ListTag *listTag = new ListTag(name, listTagType);
+            TagType listTagType = static_cast<TagType>(readValue<unsigned char>(stream));
+            ListTag *listTag    = new ListTag(name, listTagType);
 
             // Read the sub tags
+            int32_t listLength  = readValue<int32_t>(stream);
             for(int i = 0; i < listLength; ++i) {
-                subTag = readSubTag(stream, true, listTagType);
-                listTag->pushBack(subTag);
+                childTag = readChildTag(stream, true, listTagType);
+                listTag->pushBack(childTag);
             }
             tag = listTag;
             break;
@@ -153,18 +149,18 @@ AbstractTag* readSubTag(util::ByteStream &stream,
         case TagType::Compound:
         {
             // Read all sub tags
-            CompoundTag *compTag = new CompoundTag(name);
+            CompoundTag *compoundTag = new CompoundTag(name);
             do {
-                subTag = readSubTag(stream, false, TagType::End);
-                if(!subTag) {
-                    throw std::runtime_error("Failed to parse Sub Tag");
+                childTag = readChildTag(stream, false, TagType::End);
+                if(!childTag) {
+                    throw std::runtime_error("Failed to parse child tag.");
                 }
-                if(subTag->getType() != TagType::End) {
-                    compTag->pushBack(subTag);
+                if(childTag->getType() != TagType::End) {
+                    compoundTag->pushBack(childTag);
                 }
-            } while(subTag->getType() != TagType::End);
-            tag = compTag;
-            delete subTag;
+            } while(childTag->getType() != TagType::End);
+            tag = compoundTag;
+            delete childTag;
             break;
         }
         case TagType::IntArray:

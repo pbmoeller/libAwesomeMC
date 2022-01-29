@@ -2,47 +2,15 @@
 #define AWESOMEMC_NBT_TAGS_SHORT_TAG_HPP
 
 // AwesomeMC
-#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
+#include <AwesomeMC/nbt/tags/value_tag.hpp>
 
 // STL
-#include <string>
+#include <cstdint>
 
 namespace nbt
 {
 
-class ShortTag : public AbstractTag
-{
-public:
-    enum { Type = static_cast<int>(TagType::Short) };
-
-    ShortTag();
-    ShortTag(const ShortTag &other);
-    ShortTag(ShortTag &&other) noexcept;
-    ShortTag(const std::string &name);
-    ShortTag(int16_t value);
-    ShortTag(const std::string &name, int16_t value);
-    virtual ~ShortTag();
-
-    ShortTag& operator=(const ShortTag &other);
-    ShortTag& operator=(ShortTag &&other) noexcept;
-
-    virtual AbstractTag* clone();
-
-    constexpr virtual TagType getType() const override {
-        return TagType::Short;
-    }
-
-    std::vector<unsigned char> getData(bool isListEntry) override;
-
-    int16_t getValue() const;
-    void setValue(int16_t value);
-
-protected:
-    virtual bool isEqual(const AbstractTag &other) const override;
-
-private:
-    int16_t m_value;
-};
+using ShortTag = ValueTag<int16_t, TagType::Short>;
 
 } // namespace nbt
 

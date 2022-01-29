@@ -17,16 +17,16 @@ std::string printNbtData(const AbstractTag *root,
     std::stringstream sstr;
 
     if(root->getType() != TagType::End) {
-        printNextNbtDataLevel(root, sstr, 0, printArrayContent);
+        printNbtChildTag(root, sstr, util::Indent(), printArrayContent);
     }
 
     return sstr.str();
 }
 
-void printNextNbtDataLevel(const AbstractTag *tag,
-                           std::stringstream &sstr,
-                           int indent,
-                           bool printArrayContent)
+void printNbtChildTag(const AbstractTag *tag,
+                      std::stringstream &sstr,
+                      util::Indent indent,
+                      bool printArrayContent)
 {
     switch(tag->getType())
     {
@@ -36,129 +36,87 @@ void printNextNbtDataLevel(const AbstractTag *tag,
         }
         case TagType::Byte:
         {
-            const ByteTag *t = tag_cast<const ByteTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::Byte) 
-                 << "(\"" << t->getName() << "\"): " << static_cast<int>(t->getValue()) << "\n";
+            const ByteTag &t = *tag_cast<const ByteTag*>(tag);
+            sstr << indent << printTagName(t) << printTagValue(t);
             break;
         }
         case TagType::Short:
         {
-            const ShortTag *t = tag_cast<const ShortTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::Short)
-                 << "(\"" << t->getName() << "\"): " << static_cast<int>(t->getValue()) << "\n";
+            const ShortTag &t = *tag_cast<const ShortTag*>(tag);
+            sstr << indent << printTagName(t) << printTagValue(t);
             break;
         }
         case TagType::Int:
         {
-            const IntTag *t = tag_cast<const IntTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::Int)
-                 << "(\"" << t->getName() << "\"): " << t->getValue() << "\n";
+            const IntTag &t = *tag_cast<const IntTag*>(tag);
+            sstr << indent << printTagName(t) << printTagValue(t);
             break;
         }
         case TagType::Long:
         {
-            const LongTag *t = tag_cast<const LongTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::Long)
-                 << "(\"" << t->getName() << "\"): " << t->getValue() << "\n";
+            const LongTag &t = *tag_cast<const LongTag*>(tag);
+            sstr << indent << printTagName(t) << printTagValue(t);
             break;
         }
         case TagType::Float:
         {
-            const FloatTag *t = tag_cast<const FloatTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::Float)
-                 << "(\"" << t->getName() << "\"): " << std::setprecision(8) << t->getValue() << "\n";
+            const FloatTag &t = *tag_cast<const FloatTag*>(tag);
+            sstr << indent << printTagName(t) << printTagValue(t);
             break;
         }
         case TagType::Double:
         {
-            const DoubleTag *t = tag_cast<const DoubleTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::Double)
-                 << "(\"" << t->getName() << "\"): " << std::setprecision(16) << t->getValue() << "\n";
+            const DoubleTag &t = *tag_cast<const DoubleTag*>(tag);
+            sstr << indent << printTagName(t) << printTagValue(t);
             break;
         }
         case TagType::ByteArray:
         {
-            const ByteArrayTag *t = tag_cast<const ByteArrayTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::ByteArray)
-                 << "(\"" << t->getName() << "\"):";
-            if(printArrayContent) {
-                sstr << "\n" << std::string(indent, ' ') << "{\n";
-                size_t i = 0;
-                for(i = 0; i < t->size() - 1; ++i) {
-                    sstr << " " << static_cast<int>(t->at(i)) << ",";
-                }
-                sstr << " " << static_cast<int>(t->at(i)) << "\n";
-                sstr << std::string(indent, ' ') << "}\n";
-            } else {
-                sstr << " [" << t->size() << " bytes]\n";
-            }
+            const ByteArrayTag &t = *tag_cast<const ByteArrayTag*>(tag);
+            sstr << indent << printTagName(t);
+            sstr << printTagValue(t, indent, printArrayContent);
             break;
         }
         case TagType::String:
         {
-            const StringTag *t = tag_cast<const StringTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::String)
-                 << "(\"" << t->getName() << "\"): " << t->getValue() << "\n";
+            const StringTag &t = *tag_cast<const StringTag*>(tag);
+            sstr << indent << printTagName(t) << printTagValue(t);
             break;
         }
         case TagType::List:
         {
-            const ListTag *t = tag_cast<const ListTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::List)
-                 << "(\"" << t->getName() << "\"): " << t->size() << " entries of type " << getTagName(t->getListType()) << "\n";
-            sstr << std::string(indent, ' ') << "{\n";
-            for(const AbstractTag *subTag : t->getValue()) {
-                printNextNbtDataLevel(subTag, sstr, indent + 2);
+            const ListTag &t = *tag_cast<const ListTag*>(tag);
+            sstr << indent << printTagName(t);
+            sstr << "\n" << indent++ << "{\n";
+            for(const AbstractTag *childTag : t) {
+                printNbtChildTag(childTag, sstr, indent);
             }
-            sstr << std::string(indent, ' ') << "}\n";
+            sstr << --indent << "}\n";
             break;
         }
         case TagType::Compound:
         {
-            const CompoundTag *t = tag_cast<const CompoundTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::Compound)
-                 << "(\"" << t->getName() << "\"): " << t->size() << " entries\n";
-            sstr << std::string(indent, ' ') << "{\n";
-            for(size_t i = 0; i < t->size(); ++i) {
-                printNextNbtDataLevel(t->at(i), sstr, indent + 2);
+            const CompoundTag &t = *tag_cast<const CompoundTag*>(tag);
+            sstr << indent << printTagName(t);
+            sstr << "\n" << indent++ << "{\n";
+            for(const AbstractTag *childTag : t) {
+                printNbtChildTag(childTag, sstr, indent);
             }
-            sstr << std::string(indent, ' ') << "}\n";
+            sstr << --indent << "}\n";
             break;
         }
         case TagType::IntArray:
         {
-            const IntArrayTag *t = tag_cast<const IntArrayTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::IntArray)
-                 << "(\"" << t->getName() << "\"): ";
-            if(printArrayContent) {
-                sstr << "\n" << std::string(indent, ' ') << "{\n";
-                size_t i = 0;
-                for(i = 0; i < t->size() - 1; ++i) {
-                    sstr << " " << static_cast<int>(t->at(i)) << ",";
-                }
-                sstr << " " << static_cast<int>(t->at(i)) << "\n";
-                sstr << std::string(indent, ' ') << "}\n";
-            } else {
-                sstr << " [" << t->size() * 2 << " bytes]\n";
-            }
+            const IntArrayTag &t = *tag_cast<const IntArrayTag*>(tag);
+            sstr << indent << printTagName(t);
+            sstr << printTagValue(t, indent, printArrayContent);
             break;
         }
         case TagType::LongArray:
         {
-            const LongArrayTag *t = tag_cast<const LongArrayTag*>(tag);
-            sstr << std::string(indent, ' ') << getTagName(TagType::LongArray)
-                 << "(\"" << t->getName() << "\"): " << t->size() << " entries\n";
-            if(printArrayContent) {
-                sstr << "\n" << std::string(indent, ' ') << "{\n";
-                size_t i = 0;
-                for(i = 0; i < t->size() - 1; ++i) {
-                    sstr << " " << static_cast<int>(t->at(i)) << ",";
-                }
-                sstr << " " << static_cast<int>(t->at(i)) << "\n";
-                sstr << std::string(indent, ' ') << "}\n";
-            } else {
-                sstr << " [" << t->size() * 4 << " bytes]\n";
-            }
+            const LongArrayTag &t = *tag_cast<const LongArrayTag*>(tag);
+            sstr << indent << printTagName(t);
+            sstr << printTagValue(t, indent, printArrayContent);
             break;
         }
         default:

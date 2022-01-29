@@ -2,7 +2,7 @@
 #define AWESOMEMC_NBT_TAGS_STRING_TAG_HPP
 
 // AwesomeMC
-#include <AwesomeMC/nbt/tags/abstract_tag.hpp>
+#include <AwesomeMC/nbt/tags/value_tag.hpp>
 
 // STL
 #include <string>
@@ -10,39 +10,24 @@
 namespace nbt
 {
 
-class StringTag : public AbstractTag
+template<>
+inline std::vector<unsigned char> ValueTag<std::string, TagType::String>::getData(bool isListEntry)
 {
-public:
-    enum { Type = static_cast<int>(TagType::String) };
+    util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
 
-    StringTag();
-    StringTag(const StringTag &other);
-    StringTag(StringTag &&other) noexcept;
-    StringTag(const std::string &value);
-    StringTag(const std::string &name, const std::string &value);
-    virtual ~StringTag();
-
-    StringTag& operator=(const StringTag &other);
-    StringTag& operator=(StringTag &&other) noexcept;
-
-    virtual AbstractTag* clone();
-
-    constexpr virtual TagType getType() const override {
-        return TagType::String;
+    if(!isListEntry) {
+        stream << static_cast<int8_t>(getType());
+        stream << static_cast<int16_t>(m_name.size());
+        stream << m_name;
     }
+    stream << static_cast<int16_t>(m_value.size());
+    stream << m_value;
 
-    std::vector<unsigned char> getData(bool isListEntry) override;
+    return stream.vbuf();
+}
 
-    std::string getValue() const;
-    void setValue(std::string value);
+using StringTag = ValueTag<std::string, TagType::String>;
 
-protected:
-    virtual bool isEqual(const AbstractTag &other) const override;
-
-private:
-    std::string m_value;
-};
-
-} // namespace nbt
+} // nbt
 
 #endif // AWESOMEMC_NBT_TAGS_STRING_TAG_HPP

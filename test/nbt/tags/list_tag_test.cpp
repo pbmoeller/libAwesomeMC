@@ -257,8 +257,17 @@ TEST(ListTag, Equal)
     listTagB.pushBack(new nbt::ByteTag("C", 3));
     ASSERT_EQ(3, listTagB.size());
 
+    // Init List C
+    nbt::ListTag listTagC(nbt::TagType::Int);
+
+    listTagC.pushBack(new nbt::IntTag("A", 1));
+    listTagC.pushBack(new nbt::IntTag("B", 2));
+    listTagC.pushBack(new nbt::IntTag("C", 3));
+    ASSERT_EQ(3, listTagC.size());
+
     EXPECT_TRUE(listTagA == listTagA);
     EXPECT_TRUE(listTagA == listTagB);
+    EXPECT_FALSE(listTagA == listTagC);
 
     // Change B
     listTagB.erase(2);
@@ -290,8 +299,17 @@ TEST(ListTag, NotEqual)
     listTagB.pushBack(new nbt::ByteTag("C", 3));
     ASSERT_EQ(3, listTagB.size());
 
+    // Init List C
+    nbt::ListTag listTagC(nbt::TagType::Int);
+
+    listTagC.pushBack(new nbt::IntTag("A", 1));
+    listTagC.pushBack(new nbt::IntTag("B", 2));
+    listTagC.pushBack(new nbt::IntTag("C", 3));
+    ASSERT_EQ(3, listTagC.size());
+
     EXPECT_FALSE(listTagA != listTagA);
     EXPECT_FALSE(listTagA != listTagB);
+    EXPECT_TRUE(listTagA != listTagC);
 
     // Change B
     listTagB.erase(2);
@@ -373,7 +391,7 @@ TEST(ListTag, end)
         new nbt::ByteTag("C", 3)
     });
 
-    int idx = 0;
+    int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
     for(nbt::ListTag::iterator it = listTag.begin(); it != listTag.end(); ++it) {
         nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
@@ -405,7 +423,7 @@ TEST(ListTag, end_const)
         new nbt::ByteTag("C", 3)
     });
 
-    int idx = 0;
+    int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
     for(nbt::ListTag::const_iterator it = listTag.begin(); it != listTag.end(); ++it) {
         nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);

@@ -179,6 +179,11 @@ bool ByteStream::operator<<(char input)
     return writeStream(input);
 }
 
+bool ByteStream::operator<<(unsigned char input)
+{
+    return writeStream(input);
+}
+
 bool ByteStream::operator<<(int8_t input)
 {
     return writeStream(input);
@@ -237,6 +242,11 @@ bool ByteStream::operator<<(const std::vector<unsigned char> &input)
 }
 
 bool ByteStream::operator>>(char &input)
+{
+    return readStream(input);
+}
+
+bool ByteStream::operator>>(unsigned char &input)
 {
     return readStream(input);
 }

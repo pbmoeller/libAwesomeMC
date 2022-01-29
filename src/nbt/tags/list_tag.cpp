@@ -11,48 +11,43 @@ namespace nbt
 {
 
 ListTag::ListTag()
-    : AbstractTag()
+    : AbstractVectorTag()
     , m_listType{TagType::Byte}
-    , m_value{}
 {
 
 }
 
 ListTag::ListTag(const ListTag &other)
-    : AbstractTag(other.m_name)
+    : AbstractVectorTag(other)
     , m_listType{other.m_listType}
 {
-    copy(other.m_value);
+
 }
 
 ListTag::ListTag(ListTag &&other) noexcept
-    : AbstractTag(std::move(other.m_name))
-    , m_listType{std::move(other.m_listType)}
-    , m_value{std::move(other.m_value)}
+    : AbstractVectorTag(std::move(other))
+    , m_listType{other.m_listType}
 {
-    
+
 }
 
 ListTag::ListTag(const std::string &name)
-    : AbstractTag(name)
+    : AbstractVectorTag(name)
     , m_listType{TagType::Byte}
-    , m_value{}
 {
 
 }
 
 ListTag::ListTag(TagType listType)
-    : AbstractTag()
+    : AbstractVectorTag()
     , m_listType{listType}
-    , m_value{}
 {
 
 }
 
 ListTag::ListTag(TagType listType, std::initializer_list<AbstractTag*> items)
-    : AbstractTag()
+    : AbstractVectorTag()
     , m_listType{listType}
-    , m_value{}
 {
     for(AbstractTag *item : items) {
         if(item && item->getType() == listType) {
@@ -62,17 +57,15 @@ ListTag::ListTag(TagType listType, std::initializer_list<AbstractTag*> items)
 }
 
 ListTag::ListTag(const std::string &name, TagType listType)
-    : AbstractTag(name)
+    : AbstractVectorTag(name)
     , m_listType{listType}
-    , m_value{}
 {
 
 }
 
 ListTag::ListTag(const std::string &name, TagType listType, std::initializer_list<AbstractTag*> items)
-    : AbstractTag(name)
+    : AbstractVectorTag(name)
     , m_listType{listType}
-    , m_value{}
 {
     for(AbstractTag *item : items) {
         if(item && item->getType() == listType) {
@@ -83,15 +76,14 @@ ListTag::ListTag(const std::string &name, TagType listType, std::initializer_lis
 
 ListTag::~ListTag()
 {
-    clear();
+
 }
 
 ListTag& ListTag::operator=(const ListTag &other)
 {
     if(this != &other) {
-        m_name      = other.m_name;
-        m_listType  = other.m_listType;
-        copy(other.m_value);
+        m_listType = other.m_listType;
+        AbstractVectorTag::operator=(other);
     }
     return *this;
 }
@@ -99,25 +91,15 @@ ListTag& ListTag::operator=(const ListTag &other)
 ListTag& ListTag::operator=(ListTag &&other) noexcept
 {
     if(this != &other) {
-        m_name      = std::move(other.m_name);
-        m_listType  = other.m_listType;
-
-        // Delete old data
-        clear();
-
-        m_value = std::move(other.m_value);
+        m_listType = other.m_listType;
+        AbstractVectorTag::operator=(std::move(other));
     }
     return *this;
 }
 
-AbstractTag* ListTag::clone()
+AbstractTag* ListTag::clone() const
 {
     return new ListTag(*this);
-}
-
-TagType ListTag::getListType() const
-{
-    return m_listType;
 }
 
 std::vector<unsigned char> ListTag::getData(bool isListEntry)
@@ -125,7 +107,7 @@ std::vector<unsigned char> ListTag::getData(bool isListEntry)
     util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
-        stream << static_cast<char>(getType());
+        stream << static_cast<int8_t>(getType());
         stream << static_cast<int16_t>(m_name.size());
         stream << m_name;
     }
@@ -139,65 +121,20 @@ std::vector<unsigned char> ListTag::getData(bool isListEntry)
     return stream.vbuf();
 }
 
-ListTag::iterator ListTag::begin()
+bool ListTag::isEqual(const AbstractTag &other) const
 {
-    return m_value.begin();
-}
+    const ListTag &otherTag = static_cast<const ListTag&>(other);
 
-ListTag::iterator ListTag::end()
-{
-    return m_value.end();
-}
-
-ListTag::const_iterator ListTag::begin() const
-{
-    return m_value.begin();
-}
-
-ListTag::const_iterator ListTag::end() const
-{
-    return m_value.end();
-}
-
-bool ListTag::isEmpty() const
-{
-    return m_value.empty();
-}
-
-void ListTag::clear()
-{
-    // Delete all objects stored in the vector
-    for(auto ptr : m_value) {
-        // Check that ptr is not null
-        if(ptr) {
-            delete ptr;
-            ptr = nullptr;
-        }
-    }
-    m_value.clear();
-}
-
-bool ListTag::erase(size_t index)
-{
-    if(index >= m_value.size()) {
-        return false;
-    } else {
-        if(m_value[index] != nullptr) {
-            delete m_value[index];
-        }
-        m_value.erase(m_value.begin() + index);
-        return true;
-    }
+    return m_listType == otherTag.m_listType
+        && AbstractVectorTag::isEqual(other);
 }
 
 bool ListTag::insert(size_t index, AbstractTag *value)
 {
-    if(!value || value->getType() != m_listType
-       || index > m_value.size()) {
+    if(!value || value->getType() != m_listType) {
         return false;
     } else {
-        m_value.insert(m_value.begin() + index, value);
-        return true;
+        return AbstractVectorTag::insert(index, value);
     }
 }
 
@@ -206,103 +143,7 @@ bool ListTag::pushBack(AbstractTag* value)
     if(!value || value->getType() != m_listType) {
         return false;
     } else {
-        m_value.push_back(value);
-        return true;
-    }
-}
-
-size_t ListTag::size() const
-{
-    return m_value.size();
-}
-
-AbstractTag* ListTag::at(size_t index)
-{
-    if(index >= m_value.size()) {
-        throw std::out_of_range("Index out of range!");
-    }
-    return m_value.at(index);
-}
-
-const AbstractTag* ListTag::at(size_t index) const
-{
-    if(index >= m_value.size()) {
-        throw std::out_of_range("Index out of range!");
-    }
-    return m_value.at(index);
-}
-
-AbstractTag* ListTag::takeAt(size_t index)
-{
-    AbstractTag *tag = at(index);
-    m_value.erase(m_value.begin() + index);
-    return tag;
-}
-
-AbstractTag* ListTag::operator[](const size_t index)
-{
-    return m_value.at(index);
-}
-
-const AbstractTag* ListTag::operator[](const size_t index) const
-{
-    return m_value.at(index);
-}
-
-std::vector<AbstractTag*>& ListTag::getValue()
-{
-    return m_value;
-}
-
-const std::vector<AbstractTag*>& ListTag::getValue() const
-{
-    return m_value;
-}
-
-std::vector<AbstractTag*> ListTag::getValueCopy() const
-{
-    std::vector<AbstractTag*> valueCopy(m_value.size(), nullptr);
-    for(size_t i = 0; i < m_value.size(); ++i) {
-        valueCopy[i] = m_value[i]->clone();
-    }
-
-    return valueCopy;
-}
-
-void ListTag::setValue(std::vector<AbstractTag*> &value)
-{
-    copy(value);
-}
-
-bool ListTag::isEqual(const AbstractTag &other) const
-{
-    const ListTag &oTag = static_cast<const ListTag&>(other);
-
-    if(m_name != oTag.m_name
-       || getType() != oTag.getType()
-       || m_value.size() != oTag.m_value.size()) {
-        return false;
-    }
-
-    for(size_t i = 0; i < m_value.size(); ++i) {
-        if(*m_value[i] != *oTag.m_value[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
-void ListTag::copy(const std::vector<AbstractTag*> &otherValue)
-{
-    //TODO: Check the type. One might pass a CompoundTag vector
-    clear();
-
-    // Resize list to other size
-    m_value.resize(otherValue.size());
-
-    // Copy other data elements
-    for(size_t i = 0; i < otherValue.size(); ++i) {
-        m_value[i] = otherValue[i]->clone();
+        return AbstractVectorTag::pushBack(value);
     }
 }
 

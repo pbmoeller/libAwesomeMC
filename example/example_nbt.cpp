@@ -22,7 +22,7 @@ int main(int argc, char **argv)
                   << "\t filename : path"
                   << "\t compressed : [1 | 0]" << std::endl;
 
-        file = R"(E:\Coding\Projects\Minecraft\libAwesomeMC\data\world\Forge_BOP_1_16_5\level.dat)";
+        file = R"(..\..\..\test\testdata\world\libAwesomeMC_TestWorld_1_18_1\level.dat)";
         compressed = true;
     } else {
         file = argv[1];
