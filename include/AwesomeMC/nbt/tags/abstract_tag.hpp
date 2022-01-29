@@ -33,6 +33,8 @@ class AbstractTag
 public:
     enum { Type = static_cast<int>(TagType::Unknown) };
 
+public:
+    // Constructors, Destructor & Assignments
     AbstractTag();
     AbstractTag(const AbstractTag &other);
     AbstractTag(AbstractTag &&other) noexcept;
@@ -43,6 +45,7 @@ public:
     AbstractTag& operator=(const AbstractTag &other);
     AbstractTag& operator=(AbstractTag &&other) noexcept;
 
+    // Tag functions
     virtual AbstractTag* clone() const = 0;
 
     constexpr virtual TagType getType() const {
