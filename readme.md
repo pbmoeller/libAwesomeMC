@@ -15,7 +15,7 @@ Data format references:
 
 # Style Guide
 
-1. Include Order: Local to global -> to prvent hidden dependencies
+1. Include Order: Local to global -> to prevent hidden dependencies
     * (Prototype/Interface Header for implementation if in *.cpp file)
     * Other headers from same project
     * 3rd party library headers, eg. Qt
@@ -62,10 +62,7 @@ Data format references:
     - Remove anvil namespace
   - Round vs. curly braces
   - Use size_t when dealing with sizes of containers
-  - Use templates for tags
-    - Abstract Intermediate class `NumberTag` for number tags : char, short, int, long, float, double
-    - Abstract Intermediate class `ArrayTag` for array tags : byte array, int array, long array
-    - Use instanciated unit tests to test the template types.
+  - Use instanciated unit tests to test the template types.
   - Evaluate Header initialization instead of Initialization in constructors
   - Evaluate getter/setter in hpp/cpp, inline?
   - Evaluate getter name without "get" and just the Type name, see. Qt
