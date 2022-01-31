@@ -4,6 +4,7 @@
 #include <AwesomeMC/nbt/nbt_print.hpp>
 #include <AwesomeMC/nbt/nbt_read.hpp>
 #include <AwesomeMC/util/compression.hpp>
+#include <AwesomeMC/version.hpp>
 
 // STL
 #include <string>
@@ -11,32 +12,58 @@
 #include <fstream>
 #include <iostream>
 
-int main(int argc, char **argv)
-{
 #if defined(_MSC_VER)
-    std::string programName = "example_nbt.exe";
+std::string g_programName = "example_nbt.exe";
 #elif defined(__GNUC__)
-    std::string programName = "example_nbt";
+std::string g_programName = "example_nbt";
 #endif
 
+void printUsage()
+{
+    std::cout << "Usage: "
+        << g_programName << " FILENAME [OPTIONS]\n"
+        << "Prints the given nbt file to the console window.\n\n"
+        << "  -c               the nbt file is compressed.\n"
+        << "  -o=<filename>    the output is printed to a file rather\n"
+        << "                   than to the console window.\n"
+        << "  -h, --help       print this help message\n"
+        << "  -v, --version    print library version\n"
+        << std::endl;
+}
+
+int main(int argc, char **argv)
+{
     bool compressed = false;
     std::string file;
     std::string outputFile;
 
     if(argc < 2) {
-        std::cout << "Usage: "
-                  << programName << " FILENAME [OPTIONS]\n"
-                  << "Prints the given nbt file to the console window.\n\n"
-                  << "  -c               the nbt file is compressed.\n"
-                  << "  -o=<filename>    the output is printed to a file rather\n"
-                  << "                   than to the console window.\n\n"
-                  << std::endl;
+        // No valid parameters given, print usage and run example.
+        printUsage();
 
         file = R"(..\..\..\test\testdata\world\libAwesomeMC_TestWorld_1_18_1\level.dat)";
         compressed = true;
 
         std::cout << "Inputfile: " << file << "\n";
         std::cout << "Compression = true" << "\n" << std::endl;
+    } else if(argc == 2) {
+        // Check single parameters
+        std::string arg = argv[1];
+        if(arg == "-v" || arg == "--version") {
+            std::cout << "AwesomeMC Version: " << AwesomeMC_Version 
+                      << "-" << AwesomeMC_GitHash 
+                      << "(" << AwesomeMC_GitBranch << ")" << std::endl;
+            return 0;
+        } else if(arg == "-h" || arg == "--help") {
+            printUsage();
+            return 0;
+        }
+
+        // If the parameter is invalid, print a message and usage information.
+        std::cout << "Invalid argument: " << arg << std::endl;
+        printUsage();
+        return 0;
+
     } else {
         file = argv[1];
         std::cout << "Inputfile: " << file << std::endl;
@@ -54,17 +81,28 @@ int main(int argc, char **argv)
         std::cout << "\n\n";
     }
 
-    std::vector<unsigned char> data1 = nbt::loadNbtData(file, compressed);
-    nbt::CompoundTag *tag1 = nbt::readNbtData(data1);
+    // Use try catch, since we use user input that might be wrong.
+    try {
+        // Load and uncompress NBT data from file into data buffer. 
+        std::vector<unsigned char> data1 = nbt::loadNbtData(file, compressed);
 
-    if(outputFile.empty()) {
-        std::cout << nbt::printNbtData(tag1)
-                  << std::endl;
-    } else {
-        std::ofstream fstrm(outputFile);
-        if(fstrm) {
-            fstrm << nbt::printNbtData(tag1);
+        // Read NBT data from data buffer.
+        nbt::CompoundTag *tag1 = nullptr;
+        tag1 = nbt::readNbtData(data1);
+
+        // Check if the NBT data should be printed to console or a given output file.
+        if(outputFile.empty()) {
+            std::cout << nbt::printNbtData(tag1)
+                      << std::endl;
+        } else {
+            std::ofstream fstrm(outputFile);
+            if(fstrm) {
+                fstrm << nbt::printNbtData(tag1);
+            }
         }
+
+    } catch(std::exception &e) {
+        std::cout << "Failed to read and print NBT data.\nException: " << e.what() << std::endl;
     }
 
     return 0;

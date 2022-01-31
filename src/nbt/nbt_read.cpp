@@ -21,7 +21,7 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
     std::ifstream stream(filename, std::ios::binary);
 
     if(!stream.is_open()) {
-        throw std::runtime_error(std::string("Could not open file for reading: ").append(filename).append("!"));
+        throw std::runtime_error(std::string("Could not open file for reading: \"").append(filename).append("\"!"));
     } else {
         stream.seekg(0, std::ios::end);
         size_t size = stream.tellg();
