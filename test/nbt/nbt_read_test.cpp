@@ -20,7 +20,7 @@ TEST(nbt_read, loadNbtData_error)
             data = nbt::loadNbtData("fakeFileName.someExt", false);
         } catch(const std::runtime_error &err)
         {
-            EXPECT_STREQ("Could not open file for reading: fakeFileName.someExt!", 
+            EXPECT_STREQ("Could not open file for reading: \"fakeFileName.someExt\"!", 
                          err.what());
             throw;
         }
