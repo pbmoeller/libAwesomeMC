@@ -174,46 +174,6 @@ bool ByteStream::readString(std::string &str, const int16_t length)
     return Success;
 }
 
-bool ByteStream::operator<<(char input)
-{
-    return writeStream(input);
-}
-
-bool ByteStream::operator<<(unsigned char input)
-{
-    return writeStream(input);
-}
-
-bool ByteStream::operator<<(int8_t input)
-{
-    return writeStream(input);
-}
-
-bool ByteStream::operator<<(int16_t input)
-{
-    return writeStream(input);
-}
-
-bool ByteStream::operator<<(int32_t input)
-{
-    return writeStream(input);
-}
-
-bool ByteStream::operator<<(int64_t input)
-{
-    return writeStream(input);
-}
-
-bool ByteStream::operator<<(float input)
-{
-    return writeStream(input);
-}
-
-bool ByteStream::operator<<(double input)
-{
-    return writeStream(input);
-}
-
 bool ByteStream::operator<<(const std::string &input)
 {
     m_buffer.insert(m_buffer.begin() + m_position,
@@ -222,64 +182,5 @@ bool ByteStream::operator<<(const std::string &input)
     m_position += input.size();
     return true;
 }
-
-bool ByteStream::operator<<(const std::vector<char> &input)
-{
-    m_buffer.insert(m_buffer.begin() + m_position,
-                    input.begin(),
-                    input.end());
-    m_position += input.size();
-    return true;
-}
-
-bool ByteStream::operator<<(const std::vector<unsigned char> &input)
-{
-    m_buffer.insert(m_buffer.begin() + m_position,
-                    input.begin(),
-                    input.end());
-    m_position += input.size();
-    return true;
-}
-
-bool ByteStream::operator>>(char &input)
-{
-    return readStream(input);
-}
-
-bool ByteStream::operator>>(unsigned char &input)
-{
-    return readStream(input);
-}
-
-bool ByteStream::operator>>(int8_t &input)
-{
-    return readStream(input);
-}
-
-bool ByteStream::operator>>(int16_t &input)
-{
-    return readStream(input);
-}
-
-bool ByteStream::operator>>(int32_t &input)
-{
-    return readStream(input);
-}
-
-bool ByteStream::operator>>(int64_t &input)
-{
-    return readStream(input);
-}
-
-bool ByteStream::operator>>(float &input)
-{
-    return readStream(input);
-}
-
-bool ByteStream::operator>>(double &input)
-{
-    return readStream(input);
-}
-
 
 } // namespace util

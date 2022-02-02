@@ -10,6 +10,7 @@
 #include <cstring>
 #include <vector>
 #include <algorithm>
+#include <type_traits>
 
 namespace util
 {
@@ -26,6 +27,7 @@ public:
     static constexpr size_t EndOfStream  = 0;
     static constexpr size_t Success      = 1;
 
+public:
     ByteStream();
     ByteStream(const ByteStream &byteStream);
     ByteStream(ByteStream &&byteStream) noexcept;
@@ -59,34 +61,37 @@ public:
 
     bool readString(std::string &str, const int16_t length);
 
-    bool operator<<(char input);
-    bool operator<<(unsigned char input);
-    bool operator<<(int8_t input);
-    bool operator<<(int16_t input);
-    bool operator<<(int32_t input);
-    bool operator<<(int64_t input);
-    bool operator<<(float input);
-    bool operator<<(double input);
-    bool operator<<(const std::string &input);
-    bool operator<<(const std::vector<char> &input);
-    bool operator<<(const std::vector<unsigned char> &input);
-    bool operator>>(char &input);
-    bool operator>>(unsigned char &input);
-    bool operator>>(int8_t &input);
-    bool operator>>(int16_t &input);
-    bool operator>>(int32_t &input);
-    bool operator>>(int64_t &input);
-    bool operator>>(float &input);
-    bool operator>>(double &input);
-
-private:
-    std::vector<unsigned char> m_buffer;
-    size_t m_position;
-    Swap m_swap;
-
+    // Operators
+    // Left Shift
     template<typename T>
     requires std::integral<T> || std::floating_point<T>
-    size_t readStream(T &value)
+    bool operator<<(const T &input) {
+        return writeStream(input);
+    }
+
+    template<typename T>
+    requires(sizeof(T) == 1)
+    bool operator<<(const std::vector<T> &input) {
+        m_buffer.insert(m_buffer.begin() + m_position,
+                        input.begin(),
+                        input.end());
+        m_position += input.size();
+        return true;
+    }
+    
+    bool operator<<(const std::string &input);
+
+    // Right Shift
+    template<typename T>
+    requires std::integral<T> || std::floating_point<T>
+    bool operator>>(T &input) {
+        return readStream(input);
+    }
+
+private:
+    template<typename T>
+    requires std::integral<T> || std::floating_point<T>
+        size_t readStream(T & value)
     {
         size_t width = sizeof(T);
         if(availableBytes() < width) {
@@ -115,6 +120,11 @@ private:
         m_position += sizeof(T);
         return Success;
     }
+
+private:
+    std::vector<unsigned char> m_buffer;
+    size_t m_position;
+    Swap m_swap;
 };
 
 } // namespace util
