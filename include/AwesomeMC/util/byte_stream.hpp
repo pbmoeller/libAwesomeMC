@@ -2,6 +2,7 @@
 #define AWESOMEMC_UTIL_BYTE_STREAM_HPP
 
 // AwesomeMC
+#include <AwesomeMC/util/traits.hpp>
 #include <AwesomeMC/util/byte_swap.hpp>
 
 // STL
@@ -70,16 +71,14 @@ public:
     }
 
     template<typename T>
-    requires(sizeof(T) == 1)
-    bool operator<<(const std::vector<T> &input) {
+    requires is_std_string_or_std_vector<T>
+    bool operator<<(const T &input) {
         m_buffer.insert(m_buffer.begin() + m_position,
                         input.begin(),
                         input.end());
         m_position += input.size();
         return true;
     }
-    
-    bool operator<<(const std::string &input);
 
     // Right Shift
     template<typename T>

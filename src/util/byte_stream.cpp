@@ -174,13 +174,4 @@ bool ByteStream::readString(std::string &str, const int16_t length)
     return Success;
 }
 
-bool ByteStream::operator<<(const std::string &input)
-{
-    m_buffer.insert(m_buffer.begin() + m_position,
-                    input.begin(), 
-                    input.end());
-    m_position += input.size();
-    return true;
-}
-
 } // namespace util

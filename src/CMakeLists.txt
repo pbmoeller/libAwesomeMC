@@ -46,6 +46,7 @@ set(UTIL_INCLUDES
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/conversion.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/floating_point.hpp"
     "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/indent.hpp"
+    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/traits.hpp"
 )
 
 set(AWESOMEMC_INCLUDES
