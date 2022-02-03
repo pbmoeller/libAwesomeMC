@@ -1,8 +1,13 @@
 // AwesomeMC
 #include <AwesomeMC/util/byte_stream.hpp>
+#include <AwesomeMC/util/traits.hpp>
 
 // gtest
 #include <gtest/gtest.h>
+
+// STL
+#include <cstring>
+#include <tuple>
 
 TEST(ByteStream, Types)
 {
@@ -373,357 +378,337 @@ TEST(ByteStream, vbuf)
     EXPECT_EQ(data[3], data2[3]);
 }
 
-TEST(ByteStream, streamOperator_in_char)
-{
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << static_cast<char>(0xAB);
-    EXPECT_EQ(1, byteStream.size());
-    EXPECT_EQ(1, byteStream.getPosition());
-    byteStream << static_cast<char>(0x34);
-    EXPECT_EQ(2, byteStream.size());
-    EXPECT_EQ(2, byteStream.getPosition());
+// Test Left Shift Operator
+template<typename T>
+using LeftShiftParamsT = std::vector<std::tuple<T, size_t, T, size_t>>;
 
-    std::vector<unsigned char> data = byteStream.vbuf();
-    EXPECT_EQ(0xAB, data[0]);
-    EXPECT_EQ(0x34, data[1]);
+static std::tuple<
+    LeftShiftParamsT<char>,
+    LeftShiftParamsT<unsigned char>,
+    LeftShiftParamsT<int8_t>,
+    LeftShiftParamsT<int16_t>,
+    LeftShiftParamsT<int32_t>,
+    LeftShiftParamsT<int64_t>,
+    LeftShiftParamsT<float>,
+    LeftShiftParamsT<double>
+> leftShiftParamsSimple
+{
+    {
+        std::make_tuple((char)-98, 1, (char)52, 2),
+    },
+    {
+        std::make_tuple((unsigned char)3, 1, (unsigned char)222, 2),
+    },
+    {
+        std::make_tuple((int8_t)-8, 1, (int8_t)56, 2),
+    },
+    {
+        std::make_tuple((int16_t)0x5678, 2, (int16_t)0x1234, 4),
+    },
+    {
+        std::make_tuple(0x12345678, 4, 0xAABBCCDD, 8),
+    },
+    {
+        std::make_tuple(0x0123456789ABCDEF, 8, 0xAABBCCDDEEFF1234, 16),
+    },
+    {
+        std::make_tuple(1.0f, 4, 2.0f, 8),
+    },
+    {
+        std::make_tuple(3.14, 8, -4.5, 16),
+    }
+};
+
+static std::tuple<
+    LeftShiftParamsT<std::string>,
+    LeftShiftParamsT<std::vector<int8_t>>,
+    LeftShiftParamsT<std::vector<uint8_t>>
+> leftShiftParamsVector
+{
+    {
+        std::make_tuple("Test", 4, "String", 10),
+    },
+    {
+        std::make_tuple(std::vector<int8_t>({18, 52}), 2,
+                        std::vector<int8_t>({-128, 3, -2, 0, -66, 127, 32, 99}), 10),
+    },
+    {
+        std::make_tuple(std::vector<uint8_t>({0, 255, 34, 1, 133}), 5,
+                        std::vector<uint8_t>({128, 3, 2, 0, 200, 111}), 11),
+    }
+};
+
+template<typename T>
+struct LeftShiftFixtureSimple : public testing::Test
+{
+    LeftShiftFixtureSimple()
+        : params{std::get<LeftShiftParamsT<T>>(leftShiftParamsSimple)}
+    { }
+    LeftShiftParamsT<T> params;
+};
+
+template<typename T>
+struct LeftShiftFixtureVector : public testing::Test
+{
+    LeftShiftFixtureVector()
+        : params{std::get<LeftShiftParamsT<T>>(leftShiftParamsVector)}
+    { }
+    LeftShiftParamsT<T> params;
+};
+
+TYPED_TEST_SUITE_P(LeftShiftFixtureSimple);
+TYPED_TEST_SUITE_P(LeftShiftFixtureVector);
+
+TYPED_TEST_P(LeftShiftFixtureSimple, left_shift)
+{
+    for(auto const& [input1, expectedSizePos1, input2, expectedSizePos2] : this->params) {
+        // Test size and position of ByteStream
+        util::ByteStream byteStream;
+        ASSERT_EQ(0, byteStream.size());
+        ASSERT_EQ(0, byteStream.getPosition());
+        byteStream << input1;
+        EXPECT_EQ(expectedSizePos1, byteStream.size());
+        EXPECT_EQ(expectedSizePos1, byteStream.getPosition());
+        byteStream << input2;
+        EXPECT_EQ(expectedSizePos2, byteStream.size());
+        EXPECT_EQ(expectedSizePos2, byteStream.getPosition());
+
+        // Init Test content
+        unsigned char testArray1[sizeof(TypeParam)];
+        unsigned char testArray2[sizeof(TypeParam)];
+        std::memcpy(&testArray1[0], &input1, sizeof(TypeParam));
+        std::memcpy(&testArray2[0], &input2, sizeof(TypeParam));
+
+        // Test ByteStream content
+        std::vector<unsigned char> data = byteStream.vbuf();
+        for(int i = 0; i < sizeof(TypeParam); ++i) {
+            EXPECT_EQ(data[i], testArray1[i]);
+        }
+        for(int i = 0; i < sizeof(TypeParam); ++i) {
+            EXPECT_EQ(data[i + sizeof(TypeParam)], testArray2[i]);
+        }
+    }
 }
 
-TEST(ByteStream, streamOperator_in_int8)
+TYPED_TEST_P(LeftShiftFixtureSimple, left_shift_swapped)
 {
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << static_cast<int8_t>(0x56);
-    EXPECT_EQ(1, byteStream.size());
-    EXPECT_EQ(1, byteStream.getPosition());
-    byteStream << static_cast<int8_t>(0x78);
-    EXPECT_EQ(2, byteStream.size());
-    EXPECT_EQ(2, byteStream.getPosition());
+    for(auto const& [input1, expectedSizePos1, input2, expectedSizePos2] : this->params) {
+        // Test size and position of ByteStream
+        util::ByteStream byteStream(util::ByteStream::Swap::SwapEndian);
+        ASSERT_EQ(0, byteStream.size());
+        ASSERT_EQ(0, byteStream.getPosition());
+        byteStream << input1;
+        EXPECT_EQ(expectedSizePos1, byteStream.size());
+        EXPECT_EQ(expectedSizePos1, byteStream.getPosition());
+        byteStream << input2;
+        EXPECT_EQ(expectedSizePos2, byteStream.size());
+        EXPECT_EQ(expectedSizePos2, byteStream.getPosition());
 
-    std::vector<unsigned char> data = byteStream.vbuf();
-    EXPECT_EQ(0x56, data[0]);
-    EXPECT_EQ(0x78, data[1]);
+        // Init Test content
+        unsigned char testArray1[sizeof(TypeParam)];
+        unsigned char testArray2[sizeof(TypeParam)];
+        std::memcpy(&testArray1[0], &input1, sizeof(TypeParam));
+        std::memcpy(&testArray2[0], &input2, sizeof(TypeParam));
+
+        // Test ByteStream content
+        std::vector<unsigned char> data = byteStream.vbuf();
+        for(int i = 0; i < sizeof(TypeParam); ++i) {
+            EXPECT_EQ(data[sizeof(TypeParam) - 1 - i], testArray1[i]);
+        }
+        for(int i = 0; i < sizeof(TypeParam); ++i) {
+            EXPECT_EQ(data[2 * sizeof(TypeParam) - 1 - i], testArray2[i]);
+        }
+    }
 }
 
-TEST(ByteStream, streamOperator_in_int16)
+TYPED_TEST_P(LeftShiftFixtureVector, left_shift)
 {
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << static_cast<int16_t>(0x5678);
-    EXPECT_EQ(2, byteStream.size());
-    EXPECT_EQ(2, byteStream.getPosition());
-    byteStream << static_cast<int16_t>(0x1234);
-    EXPECT_EQ(4, byteStream.size());
-    EXPECT_EQ(4, byteStream.getPosition());
+    for(auto const& [input1, expectedSizePos1, input2, expectedSizePos2] : this->params) {
+        // Test size and position of ByteStream
+        util::ByteStream byteStream;
+        ASSERT_EQ(0, byteStream.size());
+        ASSERT_EQ(0, byteStream.getPosition());
+        byteStream << input1;
+        EXPECT_EQ(expectedSizePos1, byteStream.size());
+        EXPECT_EQ(expectedSizePos1, byteStream.getPosition());
+        byteStream << input2;
+        EXPECT_EQ(expectedSizePos2, byteStream.size());
+        EXPECT_EQ(expectedSizePos2, byteStream.getPosition());
 
-    std::vector<unsigned char> data = byteStream.vbuf();
-    EXPECT_EQ(0x78, data[0]);
-    EXPECT_EQ(0x56, data[1]);
-    EXPECT_EQ(0x34, data[2]);
-    EXPECT_EQ(0x12, data[3]);
-
-    util::ByteStream byteStream2(util::ByteStream::Swap::SwapEndian);
-    ASSERT_EQ(0, byteStream2.size());
-    ASSERT_EQ(0, byteStream2.getPosition());
-    byteStream2 << static_cast<int16_t>(0x5678);
-    EXPECT_EQ(2, byteStream2.size());
-    EXPECT_EQ(2, byteStream2.getPosition());
-    std::vector<unsigned char> data2 = byteStream2.vbuf();
-    EXPECT_EQ(0x56, data2[0]);
-    EXPECT_EQ(0x78, data2[1]);
+        // Test ByteStream content
+        std::vector<unsigned char> data = byteStream.vbuf();
+        for(int i = 0; i < input1.size(); ++i) {
+            EXPECT_EQ(data[i], static_cast<unsigned char>(input1[i]));
+        }
+        for(int i = 0; i < input2.size(); ++i) {
+            EXPECT_EQ(data[i + expectedSizePos1], static_cast<unsigned char>(input2[i]));
+        }
+    }
 }
 
-TEST(ByteStream, streamOperator_in_int32)
+REGISTER_TYPED_TEST_SUITE_P(LeftShiftFixtureSimple, left_shift, left_shift_swapped);
+REGISTER_TYPED_TEST_SUITE_P(LeftShiftFixtureVector, left_shift);
+
+using LeftShiftTypesSimple = testing::Types<
+    char,
+    unsigned char,
+    int8_t,
+    int16_t,
+    int32_t,
+    int64_t,
+    float,
+    double
+>;
+using LeftShiftTypesVector = testing::Types<
+    std::string,
+    std::vector<int8_t>,
+    std::vector<uint8_t>
+>;
+
+INSTANTIATE_TYPED_TEST_SUITE_P(ByteStream, LeftShiftFixtureSimple, LeftShiftTypesSimple);
+INSTANTIATE_TYPED_TEST_SUITE_P(ByteStream, LeftShiftFixtureVector, LeftShiftTypesVector);
+
+// Test Right Shift Operator
+template<typename T>
+using RightShiftParamsT = std::vector<std::tuple<T>>;
+
+static std::tuple<
+    RightShiftParamsT<int8_t>,
+    RightShiftParamsT<uint8_t>,
+    RightShiftParamsT<int16_t>,
+    RightShiftParamsT<uint16_t>,
+    RightShiftParamsT<int32_t>,
+    RightShiftParamsT<uint32_t>,
+    RightShiftParamsT<int64_t>,
+    RightShiftParamsT<uint64_t>,
+    RightShiftParamsT<float>,
+    RightShiftParamsT<double>
+> rightShiftParams
 {
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << static_cast<int32_t>(0x12345678);
-    EXPECT_EQ(4, byteStream.size());
-    EXPECT_EQ(4, byteStream.getPosition());
-    byteStream << static_cast<int32_t>(0xAABBCCDD);
-    EXPECT_EQ(8, byteStream.size());
-    EXPECT_EQ(8, byteStream.getPosition());
+    {
+        std::make_tuple(std::numeric_limits<int8_t>::min()),
+        std::make_tuple(-34),
+        std::make_tuple(0),
+        std::make_tuple(115),
+        std::make_tuple(std::numeric_limits<int8_t>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<uint8_t>::min()),
+        std::make_tuple(0),
+        std::make_tuple(222),
+        std::make_tuple(std::numeric_limits<uint8_t>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<int16_t>::min()),
+        std::make_tuple(-1234),
+        std::make_tuple(0),
+        std::make_tuple(413),
+        std::make_tuple(std::numeric_limits<int16_t>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<uint16_t>::min()),
+        std::make_tuple(0),
+        std::make_tuple(37899),
+        std::make_tuple(std::numeric_limits<uint16_t>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<int32_t>::min()),
+        std::make_tuple(-131231),
+        std::make_tuple(0),
+        std::make_tuple(0x12345678),
+        std::make_tuple(std::numeric_limits<int32_t>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<uint32_t>::min()),
+        std::make_tuple(0),
+        std::make_tuple(100000000),
+        std::make_tuple(std::numeric_limits<uint32_t>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<int64_t>::min()),
+        std::make_tuple(-(0x1234567890ABCDEF)),
+        std::make_tuple(0),
+        std::make_tuple(0x1234567890ABCDEF),
+        std::make_tuple(std::numeric_limits<int64_t>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<uint64_t>::min()),
+        std::make_tuple(0),
+        std::make_tuple(0xFFFFFFFF12345678),
+        std::make_tuple(std::numeric_limits<uint64_t>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<float>::min()),
+        std::make_tuple(100.567f),
+        std::make_tuple(300e2f),
+        std::make_tuple(-3.14f),
+        std::make_tuple(std::numeric_limits<float>::max())
+    },
+    {
+        std::make_tuple(std::numeric_limits<double>::min()),
+        std::make_tuple(12345.67890),
+        std::make_tuple(-5.4e-9),
+        std::make_tuple(std::numeric_limits<double>::max())
+    }
+};
+
+template<typename T>
+struct RightShiftFixture : public testing::Test
+{
+    RightShiftFixture()
+        : params{std::get<RightShiftParamsT<T>>(rightShiftParams)}
+    { }
+    RightShiftParamsT<T> params;
+};
+
+TYPED_TEST_SUITE_P(RightShiftFixture);
+
+TYPED_TEST_P(RightShiftFixture, right_shift)
+{
+    for(const auto &[input1] : this->params)
+    {
+        // Init 
+        size_t ret = 0;
+        TypeParam value1 = 0;
+        TypeParam value2 = 0;
+        util::ByteStream byteStream;
+
+        // Write input 1
+        byteStream << input1;
+        ASSERT_EQ(sizeof(TypeParam), byteStream.size());
+        ASSERT_EQ(sizeof(TypeParam), byteStream.getPosition());
+
+        // Set position back
+        byteStream.reset();
+        ASSERT_EQ(0, byteStream.getPosition());
+        EXPECT_EQ(sizeof(TypeParam), byteStream.availableBytes());
+
+        // Read input 1
+        ret = byteStream >> value1;
+        EXPECT_EQ(util::ByteStream::Success, ret);
+        EXPECT_EQ(input1, value1);
+
+        // Read invalid
+        EXPECT_EQ(0, byteStream.availableBytes());
+        ret = byteStream >> value2;
+        EXPECT_EQ(util::ByteStream::EndOfStream, ret);
+        EXPECT_EQ(0, value2);
+    }
 }
 
-TEST(ByteStream, streamOperator_in_int64)
-{
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << static_cast<int64_t>(0x0123456789ABCDEF);
-    EXPECT_EQ(8, byteStream.size());
-    EXPECT_EQ(8, byteStream.getPosition());
-    byteStream << static_cast<int64_t>(0xAABBCCDDEEFF1234);
-    EXPECT_EQ(16, byteStream.size());
-    EXPECT_EQ(16, byteStream.getPosition());
-}
+REGISTER_TYPED_TEST_SUITE_P(RightShiftFixture, right_shift);
 
-TEST(ByteStream, streamOperator_in_float)
-{
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << 1.0f;
-    EXPECT_EQ(4, byteStream.size());
-    EXPECT_EQ(4, byteStream.getPosition());
-    byteStream << 2.0f;
-    EXPECT_EQ(8, byteStream.size());
-    EXPECT_EQ(8, byteStream.getPosition());
-}
+using RightShiftTypes = testing::Types<
+    int8_t,
+    uint8_t,
+    int16_t,
+    uint16_t,
+    int32_t,
+    uint32_t,
+    int64_t,
+    uint64_t,
+    float,
+    double
+>;
 
-TEST(ByteStream, streamOperator_in_double)
-{
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << 3.14;
-    EXPECT_EQ(8, byteStream.size());
-    EXPECT_EQ(8, byteStream.getPosition());
-    byteStream << -4.5;
-    EXPECT_EQ(16, byteStream.size());
-    EXPECT_EQ(16, byteStream.getPosition());
-}
-
-TEST(ByteStream, streamOperator_in_string)
-{
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << "Test";
-    EXPECT_EQ(4, byteStream.size());
-    EXPECT_EQ(4, byteStream.getPosition());
-    byteStream << "String";
-    EXPECT_EQ(10, byteStream.size());
-    EXPECT_EQ(10, byteStream.getPosition());
-}
-
-TEST(ByteStream, streamOperator_in_vector)
-{
-    util::ByteStream byteStream;
-    ASSERT_EQ(0, byteStream.size());
-    ASSERT_EQ(0, byteStream.getPosition());
-    byteStream << std::vector<char>({0x12, 0x34});
-    EXPECT_EQ(2, byteStream.size());
-    EXPECT_EQ(2, byteStream.getPosition());
-    byteStream << std::vector<char>({0x12, 0x34, 0x56, 0x78, (char)0x90u, (char)0xABu, (char)0xCDu, (char)0xEFu});
-    EXPECT_EQ(10, byteStream.size());
-    EXPECT_EQ(10, byteStream.getPosition());
-}
-
-TEST(ByteStream, streamOperator_out_char)
-{
-    // Definitions
-    size_t ret      = 0;
-    char value1     = -67;
-    char value2     = 117;
-    char value1_out = 0;
-    char value2_out = 0;
-    char value3_out = 0;
-
-    // Init
-    util::ByteStream byteStream;
-    byteStream << value1;
-    byteStream << value2;
-    ASSERT_EQ(2, byteStream.size());
-    ASSERT_EQ(2, byteStream.getPosition());
-    byteStream.reset();
-
-    // Read 1
-    EXPECT_EQ(2, byteStream.availableBytes());
-    ret = byteStream >> value1_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value1, value1_out);
-
-    // Read 2
-    EXPECT_EQ(1, byteStream.availableBytes());
-    ret = byteStream >> value2_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value2, value2_out);
-
-    // Read Invalid
-    EXPECT_EQ(0, byteStream.availableBytes());
-    ret = byteStream >> value3_out;
-    EXPECT_EQ(util::ByteStream::EndOfStream, ret);
-    EXPECT_EQ(0, value3_out);
-}
-
-TEST(ByteStream, streamOperator_out_int8)
-{
-    // Definitions
-    size_t ret          = 0;
-    int8_t value1       = -34;
-    int8_t value2       = 115;
-    int8_t value1_out   = 0;
-    int8_t value2_out   = 0;
-    int8_t value3_out   = 0;
-
-    // Init
-    util::ByteStream byteStream;
-    byteStream << value1;
-    byteStream << value2;
-    ASSERT_EQ(2, byteStream.size());
-    ASSERT_EQ(2, byteStream.getPosition());
-    byteStream.reset();
-
-    // Read 1
-    EXPECT_EQ(2, byteStream.availableBytes());
-    ret = byteStream >> value1_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value1, value1_out);
-    
-    // Read 2
-    EXPECT_EQ(1, byteStream.availableBytes());
-    ret = byteStream >> value2_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value2, value2_out);
-
-    // Read Invalid
-    EXPECT_EQ(0, byteStream.availableBytes());
-    ret = byteStream >> value3_out;
-    EXPECT_EQ(util::ByteStream::EndOfStream, ret);
-    EXPECT_EQ(0, value3_out);
-}
-
-TEST(ByteStream, streamOperator_out_int16)
-{
-    // Definitions
-    size_t ret = 0;
-    int16_t value1 = 0x1234;
-    int16_t value1_out = 0;
-    int16_t value2_out = 0;
-
-    // Init
-    util::ByteStream byteStream;
-    byteStream << value1;
-    ASSERT_EQ(2, byteStream.size());
-    ASSERT_EQ(2, byteStream.getPosition());
-    byteStream.reset();
-
-    // Read 1
-    EXPECT_EQ(2, byteStream.availableBytes());
-    ret = byteStream >> value1_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value1, value1_out);
-
-    // Read Invalid
-    EXPECT_EQ(0, byteStream.availableBytes());
-    ret = byteStream >> value2_out;
-    EXPECT_EQ(util::ByteStream::EndOfStream, ret);
-    EXPECT_EQ(0, value2_out);
-}
-
-TEST(ByteStream, streamOperator_out_int32)
-{
-    // Definitions
-    size_t ret = 0;
-    int32_t value1 = 0x12345678;
-    int32_t value1_out = 0;
-    int32_t value2_out = 0;
-
-    // Init
-    util::ByteStream byteStream;
-    byteStream << value1;
-    ASSERT_EQ(4, byteStream.size());
-    ASSERT_EQ(4, byteStream.getPosition());
-    byteStream.reset();
-
-    // Read 1
-    EXPECT_EQ(4, byteStream.availableBytes());
-    ret = byteStream >> value1_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value1, value1_out);
-
-    // Read Invalid
-    EXPECT_EQ(0, byteStream.availableBytes());
-    ret = byteStream >> value2_out;
-    EXPECT_EQ(util::ByteStream::EndOfStream, ret);
-    EXPECT_EQ(0, value2_out);
-}
-
-TEST(ByteStream, streamOperator_out_int64)
-{
-    // Definitions
-    size_t ret = 0;
-    int64_t value1 = 0x1234567890ABCDEF;
-    int64_t value1_out = 0;
-    int64_t value2_out = 0;
-
-    // Init
-    util::ByteStream byteStream;
-    byteStream << value1;
-    ASSERT_EQ(8, byteStream.size());
-    ASSERT_EQ(8, byteStream.getPosition());
-    byteStream.reset();
-
-    // Read 1
-    EXPECT_EQ(8, byteStream.availableBytes());
-    ret = byteStream >> value1_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value1, value1_out);
-
-    // Read Invalid
-    EXPECT_EQ(0, byteStream.availableBytes());
-    ret = byteStream >> value2_out;
-    EXPECT_EQ(util::ByteStream::EndOfStream, ret);
-    EXPECT_EQ(0, value2_out);
-}
-
-TEST(ByteStream, streamOperator_out_float)
-{
-    // Definitions
-    size_t ret = 0;
-    float value1 = 100.567f;
-    float value1_out = 0;
-    float value2_out = 0;
-
-    // Init
-    util::ByteStream byteStream;
-    byteStream << value1;
-    ASSERT_EQ(4, byteStream.size());
-    ASSERT_EQ(4, byteStream.getPosition());
-    byteStream.reset();
-
-    // Read 1
-    EXPECT_EQ(4, byteStream.availableBytes());
-    ret = byteStream >> value1_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value1, value1_out);
-
-    // Read Invalid
-    EXPECT_EQ(0, byteStream.availableBytes());
-    ret = byteStream >> value2_out;
-    EXPECT_EQ(util::ByteStream::EndOfStream, ret);
-    EXPECT_EQ(0, value2_out);
-}
-
-TEST(ByteStream, streamOperator_out_double)
-{
-    // Definitions
-    size_t ret = 0;
-    double value1 = 12345.67890;
-    double value1_out = 0;
-    double value2_out = 0;
-
-    // Init
-    util::ByteStream byteStream;
-    byteStream << value1;
-    ASSERT_EQ(8, byteStream.size());
-    ASSERT_EQ(8, byteStream.getPosition());
-    byteStream.reset();
-
-    // Read 1
-    EXPECT_EQ(8, byteStream.availableBytes());
-    ret = byteStream >> value1_out;
-    EXPECT_EQ(util::ByteStream::Success, ret);
-    EXPECT_EQ(value1, value1_out);
-
-    // Read Invalid
-    EXPECT_EQ(0, byteStream.availableBytes());
-    ret = byteStream >> value2_out;
-    EXPECT_EQ(util::ByteStream::EndOfStream, ret);
-    EXPECT_EQ(0, value2_out);
-}
+INSTANTIATE_TYPED_TEST_SUITE_P(ByteStream, RightShiftFixture, RightShiftTypes);
