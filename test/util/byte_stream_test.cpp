@@ -247,13 +247,15 @@ TEST(ByteStream, good)
     // Init
     util::ByteStream byteStream;
     EXPECT_FALSE(byteStream.good());
-    byteStream << value1;
+    ret = byteStream << value1;
+    EXPECT_TRUE(ret);
     EXPECT_FALSE(byteStream.good());
     byteStream.reset();
     EXPECT_TRUE(byteStream.good());
 
     // Read 
     ret = byteStream >> value1_out;
+    EXPECT_TRUE(ret);
     EXPECT_FALSE(byteStream.good());
 }
 
@@ -394,16 +396,16 @@ static std::tuple<
 > leftShiftParamsSimple
 {
     {
-        std::make_tuple((char)-98, 1, (char)52, 2),
+        std::make_tuple(char(-98), 1, char(52), 2),
     },
     {
-        std::make_tuple((unsigned char)3, 1, (unsigned char)222, 2),
+        std::make_tuple((unsigned char)(3), 1, (unsigned char)(222), 2),
     },
     {
-        std::make_tuple((int8_t)-8, 1, (int8_t)56, 2),
+        std::make_tuple(int8_t(-8), 1, int8_t(56), 2),
     },
     {
-        std::make_tuple((int16_t)0x5678, 2, (int16_t)0x1234, 4),
+        std::make_tuple(int16_t(0x5678), 2, int16_t(0x1234), 4),
     },
     {
         std::make_tuple(0x12345678, 4, 0xAABBCCDD, 8),
@@ -481,10 +483,10 @@ TYPED_TEST_P(LeftShiftFixtureSimple, left_shift)
 
         // Test ByteStream content
         std::vector<unsigned char> data = byteStream.vbuf();
-        for(int i = 0; i < sizeof(TypeParam); ++i) {
+        for(size_t i = 0; i < sizeof(TypeParam); ++i) {
             EXPECT_EQ(data[i], testArray1[i]);
         }
-        for(int i = 0; i < sizeof(TypeParam); ++i) {
+        for(size_t i = 0; i < sizeof(TypeParam); ++i) {
             EXPECT_EQ(data[i + sizeof(TypeParam)], testArray2[i]);
         }
     }
@@ -512,10 +514,10 @@ TYPED_TEST_P(LeftShiftFixtureSimple, left_shift_swapped)
 
         // Test ByteStream content
         std::vector<unsigned char> data = byteStream.vbuf();
-        for(int i = 0; i < sizeof(TypeParam); ++i) {
+        for(size_t i = 0; i < sizeof(TypeParam); ++i) {
             EXPECT_EQ(data[sizeof(TypeParam) - 1 - i], testArray1[i]);
         }
-        for(int i = 0; i < sizeof(TypeParam); ++i) {
+        for(size_t i = 0; i < sizeof(TypeParam); ++i) {
             EXPECT_EQ(data[2 * sizeof(TypeParam) - 1 - i], testArray2[i]);
         }
     }
@@ -537,10 +539,10 @@ TYPED_TEST_P(LeftShiftFixtureVector, left_shift)
 
         // Test ByteStream content
         std::vector<unsigned char> data = byteStream.vbuf();
-        for(int i = 0; i < input1.size(); ++i) {
+        for(size_t i = 0; i < input1.size(); ++i) {
             EXPECT_EQ(data[i], static_cast<unsigned char>(input1[i]));
         }
-        for(int i = 0; i < input2.size(); ++i) {
+        for(size_t i = 0; i < input2.size(); ++i) {
             EXPECT_EQ(data[i + expectedSizePos1], static_cast<unsigned char>(input2[i]));
         }
     }
