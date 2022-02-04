@@ -4,9 +4,9 @@
 constexpr int AwesomeMC_VersionMajor    = @AWESOMEMC_VERSION_MAJOR@;
 constexpr int AwesomeMC_VersionMinor    = @AWESOMEMC_VERSION_MINOR@;
 constexpr int AwesomeMC_VersionPatch    = @AWESOMEMC_VERSION_PATCH@;
-const char * AwesomeMC_Version          = "@AWESOMEMC_VERSION@";
-const char * AwesomeMC_GitBranch        = "@AWESOMEMC_GIT_BRANCH@";
-const char * AwesomeMC_GitHash          = "@AWESOMEMC_GIT_HASH@";
+constexpr const char * AwesomeMC_Version          = "@AWESOMEMC_VERSION@";
+constexpr const char * AwesomeMC_GitBranch        = "@AWESOMEMC_GIT_BRANCH@";
+constexpr const char * AwesomeMC_GitHash          = "@AWESOMEMC_GIT_HASH@";
 
 constexpr int getVersionMajor()
 {
