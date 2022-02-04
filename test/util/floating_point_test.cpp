@@ -11,7 +11,7 @@ namespace detail
 {
 
 float sqrt(float value) {
-    return std::sqrtf(value);
+    return std::sqrt(value);
 }
 
 double sqrt(double value) {
@@ -26,8 +26,8 @@ class FloatingPointFixture : public ::testing::Test
 protected:
     virtual void SetUp()
     {
-        (*(U *)&negZero) = one << (sizeof(U) * 8 -1);
-        (*(U *)&smallestDenormal) += 1;
+        (*(reinterpret_cast<U*>(&negZero))) = one << (sizeof(U) * 8 - 1);
+        (*(reinterpret_cast<U*>(&smallestDenormal))) += 1;
 
         nan1 = detail::sqrt(static_cast<T>(-1));
         nan2 = zero1 / zero2;
@@ -35,7 +35,7 @@ protected:
         nan3 = inf - inf;
         nan4 = nan3;
 
-        (*(U *)&nan4) += static_cast<U>(1);
+        (*(reinterpret_cast<U*>(&nan4))) += static_cast<U>(1);
     }
 
     virtual void TearDown()
@@ -52,7 +52,7 @@ protected:
     T nan3 = 0.0f;
     T nan4 = 0.0f;
     T negZero = 0.0f;
-    T smallestDenormal = 0.0f;;
+    T smallestDenormal = 0.0f;
 };
 
 using FloatFixture = FloatingPointFixture<float, int32_t>;
@@ -163,7 +163,7 @@ TEST_F(DoubleFixture, closeNumbers_10ulp)
 
 TEST_F(DoubleFixture, inf_negInf)
 {
-    EXPECT_FALSE(util::almostEqualUlps(inf, -inf, (int64_t)16 * 1024 * 1024));
+    EXPECT_FALSE(util::almostEqualUlps(inf, -inf, static_cast<int64_t>(16 * 1024 * 1024)));
 }
 
 TEST_F(DoubleFixture, max_inf)
