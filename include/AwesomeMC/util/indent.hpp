@@ -30,9 +30,9 @@ public:
     friend std::ostream& operator<<(std::ostream &out, const Indent &indent);
 
 private:
-    int m_indentation           = 0;
-    char m_indentationCharacter = ' ';
     const int m_indentationSize = 2;
+    char m_indentationCharacter = ' ';
+    int m_indentation           = 0;
 };
 
 std::ostream& operator<<(std::ostream &out, const Indent &indent);
