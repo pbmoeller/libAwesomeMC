@@ -143,13 +143,13 @@ TEST(bswap, 8B)
 
 TEST(bswap, Float)
 {
-    Float value{1.0f};
-    Float actual{util::bswap(value.value)};
-    compareBytes(value, actual);
+    Float value1{1.0f};
+    Float actual1{util::bswap(value1.value)};
+    compareBytes(value1, actual1);
 
     Float value2{123.456789f};
     Float actual2{util::bswap(value2.value)};
-    compareBytes(value, actual);
+    compareBytes(value2, actual2);
 
     Float value3{-1.0f};
     Float actual3{util::bswap(value3.value)};
@@ -170,13 +170,13 @@ TEST(bswap, Float)
 
 TEST(bswap, Double)
 {
-    Double value{1.0};
-    Double actual{util::bswap(value.value)};
-    compareBytes(value, actual);
+    Double value1{1.0};
+    Double actual1{util::bswap(value1.value)};
+    compareBytes(value1, actual1);
 
     Double value2{123.456789};
     Double actual2{util::bswap(value2.value)};
-    compareBytes(value, actual);
+    compareBytes(value2, actual2);
 
     Double value3{-1.0};
     Double actual3{util::bswap(value3.value)};
