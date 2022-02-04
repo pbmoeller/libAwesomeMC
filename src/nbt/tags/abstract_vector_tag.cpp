@@ -130,6 +130,33 @@ void AbstractVectorTag::copy(const std::vector<AbstractTag*> &otherValue)
     }
 }
 
+AbstractVectorTag::iterator AbstractVectorTag::begin() noexcept
+{
+    return m_value.begin();
+}
+
+AbstractVectorTag::iterator AbstractVectorTag::end() noexcept
+{
+    return m_value.end();
+}
+
+AbstractVectorTag::const_iterator AbstractVectorTag::begin() const noexcept
+{
+    return m_value.begin();
+}
+
+AbstractVectorTag::const_iterator AbstractVectorTag::end() const noexcept
+{
+    return m_value.end();
+}
+
+bool AbstractVectorTag::isEmpty() const noexcept {
+    return m_value.empty();
+}
+size_t AbstractVectorTag::size() const noexcept {
+    return m_value.size();
+}
+
 bool AbstractVectorTag::erase(size_t index)
 {
     if(index >= m_value.size()) {

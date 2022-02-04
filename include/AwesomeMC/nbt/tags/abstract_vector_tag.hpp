@@ -47,25 +47,14 @@ protected:
 
 public:
     // Vector Operations
-    constexpr iterator begin() noexcept {
-        return m_value.begin();
-    }
-    constexpr iterator end() noexcept {
-        return m_value.end();
-    }
-    constexpr const_iterator begin() const noexcept {
-        return m_value.begin();
-    }
-    constexpr const_iterator end() const noexcept {
-        return m_value.end();
-    }
+    iterator begin() noexcept;
+    iterator end() noexcept;
+    const_iterator begin() const noexcept;
+    const_iterator end() const noexcept;
 
-    constexpr bool isEmpty() const noexcept {
-        return m_value.empty();
-    }
-    constexpr size_t size() const noexcept {
-        return m_value.size();
-    }
+    bool isEmpty() const noexcept;
+    size_t size() const noexcept;
+
     bool erase(size_t index);
 
     // !!! This functions removes the item from the container - transfers ownership !!!
