@@ -41,7 +41,7 @@ int main(int argc, char **argv)
         // No valid parameters given, print usage and run example.
         printUsage();
 
-        file = R"(..\..\..\test\testdata\world\libAwesomeMC_TestWorld_1_18_1\level.dat)";
+        file = R"(../../../test/testdata/world/libAwesomeMC_TestWorld_1_18_1/level.dat)";
         compressed = true;
 
         std::cout << "Inputfile: " << file << "\n";
