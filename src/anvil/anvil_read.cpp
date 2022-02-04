@@ -11,25 +11,20 @@
 #include <regex>
 #include <stdexcept>
 #include <iostream>
+#include <filesystem>
 
 namespace anvil
 {
 
-// Constants
-#ifdef _MSC_VER
-const char DirectorySeparator = '\\';
-#elif defined(__linux__)
-const char DirectorySeparator = '/';
-#endif
-
 const std::regex RegionFilePattern = std::regex("r\\.([-]?[0-9]+)\\.([-]?[0-9]+)\\.mca");
-
-
 
 bool checkRegionFilename(const std::string &filename, int &x, int &z)
 {
+    std::filesystem::path filepath{filename};
+    std::string convertedFilename = filepath.make_preferred().string();
+
     // Extract filename from filename with path
-    std::string name = filename.substr(filename.find_last_of(DirectorySeparator) + 1);
+    std::string name = convertedFilename.substr(convertedFilename.find_last_of(std::filesystem::path::preferred_separator) + 1);
 
     // Search for region file pattern : 'r.X.Z.mca'
     std::cmatch ref;
