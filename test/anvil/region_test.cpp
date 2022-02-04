@@ -22,7 +22,7 @@ protected:
 
     static void SetUpTestSuite() 
     {
-        const std::string filename = testFolder + "libAwesomeMC_TestWorld_1_18_1\\region\\r.-1.-1.mca";
+        const std::string filename = testFolder + "libAwesomeMC_TestWorld_1_18_1/region/r.-1.-1.mca";
         region = anvil::loadRegion(filename);
     }
 
