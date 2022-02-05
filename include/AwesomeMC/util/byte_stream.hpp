@@ -65,7 +65,7 @@ public:
     // Operators
     // Left Shift
     template<typename T>
-    requires std::integral<T> || std::floating_point<T>
+    requires is_number<T>
     bool operator<<(const T &input) {
         return writeStream(input);
     }
@@ -82,15 +82,15 @@ public:
 
     // Right Shift
     template<typename T>
-    requires std::integral<T> || std::floating_point<T>
+    requires is_number<T>
     bool operator>>(T &input) {
         return readStream(input);
     }
 
 private:
     template<typename T>
-    requires std::integral<T> || std::floating_point<T>
-        size_t readStream(T & value)
+    requires is_number<T>
+    size_t readStream(T & value)
     {
         size_t width = sizeof(T);
         if(availableBytes() < width) {

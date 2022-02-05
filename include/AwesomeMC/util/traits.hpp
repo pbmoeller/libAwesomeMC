@@ -24,6 +24,9 @@ concept is_std_string = std::is_same_v<T, std::string>;
 template<typename T>
 concept is_std_string_or_std_vector = is_std_vector<T> || is_std_string<T>;
 
+template<typename T>
+concept is_number = std::integral<T> || std::floating_point<T>;
+
 } // namespace util
 
 #endif // AWESOMEMC_UTIL_TRAITS_HPP
