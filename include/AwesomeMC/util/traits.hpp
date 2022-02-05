@@ -11,21 +11,21 @@ namespace util
 {
 
 template<typename, template<typename...> typename>
-inline constexpr bool is_specialization = false;
+inline constexpr bool isSpecialization = false;
 template<template<typename...> typename T, typename... Args>
-inline constexpr bool is_specialization<T<Args...>, T> = true;
+inline constexpr bool isSpecialization<T<Args...>, T> = true;
 
 template<typename T>
-concept is_std_vector = is_specialization<T, std::vector>;
+concept StdVector = isSpecialization<T, std::vector>;
 
 template<typename T>
-concept is_std_string = std::is_same_v<T, std::string>;
+concept StdString = std::is_same_v<T, std::string>;
 
 template<typename T>
-concept is_std_string_or_std_vector = is_std_vector<T> || is_std_string<T>;
+concept StdStringOrStdVector = StdVector<T> || StdString<T>;
 
 template<typename T>
-concept is_number = std::integral<T> || std::floating_point<T>;
+concept Number = std::integral<T> || std::floating_point<T>;
 
 } // namespace util
 

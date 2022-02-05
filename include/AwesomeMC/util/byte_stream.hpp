@@ -65,13 +65,13 @@ public:
     // Operators
     // Left Shift
     template<typename T>
-    requires is_number<T>
+    requires Number<T>
     bool operator<<(const T &input) {
         return writeStream(input);
     }
 
     template<typename T>
-    requires is_std_string_or_std_vector<T>
+    requires StdStringOrStdVector<T>
     bool operator<<(const T &input) {
         m_buffer.insert(m_buffer.begin() + m_position,
                         input.begin(),
@@ -82,15 +82,15 @@ public:
 
     // Right Shift
     template<typename T>
-    requires is_number<T>
+    requires Number<T>
     bool operator>>(T &input) {
         return readStream(input);
     }
 
 private:
     template<typename T>
-    requires is_number<T>
-    size_t readStream(T & value)
+    requires Number<T>
+    size_t readStream(T &value)
     {
         size_t width = sizeof(T);
         if(availableBytes() < width) {
