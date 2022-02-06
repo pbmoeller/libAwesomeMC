@@ -7,11 +7,11 @@
 // STL
 #include <cstdint>
 
-namespace nbt
+namespace amc
 {
 
 using ShortTag = ValueTag<int16_t, TagType::Short>;
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_SHORT_TAG_HPP

@@ -13,131 +13,131 @@
 
 TEST(ListTag, Constructor)
 {
-    nbt::ListTag listTag;
+    amc::ListTag listTag;
     EXPECT_STREQ("", listTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag.getType());
-    EXPECT_EQ(nbt::TagType::Byte, listTag.getListType());
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag.getType());
+    EXPECT_EQ(amc::TagType::Byte, listTag.getListType());
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
     EXPECT_EQ(0, data.size());
 }
 
 TEST(ListTag, Constructor_2)
 {
-    nbt::ListTag listTag("Tagname");
+    amc::ListTag listTag("Tagname");
     EXPECT_STREQ("Tagname", listTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag.getType());
-    EXPECT_EQ(nbt::TagType::Byte, listTag.getListType());
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag.getType());
+    EXPECT_EQ(amc::TagType::Byte, listTag.getListType());
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
     EXPECT_EQ(0, data.size());
 }
 
 TEST(ListTag, Constructor_3)
 {
-    nbt::ListTag listTag("Tagname");
+    amc::ListTag listTag("Tagname");
     EXPECT_STREQ("Tagname", listTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag.getType());
-    EXPECT_EQ(nbt::TagType::Byte, listTag.getListType());
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag.getType());
+    EXPECT_EQ(amc::TagType::Byte, listTag.getListType());
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
     EXPECT_EQ(0, data.size());
 }
 
 TEST(ListTag, Constructor_4)
 {
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
-    nbt::ListTag listTag(nbt::TagType::Byte, {a, b, c});
+    amc::ListTag listTag(amc::TagType::Byte, {a, b, c});
     EXPECT_STREQ("", listTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag.getType());
-    EXPECT_EQ(nbt::TagType::Byte, listTag.getListType());
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag.getType());
+    EXPECT_EQ(amc::TagType::Byte, listTag.getListType());
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
     EXPECT_EQ(3, data.size());
 
-    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(listTag.at(0));
-    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(listTag.at(1));
-    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(listTag.at(2));
+    amc::ByteTag *v1 = tag_cast<amc::ByteTag*>(listTag.at(0));
+    amc::ByteTag *v2 = tag_cast<amc::ByteTag*>(listTag.at(1));
+    amc::ByteTag *v3 = tag_cast<amc::ByteTag*>(listTag.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
     EXPECT_TRUE(*c == *v3);
 
     // Test not matching list type
-    nbt::ByteTag *a2 = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b2 = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c2 = new nbt::ByteTag("C", 3);
-    nbt::ListTag listTag2(nbt::TagType::Float, {a2, b2, c2});
+    amc::ByteTag *a2 = new amc::ByteTag("A", 1);
+    amc::ByteTag *b2 = new amc::ByteTag("B", 2);
+    amc::ByteTag *c2 = new amc::ByteTag("C", 3);
+    amc::ListTag listTag2(amc::TagType::Float, {a2, b2, c2});
     EXPECT_STREQ("", listTag2.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag2.getType());
-    EXPECT_EQ(nbt::TagType::Float, listTag2.getListType());
-    std::vector<nbt::AbstractTag*> data2 = listTag2.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag2.getType());
+    EXPECT_EQ(amc::TagType::Float, listTag2.getListType());
+    std::vector<amc::AbstractTag*> data2 = listTag2.getValue();
     EXPECT_EQ(0, data2.size());
     delete a2;
     delete b2;
     delete c2;
 
     // Test nullptr
-    nbt::ByteTag *a3 = new nbt::ByteTag("A", 1);
-    nbt::ListTag listTag3(nbt::TagType::Byte, {a3, nullptr});
+    amc::ByteTag *a3 = new amc::ByteTag("A", 1);
+    amc::ListTag listTag3(amc::TagType::Byte, {a3, nullptr});
     EXPECT_STREQ("", listTag3.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag3.getType());
-    EXPECT_EQ(nbt::TagType::Byte, listTag3.getListType());
-    std::vector<nbt::AbstractTag*> data3 = listTag3.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag3.getType());
+    EXPECT_EQ(amc::TagType::Byte, listTag3.getListType());
+    std::vector<amc::AbstractTag*> data3 = listTag3.getValue();
     EXPECT_EQ(1, data3.size());
 }
 
 TEST(ListTag, Constructor_5)
 {
-    nbt::ListTag listTag("Tagname", nbt::TagType::Float);
+    amc::ListTag listTag("Tagname", amc::TagType::Float);
     EXPECT_STREQ("Tagname", listTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag.getType());
-    EXPECT_EQ(nbt::TagType::Float, listTag.getListType());
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag.getType());
+    EXPECT_EQ(amc::TagType::Float, listTag.getListType());
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
     EXPECT_EQ(0, data.size());
 }
 
 TEST(ListTag, Constructor_6)
 {
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
-    nbt::ListTag listTag("Tagname", nbt::TagType::Byte, {a, b, c});
+    amc::ListTag listTag("Tagname", amc::TagType::Byte, {a, b, c});
     EXPECT_STREQ("Tagname", listTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag.getType());
-    EXPECT_EQ(nbt::TagType::Byte, listTag.getListType());
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag.getType());
+    EXPECT_EQ(amc::TagType::Byte, listTag.getListType());
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
     EXPECT_EQ(3, data.size());
 
-    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(listTag.at(0));
-    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(listTag.at(1));
-    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(listTag.at(2));
+    amc::ByteTag *v1 = tag_cast<amc::ByteTag*>(listTag.at(0));
+    amc::ByteTag *v2 = tag_cast<amc::ByteTag*>(listTag.at(1));
+    amc::ByteTag *v3 = tag_cast<amc::ByteTag*>(listTag.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
     EXPECT_TRUE(*c == *v3);
 
     // Test not matching list type
-    nbt::ByteTag *a2 = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b2 = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c2 = new nbt::ByteTag("C", 3);
-    nbt::ListTag listTag2("Tagname", nbt::TagType::Float, {a2, b2, c2});
+    amc::ByteTag *a2 = new amc::ByteTag("A", 1);
+    amc::ByteTag *b2 = new amc::ByteTag("B", 2);
+    amc::ByteTag *c2 = new amc::ByteTag("C", 3);
+    amc::ListTag listTag2("Tagname", amc::TagType::Float, {a2, b2, c2});
     EXPECT_STREQ("Tagname", listTag2.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag2.getType());
-    EXPECT_EQ(nbt::TagType::Float, listTag2.getListType());
-    std::vector<nbt::AbstractTag*> data2 = listTag2.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag2.getType());
+    EXPECT_EQ(amc::TagType::Float, listTag2.getListType());
+    std::vector<amc::AbstractTag*> data2 = listTag2.getValue();
     EXPECT_EQ(0, data2.size());
     delete a2;
     delete b2;
     delete c2;
 
     // Test nullptr
-    nbt::ByteTag *a3 = new nbt::ByteTag("A", 1);
-    nbt::ListTag listTag3("Tagname", nbt::TagType::Byte, {a3, nullptr});
+    amc::ByteTag *a3 = new amc::ByteTag("A", 1);
+    amc::ListTag listTag3("Tagname", amc::TagType::Byte, {a3, nullptr});
     EXPECT_STREQ("Tagname", listTag3.getName().c_str());
-    EXPECT_EQ(nbt::TagType::List, listTag3.getType());
-    EXPECT_EQ(nbt::TagType::Byte, listTag3.getListType());
-    std::vector<nbt::AbstractTag*> data3 = listTag3.getValue();
+    EXPECT_EQ(amc::TagType::List, listTag3.getType());
+    EXPECT_EQ(amc::TagType::Byte, listTag3.getListType());
+    std::vector<amc::AbstractTag*> data3 = listTag3.getValue();
     EXPECT_EQ(1, data3.size());
 }
 
@@ -146,15 +146,15 @@ TEST(ListTag, CopyConstructor)
     std::string name = "CopyConstructor";
 
     // Init A
-    nbt::ListTag listTagA(name, nbt::TagType::Byte);
-    listTagA.pushBack(new nbt::ByteTag("A", 1));
-    listTagA.pushBack(new nbt::ByteTag("B", 2));
-    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    amc::ListTag listTagA(name, amc::TagType::Byte);
+    listTagA.pushBack(new amc::ByteTag("A", 1));
+    listTagA.pushBack(new amc::ByteTag("B", 2));
+    listTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_STREQ(listTagA.getName().c_str(), name.c_str());
     ASSERT_EQ(3, listTagA.size());
 
     // Test Copy Assignment
-    nbt::ListTag listTagB(listTagA);
+    amc::ListTag listTagB(listTagA);
     EXPECT_STREQ(listTagB.getName().c_str(), listTagA.getName().c_str());
     EXPECT_EQ(3, listTagB.size());
 }
@@ -164,15 +164,15 @@ TEST(ListTag, MoveConstructor)
     std::string name = "MoveConstructor";
 
     // Init A
-    nbt::ListTag listTagA(name, nbt::TagType::Byte);
-    listTagA.pushBack(new nbt::ByteTag("A", 1));
-    listTagA.pushBack(new nbt::ByteTag("B", 2));
-    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    amc::ListTag listTagA(name, amc::TagType::Byte);
+    listTagA.pushBack(new amc::ByteTag("A", 1));
+    listTagA.pushBack(new amc::ByteTag("B", 2));
+    listTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_STREQ(listTagA.getName().c_str(), name.c_str());
     ASSERT_EQ(3, listTagA.size());
 
     // Test Copy Assignment
-    nbt::ListTag listTagB(std::move(listTagA));
+    amc::ListTag listTagB(std::move(listTagA));
     EXPECT_STREQ(listTagB.getName().c_str(), name.c_str());
     EXPECT_EQ(3, listTagB.size());
 }
@@ -182,15 +182,15 @@ TEST(ListTag, CopyAssignment)
     std::string name = "CopyAssignment";
 
     // Init A
-    nbt::ListTag listTagA(name, nbt::TagType::Byte);
-    listTagA.pushBack(new nbt::ByteTag("A", 1));
-    listTagA.pushBack(new nbt::ByteTag("B", 2));
-    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    amc::ListTag listTagA(name, amc::TagType::Byte);
+    listTagA.pushBack(new amc::ByteTag("A", 1));
+    listTagA.pushBack(new amc::ByteTag("B", 2));
+    listTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_STREQ(listTagA.getName().c_str(), name.c_str());
     ASSERT_EQ(3, listTagA.size());
 
     // Init B
-    nbt::ListTag listTagB;
+    amc::ListTag listTagB;
     ASSERT_STREQ(listTagB.getName().c_str(), "");
     ASSERT_EQ(0, listTagB.size());
 
@@ -205,15 +205,15 @@ TEST(ListTag, MoveAssignment)
     std::string name = "MoveAssignment";
 
     // Init A
-    nbt::ListTag listTagA(name, nbt::TagType::Byte);
-    listTagA.pushBack(new nbt::ByteTag("A", 1));
-    listTagA.pushBack(new nbt::ByteTag("B", 2));
-    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    amc::ListTag listTagA(name, amc::TagType::Byte);
+    listTagA.pushBack(new amc::ByteTag("A", 1));
+    listTagA.pushBack(new amc::ByteTag("B", 2));
+    listTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_STREQ(listTagA.getName().c_str(), name.c_str());
     ASSERT_EQ(3, listTagA.size());
 
     // Init B
-    nbt::ListTag listTagB;
+    amc::ListTag listTagB;
     ASSERT_STREQ(listTagB.getName().c_str(), "");
     ASSERT_EQ(0, listTagB.size());
 
@@ -226,14 +226,14 @@ TEST(ListTag, MoveAssignment)
 TEST(ListTag, clone)
 {
     // Init List A
-    nbt::ListTag listTagA(nbt::TagType::Byte);
+    amc::ListTag listTagA(amc::TagType::Byte);
 
-    listTagA.pushBack(new nbt::ByteTag("A", 1));
-    listTagA.pushBack(new nbt::ByteTag("B", 2));
-    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    listTagA.pushBack(new amc::ByteTag("A", 1));
+    listTagA.pushBack(new amc::ByteTag("B", 2));
+    listTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, listTagA.size());
 
-    nbt::ListTag *listClone = tag_cast<nbt::ListTag*>(listTagA.clone());
+    amc::ListTag *listClone = tag_cast<amc::ListTag*>(listTagA.clone());
 
     EXPECT_TRUE(listTagA == *listClone);
     delete listClone;
@@ -242,27 +242,27 @@ TEST(ListTag, clone)
 TEST(ListTag, Equal)
 {
     // Init List A
-    nbt::ListTag listTagA(nbt::TagType::Byte);
+    amc::ListTag listTagA(amc::TagType::Byte);
 
-    listTagA.pushBack(new nbt::ByteTag("A", 1));
-    listTagA.pushBack(new nbt::ByteTag("B", 2));
-    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    listTagA.pushBack(new amc::ByteTag("A", 1));
+    listTagA.pushBack(new amc::ByteTag("B", 2));
+    listTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, listTagA.size());
 
     // Init List B
-    nbt::ListTag listTagB(nbt::TagType::Byte);
+    amc::ListTag listTagB(amc::TagType::Byte);
 
-    listTagB.pushBack(new nbt::ByteTag("A", 1));
-    listTagB.pushBack(new nbt::ByteTag("B", 2));
-    listTagB.pushBack(new nbt::ByteTag("C", 3));
+    listTagB.pushBack(new amc::ByteTag("A", 1));
+    listTagB.pushBack(new amc::ByteTag("B", 2));
+    listTagB.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, listTagB.size());
 
     // Init List C
-    nbt::ListTag listTagC(nbt::TagType::Int);
+    amc::ListTag listTagC(amc::TagType::Int);
 
-    listTagC.pushBack(new nbt::IntTag("A", 1));
-    listTagC.pushBack(new nbt::IntTag("B", 2));
-    listTagC.pushBack(new nbt::IntTag("C", 3));
+    listTagC.pushBack(new amc::IntTag("A", 1));
+    listTagC.pushBack(new amc::IntTag("B", 2));
+    listTagC.pushBack(new amc::IntTag("C", 3));
     ASSERT_EQ(3, listTagC.size());
 
     EXPECT_TRUE(listTagA == listTagA);
@@ -284,27 +284,27 @@ TEST(ListTag, Equal)
 TEST(ListTag, NotEqual)
 {
     // Init List A
-    nbt::ListTag listTagA(nbt::TagType::Byte);
+    amc::ListTag listTagA(amc::TagType::Byte);
 
-    listTagA.pushBack(new nbt::ByteTag("A", 1));
-    listTagA.pushBack(new nbt::ByteTag("B", 2));
-    listTagA.pushBack(new nbt::ByteTag("C", 3));
+    listTagA.pushBack(new amc::ByteTag("A", 1));
+    listTagA.pushBack(new amc::ByteTag("B", 2));
+    listTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, listTagA.size());
 
     // Init List B
-    nbt::ListTag listTagB(nbt::TagType::Byte);
+    amc::ListTag listTagB(amc::TagType::Byte);
 
-    listTagB.pushBack(new nbt::ByteTag("A", 1));
-    listTagB.pushBack(new nbt::ByteTag("B", 2));
-    listTagB.pushBack(new nbt::ByteTag("C", 3));
+    listTagB.pushBack(new amc::ByteTag("A", 1));
+    listTagB.pushBack(new amc::ByteTag("B", 2));
+    listTagB.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, listTagB.size());
 
     // Init List C
-    nbt::ListTag listTagC(nbt::TagType::Int);
+    amc::ListTag listTagC(amc::TagType::Int);
 
-    listTagC.pushBack(new nbt::IntTag("A", 1));
-    listTagC.pushBack(new nbt::IntTag("B", 2));
-    listTagC.pushBack(new nbt::IntTag("C", 3));
+    listTagC.pushBack(new amc::IntTag("A", 1));
+    listTagC.pushBack(new amc::IntTag("B", 2));
+    listTagC.pushBack(new amc::IntTag("C", 3));
     ASSERT_EQ(3, listTagC.size());
 
     EXPECT_FALSE(listTagA != listTagA);
@@ -326,17 +326,17 @@ TEST(ListTag, NotEqual)
 
 TEST(ListTag, getType)
 {
-    nbt::ListTag listTag;
-    EXPECT_EQ(nbt::TagType::List, listTag.getType());
+    amc::ListTag listTag;
+    EXPECT_EQ(amc::TagType::List, listTag.getType());
 }
 
 TEST(ListTag, getListType)
 {
-    nbt::ListTag listTag;
-    EXPECT_EQ(nbt::TagType::Byte, listTag.getListType());
+    amc::ListTag listTag;
+    EXPECT_EQ(amc::TagType::Byte, listTag.getListType());
 
-    nbt::ListTag listTag2(nbt::TagType::Float);
-    EXPECT_EQ(nbt::TagType::Float, listTag2.getListType());
+    amc::ListTag listTag2(amc::TagType::Float);
+    EXPECT_EQ(amc::TagType::Float, listTag2.getListType());
 }
 
 TEST(ListTag, getData)
@@ -352,12 +352,12 @@ TEST(ListTag, getData)
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0F
     };
 
-    nbt::ListTag listTag("listTest (long)", nbt::TagType::Long);
-    listTag.pushBack(new nbt::LongTag(11));
-    listTag.pushBack(new nbt::LongTag(12));
-    listTag.pushBack(new nbt::LongTag(13));
-    listTag.pushBack(new nbt::LongTag(14));
-    listTag.pushBack(new nbt::LongTag(15));
+    amc::ListTag listTag("listTest (long)", amc::TagType::Long);
+    listTag.pushBack(new amc::LongTag(11));
+    listTag.pushBack(new amc::LongTag(12));
+    listTag.pushBack(new amc::LongTag(13));
+    listTag.pushBack(new amc::LongTag(14));
+    listTag.pushBack(new amc::LongTag(15));
 
     std::vector<unsigned char> data = listTag.getData(false);
 
@@ -371,85 +371,85 @@ TEST(ListTag, getData)
 
 TEST(ListTag, begin)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte, {
-        new nbt::ByteTag("A", 1),
-        new nbt::ByteTag("B", 2),
-        new nbt::ByteTag("C", 3)
+    amc::ListTag listTag(amc::TagType::Byte, {
+        new amc::ByteTag("A", 1),
+        new amc::ByteTag("B", 2),
+        new amc::ByteTag("C", 3)
     });
 
-    nbt::ListTag::iterator it = listTag.begin();
-    nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    amc::ListTag::iterator it = listTag.begin();
+    amc::ByteTag *b = amc::tag_cast<amc::ByteTag*>(*it);
     ASSERT_TRUE(b != nullptr);
-    EXPECT_EQ(*b, nbt::ByteTag("A", 1));
+    EXPECT_EQ(*b, amc::ByteTag("A", 1));
 }
 
 TEST(ListTag, end)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte, {
-        new nbt::ByteTag("A", 1),
-        new nbt::ByteTag("B", 2),
-        new nbt::ByteTag("C", 3)
+    amc::ListTag listTag(amc::TagType::Byte, {
+        new amc::ByteTag("A", 1),
+        new amc::ByteTag("B", 2),
+        new amc::ByteTag("C", 3)
     });
 
     int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
-    for(nbt::ListTag::iterator it = listTag.begin(); it != listTag.end(); ++it) {
-        nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    for(amc::ListTag::iterator it = listTag.begin(); it != listTag.end(); ++it) {
+        amc::ByteTag *b = amc::tag_cast<amc::ByteTag*>(*it);
         ASSERT_TRUE(b != nullptr);
-        EXPECT_EQ(*b, nbt::ByteTag(strArray[idx], idx + 1));
+        EXPECT_EQ(*b, amc::ByteTag(strArray[idx], idx + 1));
         idx++;
     }
 }
 
 TEST(ListTag, begin_const)
 {
-    const nbt::ListTag listTag(nbt::TagType::Byte, {
-        new nbt::ByteTag("A", 1),
-        new nbt::ByteTag("B", 2),
-        new nbt::ByteTag("C", 3)
+    const amc::ListTag listTag(amc::TagType::Byte, {
+        new amc::ByteTag("A", 1),
+        new amc::ByteTag("B", 2),
+        new amc::ByteTag("C", 3)
     });
 
-    nbt::ListTag::const_iterator it = listTag.begin();
-    nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    amc::ListTag::const_iterator it = listTag.begin();
+    amc::ByteTag *b = amc::tag_cast<amc::ByteTag*>(*it);
     ASSERT_TRUE(b != nullptr);
-    EXPECT_TRUE(*b == nbt::ByteTag("A", 1));
+    EXPECT_TRUE(*b == amc::ByteTag("A", 1));
 }
 
 TEST(ListTag, end_const)
 {
-    const nbt::ListTag listTag(nbt::TagType::Byte, {
-        new nbt::ByteTag("A", 1),
-        new nbt::ByteTag("B", 2),
-        new nbt::ByteTag("C", 3)
+    const amc::ListTag listTag(amc::TagType::Byte, {
+        new amc::ByteTag("A", 1),
+        new amc::ByteTag("B", 2),
+        new amc::ByteTag("C", 3)
     });
 
     int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
-    for(nbt::ListTag::const_iterator it = listTag.begin(); it != listTag.end(); ++it) {
-        nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    for(amc::ListTag::const_iterator it = listTag.begin(); it != listTag.end(); ++it) {
+        amc::ByteTag *b = amc::tag_cast<amc::ByteTag*>(*it);
         ASSERT_TRUE(b != nullptr);
-        EXPECT_EQ(*b, nbt::ByteTag(strArray[idx], idx + 1));
+        EXPECT_EQ(*b, amc::ByteTag(strArray[idx], idx + 1));
         idx++;
     }
 }
 
 TEST(ListTag, isEmpty)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
     EXPECT_TRUE(listTag.isEmpty());
     
     // Test adding a new Item
-    EXPECT_TRUE(listTag.pushBack(new nbt::ByteTag("Value", 1)));
+    EXPECT_TRUE(listTag.pushBack(new amc::ByteTag("Value", 1)));
     EXPECT_EQ(1, listTag.size());
     EXPECT_FALSE(listTag.isEmpty());
 }
 
 TEST(ListTag, clear)
 {
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
 
-    nbt::ListTag list;
+    amc::ListTag list;
     ASSERT_TRUE(list.pushBack(a));
     ASSERT_TRUE(list.pushBack(b));
     ASSERT_EQ(2, list.size());
@@ -459,12 +459,12 @@ TEST(ListTag, clear)
 
 TEST(ListTag, erase)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
     // Add 3 Items
-    listTag.pushBack(new nbt::ByteTag("A", 1));
-    listTag.pushBack(new nbt::ByteTag("B", 2));
-    listTag.pushBack(new nbt::ByteTag("C", 3));
+    listTag.pushBack(new amc::ByteTag("A", 1));
+    listTag.pushBack(new amc::ByteTag("B", 2));
+    listTag.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, listTag.size());
 
     // Test index too high
@@ -476,11 +476,11 @@ TEST(ListTag, erase)
     EXPECT_EQ(2, listTag.size());
 
     // Check that item 1 and 3 remain
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
-    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
+    amc::ByteTag *bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
-    bt = tag_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<amc::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
 
@@ -490,7 +490,7 @@ TEST(ListTag, erase)
 
     // Check remaining item
     data = listTag.getValue();
-    bt = tag_cast<nbt::ByteTag*>(data[0]);
+    bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
 
@@ -502,42 +502,42 @@ TEST(ListTag, erase)
 
 TEST(ListTag, insert)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
     // Test insert nullptr
     EXPECT_FALSE(listTag.insert(0, nullptr));
 
     // Test insert invalid type
-    nbt::AbstractTag *invalidTag = new nbt::EndTag();
+    amc::AbstractTag *invalidTag = new amc::EndTag();
     EXPECT_FALSE(listTag.insert(0, invalidTag));
     delete invalidTag;
 
     // Test adding a new Item at invalid index
-    nbt::AbstractTag *invalidTag2 = new nbt::ByteTag("Value", 1);
+    amc::AbstractTag *invalidTag2 = new amc::ByteTag("Value", 1);
     EXPECT_FALSE(listTag.insert(1, invalidTag2));
     delete invalidTag2;
 
     // Add correct item
-    EXPECT_TRUE(listTag.insert(0, new nbt::ByteTag("Value", 1)));
+    EXPECT_TRUE(listTag.insert(0, new amc::ByteTag("Value", 1)));
     EXPECT_EQ(1, listTag.size());
 
     // Add second item at end
-    EXPECT_TRUE(listTag.insert(1, new nbt::ByteTag("Value", 3)));
+    EXPECT_TRUE(listTag.insert(1, new amc::ByteTag("Value", 3)));
     EXPECT_EQ(2, listTag.size());
 
     // Add third item in between
-    EXPECT_TRUE(listTag.insert(1, new nbt::ByteTag("Value", 2)));
+    EXPECT_TRUE(listTag.insert(1, new amc::ByteTag("Value", 2)));
     EXPECT_EQ(3, listTag.size());
 
     // Test correct order
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
-    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
+    amc::ByteTag *bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
-    bt = tag_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<amc::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
-    bt = tag_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<amc::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
 
@@ -545,13 +545,13 @@ TEST(ListTag, insert)
 
 TEST(ListTag, pushBack)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
     // Test adding a new Item
-    EXPECT_TRUE(listTag.pushBack(new nbt::ByteTag("Value", 1)));
+    EXPECT_TRUE(listTag.pushBack(new amc::ByteTag("Value", 1)));
     EXPECT_EQ(1, listTag.size());
 
     // Test adding an invalid item.
-    nbt::AbstractTag *invalidTag = new nbt::EndTag();
+    amc::AbstractTag *invalidTag = new amc::EndTag();
     EXPECT_FALSE(listTag.pushBack(invalidTag));
     EXPECT_EQ(1, listTag.size());
     delete invalidTag;
@@ -563,17 +563,17 @@ TEST(ListTag, pushBack)
 
 TEST(ListTag, size)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
     // Test adding a new Item
-    ASSERT_TRUE(listTag.pushBack(new nbt::ByteTag("Value", 1)));
+    ASSERT_TRUE(listTag.pushBack(new amc::ByteTag("Value", 1)));
     EXPECT_EQ(1, listTag.size());
 
     // Test adding a second item
-    ASSERT_TRUE(listTag.pushBack(new nbt::ByteTag("Value", 2)));
+    ASSERT_TRUE(listTag.pushBack(new amc::ByteTag("Value", 2)));
     EXPECT_EQ(2, listTag.size());
 
     // Test adding a third item
-    ASSERT_TRUE(listTag.pushBack(new nbt::ByteTag("Value", 3)));
+    ASSERT_TRUE(listTag.pushBack(new amc::ByteTag("Value", 3)));
     EXPECT_EQ(3, listTag.size());
 
     // Test erasing an item
@@ -587,11 +587,11 @@ TEST(ListTag, size)
 
 TEST(ListTag, at)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     listTag.pushBack(a);
@@ -600,9 +600,9 @@ TEST(ListTag, at)
     ASSERT_EQ(3, listTag.size());
 
     // Test at
-    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(listTag.at(0));
-    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(listTag.at(1));
-    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(listTag.at(2));
+    amc::ByteTag *v1 = tag_cast<amc::ByteTag*>(listTag.at(0));
+    amc::ByteTag *v2 = tag_cast<amc::ByteTag*>(listTag.at(1));
+    amc::ByteTag *v3 = tag_cast<amc::ByteTag*>(listTag.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -614,11 +614,11 @@ TEST(ListTag, at)
 
 TEST(ListTag, at_const)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     listTag.pushBack(a);
@@ -626,12 +626,12 @@ TEST(ListTag, at_const)
     listTag.pushBack(c);
     ASSERT_EQ(3, listTag.size());
 
-    const nbt::ListTag listTag2(listTag);
+    const amc::ListTag listTag2(listTag);
 
     // Test at
-    const nbt::ByteTag *v1 = tag_cast<const nbt::ByteTag*>(listTag2.at(0));
-    const nbt::ByteTag *v2 = tag_cast<const nbt::ByteTag*>(listTag2.at(1));
-    const nbt::ByteTag *v3 = tag_cast<const nbt::ByteTag*>(listTag2.at(2));
+    const amc::ByteTag *v1 = tag_cast<const amc::ByteTag*>(listTag2.at(0));
+    const amc::ByteTag *v2 = tag_cast<const amc::ByteTag*>(listTag2.at(1));
+    const amc::ByteTag *v3 = tag_cast<const amc::ByteTag*>(listTag2.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -643,11 +643,11 @@ TEST(ListTag, at_const)
 
 TEST(ListTag, takeAt)
 {
-    nbt::ListTag listTag(nbt::TagType::Float);
+    amc::ListTag listTag(amc::TagType::Float);
 
-    nbt::FloatTag *a = new nbt::FloatTag("A", 1.4f);
-    nbt::FloatTag *b = new nbt::FloatTag("B", 2000.6f);
-    nbt::FloatTag *c = new nbt::FloatTag("C", 3.f);
+    amc::FloatTag *a = new amc::FloatTag("A", 1.4f);
+    amc::FloatTag *b = new amc::FloatTag("B", 2000.6f);
+    amc::FloatTag *c = new amc::FloatTag("C", 3.f);
 
     // Add 3 Items
     listTag.pushBack(a);
@@ -656,13 +656,13 @@ TEST(ListTag, takeAt)
     ASSERT_EQ(3, listTag.size());
 
     // Test
-    nbt::AbstractTag *bTest = listTag.takeAt(1);
+    amc::AbstractTag *bTest = listTag.takeAt(1);
     EXPECT_EQ(2, listTag.size());
     EXPECT_EQ(b, bTest);
-    nbt::AbstractTag *aTest = listTag.takeAt(0);
+    amc::AbstractTag *aTest = listTag.takeAt(0);
     EXPECT_EQ(1, listTag.size());
     EXPECT_EQ(a, aTest);
-    nbt::AbstractTag *cTest = listTag.takeAt(0);
+    amc::AbstractTag *cTest = listTag.takeAt(0);
     EXPECT_EQ(0, listTag.size());
     EXPECT_EQ(c, cTest);
 
@@ -673,11 +673,11 @@ TEST(ListTag, takeAt)
 
 TEST(ListTag, subscript)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     listTag.pushBack(a);
@@ -686,9 +686,9 @@ TEST(ListTag, subscript)
     ASSERT_EQ(3, listTag.size());
 
     // Test at
-    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(listTag[0]);
-    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(listTag[1]);
-    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(listTag[2]);
+    amc::ByteTag *v1 = tag_cast<amc::ByteTag*>(listTag[0]);
+    amc::ByteTag *v2 = tag_cast<amc::ByteTag*>(listTag[1]);
+    amc::ByteTag *v3 = tag_cast<amc::ByteTag*>(listTag[2]);
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -697,11 +697,11 @@ TEST(ListTag, subscript)
 
 TEST(ListTag, subscript_const)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     listTag.pushBack(a);
@@ -709,12 +709,12 @@ TEST(ListTag, subscript_const)
     listTag.pushBack(c);
     ASSERT_EQ(3, listTag.size());
 
-    const nbt::ListTag listTag2(listTag);
+    const amc::ListTag listTag2(listTag);
 
     // Test at
-    const nbt::ByteTag *v1 = tag_cast<const nbt::ByteTag*>(listTag2[0]);
-    const nbt::ByteTag *v2 = tag_cast<const nbt::ByteTag*>(listTag2[1]);
-    const nbt::ByteTag *v3 = tag_cast<const nbt::ByteTag*>(listTag2[2]);
+    const amc::ByteTag *v1 = tag_cast<const amc::ByteTag*>(listTag2[0]);
+    const amc::ByteTag *v2 = tag_cast<const amc::ByteTag*>(listTag2[1]);
+    const amc::ByteTag *v3 = tag_cast<const amc::ByteTag*>(listTag2[2]);
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -723,11 +723,11 @@ TEST(ListTag, subscript_const)
 
 TEST(ListTag, getValue)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     listTag.pushBack(a);
@@ -736,16 +736,16 @@ TEST(ListTag, getValue)
     ASSERT_EQ(3, listTag.size());
 
     // Test items
-    std::vector<nbt::AbstractTag*> data = listTag.getValue();
-    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
+    std::vector<amc::AbstractTag*> data = listTag.getValue();
+    amc::ByteTag *bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
     EXPECT_STREQ("A", bt->getName().c_str());
-    bt = tag_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<amc::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
     EXPECT_STREQ("B", bt->getName().c_str());
-    bt = tag_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<amc::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
     EXPECT_STREQ("C", bt->getName().c_str());
@@ -753,11 +753,11 @@ TEST(ListTag, getValue)
 
 TEST(ListTag, getValueCopy)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     listTag.pushBack(a);
@@ -765,16 +765,16 @@ TEST(ListTag, getValueCopy)
     listTag.pushBack(c);
     ASSERT_EQ(3, listTag.size());
 
-    std::vector<nbt::AbstractTag*> data = listTag.getValueCopy();
-    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
+    std::vector<amc::AbstractTag*> data = listTag.getValueCopy();
+    amc::ByteTag *bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
     EXPECT_STREQ("A", bt->getName().c_str());
-    bt = tag_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<amc::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
     EXPECT_STREQ("B", bt->getName().c_str());
-    bt = tag_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<amc::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
     EXPECT_STREQ("C", bt->getName().c_str());
@@ -786,19 +786,19 @@ TEST(ListTag, getValueCopy)
 
 TEST(ListTag, setValue)
 {
-    nbt::ListTag listTag(nbt::TagType::Byte);
+    amc::ListTag listTag(amc::TagType::Byte);
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
-    std::vector<nbt::AbstractTag*> data({a, b, c});
+    std::vector<amc::AbstractTag*> data({a, b, c});
 
     EXPECT_EQ(0, listTag.size());
     listTag.setValue(data);
     EXPECT_EQ(3, listTag.size());
 
-    std::vector<nbt::AbstractTag*> data2 = listTag.getValue();
+    std::vector<amc::AbstractTag*> data2 = listTag.getValue();
 
     EXPECT_TRUE(*data2[0] == *data[0]);
     EXPECT_TRUE(*data2[1] == *data[1]);
@@ -811,12 +811,12 @@ TEST(ListTag, setValue)
 
 TEST(ListTag, tag_cast)
 {
-    nbt::AbstractTag *testTag = new nbt::ListTag("A", nbt::TagType::Byte);
+    amc::AbstractTag *testTag = new amc::ListTag("A", amc::TagType::Byte);
 
-    nbt::ListTag *otherTag = tag_cast<nbt::ListTag*>(testTag);
+    amc::ListTag *otherTag = tag_cast<amc::ListTag*>(testTag);
     EXPECT_EQ(otherTag, testTag);
 
-    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    amc::IntTag *nullTag = tag_cast<amc::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
 
     delete testTag;

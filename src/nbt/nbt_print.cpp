@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <sstream>
 
-namespace nbt
+namespace amc
 {
 
 std::string printNbtData(const AbstractTag *root,
@@ -17,7 +17,7 @@ std::string printNbtData(const AbstractTag *root,
     std::stringstream sstr;
 
     if(root->getType() != TagType::End) {
-        printNbtChildTag(root, sstr, util::Indent(), printArrayContent);
+        printNbtChildTag(root, sstr, Indent(), printArrayContent);
     }
 
     return sstr.str();
@@ -25,7 +25,7 @@ std::string printNbtData(const AbstractTag *root,
 
 void printNbtChildTag(const AbstractTag *tag,
                       std::stringstream &sstr,
-                      util::Indent indent,
+                      Indent indent,
                       bool printArrayContent)
 {
     switch(tag->getType())
@@ -159,4 +159,4 @@ std::string getTagName(TagType type)
     }
 }
 
-} // namespace nbt
+} // namespace amc

@@ -11,9 +11,9 @@ const std::string testFolder = "..\\..\\..\\test\\testdata\\world\\";
 int main(int argc, char **argv)
 {
     std::string filename = testFolder + "libAwesomeMC_TestWorld_1_18_1\\region\\r.-1.-1.mca";
-    anvil::Region region = anvil::loadRegion(filename);
+    amc::Region region = amc::loadRegion(filename);
 
-    anvil::Block b = region.getBlockAt(-15, -16, -48);
+    amc::Block b = region.getBlockAt(-15, -16, -48);
 
 
 

@@ -11,7 +11,7 @@
 #include <iomanip>
 #include <stdexcept>
 
-namespace nbt
+namespace amc
 {
 
 std::vector<unsigned char> loadNbtData(const std::string &filename,
@@ -30,7 +30,7 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
         stream.read((char*)&data[0], size);
 
         if(isCompressed) {
-            bool ret = util::inflate_gzip(data);
+            bool ret = inflate_gzip(data);
             if(!ret) {
                 throw std::runtime_error("Error: inflate_gzip failed.");
             }
@@ -45,8 +45,8 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
     CompoundTag *root = nullptr;
 
     // Init the ByteStream object.
-    util::ByteStream byteStream(data);
-    byteStream.setSwap(util::ByteStream::Swap::SwapEndian);
+    ByteStream byteStream(data);
+    byteStream.setSwap(ByteStream::Swap::SwapEndian);
 
     // The first tag must not be an EndTag or an invalid (Unknown) tag, which means the CompoundTag must be empty.
     // TODO: Check!! => In fact the first Tag must be a CompoundTag by definition.
@@ -80,7 +80,7 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
     return root;
 }
 
-AbstractTag* readChildTag(util::ByteStream &stream,
+AbstractTag* readChildTag(ByteStream &stream,
                           bool isListItem,
                           TagType listType)
 {
@@ -176,7 +176,7 @@ AbstractTag* readChildTag(util::ByteStream &stream,
     return tag;
 }
 
-std::string readStringValue(util::ByteStream &stream)
+std::string readStringValue(ByteStream &stream)
 {
     // Check if stream is good
     if(!stream.good()) {
@@ -192,4 +192,4 @@ std::string readStringValue(util::ByteStream &stream)
     return name;
 }
 
-} // namespace nbt
+} // namespace amc

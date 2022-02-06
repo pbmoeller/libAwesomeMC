@@ -4,7 +4,7 @@
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 
-namespace nbt
+namespace amc
 {
 
 class EndTag : public AbstractTag
@@ -32,6 +32,6 @@ protected:
     virtual bool isEqual(const AbstractTag &other) const override;
 };
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_END_TAG_HPP

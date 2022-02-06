@@ -13,7 +13,7 @@
 #include <iostream>
 #include <filesystem>
 
-namespace anvil
+namespace amc
 {
 
 const std::regex RegionFilePattern = std::regex("r\\.([-]?[0-9]+)\\.([-]?[0-9]+)\\.mca");
@@ -80,7 +80,7 @@ bool readRegionHeader(std::ifstream &filestream, Region &region)
     uint32_t value = 0;
     for(unsigned int i = 0; i < ChunkCount; ++i) {
         filestream.read((char*)&value, sizeof(uint32_t));
-        value = util::bswap(value);
+        value = bswap(value);
         uint32_t size   = value & 0x000000FF;
         uint32_t offset = (value & 0xFFFFFF00) >> 8;
         region.getRegionHeader().getChunkInfoAt(i).setOffset(offset);
@@ -90,7 +90,7 @@ bool readRegionHeader(std::ifstream &filestream, Region &region)
     // Read second half of header data (Chunk Timestamp Data) => Bytes 4096 - 8191
     for(unsigned int i = 0; i < ChunkCount; ++i) {
         filestream.read((char*)&value, sizeof(uint32_t));
-        value = util::bswap(value);
+        value = bswap(value);
         region.getRegionHeader().getChunkInfoAt(i).setTimestamp(value);
     }
 
@@ -121,9 +121,9 @@ bool readRegionChunks(std::ifstream &filestream, Region &region)
         uint32_t dataSize = 0;
         ChunkInfo::CompressionType compressionType = ChunkInfo::CompressionType::Uncompressed;
         filestream.read((char*)&dataSize, sizeof(uint32_t));
-        dataSize = util::bswap(dataSize);
+        dataSize = bswap(dataSize);
         filestream.read((char*)&compressionType, sizeof(char));
-
+        
         info.setCompression(compressionType);
 
         // Read the chunk data
@@ -132,12 +132,12 @@ bool readRegionChunks(std::ifstream &filestream, Region &region)
 
         switch(compressionType) {
             case ChunkInfo::CompressionType::GZip:
-                if(!util::inflate_gzip(chunkData)) {
+                if(!inflate_gzip(chunkData)) {
                     throw std::runtime_error("Failed to uncompress chunk data (gzip).");
                 }
                 break;
             case ChunkInfo::CompressionType::Zlib:
-                if(!util::inflate_zlib(chunkData)) {
+                if(!inflate_zlib(chunkData)) {
                     throw std::runtime_error("Failed to uncompress chunk data (zlib).");
                 }
                 break;
@@ -148,10 +148,10 @@ bool readRegionChunks(std::ifstream &filestream, Region &region)
         }
 
         // Parse nbt data.
-        region.getChunkAt(i).setRootTag(nbt::readNbtData(chunkData));
+        region.getChunkAt(i).setRootTag(readNbtData(chunkData));
     }
 
     return true;
 }
 
-} // namespace anvil
+} // namespace amc

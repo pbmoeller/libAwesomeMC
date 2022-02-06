@@ -11,7 +11,7 @@
 #include <array>
 #include <vector>
 
-namespace anvil
+namespace amc
 {
 
 class Region
@@ -66,6 +66,6 @@ private:
     std::array<Chunk, ChunkCount> *m_chunks;
 };
 
-} // namespace anvil
+} // namespace amc
 
 #endif // AWESOMEMC_ANVIL_REGION_HPP

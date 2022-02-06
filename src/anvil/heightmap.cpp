@@ -6,7 +6,7 @@
 #include <climits>
 #include <utility>
 
-namespace anvil
+namespace amc
 {
 
 HeightMap::HeightMap()
@@ -188,4 +188,4 @@ const std::array<int, BlockCount>& HeightMap::getData() const
     return m_data;
 }
 
-} // namespace anvil
+} // namespace amc

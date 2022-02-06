@@ -4,7 +4,7 @@
 // STL
 #include <vector>
 
-namespace util
+namespace amc
 {
     constexpr unsigned int ZlibChunkSize = 16384;
 
@@ -16,6 +16,6 @@ namespace util
 
     bool inflate_gzip2(std::vector<unsigned char> &data);
 
-} // namespace util
+} // namespace amc
 
 #endif // AWESOMEMC_UTIL_COMPRESSION_HPP

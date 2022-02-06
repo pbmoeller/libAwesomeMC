@@ -8,7 +8,7 @@
 #include <string>
 #include <fstream>
 
-namespace anvil
+namespace amc
 {
 
 Region loadRegion(const std::string &filename);
@@ -17,6 +17,6 @@ bool readRegionHeader(std::ifstream &filestream, Region &region);
 
 bool readRegionChunks(std::ifstream &filestream, Region &region);
 
-} // namespace anvil
+} // namespace amc
 
 #endif // AWESOMEMC_ANVIL_ANVIL_READ_HPP

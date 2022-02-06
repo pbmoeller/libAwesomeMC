@@ -9,7 +9,7 @@
 #include <string>
 #include <initializer_list>
 
-namespace nbt
+namespace amc
 {
 
 class ListTag : public AbstractVectorTag
@@ -57,6 +57,6 @@ private:
     TagType m_listType;
 };
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_LIST_TAG_HPP

@@ -78,10 +78,10 @@ TEST(conversion, convertBlockWorld2Region)
     int regionZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates1.size(), regionCoordinates1.size());
     for(int i = 0; i < blockCoordinates1.size(); ++i) {
-        util::convertBlockWorld2Region(blockCoordinates1[i][0],
-                                       blockCoordinates1[i][2],
-                                       regionX,
-                                       regionZ);
+        amc::convertBlockWorld2Region(blockCoordinates1[i][0],
+                                      blockCoordinates1[i][2],
+                                      regionX,
+                                      regionZ);
         EXPECT_EQ(regionX, regionCoordinates1[i][0]);
         EXPECT_EQ(regionZ, regionCoordinates1[i][1]);
     }
@@ -93,10 +93,10 @@ TEST(conversion, convertBlockWorld2ChunkWorld)
     int chunkZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates1.size(), chunkCoordinates1.size());
     for(int i = 0; i < blockCoordinates1.size(); ++i) {
-        util::convertBlockWorld2ChunkWorld(blockCoordinates1[i][0],
-                                           blockCoordinates1[i][2],
-                                           chunkX,
-                                           chunkZ);
+        amc::convertBlockWorld2ChunkWorld(blockCoordinates1[i][0],
+                                          blockCoordinates1[i][2],
+                                          chunkX,
+                                          chunkZ);
         EXPECT_EQ(chunkX, chunkCoordinates1[i][0]);
         EXPECT_EQ(chunkZ, chunkCoordinates1[i][1]);
     }
@@ -108,10 +108,10 @@ TEST(conversion, convertBlockWorld2ChunkRegion)
     int chunkZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates1.size(), relativeChunkCoordinates1.size());
     for(int i = 0; i < blockCoordinates1.size(); ++i) {
-        util::convertBlockWorld2ChunkRegion(blockCoordinates1[i][0],
-                                            blockCoordinates1[i][2],
-                                            chunkX,
-                                            chunkZ);
+        amc::convertBlockWorld2ChunkRegion(blockCoordinates1[i][0],
+                                           blockCoordinates1[i][2],
+                                           chunkX,
+                                           chunkZ);
         EXPECT_EQ(chunkX, relativeChunkCoordinates1[i][0]);
         EXPECT_EQ(chunkZ, relativeChunkCoordinates1[i][1]);
     }
@@ -156,10 +156,10 @@ TEST(conversion, convertBlockWorld2BlockRegion)
     int blockRegionZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates2.size(), blockCoordinatesRegion2.size());
     for(int i = 0; i < blockCoordinates2.size(); ++i) {
-        util::convertBlockWorld2BlockRegion(blockCoordinates2[i][0],
-                                            blockCoordinates2[i][2],
-                                            blockRegionX,
-                                            blockRegionZ);
+        amc::convertBlockWorld2BlockRegion(blockCoordinates2[i][0],
+                                           blockCoordinates2[i][2],
+                                           blockRegionX,
+                                           blockRegionZ);
         EXPECT_EQ(blockRegionX, blockCoordinatesRegion2[i][0]);
         EXPECT_EQ(blockRegionZ, blockCoordinatesRegion2[i][2]);
     }
@@ -171,10 +171,10 @@ TEST(conversion, convertBlockWorld2BlockChunk)
     int blockChunkZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates2.size(), blockCoordinatesChunk2.size());
     for(int i = 0; i < blockCoordinates2.size(); ++i) {
-        util::convertBlockWorld2BlockChunk(blockCoordinates2[i][0],
-                                           blockCoordinates2[i][2],
-                                           blockChunkX,
-                                           blockChunkZ);
+        amc::convertBlockWorld2BlockChunk(blockCoordinates2[i][0],
+                                          blockCoordinates2[i][2],
+                                          blockChunkX,
+                                          blockChunkZ);
         EXPECT_EQ(blockChunkX, blockCoordinatesChunk2[i][0]);
         EXPECT_EQ(blockChunkZ, blockCoordinatesChunk2[i][2]);
     }
@@ -187,12 +187,12 @@ TEST(conversion, convertBlockWorld2BlockChunk_2)
     int blockChunkZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates2.size(), blockCoordinatesChunk2.size());
     for(int i = 0; i < blockCoordinates2.size(); ++i) {
-        util::convertBlockWorld2BlockChunk(blockCoordinates2[i][0],
-                                           blockCoordinates2[i][1],
-                                           blockCoordinates2[i][2],
-                                           blockChunkX,
-                                           blockChunkY,
-                                           blockChunkZ);
+        amc::convertBlockWorld2BlockChunk(blockCoordinates2[i][0],
+                                          blockCoordinates2[i][1],
+                                          blockCoordinates2[i][2],
+                                          blockChunkX,
+                                          blockChunkY,
+                                          blockChunkZ);
         EXPECT_EQ(blockChunkX, blockCoordinatesChunk2[i][0]);
         EXPECT_EQ(blockChunkY, blockCoordinatesChunk2[i][1]);
         EXPECT_EQ(blockChunkZ, blockCoordinatesChunk2[i][2]);

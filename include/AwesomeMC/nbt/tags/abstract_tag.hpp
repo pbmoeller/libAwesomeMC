@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstdint>
 
-namespace nbt
+namespace amc
 {
 
 // Tag types to distinguish between types
@@ -83,6 +83,6 @@ template<typename T> inline T tag_cast(const AbstractTag *item)
         || (item && int(Item::Type) == int(item->getType())) ? static_cast<T>(item) : nullptr;
 }
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_ABSTRACT_TAG_HPP

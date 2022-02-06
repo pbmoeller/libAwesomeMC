@@ -7,13 +7,13 @@
 // STL
 #include <string>
 
-namespace nbt
+namespace amc
 {
 
 template<>
 inline std::vector<unsigned char> ValueTag<std::string, TagType::String>::getData(bool isListEntry)
 {
-    util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
+    ByteStream stream(ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
         stream << static_cast<int8_t>(getType());
@@ -28,6 +28,6 @@ inline std::vector<unsigned char> ValueTag<std::string, TagType::String>::getDat
 
 using StringTag = ValueTag<std::string, TagType::String>;
 
-} // nbt
+} // amc
 
 #endif // AWESOMEMC_NBT_TAGS_STRING_TAG_HPP

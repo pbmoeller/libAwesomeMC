@@ -11,39 +11,39 @@
 
 TEST(ByteStream, Types)
 {
-    EXPECT_EQ(0, static_cast<int>(util::ByteStream::Swap::NoSwapEndian));
-    EXPECT_EQ(1, static_cast<int>(util::ByteStream::Swap::SwapEndian));
+    EXPECT_EQ(0, static_cast<int>(amc::ByteStream::Swap::NoSwapEndian));
+    EXPECT_EQ(1, static_cast<int>(amc::ByteStream::Swap::SwapEndian));
 
-    EXPECT_EQ(0, util::ByteStream::EndOfStream);
-    EXPECT_EQ(1, util::ByteStream::Success);
+    EXPECT_EQ(0, amc::ByteStream::EndOfStream);
+    EXPECT_EQ(1, amc::ByteStream::Success);
 }
 
 TEST(ByteStream, Constructor)
 {
-    util::ByteStream stream;
+    amc::ByteStream stream;
 
     EXPECT_EQ(0, stream.getPosition());
     EXPECT_EQ(false, stream.isSwapSet());
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, stream.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, stream.getSwap());
     EXPECT_EQ(0, stream.size());
     EXPECT_EQ(0, stream.availableBytes());
 }
 
 TEST(ByteStream, Constructor_2)
 {
-    util::ByteStream stream(util::ByteStream::Swap::NoSwapEndian);
+    amc::ByteStream stream(amc::ByteStream::Swap::NoSwapEndian);
 
     EXPECT_EQ(0, stream.getPosition());
     EXPECT_EQ(false, stream.isSwapSet());
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, stream.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, stream.getSwap());
     EXPECT_EQ(0, stream.size());
     EXPECT_EQ(0, stream.availableBytes());
 
-    util::ByteStream stream2(util::ByteStream::Swap::SwapEndian);
+    amc::ByteStream stream2(amc::ByteStream::Swap::SwapEndian);
 
     EXPECT_EQ(0, stream2.getPosition());
     EXPECT_EQ(true, stream2.isSwapSet());
-    EXPECT_EQ(util::ByteStream::Swap::SwapEndian, stream2.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::SwapEndian, stream2.getSwap());
     EXPECT_EQ(0, stream2.size());
     EXPECT_EQ(0, stream2.availableBytes());
 }
@@ -52,11 +52,11 @@ TEST(ByteStream, Constructor_3)
 {
     std::string data("ABCD");
 
-    util::ByteStream stream(data);
+    amc::ByteStream stream(data);
 
     EXPECT_EQ(0, stream.getPosition());
     EXPECT_EQ(false, stream.isSwapSet());
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, stream.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, stream.getSwap());
     EXPECT_EQ(data.size(), stream.size());
     EXPECT_EQ(data.size(), stream.availableBytes());
 }
@@ -65,11 +65,11 @@ TEST(ByteStream, Constructor_4)
 {
     std::vector<unsigned char> data({0, 1, 2, 3});
 
-    util::ByteStream stream(data);
+    amc::ByteStream stream(data);
 
     EXPECT_EQ(0, stream.getPosition());
     EXPECT_EQ(false, stream.isSwapSet());
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, stream.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, stream.getSwap());
     EXPECT_EQ(data.size(), stream.size());
     EXPECT_EQ(data.size(), stream.availableBytes());
 }
@@ -79,18 +79,18 @@ TEST(ByteStream, CopyConstructor)
     std::string str = "Byte";
 
     // Init Stream A
-    util::ByteStream streamA;
-    streamA.setSwap(util::ByteStream::Swap::SwapEndian);
+    amc::ByteStream streamA;
+    streamA.setSwap(amc::ByteStream::Swap::SwapEndian);
     streamA << str;
     ASSERT_EQ(4, streamA.getPosition());
     ASSERT_EQ(4, streamA.size());
-    ASSERT_EQ(util::ByteStream::Swap::SwapEndian, streamA.getSwap());
+    ASSERT_EQ(amc::ByteStream::Swap::SwapEndian, streamA.getSwap());
 
     // Test Copy Constructor
-    util::ByteStream streamB(streamA);
+    amc::ByteStream streamB(streamA);
     EXPECT_EQ(4, streamB.getPosition());
     EXPECT_EQ(4, streamB.size());
-    EXPECT_EQ(util::ByteStream::Swap::SwapEndian, streamB.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::SwapEndian, streamB.getSwap());
 }
 
 TEST(ByteStream, MoveConstructor)
@@ -98,18 +98,18 @@ TEST(ByteStream, MoveConstructor)
     std::string str = "Byte";
 
     // Init Stream A
-    util::ByteStream streamA;
-    streamA.setSwap(util::ByteStream::Swap::SwapEndian);
+    amc::ByteStream streamA;
+    streamA.setSwap(amc::ByteStream::Swap::SwapEndian);
     streamA << str;
     ASSERT_EQ(4, streamA.getPosition());
     ASSERT_EQ(4, streamA.size());
-    ASSERT_EQ(util::ByteStream::Swap::SwapEndian, streamA.getSwap());
+    ASSERT_EQ(amc::ByteStream::Swap::SwapEndian, streamA.getSwap());
 
     // Test Move Constructor
-    util::ByteStream streamB(std::move(streamA));
+    amc::ByteStream streamB(std::move(streamA));
     EXPECT_EQ(4, streamB.getPosition());
     EXPECT_EQ(4, streamB.size());
-    EXPECT_EQ(util::ByteStream::Swap::SwapEndian, streamB.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::SwapEndian, streamB.getSwap());
 }
 
 TEST(ByteStream, CopyAssignment)
@@ -117,48 +117,48 @@ TEST(ByteStream, CopyAssignment)
     std::string str = "Byte";
 
     // Init Stream A
-    util::ByteStream streamA;
-    streamA.setSwap(util::ByteStream::Swap::SwapEndian);
+    amc::ByteStream streamA;
+    streamA.setSwap(amc::ByteStream::Swap::SwapEndian);
     streamA << str;
     ASSERT_EQ(4, streamA.getPosition());
     ASSERT_EQ(4, streamA.size());
-    ASSERT_EQ(util::ByteStream::Swap::SwapEndian, streamA.getSwap());
+    ASSERT_EQ(amc::ByteStream::Swap::SwapEndian, streamA.getSwap());
 
     // Init Stream B
-    util::ByteStream streamB;
+    amc::ByteStream streamB;
     ASSERT_EQ(0, streamB.getPosition());
     ASSERT_EQ(0, streamB.size());
-    ASSERT_EQ(util::ByteStream::Swap::NoSwapEndian, streamB.getSwap());
+    ASSERT_EQ(amc::ByteStream::Swap::NoSwapEndian, streamB.getSwap());
 
     // Test Copy Assignment
     streamB = streamA;
     EXPECT_EQ(4, streamB.getPosition());
     EXPECT_EQ(4, streamB.size());
-    EXPECT_EQ(util::ByteStream::Swap::SwapEndian, streamB.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::SwapEndian, streamB.getSwap());
 }
 
 TEST(ByteStream, MoveAssignment)
 {
     // Init Stream A
-    util::ByteStream streamA;
-    streamA.setSwap(util::ByteStream::Swap::SwapEndian);
+    amc::ByteStream streamA;
+    streamA.setSwap(amc::ByteStream::Swap::SwapEndian);
     ASSERT_EQ(0, streamA.getPosition());
     ASSERT_EQ(0, streamA.size());
-    ASSERT_EQ(util::ByteStream::Swap::SwapEndian, streamA.getSwap());
+    ASSERT_EQ(amc::ByteStream::Swap::SwapEndian, streamA.getSwap());
 
     // Test Move Assignment
-    streamA = util::ByteStream("Byte");
+    streamA = amc::ByteStream("Byte");
     EXPECT_EQ(0, streamA.getPosition());
     EXPECT_EQ(4, streamA.size());
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, streamA.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, streamA.getSwap());
 }
 
 TEST(ByteStream, Equal)
 {
-    util::ByteStream a("BYTES");
-    util::ByteStream b("BYTES");
-    util::ByteStream c("BYTED");
-    util::ByteStream d("BYTE");
+    amc::ByteStream a("BYTES");
+    amc::ByteStream b("BYTES");
+    amc::ByteStream c("BYTED");
+    amc::ByteStream d("BYTE");
 
     EXPECT_TRUE(a == a);
     EXPECT_TRUE(a == b);
@@ -167,8 +167,8 @@ TEST(ByteStream, Equal)
     EXPECT_FALSE(a == c);
     EXPECT_FALSE(a == d);
 
-    util::ByteStream g;
-    util::ByteStream h;
+    amc::ByteStream g;
+    amc::ByteStream h;
     g << 3.4;
     h << 3.4;
     EXPECT_TRUE(g == g);
@@ -179,10 +179,10 @@ TEST(ByteStream, Equal)
 
 TEST(ByteStream, NotEqual)
 {
-    util::ByteStream a("BYTES");
-    util::ByteStream b("BYTES");
-    util::ByteStream c("BYTED");
-    util::ByteStream d("BYTE");
+    amc::ByteStream a("BYTES");
+    amc::ByteStream b("BYTES");
+    amc::ByteStream c("BYTED");
+    amc::ByteStream d("BYTE");
 
     EXPECT_FALSE(a != a);
     EXPECT_FALSE(a != b);
@@ -191,8 +191,8 @@ TEST(ByteStream, NotEqual)
     EXPECT_TRUE(a != c);
     EXPECT_TRUE(a != d);
 
-    util::ByteStream g;
-    util::ByteStream h;
+    amc::ByteStream g;
+    amc::ByteStream h;
     g << 3.4;
     h << 3.4;
     EXPECT_FALSE(g != g);
@@ -205,7 +205,7 @@ TEST(ByteStream, availableBytes)
 {
     std::string data("ABCD");
 
-    util::ByteStream stream;
+    amc::ByteStream stream;
     stream << data;
     ASSERT_EQ(data.size(), stream.getPosition());
     ASSERT_EQ(data.size(), stream.size());
@@ -226,7 +226,7 @@ TEST(ByteStream, availableBytes)
 
 TEST(ByteStream, size)
 {
-    util::ByteStream byteStream;
+    amc::ByteStream byteStream;
     EXPECT_EQ(0, byteStream.size());
     byteStream << static_cast<int8_t>(0x45);
     EXPECT_EQ(1, byteStream.size());
@@ -245,7 +245,7 @@ TEST(ByteStream, good)
     int16_t value1_out = 0;
 
     // Init
-    util::ByteStream byteStream;
+    amc::ByteStream byteStream;
     EXPECT_FALSE(byteStream.good());
     ret = byteStream << value1;
     EXPECT_TRUE(ret);
@@ -262,7 +262,7 @@ TEST(ByteStream, good)
 TEST(ByteStream, clear)
 {
     std::string data("ABCD");
-    util::ByteStream stream(data);
+    amc::ByteStream stream(data);
 
     ASSERT_EQ(0, stream.getPosition());
     ASSERT_EQ(data.size(), stream.size());
@@ -272,7 +272,7 @@ TEST(ByteStream, clear)
     EXPECT_EQ(0, stream.size());
     EXPECT_EQ(0, stream.availableBytes());
 
-    util::ByteStream stream2;
+    amc::ByteStream stream2;
     stream2 << data;
     ASSERT_EQ(data.size(), stream2.getPosition());
     ASSERT_EQ(data.size(), stream2.size());
@@ -287,7 +287,7 @@ TEST(ByteStream, reset)
 {
     std::string data("ABCD");
 
-    util::ByteStream stream;
+    amc::ByteStream stream;
     stream << data;
     ASSERT_EQ(data.size(), stream.getPosition());
     ASSERT_EQ(data.size(), stream.size());
@@ -298,19 +298,19 @@ TEST(ByteStream, reset)
 
 TEST(ByteStream, getPosition)
 {
-    util::ByteStream byteStream;
+    amc::ByteStream byteStream;
 
     EXPECT_EQ(0, byteStream.getPosition());
     byteStream.setPosition(2);
     EXPECT_EQ(2, byteStream.getPosition());
 
-    util::ByteStream byteStream2("Test");
+    amc::ByteStream byteStream2("Test");
     EXPECT_EQ(0, byteStream2.getPosition());
 }
 
 TEST(ByteStream, setPosition)
 {
-    util::ByteStream byteStream;
+    amc::ByteStream byteStream;
 
     EXPECT_EQ(0, byteStream.getPosition());
     byteStream.setPosition(2);
@@ -319,45 +319,45 @@ TEST(ByteStream, setPosition)
 
 TEST(ByteStream, isSwapSet)
 {
-    util::ByteStream byteStream;
+    amc::ByteStream byteStream;
 
     EXPECT_FALSE(byteStream.isSwapSet());
 
-    byteStream.setSwap(util::ByteStream::Swap::NoSwapEndian);
+    byteStream.setSwap(amc::ByteStream::Swap::NoSwapEndian);
     EXPECT_FALSE(byteStream.isSwapSet());
-    byteStream.setSwap(util::ByteStream::Swap::SwapEndian);
+    byteStream.setSwap(amc::ByteStream::Swap::SwapEndian);
     EXPECT_TRUE(byteStream.isSwapSet());
 }
 
 TEST(ByteStream, getSwap)
 {
-    util::ByteStream byteStream;
+    amc::ByteStream byteStream;
 
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, byteStream.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, byteStream.getSwap());
 
-    byteStream.setSwap(util::ByteStream::Swap::NoSwapEndian);
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, byteStream.getSwap());
-    byteStream.setSwap(util::ByteStream::Swap::SwapEndian);
-    EXPECT_EQ(util::ByteStream::Swap::SwapEndian, byteStream.getSwap());
+    byteStream.setSwap(amc::ByteStream::Swap::NoSwapEndian);
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, byteStream.getSwap());
+    byteStream.setSwap(amc::ByteStream::Swap::SwapEndian);
+    EXPECT_EQ(amc::ByteStream::Swap::SwapEndian, byteStream.getSwap());
 }
 
 TEST(ByteStream, setSwap)
 {
-    util::ByteStream byteStream;
+    amc::ByteStream byteStream;
 
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, byteStream.getSwap());
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, byteStream.getSwap());
 
-    byteStream.setSwap(util::ByteStream::Swap::NoSwapEndian);
-    EXPECT_EQ(util::ByteStream::Swap::NoSwapEndian, byteStream.getSwap());
-    byteStream.setSwap(util::ByteStream::Swap::SwapEndian);
-    EXPECT_EQ(util::ByteStream::Swap::SwapEndian, byteStream.getSwap());
+    byteStream.setSwap(amc::ByteStream::Swap::NoSwapEndian);
+    EXPECT_EQ(amc::ByteStream::Swap::NoSwapEndian, byteStream.getSwap());
+    byteStream.setSwap(amc::ByteStream::Swap::SwapEndian);
+    EXPECT_EQ(amc::ByteStream::Swap::SwapEndian, byteStream.getSwap());
 }
 
 TEST(ByteStream, rdbuf)
 {
     std::vector<unsigned char> data({0, 1, 2, 3});
 
-    util::ByteStream stream(data);
+    amc::ByteStream stream(data);
 
     const unsigned char* data2 = stream.rdbuf();
     ASSERT_EQ(4, stream.size());
@@ -371,7 +371,7 @@ TEST(ByteStream, vbuf)
 {
     std::vector<unsigned char> data({0, 1, 2, 3});
 
-    util::ByteStream stream(data);
+    amc::ByteStream stream(data);
 
     std::vector<unsigned char> data2 = stream.vbuf();
     EXPECT_EQ(data[0], data2[0]);
@@ -465,7 +465,7 @@ TYPED_TEST_P(LeftShiftFixtureSimple, left_shift)
 {
     for(auto const& [input1, expectedSizePos1, input2, expectedSizePos2] : this->params) {
         // Test size and position of ByteStream
-        util::ByteStream byteStream;
+        amc::ByteStream byteStream;
         ASSERT_EQ(0, byteStream.size());
         ASSERT_EQ(0, byteStream.getPosition());
         byteStream << input1;
@@ -496,7 +496,7 @@ TYPED_TEST_P(LeftShiftFixtureSimple, left_shift_swapped)
 {
     for(auto const& [input1, expectedSizePos1, input2, expectedSizePos2] : this->params) {
         // Test size and position of ByteStream
-        util::ByteStream byteStream(util::ByteStream::Swap::SwapEndian);
+        amc::ByteStream byteStream(amc::ByteStream::Swap::SwapEndian);
         ASSERT_EQ(0, byteStream.size());
         ASSERT_EQ(0, byteStream.getPosition());
         byteStream << input1;
@@ -527,7 +527,7 @@ TYPED_TEST_P(LeftShiftFixtureVector, left_shift)
 {
     for(auto const& [input1, expectedSizePos1, input2, expectedSizePos2] : this->params) {
         // Test size and position of ByteStream
-        util::ByteStream byteStream;
+        amc::ByteStream byteStream;
         ASSERT_EQ(0, byteStream.size());
         ASSERT_EQ(0, byteStream.getPosition());
         byteStream << input1;
@@ -673,7 +673,7 @@ TYPED_TEST_P(RightShiftFixture, right_shift)
         size_t ret = 0;
         TypeParam value1 = 0;
         TypeParam value2 = 0;
-        util::ByteStream byteStream;
+        amc::ByteStream byteStream;
 
         // Write input 1
         byteStream << input1;
@@ -687,13 +687,13 @@ TYPED_TEST_P(RightShiftFixture, right_shift)
 
         // Read input 1
         ret = byteStream >> value1;
-        EXPECT_EQ(util::ByteStream::Success, ret);
+        EXPECT_EQ(amc::ByteStream::Success, ret);
         EXPECT_EQ(input1, value1);
 
         // Read invalid
         EXPECT_EQ(0, byteStream.availableBytes());
         ret = byteStream >> value2;
-        EXPECT_EQ(util::ByteStream::EndOfStream, ret);
+        EXPECT_EQ(amc::ByteStream::EndOfStream, ret);
         EXPECT_EQ(0, value2);
     }
 }

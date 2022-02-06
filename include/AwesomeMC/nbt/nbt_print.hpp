@@ -9,7 +9,7 @@
 #include <sstream>
 #include <iomanip>
 
-namespace nbt
+namespace amc
 {
 
 std::string printNbtData(const AbstractTag *root,
@@ -17,7 +17,7 @@ std::string printNbtData(const AbstractTag *root,
 
 void printNbtChildTag(const AbstractTag *tag,
                       std::stringstream &sstr,
-                      util::Indent indent,
+                      Indent indent,
                       bool printArrayContent = false);
 
 std::string getTagName(TagType type);
@@ -70,7 +70,7 @@ std::string printTagValue(const ValueTag<T, TAG> &tag)
 
 template<typename T, TagType TAG>
 std::string printTagValue(const ArrayTag<T, TAG> &tag,
-                          util::Indent indent, 
+                          Indent indent, 
                           bool printArrayContent)
 {
     std::stringstream sstr;
@@ -88,6 +88,6 @@ std::string printTagValue(const ArrayTag<T, TAG> &tag,
     return sstr.str();
 }
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_NBT_PRINT_HPP

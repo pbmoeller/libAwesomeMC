@@ -1,6 +1,6 @@
 #include <AwesomeMC/anvil/block.hpp>
 
-namespace anvil
+namespace amc
 {
 
 Block::Block()
@@ -35,7 +35,7 @@ Block::Block(int x, int y, int z, const std::string &name)
 
 }
 
-Block::Block(int x, int y, int z, const std::string &name, const nbt::CompoundTag &properties)
+Block::Block(int x, int y, int z, const std::string &name, const CompoundTag &properties)
     : m_x(x)
     , m_y(y)
     , m_z(z)
@@ -143,14 +143,14 @@ void Block::setName(const std::string &name)
     m_name = name;
 }
 
-nbt::CompoundTag Block::getProperties() const
+CompoundTag Block::getProperties() const
 {
     return m_properties;
 }
 
-void Block::setProperties(const nbt::CompoundTag &properties)
+void Block::setProperties(const CompoundTag &properties)
 {
     m_properties = properties;
 }
 
-} // namespace anvil
+} // namespace amc

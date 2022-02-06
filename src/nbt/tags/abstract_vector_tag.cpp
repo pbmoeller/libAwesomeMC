@@ -5,7 +5,7 @@
 #include <utility>
 #include <stdexcept>
 
-namespace nbt
+namespace amc
 {
 
 AbstractVectorTag::AbstractVectorTag()
@@ -225,4 +225,4 @@ bool AbstractVectorTag::pushBack(AbstractTag* value)
     }
 }
 
-} // namespace nbt
+} // namespace amc

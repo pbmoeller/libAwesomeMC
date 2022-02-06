@@ -3,7 +3,7 @@
 // STL
 #include <utility>
 
-namespace util
+namespace amc
 {
 
 ByteStream::ByteStream()
@@ -174,4 +174,4 @@ bool ByteStream::readString(std::string &str, const int16_t length)
     return Success;
 }
 
-} // namespace util
+} // namespace amc

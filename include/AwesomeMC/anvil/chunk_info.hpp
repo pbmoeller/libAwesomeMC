@@ -1,7 +1,7 @@
 #ifndef AWESOMEMC_ANVIL_CHUNK_INFO_HPP
 #define AWESOMEMC_ANVIL_CHUNK_INFO_HPP
 
-namespace anvil
+namespace amc
 {
 
 class ChunkInfo
@@ -50,6 +50,6 @@ private:
     CompressionType m_compression;
 };
 
-} // namespace anvil
+} // namespace amc
 
 #endif // AWESOMEMC_ANVIL_CHUNK_INFO_HPP

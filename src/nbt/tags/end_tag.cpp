@@ -1,6 +1,6 @@
 #include <AwesomeMC/nbt/tags/end_tag.hpp>
 
-namespace nbt
+namespace amc
 {
 
 EndTag::EndTag()
@@ -61,4 +61,4 @@ bool EndTag::isEqual(const AbstractTag &other) const
         && getType() == oTag.getType();
 }
 
-} // namespace nbt
+} // namespace amc

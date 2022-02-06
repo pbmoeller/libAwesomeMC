@@ -9,18 +9,18 @@
 
 TEST(ByteArrayTag, Constructor)
 {
-    nbt::ByteArrayTag byteArrayTag;
+    amc::ByteArrayTag byteArrayTag;
     EXPECT_STREQ("", byteArrayTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
+    EXPECT_EQ(amc::TagType::ByteArray, byteArrayTag.getType());
     std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(0, data.size());
 }
 
 TEST(ByteArrayTag, Constructor_2)
 {
-    nbt::ByteArrayTag byteArrayTag("TagName");
+    amc::ByteArrayTag byteArrayTag("TagName");
     EXPECT_STREQ("TagName", byteArrayTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
+    EXPECT_EQ(amc::TagType::ByteArray, byteArrayTag.getType());
     std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(0, data.size());
 }
@@ -28,9 +28,9 @@ TEST(ByteArrayTag, Constructor_2)
 TEST(ByteArrayTag, Constructor_3)
 {
     std::vector<int8_t> value = {-123, 0, 127};
-    nbt::ByteArrayTag byteArrayTag(value);
+    amc::ByteArrayTag byteArrayTag(value);
     EXPECT_STREQ("", byteArrayTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
+    EXPECT_EQ(amc::TagType::ByteArray, byteArrayTag.getType());
     std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(3, data.size());
     EXPECT_EQ(value[0], data[0]);
@@ -41,9 +41,9 @@ TEST(ByteArrayTag, Constructor_3)
 TEST(ByteArrayTag, Constructor_4)
 {
     std::vector<int8_t> value = {-123, 0, 127};
-    nbt::ByteArrayTag byteArrayTag("TagName", value);
+    amc::ByteArrayTag byteArrayTag("TagName", value);
     EXPECT_STREQ("TagName", byteArrayTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
+    EXPECT_EQ(amc::TagType::ByteArray, byteArrayTag.getType());
     std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(3, data.size());
     EXPECT_EQ(value[0], data[0]);
@@ -57,12 +57,12 @@ TEST(ByteArrayTag, CopyConstructor)
     std::vector<int8_t> value = {-123, 0, 127};
 
     // Init
-    nbt::ByteArrayTag tagA(name, value);
+    amc::ByteArrayTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 
     // Test Copy
-    nbt::ByteArrayTag tagB(tagA);
+    amc::ByteArrayTag tagB(tagA);
     EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
     EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(tagA.getValue().begin(), tagA.getValue().end()));
 }
@@ -73,12 +73,12 @@ TEST(ByteArrayTag, MoveConstructor)
     std::vector<int8_t> value = {-5, -1, 0, 1, 2, 3, 5};
 
     // Init
-    nbt::ByteArrayTag tagA(name, value);
+    amc::ByteArrayTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 
     // Test Move
-    nbt::ByteArrayTag tagB(std::move(tagA));
+    amc::ByteArrayTag tagB(std::move(tagA));
     EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
     EXPECT_THAT(tagB.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 }
@@ -89,12 +89,12 @@ TEST(ByteArrayTag, CopyAssignment)
     std::vector<int8_t> value = {-50, -10, 0, 10, 20, 30, 50};
 
     // Init A
-    nbt::ByteArrayTag tagA(name, value);
+    amc::ByteArrayTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 
     // Init B
-    nbt::ByteArrayTag tagB;
+    amc::ByteArrayTag tagB;
     ASSERT_STREQ(tagB.getName().c_str(), "");
     ASSERT_EQ(tagB.getValue().size(), 0);
 
@@ -110,12 +110,12 @@ TEST(ByteArrayTag, MoveAssignment)
     std::vector<int8_t> value = {-33, -11, 0, 11, 22, 33, 55};
 
     // Init A
-    nbt::ByteArrayTag tagA(name, value);
+    amc::ByteArrayTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_THAT(tagA.getValue(), testing::ElementsAreArray(value.begin(), value.end()));
 
     // Init B
-    nbt::ByteArrayTag tagB;
+    amc::ByteArrayTag tagB;
     ASSERT_STREQ(tagB.getName().c_str(), "");
     ASSERT_EQ(tagB.getValue().size(), 0);
 
@@ -127,9 +127,9 @@ TEST(ByteArrayTag, MoveAssignment)
 
 TEST(ByteArrayTag, clone)
 {
-    nbt::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});
 
-    nbt::ByteArrayTag *byteArrayTagB = tag_cast<nbt::ByteArrayTag*>(byteArrayTagA.clone());
+    amc::ByteArrayTag *byteArrayTagB = tag_cast<amc::ByteArrayTag*>(byteArrayTagA.clone());
     EXPECT_TRUE(byteArrayTagA == *byteArrayTagB);
 
     delete byteArrayTagB;
@@ -137,12 +137,12 @@ TEST(ByteArrayTag, clone)
 
 TEST(ByteArrayTag, Equal)
 {
-    nbt::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});
-    nbt::ByteArrayTag byteArrayTagB("Test1", {1, 2, 3});
-    nbt::ByteArrayTag byteArrayTagC("Test1", {1, 2, 3});
-    nbt::ByteArrayTag byteArrayTagD("Test2", {1, 2, 5});
-    nbt::ByteArrayTag byteArrayTagE;
-    nbt::EndTag endTag;
+    amc::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagB("Test1", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagC("Test1", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagD("Test2", {1, 2, 5});
+    amc::ByteArrayTag byteArrayTagE;
+    amc::EndTag endTag;
 
     EXPECT_TRUE(byteArrayTagA == byteArrayTagA);  // Test same object
     EXPECT_TRUE(byteArrayTagA == byteArrayTagB);  // Test same data #1
@@ -157,12 +157,12 @@ TEST(ByteArrayTag, Equal)
 
 TEST(ByteArrayTag, NotEqual)
 {
-    nbt::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});
-    nbt::ByteArrayTag byteArrayTagB("Test1", {1, 2, 3});
-    nbt::ByteArrayTag byteArrayTagC("Test1", {1, 2, 3});
-    nbt::ByteArrayTag byteArrayTagD("Test2", {1, 2, 5});
-    nbt::ByteArrayTag byteArrayTagE;
-    nbt::EndTag endTag;
+    amc::ByteArrayTag byteArrayTagA("Test1", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagB("Test1", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagC("Test1", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagD("Test2", {1, 2, 5});
+    amc::ByteArrayTag byteArrayTagE;
+    amc::EndTag endTag;
 
     EXPECT_FALSE(byteArrayTagA != byteArrayTagA);  // Test same object
     EXPECT_FALSE(byteArrayTagA != byteArrayTagB);  // Test same data #1
@@ -177,8 +177,8 @@ TEST(ByteArrayTag, NotEqual)
 
 TEST(ByteArrayTag, getType)
 {
-    nbt::ByteArrayTag byteArrayTag;
-    EXPECT_EQ(nbt::TagType::ByteArray, byteArrayTag.getType());
+    amc::ByteArrayTag byteArrayTag;
+    EXPECT_EQ(amc::TagType::ByteArray, byteArrayTag.getType());
 }
 
 TEST(ByteArrayTag, getData)
@@ -189,7 +189,7 @@ TEST(ByteArrayTag, getData)
         0x00, 0x00, 0x05, 0x80, 0xFB, 0x00, 0x05, 0x7F
     };
 
-    nbt::ByteArrayTag byteArrayTag("byteArrayTag", std::vector<int8_t>({-128, -5, 0, 5, 127}));
+    amc::ByteArrayTag byteArrayTag("byteArrayTag", std::vector<int8_t>({-128, -5, 0, 5, 127}));
     std::vector<unsigned char> data = byteArrayTag.getData(false);
 
     EXPECT_EQ(data.size(), testData.size());
@@ -202,18 +202,18 @@ TEST(ByteArrayTag, getData)
 
 TEST(ByteArrayTag, isEmpty)
 {
-    nbt::ByteArrayTag byteArrayTagA;
+    amc::ByteArrayTag byteArrayTagA;
     EXPECT_TRUE(byteArrayTagA.isEmpty());
     byteArrayTagA.pushBack(2);
     EXPECT_FALSE(byteArrayTagA.isEmpty());
 
-    nbt::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
     EXPECT_FALSE(byteArrayTagB.isEmpty());
 }
 
 TEST(ByteArrayTag, clear)
 {
-    nbt::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
     EXPECT_FALSE(byteArrayTagB.isEmpty());
     byteArrayTagB.clear();
     EXPECT_TRUE(byteArrayTagB.isEmpty());
@@ -221,7 +221,7 @@ TEST(ByteArrayTag, clear)
 
 TEST(ByteArrayTag, erase)
 {
-    nbt::ByteArrayTag byteArrayTagA("TestTag", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagA("TestTag", {1, 2, 3});
     // Test index too high
     EXPECT_FALSE(byteArrayTagA.erase(3));
     EXPECT_FALSE(byteArrayTagA.erase(900));
@@ -239,7 +239,7 @@ TEST(ByteArrayTag, erase)
     // Erase from middle
     std::vector<int8_t> values1 = {1, 2, 3};
     std::vector<int8_t> values2 = {1, 3};
-    nbt::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
     ASSERT_EQ(3, byteArrayTagB.size());
     std::vector<int8_t> data1 = byteArrayTagB.getValue();
     EXPECT_THAT(data1, testing::ElementsAreArray(values1.begin(), values1.end()));
@@ -252,7 +252,7 @@ TEST(ByteArrayTag, erase)
 TEST(ByteArrayTag, insert)
 {
     // Insert into empty
-    nbt::ByteArrayTag byteArrayTagA;
+    amc::ByteArrayTag byteArrayTagA;
     // Test invalid index
     ASSERT_EQ(0, byteArrayTagA.size());
     EXPECT_FALSE(byteArrayTagA.insert(1, 1));
@@ -264,7 +264,7 @@ TEST(ByteArrayTag, insert)
 
     // Insert in the middle
     std::vector<int8_t> values1 = {1, 2, 3};
-    nbt::ByteArrayTag byteArrayTagB("TestTag", {1, 3});
+    amc::ByteArrayTag byteArrayTagB("TestTag", {1, 3});
     ASSERT_EQ(2, byteArrayTagB.size());
     EXPECT_TRUE(byteArrayTagB.insert(1, 2));
     EXPECT_EQ(3, byteArrayTagB.size());
@@ -274,7 +274,7 @@ TEST(ByteArrayTag, insert)
 
 TEST(ByteArrayTag, pushBack)
 {
-    nbt::ByteArrayTag byteArrayTagA;
+    amc::ByteArrayTag byteArrayTagA;
     EXPECT_EQ(0, byteArrayTagA.size());
     byteArrayTagA.pushBack(1);
     EXPECT_EQ(1, byteArrayTagA.at(0));
@@ -286,10 +286,10 @@ TEST(ByteArrayTag, pushBack)
 
 TEST(ByteArrayTag, size)
 {
-    nbt::ByteArrayTag byteArrayTagA;
+    amc::ByteArrayTag byteArrayTagA;
     EXPECT_EQ(0, byteArrayTagA.size());
 
-    nbt::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
+    amc::ByteArrayTag byteArrayTagB("TestTag", {1, 2, 3});
     EXPECT_EQ(3, byteArrayTagB.size());
 
     byteArrayTagB.clear();
@@ -306,7 +306,7 @@ TEST(ByteArrayTag, at)
     int8_t value3_out = 0;
     
     // Test copy
-    nbt::ByteArrayTag byteArrayTagA("TestTag", {value1_in, value2_in, value3_in});
+    amc::ByteArrayTag byteArrayTagA("TestTag", {value1_in, value2_in, value3_in});
     ASSERT_EQ(3, byteArrayTagA.size());
     value1_out = byteArrayTagA.at(0);
     EXPECT_EQ(value1_out, value1_in);
@@ -316,7 +316,7 @@ TEST(ByteArrayTag, at)
     EXPECT_EQ(value3_out, value3_in);
 
     // Test reference
-    nbt::ByteArrayTag byteArrayTagB("TestTag", {value1_in});
+    amc::ByteArrayTag byteArrayTagB("TestTag", {value1_in});
     ASSERT_EQ(1, byteArrayTagB.size());
     int8_t &value1_out_ref = byteArrayTagA.at(0);
     EXPECT_EQ(value1_out_ref, value1_in);
@@ -332,7 +332,7 @@ TEST(ByteArrayTag, at_const)
     const int8_t value3_in = 98;
 
     // Test const copy
-    const nbt::ByteArrayTag byteArrayTagA("TestTag", {value1_in, value2_in, value3_in});
+    const amc::ByteArrayTag byteArrayTagA("TestTag", {value1_in, value2_in, value3_in});
     ASSERT_EQ(3, byteArrayTagA.size());
     const int8_t value1_out = byteArrayTagA.at(0);
     EXPECT_EQ(value1_out, value1_in);
@@ -346,7 +346,7 @@ TEST(ByteArrayTag, getValue)
 {
     std::vector<int8_t> value     = {1, 2, 3, 4};
     std::vector<int8_t> value2    = {1, 2, 3, 5};
-    nbt::ByteArrayTag byteArrayTag;
+    amc::ByteArrayTag byteArrayTag;
 
     std::vector<int8_t> data = byteArrayTag.getValue();
     EXPECT_EQ(0, data.size());
@@ -361,7 +361,7 @@ TEST(ByteArrayTag, getValue)
 TEST(ByteArrayTag, setValue)
 {
     std::vector<int8_t> value = {1, 2, 3, 4};
-    nbt::ByteArrayTag byteArrayTag;
+    amc::ByteArrayTag byteArrayTag;
     EXPECT_EQ(0, byteArrayTag.size());
     byteArrayTag.setValue(value);
     EXPECT_EQ(4, byteArrayTag.size());
@@ -371,12 +371,12 @@ TEST(ByteArrayTag, setValue)
 
 TEST(ByteArrayTag, tag_cast)
 {
-    nbt::AbstractTag *testTag = new nbt::ByteArrayTag("A", std::vector<int8_t>({1, 2, 3}));
+    amc::AbstractTag *testTag = new amc::ByteArrayTag("A", std::vector<int8_t>({1, 2, 3}));
 
-    nbt::ByteArrayTag *otherTag = tag_cast<nbt::ByteArrayTag*>(testTag);
+    amc::ByteArrayTag *otherTag = tag_cast<amc::ByteArrayTag*>(testTag);
     EXPECT_EQ(otherTag, testTag);
 
-    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    amc::IntTag *nullTag = tag_cast<amc::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
 
     delete testTag;

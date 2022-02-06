@@ -6,7 +6,7 @@
 // STL
 #include <cstring>
 
-namespace util
+namespace amc
 {
 
 bool deflate_zlib(std::vector<unsigned char> &data)
@@ -181,4 +181,4 @@ bool inflate_gzip2(std::vector<unsigned char> &data)
     return true;
 }
 
-} // namespace util
+} // namespace amc

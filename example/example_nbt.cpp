@@ -84,20 +84,20 @@ int main(int argc, char **argv)
     // Use try catch, since we use user input that might be wrong.
     try {
         // Load and uncompress NBT data from file into data buffer. 
-        std::vector<unsigned char> data1 = nbt::loadNbtData(file, compressed);
+        std::vector<unsigned char> data1 = amc::loadNbtData(file, compressed);
 
         // Read NBT data from data buffer.
-        nbt::CompoundTag *tag1 = nullptr;
-        tag1 = nbt::readNbtData(data1);
+        amc::CompoundTag *tag1 = nullptr;
+        tag1 = amc::readNbtData(data1);
 
         // Check if the NBT data should be printed to console or a given output file.
         if(outputFile.empty()) {
-            std::cout << nbt::printNbtData(tag1)
+            std::cout << amc::printNbtData(tag1)
                       << std::endl;
         } else {
             std::ofstream fstrm(outputFile);
             if(fstrm) {
-                fstrm << nbt::printNbtData(tag1);
+                fstrm << amc::printNbtData(tag1);
             }
         }
 

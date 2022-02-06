@@ -5,7 +5,7 @@
 #include <utility>
 #include <string>
 
-namespace anvil
+namespace amc
 {
 
 RegionHeader::RegionHeader()
@@ -134,4 +134,4 @@ void RegionHeader::setChunkInfoAt(unsigned int index, const ChunkInfo &info)
     (*m_chunkInfo)[index] = info;
 }
 
-} // namespace anvil
+} // namespace amc

@@ -7,7 +7,7 @@
 // STL
 #include <vector>
 
-namespace nbt
+namespace amc
 {
 
 class AbstractVectorTag : public AbstractTag
@@ -82,6 +82,6 @@ protected:
     std::vector<AbstractTag*> m_value;
 };
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_ABSTRACT_VECTOR_TAG_HPP

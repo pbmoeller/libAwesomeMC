@@ -17,7 +17,7 @@
 #include <utility>
 #include <stdexcept>
 
-namespace anvil
+namespace amc
 {
 
 Chunk::Chunk()
@@ -47,7 +47,7 @@ Chunk& Chunk::operator=(const Chunk &other)
 {
     if(this != &other) {
         clear();
-        m_data = tag_cast<nbt::CompoundTag*>(other.m_data->clone());
+        m_data = tag_cast<CompoundTag*>(other.m_data->clone());
     }
     return *this;
 }
@@ -87,12 +87,12 @@ void Chunk::clear()
     }
 }
 
-nbt::CompoundTag* Chunk::getRootTag()
+CompoundTag* Chunk::getRootTag()
 {
     return m_data;
 }
 
-void Chunk::setRootTag(nbt::CompoundTag *root)
+void Chunk::setRootTag(CompoundTag *root)
 {
     // Delete old data
     clear();
@@ -101,16 +101,16 @@ void Chunk::setRootTag(nbt::CompoundTag *root)
     m_data = root;
 }
 
-std::vector<nbt::AbstractTag*> Chunk::getSubTagsByName(const std::string &name) const
+std::vector<AbstractTag*> Chunk::getSubTagsByName(const std::string &name) const
 {
-    std::vector<nbt::AbstractTag*> subTags;
+    std::vector<AbstractTag*> subTags;
     getSubTagsByName(name, m_data, subTags);
     return subTags;
 }
 
 void Chunk::getSubTagsByName(const std::string &name,
-                             nbt::AbstractTag *currentSubTag,
-                             std::vector<nbt::AbstractTag*> &subTags) const
+                             AbstractTag *currentSubTag,
+                             std::vector<AbstractTag*> &subTags) const
 {
     // Check if this sub tag matches the search name
     if(currentSubTag->getName() == name) {
@@ -119,17 +119,17 @@ void Chunk::getSubTagsByName(const std::string &name,
 
     // Iterate through child tags, if this tag is list or compound
     switch(currentSubTag->getType()) {
-        case nbt::TagType::List:
+        case TagType::List:
         {
-            nbt::ListTag *listTag = tag_cast<nbt::ListTag*>(currentSubTag);
+            ListTag *listTag = tag_cast<ListTag*>(currentSubTag);
             for(unsigned int i = 0; i < listTag->size(); ++i) {
                 getSubTagsByName(name, listTag->at(i), subTags);
             }
             break;
         }
-        case nbt::TagType::Compound:
+        case TagType::Compound:
         {
-            nbt::CompoundTag *compoundTag = tag_cast<nbt::CompoundTag*>(currentSubTag);
+            CompoundTag *compoundTag = tag_cast<CompoundTag*>(currentSubTag);
             for(unsigned int i = 0; i < compoundTag->size(); ++i) {
                 getSubTagsByName(name, compoundTag->at(i), subTags);
             }
@@ -143,7 +143,7 @@ void Chunk::getSubTagsByName(const std::string &name,
 std::vector<int32_t> Chunk::getBiomes() const
 {
     // Get Biomes array
-    std::vector<nbt::AbstractTag*> biomesArray = getSubTagsByName("Biomes");
+    std::vector<AbstractTag*> biomesArray = getSubTagsByName("Biomes");
 
     // If Biomes array is empty return empty list.
     if(biomesArray.empty()) {
@@ -151,7 +151,7 @@ std::vector<int32_t> Chunk::getBiomes() const
     }
 
     // Take first item (in errornous case where there are more than 1 "Biomes" sub tag in root tag)
-    return tag_cast<nbt::IntArrayTag*>(biomesArray[0])->getValue();
+    return tag_cast<IntArrayTag*>(biomesArray[0])->getValue();
 }
 
 int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const
@@ -163,7 +163,7 @@ int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) 
     }
 
     // Get Biome Array
-    std::vector<nbt::AbstractTag*> biomesArray = getSubTagsByName("Biomes");
+    std::vector<AbstractTag*> biomesArray = getSubTagsByName("Biomes");
 
     // If Biomes array is empty return 0.
     if(biomesArray.empty()) {
@@ -174,7 +174,7 @@ int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) 
     // Values are arranged by Z, then X, then Y
     int biomeIndex = (blockY % 4) * 4 + (blockX % 4) * 2 + (blockZ % 4);
 
-    return tag_cast<nbt::IntArrayTag*>(biomesArray[0])->at(biomeIndex);
+    return tag_cast<IntArrayTag*>(biomesArray[0])->at(biomeIndex);
 }
 
 Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) const
@@ -187,49 +187,49 @@ Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) co
 
     // Calculate Section
 
-    int sectionIndex = util::calculateSectionIndex(blockY);
+    int sectionIndex = calculateSectionIndex(blockY);
 
     // Get BlockStates
     auto vecTmp = getSubTagsByName("sections");
     if(vecTmp.size() == 0) {
         throw std::runtime_error("\"sections\" not found!");
     }
-    nbt::ListTag *sections = tag_cast<nbt::ListTag*>(vecTmp.at(0));
+    ListTag *sections = tag_cast<ListTag*>(vecTmp.at(0));
     if(!sections) {
         throw std::runtime_error("\"sections\" is not a list!");
     }
-    nbt::CompoundTag *section = tag_cast<nbt::CompoundTag*>(sections->at(sectionIndex));
+    CompoundTag *section = tag_cast<CompoundTag*>(sections->at(sectionIndex));
     if(!section) {
         throw std::runtime_error(std::string("\"section\" at index \"") + std::to_string(sectionIndex) + std::string("\" not found!"));
     }
-    nbt::CompoundTag *blockStates = tag_cast<nbt::CompoundTag*>(section->getChildByName("block_states"));
+    CompoundTag *blockStates = tag_cast<CompoundTag*>(section->getChildByName("block_states"));
     if(!blockStates) {
         throw std::runtime_error("\"block_states\" not found!");
     }
-    nbt::ListTag *palette = tag_cast<nbt::ListTag*>(blockStates->getChildByName("palette"));
+    ListTag *palette = tag_cast<ListTag*>(blockStates->getChildByName("palette"));
     if(!palette) {
         throw std::runtime_error("\"palette\" not found!");
     }
 
     // Get Block data
     size_t paletteIndex = 0;
-    nbt::LongArrayTag *blockData = tag_cast<nbt::LongArrayTag*>(blockStates->getChildByName("data"));
+    LongArrayTag *blockData = tag_cast<LongArrayTag*>(blockStates->getChildByName("data"));
     if(blockData) {
         int localX = 0;
         int localY = 0;
         int localZ = 0;
-        util::convertBlockWorld2BlockChunk(blockX, blockY, blockZ, localX, localY, localZ);
+        convertBlockWorld2BlockChunk(blockX, blockY, blockZ, localX, localY, localZ);
         char bitWidth = static_cast<char>(std::bit_width(palette->size() - 1));
         int blocksPerLong = static_cast<int>(64 / bitWidth);
 
-        int blockIndex = localY * anvil::BlockCount + localZ * anvil::BlockWidth + localX;
+        int blockIndex = localY * BlockCount + localZ * BlockWidth + localX;
         unsigned int longIndex = blockIndex / blocksPerLong;
         int blockInLong = blockIndex % blocksPerLong;
         if(longIndex >= blockData->size()) {
             throw std::runtime_error("Long index out of range!");
         }
         int64_t longValue = blockData->at(longIndex);
-        int64_t mask = util::setNLeastSignificantBits64(bitWidth);
+        int64_t mask = setNLeastSignificantBits64(bitWidth);
 
         longValue = longValue >> (blockInLong * bitWidth);
         paletteIndex = longValue & mask;
@@ -238,19 +238,19 @@ Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) co
         paletteIndex = 0;
     }
 
-    nbt::CompoundTag *paletteEntry = tag_cast<nbt::CompoundTag*>(palette->at(paletteIndex));
+    CompoundTag *paletteEntry = tag_cast<CompoundTag*>(palette->at(paletteIndex));
     if(!paletteEntry) {
         throw std::runtime_error("\"palette\" is empty!");
     }
-    nbt::StringTag *entryName = tag_cast<nbt::StringTag*>(paletteEntry->getChildByName("Name"));
+    StringTag *entryName = tag_cast<StringTag*>(paletteEntry->getChildByName("Name"));
     if(!entryName) {
         throw std::runtime_error("\"Name\" of palette entry not found!");
     }
 
     // If the palette entyr has a Properties field add it to the Block data
-    nbt::CompoundTag *properties = tag_cast<nbt::CompoundTag*>(paletteEntry->getChildByName("Properties"));
+    CompoundTag *properties = tag_cast<CompoundTag*>(paletteEntry->getChildByName("Properties"));
     if(properties) {
-        nbt::CompoundTag props(*properties);
+        CompoundTag props(*properties);
         return Block(blockX, blockY, blockZ, entryName->getValue(), props);
     } else {
         return Block(blockX, blockY, blockZ, entryName->getValue());
@@ -266,13 +266,13 @@ HeightMap Chunk::getHeightMap(HeightMap::MapType mapType) const
     } else if(vecTmp.size() != 1) {
         throw std::runtime_error("Invalid count of Heightmaps!");
     }
-    nbt::CompoundTag *heightmaps = tag_cast<nbt::CompoundTag*>(vecTmp.at(0));
+    CompoundTag *heightmaps = tag_cast<CompoundTag*>(vecTmp.at(0));
     if(!heightmaps) {
         throw std::runtime_error("Invalid tag type of Heightmaps!");
     }
 
     // Get LongArrayTag depending on type.
-    nbt::AbstractTag *tmp = nullptr;
+    AbstractTag *tmp = nullptr;
     switch(mapType)
     {
         case HeightMap::MapType::MotionBlocking:
@@ -292,7 +292,7 @@ HeightMap Chunk::getHeightMap(HeightMap::MapType mapType) const
             break;
     }
 
-    nbt::LongArrayTag *heightmapData = tag_cast<nbt::LongArrayTag*>(tmp);
+    LongArrayTag *heightmapData = tag_cast<LongArrayTag*>(tmp);
     if(!heightmapData) {
         throw std::runtime_error("Empty Heightmap data!");
     }
@@ -303,7 +303,7 @@ HeightMap Chunk::getHeightMap(HeightMap::MapType mapType) const
     // Get height values.
     HeightMap heightmap;
     int currenBlockIndex = 0;
-    const int64_t mask = util::setNLeastSignificantBits64(9);
+    const int64_t mask = setNLeastSignificantBits64(9);
     for(int i = 0; i < 37 && currenBlockIndex < BlockCount; ++i) {
         int64_t longValue = heightmapData->at(i);
         for(int j = 0; j < 7 && currenBlockIndex < BlockCount; ++j) {
@@ -318,8 +318,8 @@ HeightMap Chunk::getHeightMap(HeightMap::MapType mapType) const
     auto vecTmpX = getSubTagsByName("xPos");
     auto vecTmpZ = getSubTagsByName("zPos");
     if(vecTmpX.size() > 0 && vecTmpZ.size() > 0) {
-        nbt::IntTag *intTagX = tag_cast<nbt::IntTag*>(vecTmpX[0]);
-        nbt::IntTag *intTagZ = tag_cast<nbt::IntTag*>(vecTmpZ[0]);
+        IntTag *intTagX = tag_cast<IntTag*>(vecTmpX[0]);
+        IntTag *intTagZ = tag_cast<IntTag*>(vecTmpZ[0]);
         if(intTagX && intTagZ) {
             heightmap.setChunkX(intTagX->getValue());
             heightmap.setChunkZ(intTagZ->getValue());
@@ -329,4 +329,4 @@ HeightMap Chunk::getHeightMap(HeightMap::MapType mapType) const
     return heightmap;
 }
 
-} // namespace anvil
+} // namespace amc

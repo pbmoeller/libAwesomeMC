@@ -8,7 +8,7 @@
 #include <type_traits>
 #include <concepts>
 
-namespace util
+namespace amc
 {
 
 namespace detail
@@ -76,6 +76,6 @@ inline auto bswap(std::floating_point auto value) noexcept {
 }
 #endif
 
-} // namespace util
+} // namespace amc
 
 #endif // AWESOMEMC_UTIL_BYTE_SWAP_HPP

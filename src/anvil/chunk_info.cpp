@@ -3,7 +3,7 @@
 // STL
 #include <utility>
 
-namespace anvil
+namespace amc
 {
 
 ChunkInfo::ChunkInfo()
@@ -124,4 +124,4 @@ void ChunkInfo::setCompression(ChunkInfo::CompressionType compression)
     m_compression = compression;
 }
 
-} // namespace anvil
+} // namespace amc

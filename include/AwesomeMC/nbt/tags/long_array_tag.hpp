@@ -4,11 +4,11 @@
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/array_tag.hpp>
 
-namespace nbt
+namespace amc
 {
 
 using LongArrayTag = ArrayTag<int64_t, TagType::LongArray>;
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_LONG_ARRAY_TAG_HPP

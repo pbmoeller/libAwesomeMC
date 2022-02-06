@@ -49,12 +49,12 @@ TEST(bswap, 1B)
     uint8_t value_5 = 127;
     uint8_t value_6 = 255;
 
-    EXPECT_EQ(value_1, util::bswap(value_1));
-    EXPECT_EQ(value_2, util::bswap(value_2));
-    EXPECT_EQ(value_3, util::bswap(value_3));
-    EXPECT_EQ(value_4, util::bswap(value_4));
-    EXPECT_EQ(value_5, util::bswap(value_5));
-    EXPECT_EQ(value_6, util::bswap(value_6));
+    EXPECT_EQ(value_1, amc::bswap(value_1));
+    EXPECT_EQ(value_2, amc::bswap(value_2));
+    EXPECT_EQ(value_3, amc::bswap(value_3));
+    EXPECT_EQ(value_4, amc::bswap(value_4));
+    EXPECT_EQ(value_5, amc::bswap(value_5));
+    EXPECT_EQ(value_6, amc::bswap(value_6));
 }
 
 TEST(bswap, 2B)
@@ -75,13 +75,13 @@ TEST(bswap, 2B)
     uint16_t value_7        = 0xABCD;
     uint16_t value_7_exp    = 0xCDAB;
 
-    EXPECT_EQ(value_1_exp, util::bswap(value_1));
-    EXPECT_EQ(value_2_exp, util::bswap(value_2));
-    EXPECT_EQ(value_3_exp, util::bswap(value_3));
-    EXPECT_EQ(value_4_exp, util::bswap(value_4));
-    EXPECT_EQ(value_5_exp, util::bswap(value_5));
-    EXPECT_EQ(value_6_exp, util::bswap(value_6));
-    EXPECT_EQ(value_7_exp, util::bswap(value_7));
+    EXPECT_EQ(value_1_exp, amc::bswap(value_1));
+    EXPECT_EQ(value_2_exp, amc::bswap(value_2));
+    EXPECT_EQ(value_3_exp, amc::bswap(value_3));
+    EXPECT_EQ(value_4_exp, amc::bswap(value_4));
+    EXPECT_EQ(value_5_exp, amc::bswap(value_5));
+    EXPECT_EQ(value_6_exp, amc::bswap(value_6));
+    EXPECT_EQ(value_7_exp, amc::bswap(value_7));
 }
 
 TEST(bswap, 4B)
@@ -102,13 +102,13 @@ TEST(bswap, 4B)
     uint32_t value_7        = 0xABCDEF01;
     uint32_t value_7_exp    = 0x01EFCDAB;
 
-    EXPECT_EQ(value_1_exp, util::bswap(value_1));
-    EXPECT_EQ(value_2_exp, util::bswap(value_2));
-    EXPECT_EQ(value_3_exp, util::bswap(value_3));
-    EXPECT_EQ(value_4_exp, util::bswap(value_4));
-    EXPECT_EQ(value_5_exp, util::bswap(value_5));
-    EXPECT_EQ(value_6_exp, util::bswap(value_6));
-    EXPECT_EQ(value_7_exp, util::bswap(value_7));
+    EXPECT_EQ(value_1_exp, amc::bswap(value_1));
+    EXPECT_EQ(value_2_exp, amc::bswap(value_2));
+    EXPECT_EQ(value_3_exp, amc::bswap(value_3));
+    EXPECT_EQ(value_4_exp, amc::bswap(value_4));
+    EXPECT_EQ(value_5_exp, amc::bswap(value_5));
+    EXPECT_EQ(value_6_exp, amc::bswap(value_6));
+    EXPECT_EQ(value_7_exp, amc::bswap(value_7));
 }
 
 TEST(bswap, 8B)
@@ -131,66 +131,66 @@ TEST(bswap, 8B)
     uint64_t value_8        = 0x0AB00CD00EF00120;
     uint64_t value_8_exp    = 0x2001F00ED00CB00A;
 
-    EXPECT_EQ(value_1_exp, util::bswap(value_1));
-    EXPECT_EQ(value_2_exp, util::bswap(value_2));
-    EXPECT_EQ(value_3_exp, util::bswap(value_3));
-    EXPECT_EQ(value_4_exp, util::bswap(value_4));
-    EXPECT_EQ(value_5_exp, util::bswap(value_5));
-    EXPECT_EQ(value_6_exp, util::bswap(value_6));
-    EXPECT_EQ(value_7_exp, util::bswap(value_7));
-    EXPECT_EQ(value_8_exp, util::bswap(value_8));
+    EXPECT_EQ(value_1_exp, amc::bswap(value_1));
+    EXPECT_EQ(value_2_exp, amc::bswap(value_2));
+    EXPECT_EQ(value_3_exp, amc::bswap(value_3));
+    EXPECT_EQ(value_4_exp, amc::bswap(value_4));
+    EXPECT_EQ(value_5_exp, amc::bswap(value_5));
+    EXPECT_EQ(value_6_exp, amc::bswap(value_6));
+    EXPECT_EQ(value_7_exp, amc::bswap(value_7));
+    EXPECT_EQ(value_8_exp, amc::bswap(value_8));
 }
 
 TEST(bswap, Float)
 {
     Float value1{1.0f};
-    Float actual1{util::bswap(value1.value)};
+    Float actual1{amc::bswap(value1.value)};
     compareBytes(value1, actual1);
 
     Float value2{123.456789f};
-    Float actual2{util::bswap(value2.value)};
+    Float actual2{amc::bswap(value2.value)};
     compareBytes(value2, actual2);
 
     Float value3{-1.0f};
-    Float actual3{util::bswap(value3.value)};
+    Float actual3{amc::bswap(value3.value)};
     compareBytes(value3, actual3);
 
     Float value4{0.0f};
-    Float actual4{util::bswap(value4.value)};
+    Float actual4{amc::bswap(value4.value)};
     compareBytes(value4, actual4);
 
     Float value5{std::numeric_limits<float>::max()};
-    Float actual5{util::bswap(value5.value)};
+    Float actual5{amc::bswap(value5.value)};
     compareBytes(value5, actual5);
 
     Float value6{std::numeric_limits<float>::min()};
-    Float actual6{util::bswap(value6.value)};
+    Float actual6{amc::bswap(value6.value)};
     compareBytes(value6, actual6);
 }
 
 TEST(bswap, Double)
 {
     Double value1{1.0};
-    Double actual1{util::bswap(value1.value)};
+    Double actual1{amc::bswap(value1.value)};
     compareBytes(value1, actual1);
 
     Double value2{123.456789};
-    Double actual2{util::bswap(value2.value)};
+    Double actual2{amc::bswap(value2.value)};
     compareBytes(value2, actual2);
 
     Double value3{-1.0};
-    Double actual3{util::bswap(value3.value)};
+    Double actual3{amc::bswap(value3.value)};
     compareBytes(value3, actual3);
 
     Double value4{0.0};
-    Double actual4{util::bswap(value4.value)};
+    Double actual4{amc::bswap(value4.value)};
     compareBytes(value4, actual4);
 
     Double value5{std::numeric_limits<double>::max()};
-    Double actual5{util::bswap(value5.value)};
+    Double actual5{amc::bswap(value5.value)};
     compareBytes(value5, actual5);
 
     Double value6{std::numeric_limits<double>::min()};
-    Double actual6{util::bswap(value6.value)};
+    Double actual6{amc::bswap(value6.value)};
     compareBytes(value6, actual6);
 }

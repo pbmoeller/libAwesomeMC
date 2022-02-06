@@ -13,7 +13,7 @@
 #include <algorithm>
 #include <type_traits>
 
-namespace util
+namespace amc
 {
 
 class ByteStream
@@ -100,7 +100,7 @@ private:
         m_position += width;
 
         if(m_swap == Swap::SwapEndian) {
-            value = util::bswap(value);
+            value = bswap(value);
         }
         return Success;
     }
@@ -109,7 +109,7 @@ private:
     size_t writeStream(T value)
     {
         if(m_swap == Swap::SwapEndian) {
-            value = util::bswap(value);
+            value = bswap(value);
         }
 
         m_buffer.insert(m_buffer.end(),
@@ -126,6 +126,6 @@ private:
     Swap m_swap;
 };
 
-} // namespace util
+} // namespace amc
 
 #endif // AWESOMEMC_UTIL_BYTE_STREAM_HPP

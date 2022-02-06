@@ -6,7 +6,7 @@
 #include <cassert>
 #include <limits>
 
-namespace util
+namespace amc
 {
 
 //template<typename T>
@@ -34,6 +34,6 @@ inline uint64_t setNLeastSignificantBits64(char n)
     return n == 64 ? std::numeric_limits<uint64_t>::max() : (static_cast<int64_t>(1) << n) - 1;
 }
 
-} // namespace util
+} // namespace amc
 
 #endif // AWESOMEMC_UTIL_BIT_HPP

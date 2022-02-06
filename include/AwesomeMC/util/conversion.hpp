@@ -4,7 +4,7 @@
 // STL
 #include <cstdint>
 
-namespace util
+namespace amc
 {
 
 bool isValidWorldCoordinate(const int worldXx, const int worldY, const int worldZ);
@@ -30,6 +30,6 @@ void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldY, 
 void convertChunkWorld2ChunkRegion(const int chunkWorldX, const int chunkWorldZ,
                                    int &cunkRegionX, int &chunKRegionZ);
 
-} // namespace util
+} // namespace amc
 
 #endif // AWESOMEMC_UTIL_CONVERSION_HPP

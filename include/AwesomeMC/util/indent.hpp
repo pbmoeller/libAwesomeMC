@@ -4,7 +4,7 @@
 // STL
 #include <iostream>
 
-namespace util
+namespace amc
 {
 
 class Indent
@@ -37,6 +37,6 @@ private:
 
 std::ostream& operator<<(std::ostream &out, const Indent &indent);
 
-} // namespace util
+} // namespace amc
 
 #endif // AWESOMEMC_UTIL_INDENT_HPP

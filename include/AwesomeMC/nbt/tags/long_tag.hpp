@@ -7,11 +7,11 @@
 // STL
 #include <cstdint>
 
-namespace nbt
+namespace amc
 {
 
 using LongTag = ValueTag<int64_t, TagType::Long>;
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_LONG_TAG_HPP

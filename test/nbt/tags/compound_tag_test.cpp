@@ -13,69 +13,69 @@
 
 TEST(CompoundTag, Constructor)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
     EXPECT_STREQ("", compoundTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::Compound, compoundTag.getType());
-    std::vector<nbt::AbstractTag*> data = compoundTag.getValue();
+    EXPECT_EQ(amc::TagType::Compound, compoundTag.getType());
+    std::vector<amc::AbstractTag*> data = compoundTag.getValue();
     EXPECT_EQ(0, data.size());
     EXPECT_TRUE(compoundTag.isEmpty());
 }
 
 TEST(CompoundTag, Constructor_2)
 {
-    nbt::CompoundTag compoundTag("Tagname");
+    amc::CompoundTag compoundTag("Tagname");
     EXPECT_STREQ("Tagname", compoundTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::Compound, compoundTag.getType());
-    std::vector<nbt::AbstractTag*> data = compoundTag.getValue();
+    EXPECT_EQ(amc::TagType::Compound, compoundTag.getType());
+    std::vector<amc::AbstractTag*> data = compoundTag.getValue();
     EXPECT_EQ(0, data.size());
     EXPECT_TRUE(compoundTag.isEmpty());
 }
 
 TEST(CompoundTag, Constructor_3)
 {
-    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *a2    = new nbt::ByteTag("A", 1);
-    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
-    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+    amc::ByteTag *a     = new amc::ByteTag("A", 1);
+    amc::ByteTag *a2    = new amc::ByteTag("A", 1);
+    amc::IntTag *b      = new amc::IntTag("B", 2000);
+    amc::FloatTag *c    = new amc::FloatTag("C", 3.f);
 
-    nbt::CompoundTag compoundTag({a, b, c});
+    amc::CompoundTag compoundTag({a, b, c});
     EXPECT_EQ(3, compoundTag.size());
 
-    nbt::AbstractTag *aTest = compoundTag.getChildByName("A");
+    amc::AbstractTag *aTest = compoundTag.getChildByName("A");
     EXPECT_EQ(a, aTest);
-    nbt::AbstractTag *bTest = compoundTag.getChildByName("B");
+    amc::AbstractTag *bTest = compoundTag.getChildByName("B");
     EXPECT_EQ(b, bTest);
-    nbt::AbstractTag *cTest = compoundTag.getChildByName("C");
+    amc::AbstractTag *cTest = compoundTag.getChildByName("C");
     EXPECT_EQ(c, cTest);
 
-    nbt::CompoundTag compoundTag2({a2, nullptr});
+    amc::CompoundTag compoundTag2({a2, nullptr});
     EXPECT_EQ(1, compoundTag2.size());
-    nbt::AbstractTag *aTest2 = compoundTag2.getChildByName("A");
+    amc::AbstractTag *aTest2 = compoundTag2.getChildByName("A");
     EXPECT_EQ(a2, aTest2);
 }
 
 TEST(CompoundTag, Constructor_4)
 {
     std::string name    = "Constructor_4";
-    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *a2    = new nbt::ByteTag("A", 1);
-    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
-    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+    amc::ByteTag *a     = new amc::ByteTag("A", 1);
+    amc::ByteTag *a2    = new amc::ByteTag("A", 1);
+    amc::IntTag *b      = new amc::IntTag("B", 2000);
+    amc::FloatTag *c    = new amc::FloatTag("C", 3.f);
 
-    nbt::CompoundTag compoundTag(name, {a, b, c});
+    amc::CompoundTag compoundTag(name, {a, b, c});
     EXPECT_EQ(3, compoundTag.size());
     EXPECT_STREQ(name.c_str(), compoundTag.getName().c_str());
 
-    nbt::AbstractTag *aTest = compoundTag.getChildByName("A");
+    amc::AbstractTag *aTest = compoundTag.getChildByName("A");
     EXPECT_EQ(a, aTest);
-    nbt::AbstractTag *bTest = compoundTag.getChildByName("B");
+    amc::AbstractTag *bTest = compoundTag.getChildByName("B");
     EXPECT_EQ(b, bTest);
-    nbt::AbstractTag *cTest = compoundTag.getChildByName("C");
+    amc::AbstractTag *cTest = compoundTag.getChildByName("C");
     EXPECT_EQ(c, cTest);
 
-    nbt::CompoundTag compoundTag2(name, {a2, nullptr});
+    amc::CompoundTag compoundTag2(name, {a2, nullptr});
     EXPECT_EQ(1, compoundTag2.size());
-    nbt::AbstractTag *aTest2 = compoundTag2.getChildByName("A");
+    amc::AbstractTag *aTest2 = compoundTag2.getChildByName("A");
     EXPECT_EQ(a2, aTest2);
 }
 
@@ -84,23 +84,23 @@ TEST(CompoundTag, CopyConstructor)
     std::string name = "CopyConstructor";
 
     // Init A
-    nbt::CompoundTag compoundTagA(name);
-    compoundTagA.pushBack(new nbt::IntTag("A", 1));
-    compoundTagA.pushBack(new nbt::FloatTag("B", 2.5f));
-    compoundTagA.pushBack(new nbt::StringTag("C", "Hallo"));
+    amc::CompoundTag compoundTagA(name);
+    compoundTagA.pushBack(new amc::IntTag("A", 1));
+    compoundTagA.pushBack(new amc::FloatTag("B", 2.5f));
+    compoundTagA.pushBack(new amc::StringTag("C", "Hallo"));
     ASSERT_STREQ(compoundTagA.getName().c_str(), name.c_str());
     ASSERT_EQ(3, compoundTagA.size());
 
     // Test Copy Constructor
-    nbt::CompoundTag compoundTagB(compoundTagA);
+    amc::CompoundTag compoundTagB(compoundTagA);
     EXPECT_STREQ(compoundTagB.getName().c_str(), name.c_str());
     EXPECT_STREQ(compoundTagB.getName().c_str(), compoundTagA.getName().c_str());
     EXPECT_EQ(3, compoundTagB.size());
     EXPECT_EQ(compoundTagB.size(), compoundTagA.size());
 
-    EXPECT_EQ(compoundTagB.at(0)->getType(), nbt::TagType::Int);
-    EXPECT_EQ(compoundTagB.at(1)->getType(), nbt::TagType::Float);
-    EXPECT_EQ(compoundTagB.at(2)->getType(), nbt::TagType::String);
+    EXPECT_EQ(compoundTagB.at(0)->getType(), amc::TagType::Int);
+    EXPECT_EQ(compoundTagB.at(1)->getType(), amc::TagType::Float);
+    EXPECT_EQ(compoundTagB.at(2)->getType(), amc::TagType::String);
     EXPECT_STREQ(compoundTagB.at(0)->getName().c_str(), "A");
     EXPECT_STREQ(compoundTagB.at(1)->getName().c_str(), "B");
     EXPECT_STREQ(compoundTagB.at(2)->getName().c_str(), "C");
@@ -111,23 +111,23 @@ TEST(CompoundTag, MoveConstructor)
     std::string name = "MoveConstructor";
 
     // Init A
-    nbt::CompoundTag compoundTagA(name);
-    compoundTagA.pushBack(new nbt::IntTag("A", 1));
-    compoundTagA.pushBack(new nbt::FloatTag("B", 2.5f));
-    compoundTagA.pushBack(new nbt::StringTag("C", "Hallo"));
+    amc::CompoundTag compoundTagA(name);
+    compoundTagA.pushBack(new amc::IntTag("A", 1));
+    compoundTagA.pushBack(new amc::FloatTag("B", 2.5f));
+    compoundTagA.pushBack(new amc::StringTag("C", "Hallo"));
     ASSERT_STREQ(compoundTagA.getName().c_str(), name.c_str());
     ASSERT_EQ(3, compoundTagA.size());
 
     // Test Copy Constructor
-    nbt::CompoundTag compoundTagB(std::move(compoundTagA));
+    amc::CompoundTag compoundTagB(std::move(compoundTagA));
     EXPECT_STREQ(compoundTagB.getName().c_str(), name.c_str());
     EXPECT_STREQ(compoundTagA.getName().c_str(), "");
     EXPECT_EQ(3, compoundTagB.size());
     EXPECT_EQ(0, compoundTagA.size());
 
-    EXPECT_EQ(compoundTagB.at(0)->getType(), nbt::TagType::Int);
-    EXPECT_EQ(compoundTagB.at(1)->getType(), nbt::TagType::Float);
-    EXPECT_EQ(compoundTagB.at(2)->getType(), nbt::TagType::String);
+    EXPECT_EQ(compoundTagB.at(0)->getType(), amc::TagType::Int);
+    EXPECT_EQ(compoundTagB.at(1)->getType(), amc::TagType::Float);
+    EXPECT_EQ(compoundTagB.at(2)->getType(), amc::TagType::String);
     EXPECT_STREQ(compoundTagB.at(0)->getName().c_str(), "A");
     EXPECT_STREQ(compoundTagB.at(1)->getName().c_str(), "B");
     EXPECT_STREQ(compoundTagB.at(2)->getName().c_str(), "C");
@@ -138,23 +138,23 @@ TEST(CompoundTag, CopyAssignment)
     std::string name = "CopyAssignment";
 
     // Init A
-    nbt::CompoundTag compoundTagA(name);
-    compoundTagA.pushBack(new nbt::IntTag("A", 1));
-    compoundTagA.pushBack(new nbt::DoubleTag("B", 2.5));
-    compoundTagA.pushBack(new nbt::StringTag("C", "Hallo"));
+    amc::CompoundTag compoundTagA(name);
+    compoundTagA.pushBack(new amc::IntTag("A", 1));
+    compoundTagA.pushBack(new amc::DoubleTag("B", 2.5));
+    compoundTagA.pushBack(new amc::StringTag("C", "Hallo"));
     ASSERT_STREQ(compoundTagA.getName().c_str(), name.c_str());
     ASSERT_EQ(3, compoundTagA.size());
 
     // Test Copy Assignment
-    nbt::CompoundTag compoundTagB = compoundTagA;
+    amc::CompoundTag compoundTagB = compoundTagA;
     EXPECT_STREQ(compoundTagB.getName().c_str(), name.c_str());
     EXPECT_STREQ(compoundTagB.getName().c_str(), compoundTagA.getName().c_str());
     EXPECT_EQ(3, compoundTagB.size());
     EXPECT_EQ(compoundTagB.size(), compoundTagA.size());
 
-    EXPECT_EQ(compoundTagB.at(0)->getType(), nbt::TagType::Int);
-    EXPECT_EQ(compoundTagB.at(1)->getType(), nbt::TagType::Double);
-    EXPECT_EQ(compoundTagB.at(2)->getType(), nbt::TagType::String);
+    EXPECT_EQ(compoundTagB.at(0)->getType(), amc::TagType::Int);
+    EXPECT_EQ(compoundTagB.at(1)->getType(), amc::TagType::Double);
+    EXPECT_EQ(compoundTagB.at(2)->getType(), amc::TagType::String);
     EXPECT_STREQ(compoundTagB.at(0)->getName().c_str(), "A");
     EXPECT_STREQ(compoundTagB.at(1)->getName().c_str(), "B");
     EXPECT_STREQ(compoundTagB.at(2)->getName().c_str(), "C");
@@ -165,23 +165,23 @@ TEST(CompoundTag, MoveAssignment)
     std::string name = "MoveAssignment";
 
     // Init A
-    nbt::CompoundTag compoundTagA(name);
-    compoundTagA.pushBack(new nbt::IntTag("A", 1));
-    compoundTagA.pushBack(new nbt::FloatTag("B", 2.5f));
-    compoundTagA.pushBack(new nbt::StringTag("C", "Hallo"));
+    amc::CompoundTag compoundTagA(name);
+    compoundTagA.pushBack(new amc::IntTag("A", 1));
+    compoundTagA.pushBack(new amc::FloatTag("B", 2.5f));
+    compoundTagA.pushBack(new amc::StringTag("C", "Hallo"));
     ASSERT_STREQ(compoundTagA.getName().c_str(), name.c_str());
     ASSERT_EQ(3, compoundTagA.size());
 
     // Test Move Assignment
-    nbt::CompoundTag compoundTagB = std::move(compoundTagA);
+    amc::CompoundTag compoundTagB = std::move(compoundTagA);
     EXPECT_STREQ(compoundTagB.getName().c_str(), name.c_str());
     EXPECT_STREQ(compoundTagA.getName().c_str(), "");
     EXPECT_EQ(3, compoundTagB.size());
     EXPECT_EQ(0, compoundTagA.size());
 
-    EXPECT_EQ(compoundTagB.at(0)->getType(), nbt::TagType::Int);
-    EXPECT_EQ(compoundTagB.at(1)->getType(), nbt::TagType::Float);
-    EXPECT_EQ(compoundTagB.at(2)->getType(), nbt::TagType::String);
+    EXPECT_EQ(compoundTagB.at(0)->getType(), amc::TagType::Int);
+    EXPECT_EQ(compoundTagB.at(1)->getType(), amc::TagType::Float);
+    EXPECT_EQ(compoundTagB.at(2)->getType(), amc::TagType::String);
     EXPECT_STREQ(compoundTagB.at(0)->getName().c_str(), "A");
     EXPECT_STREQ(compoundTagB.at(1)->getName().c_str(), "B");
     EXPECT_STREQ(compoundTagB.at(2)->getName().c_str(), "C");
@@ -190,14 +190,14 @@ TEST(CompoundTag, MoveAssignment)
 TEST(CompoundTag, clone)
 {
     // Init A
-    nbt::CompoundTag compoundTagA;
+    amc::CompoundTag compoundTagA;
 
-    compoundTagA.pushBack(new nbt::IntTag("A", 1));
-    compoundTagA.pushBack(new nbt::IntTag("B", 2));
-    compoundTagA.pushBack(new nbt::IntTag("C", 3));
+    compoundTagA.pushBack(new amc::IntTag("A", 1));
+    compoundTagA.pushBack(new amc::IntTag("B", 2));
+    compoundTagA.pushBack(new amc::IntTag("C", 3));
     ASSERT_EQ(3, compoundTagA.size());
 
-    nbt::CompoundTag *clone = tag_cast<nbt::CompoundTag*>(compoundTagA.clone());
+    amc::CompoundTag *clone = tag_cast<amc::CompoundTag*>(compoundTagA.clone());
 
     EXPECT_TRUE(compoundTagA == *clone);
 
@@ -207,19 +207,19 @@ TEST(CompoundTag, clone)
 TEST(CompoundTag, Equal)
 {
     // Init A
-    nbt::CompoundTag compoundTagA;
+    amc::CompoundTag compoundTagA;
 
-    compoundTagA.pushBack(new nbt::ByteTag("A", 1));
-    compoundTagA.pushBack(new nbt::ByteTag("B", 2));
-    compoundTagA.pushBack(new nbt::ByteTag("C", 3));
+    compoundTagA.pushBack(new amc::ByteTag("A", 1));
+    compoundTagA.pushBack(new amc::ByteTag("B", 2));
+    compoundTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, compoundTagA.size());
 
     // Init B
-    nbt::CompoundTag compoundTagB;
+    amc::CompoundTag compoundTagB;
 
-    compoundTagB.pushBack(new nbt::ByteTag("A", 1));
-    compoundTagB.pushBack(new nbt::ByteTag("B", 2));
-    compoundTagB.pushBack(new nbt::ByteTag("C", 3));
+    compoundTagB.pushBack(new amc::ByteTag("A", 1));
+    compoundTagB.pushBack(new amc::ByteTag("B", 2));
+    compoundTagB.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, compoundTagB.size());
 
     EXPECT_TRUE(compoundTagA == compoundTagA);
@@ -240,19 +240,19 @@ TEST(CompoundTag, Equal)
 TEST(CompoundTag, NotEqual)
 {
     // Init List A
-    nbt::CompoundTag compoundTagA;
+    amc::CompoundTag compoundTagA;
 
-    compoundTagA.pushBack(new nbt::ByteTag("A", 1));
-    compoundTagA.pushBack(new nbt::ByteTag("B", 2));
-    compoundTagA.pushBack(new nbt::ByteTag("C", 3));
+    compoundTagA.pushBack(new amc::ByteTag("A", 1));
+    compoundTagA.pushBack(new amc::ByteTag("B", 2));
+    compoundTagA.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, compoundTagA.size());
 
     // Init List B
-    nbt::CompoundTag compoundTagB;
+    amc::CompoundTag compoundTagB;
 
-    compoundTagB.pushBack(new nbt::ByteTag("A", 1));
-    compoundTagB.pushBack(new nbt::ByteTag("B", 2));
-    compoundTagB.pushBack(new nbt::ByteTag("C", 3));
+    compoundTagB.pushBack(new amc::ByteTag("A", 1));
+    compoundTagB.pushBack(new amc::ByteTag("B", 2));
+    compoundTagB.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, compoundTagB.size());
 
     EXPECT_FALSE(compoundTagA != compoundTagA);
@@ -273,8 +273,8 @@ TEST(CompoundTag, NotEqual)
 
 TEST(CompoundTag, getType)
 {
-    nbt::CompoundTag compoundTag;
-    EXPECT_EQ(nbt::TagType::Compound, compoundTag.getType());
+    amc::CompoundTag compoundTag;
+    EXPECT_EQ(amc::TagType::Compound, compoundTag.getType());
 }
 
 TEST(CompoundTag, getData)
@@ -287,9 +287,9 @@ TEST(CompoundTag, getData)
         0x00, 0x00, 0x00
     };
 
-    nbt::CompoundTag compoundTag("egg");
-    compoundTag.pushBack(new nbt::StringTag("name", "Eggbert"));
-    compoundTag.pushBack(new nbt::FloatTag("value", 0.5));
+    amc::CompoundTag compoundTag("egg");
+    compoundTag.pushBack(new amc::StringTag("name", "Eggbert"));
+    compoundTag.pushBack(new amc::FloatTag("value", 0.5));
 
     std::vector<unsigned char> data = compoundTag.getData(false);
 
@@ -303,85 +303,85 @@ TEST(CompoundTag, getData)
 
 TEST(CompoundTag, begin)
 {
-    nbt::CompoundTag compoundTag({
-        new nbt::ByteTag("A", 1),
-        new nbt::ByteTag("B", 2),
-        new nbt::ByteTag("C", 3)
+    amc::CompoundTag compoundTag({
+        new amc::ByteTag("A", 1),
+        new amc::ByteTag("B", 2),
+        new amc::ByteTag("C", 3)
     });
 
-    nbt::CompoundTag::iterator it = compoundTag.begin();
-    nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    amc::CompoundTag::iterator it = compoundTag.begin();
+    amc::ByteTag *b = amc::tag_cast<amc::ByteTag*>(*it);
     ASSERT_TRUE(b != nullptr);
-    EXPECT_EQ(*b, nbt::ByteTag("A", 1));
+    EXPECT_EQ(*b, amc::ByteTag("A", 1));
 }
 
 TEST(CompoundTag, end)
 {
-    nbt::CompoundTag compoundTag({
-        new nbt::ByteTag("A", 1),
-        new nbt::ByteTag("B", 2),
-        new nbt::ByteTag("C", 3)
+    amc::CompoundTag compoundTag({
+        new amc::ByteTag("A", 1),
+        new amc::ByteTag("B", 2),
+        new amc::ByteTag("C", 3)
     });
 
     int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
-    for(nbt::CompoundTag::iterator it = compoundTag.begin(); it != compoundTag.end(); ++it) {
-        nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    for(amc::CompoundTag::iterator it = compoundTag.begin(); it != compoundTag.end(); ++it) {
+        amc::ByteTag *b = amc::tag_cast<amc::ByteTag*>(*it);
         ASSERT_TRUE(b != nullptr);
-        EXPECT_EQ(*b, nbt::ByteTag(strArray[idx], idx + 1));
+        EXPECT_EQ(*b, amc::ByteTag(strArray[idx], idx + 1));
         idx++;
     }
 }
 
 TEST(CompoundTag, begin_const)
 {
-    const nbt::CompoundTag compoundTag({ 
-        new nbt::ByteTag("A", 1),
-        new nbt::ByteTag("B", 2),
-        new nbt::ByteTag("C", 3)
+    const amc::CompoundTag compoundTag({ 
+        new amc::ByteTag("A", 1),
+        new amc::ByteTag("B", 2),
+        new amc::ByteTag("C", 3)
     });
 
-    nbt::CompoundTag::const_iterator it = compoundTag.begin();
-    nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    amc::CompoundTag::const_iterator it = compoundTag.begin();
+    amc::ByteTag *b = amc::tag_cast<amc::ByteTag*>(*it);
     ASSERT_TRUE(b != nullptr);
-    EXPECT_TRUE(*b == nbt::ByteTag("A", 1));
+    EXPECT_TRUE(*b == amc::ByteTag("A", 1));
 }
 
 TEST(CompoundTag, end_const)
 {
-    const nbt::CompoundTag compoundTag({
-        new nbt::ByteTag("A", 1),
-        new nbt::ByteTag("B", 2),
-        new nbt::ByteTag("C", 3)
+    const amc::CompoundTag compoundTag({
+        new amc::ByteTag("A", 1),
+        new amc::ByteTag("B", 2),
+        new amc::ByteTag("C", 3)
     });
 
     int8_t idx = 0;
     std::string strArray[3] = {"A", "B", "C"};
-    for(nbt::CompoundTag::const_iterator it = compoundTag.begin(); it != compoundTag.end(); ++it) {
-        nbt::ByteTag *b = nbt::tag_cast<nbt::ByteTag*>(*it);
+    for(amc::CompoundTag::const_iterator it = compoundTag.begin(); it != compoundTag.end(); ++it) {
+        amc::ByteTag *b = amc::tag_cast<amc::ByteTag*>(*it);
         ASSERT_TRUE(b != nullptr);
-        EXPECT_EQ(*b, nbt::ByteTag(strArray[idx], idx + 1));
+        EXPECT_EQ(*b, amc::ByteTag(strArray[idx], idx + 1));
         idx++;
     }
 }
 
 TEST(CompoundTag, isEmpty)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
     EXPECT_TRUE(compoundTag.isEmpty());
 
     // Test adding a new Item
-    EXPECT_TRUE(compoundTag.pushBack(new nbt::ByteTag("Value", 1)));
+    EXPECT_TRUE(compoundTag.pushBack(new amc::ByteTag("Value", 1)));
     EXPECT_EQ(1, compoundTag.size());
     EXPECT_FALSE(compoundTag.isEmpty());
 }
 
 TEST(CompoundTag, clear)
 {
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::IntTag  *b = new nbt::IntTag("B", 2);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::IntTag  *b = new amc::IntTag("B", 2);
 
-    nbt::CompoundTag list;
+    amc::CompoundTag list;
     ASSERT_TRUE(list.pushBack(a));
     ASSERT_TRUE(list.pushBack(b));
     ASSERT_EQ(2, list.size());
@@ -391,12 +391,12 @@ TEST(CompoundTag, clear)
 
 TEST(CompoundTag, erase)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
     // Add 3 Items
-    compoundTag.pushBack(new nbt::ByteTag("A", 1));
-    compoundTag.pushBack(new nbt::ByteTag("B", 2));
-    compoundTag.pushBack(new nbt::ByteTag("C", 3));
+    compoundTag.pushBack(new amc::ByteTag("A", 1));
+    compoundTag.pushBack(new amc::ByteTag("B", 2));
+    compoundTag.pushBack(new amc::ByteTag("C", 3));
     ASSERT_EQ(3, compoundTag.size());
 
     // Test index too high
@@ -408,11 +408,11 @@ TEST(CompoundTag, erase)
     EXPECT_EQ(2, compoundTag.size());
 
     // Check that item 1 and 3 remain
-    std::vector<nbt::AbstractTag*> data = compoundTag.getValue();
-    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
+    std::vector<amc::AbstractTag*> data = compoundTag.getValue();
+    amc::ByteTag *bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
-    bt = tag_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<amc::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
 
@@ -422,7 +422,7 @@ TEST(CompoundTag, erase)
 
     // Check remaining item
     data = compoundTag.getValue();
-    bt = tag_cast<nbt::ByteTag*>(data[0]);
+    bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
 
@@ -434,37 +434,37 @@ TEST(CompoundTag, erase)
 
 TEST(CompoundTag, insert)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
     // Test insert nullptr
     EXPECT_FALSE(compoundTag.insert(0, nullptr));
 
     // Test adding a new Item at invalid index
-    nbt::AbstractTag *invalidTag = new nbt::ByteTag("Value", 1);
+    amc::AbstractTag *invalidTag = new amc::ByteTag("Value", 1);
     EXPECT_FALSE(compoundTag.insert(1, invalidTag));
     delete invalidTag;
 
     // Add correct item
-    EXPECT_TRUE(compoundTag.insert(0, new nbt::ByteTag("Value", 1)));
+    EXPECT_TRUE(compoundTag.insert(0, new amc::ByteTag("Value", 1)));
     EXPECT_EQ(1, compoundTag.size());
 
     // Add second item at end
-    EXPECT_TRUE(compoundTag.insert(1, new nbt::ByteTag("Value", 3)));
+    EXPECT_TRUE(compoundTag.insert(1, new amc::ByteTag("Value", 3)));
     EXPECT_EQ(2, compoundTag.size());
 
     // Add third item in between
-    EXPECT_TRUE(compoundTag.insert(1, new nbt::ByteTag("Value", 2)));
+    EXPECT_TRUE(compoundTag.insert(1, new amc::ByteTag("Value", 2)));
     EXPECT_EQ(3, compoundTag.size());
 
     // Test correct order
-    std::vector<nbt::AbstractTag*> data = compoundTag.getValue();
-    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
+    std::vector<amc::AbstractTag*> data = compoundTag.getValue();
+    amc::ByteTag *bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
-    bt = tag_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<amc::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
-    bt = tag_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<amc::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
 
@@ -472,13 +472,13 @@ TEST(CompoundTag, insert)
 
 TEST(CompoundTag, pushBack)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
     // Test adding a new Item
-    EXPECT_TRUE(compoundTag.pushBack(new nbt::ByteTag("Value", 1)));
+    EXPECT_TRUE(compoundTag.pushBack(new amc::ByteTag("Value", 1)));
     EXPECT_EQ(1, compoundTag.size());
 
     // Test adding another tag
-    EXPECT_TRUE(compoundTag.pushBack(new nbt::StringTag("A", "B")));
+    EXPECT_TRUE(compoundTag.pushBack(new amc::StringTag("A", "B")));
     EXPECT_EQ(2, compoundTag.size());
 
     // Test adding a nullptr
@@ -488,17 +488,17 @@ TEST(CompoundTag, pushBack)
 
 TEST(CompoundTag, size)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
     // Test adding a new Item
-    ASSERT_TRUE(compoundTag.pushBack(new nbt::ByteTag("Value", 1)));
+    ASSERT_TRUE(compoundTag.pushBack(new amc::ByteTag("Value", 1)));
     EXPECT_EQ(1, compoundTag.size());
 
     // Test adding a second item
-    ASSERT_TRUE(compoundTag.pushBack(new nbt::IntTag("Value", 2)));
+    ASSERT_TRUE(compoundTag.pushBack(new amc::IntTag("Value", 2)));
     EXPECT_EQ(2, compoundTag.size());
 
     // Test adding a third item
-    ASSERT_TRUE(compoundTag.pushBack(new nbt::StringTag("Value", "V")));
+    ASSERT_TRUE(compoundTag.pushBack(new amc::StringTag("Value", "V")));
     EXPECT_EQ(3, compoundTag.size());
 
     // Test erasing an item
@@ -512,11 +512,11 @@ TEST(CompoundTag, size)
 
 TEST(CompoundTag, at)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -525,9 +525,9 @@ TEST(CompoundTag, at)
     ASSERT_EQ(3, compoundTag.size());
 
     // Test at
-    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(compoundTag.at(0));
-    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(compoundTag.at(1));
-    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(compoundTag.at(2));
+    amc::ByteTag *v1 = tag_cast<amc::ByteTag*>(compoundTag.at(0));
+    amc::ByteTag *v2 = tag_cast<amc::ByteTag*>(compoundTag.at(1));
+    amc::ByteTag *v3 = tag_cast<amc::ByteTag*>(compoundTag.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -539,11 +539,11 @@ TEST(CompoundTag, at)
 
 TEST(CompoundTag, at_const)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -551,12 +551,12 @@ TEST(CompoundTag, at_const)
     compoundTag.pushBack(c);
     ASSERT_EQ(3, compoundTag.size());
 
-    const nbt::CompoundTag compoundTag2(compoundTag);
+    const amc::CompoundTag compoundTag2(compoundTag);
 
     // Test at
-    const nbt::ByteTag *v1 = tag_cast<const nbt::ByteTag*>(compoundTag2.at(0));
-    const nbt::ByteTag *v2 = tag_cast<const nbt::ByteTag*>(compoundTag2.at(1));
-    const nbt::ByteTag *v3 = tag_cast<const nbt::ByteTag*>(compoundTag2.at(2));
+    const amc::ByteTag *v1 = tag_cast<const amc::ByteTag*>(compoundTag2.at(0));
+    const amc::ByteTag *v2 = tag_cast<const amc::ByteTag*>(compoundTag2.at(1));
+    const amc::ByteTag *v3 = tag_cast<const amc::ByteTag*>(compoundTag2.at(2));
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -568,11 +568,11 @@ TEST(CompoundTag, at_const)
 
 TEST(CompoundTag, takeAt)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
-    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
-    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+    amc::ByteTag *a     = new amc::ByteTag("A", 1);
+    amc::IntTag *b      = new amc::IntTag("B", 2000);
+    amc::FloatTag *c    = new amc::FloatTag("C", 3.f);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -581,13 +581,13 @@ TEST(CompoundTag, takeAt)
     ASSERT_EQ(3, compoundTag.size());
 
     // Test
-    nbt::AbstractTag *bTest = compoundTag.takeAt(1);
+    amc::AbstractTag *bTest = compoundTag.takeAt(1);
     EXPECT_EQ(2, compoundTag.size());
     EXPECT_EQ(b, bTest);
-    nbt::AbstractTag *aTest = compoundTag.takeAt(0);
+    amc::AbstractTag *aTest = compoundTag.takeAt(0);
     EXPECT_EQ(1, compoundTag.size());
     EXPECT_EQ(a, aTest);
-    nbt::AbstractTag *cTest = compoundTag.takeAt(0);
+    amc::AbstractTag *cTest = compoundTag.takeAt(0);
     EXPECT_EQ(0, compoundTag.size());
     EXPECT_EQ(c, cTest);
 
@@ -598,11 +598,11 @@ TEST(CompoundTag, takeAt)
 
 TEST(CompoundTag, subscript)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -611,9 +611,9 @@ TEST(CompoundTag, subscript)
     ASSERT_EQ(3, compoundTag.size());
 
     // Test at
-    nbt::ByteTag *v1 = tag_cast<nbt::ByteTag*>(compoundTag[0]);
-    nbt::ByteTag *v2 = tag_cast<nbt::ByteTag*>(compoundTag[1]);
-    nbt::ByteTag *v3 = tag_cast<nbt::ByteTag*>(compoundTag[2]);
+    amc::ByteTag *v1 = tag_cast<amc::ByteTag*>(compoundTag[0]);
+    amc::ByteTag *v2 = tag_cast<amc::ByteTag*>(compoundTag[1]);
+    amc::ByteTag *v3 = tag_cast<amc::ByteTag*>(compoundTag[2]);
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -622,11 +622,11 @@ TEST(CompoundTag, subscript)
 
 TEST(CompoundTag, subscript_const)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -634,12 +634,12 @@ TEST(CompoundTag, subscript_const)
     compoundTag.pushBack(c);
     ASSERT_EQ(3, compoundTag.size());
 
-    const nbt::CompoundTag compoundTag2(compoundTag);
+    const amc::CompoundTag compoundTag2(compoundTag);
 
     // Test at
-    const nbt::ByteTag *v1 = tag_cast<const nbt::ByteTag*>(compoundTag2[0]);
-    const nbt::ByteTag *v2 = tag_cast<const nbt::ByteTag*>(compoundTag2[1]);
-    const nbt::ByteTag *v3 = tag_cast<const nbt::ByteTag*>(compoundTag2[2]);
+    const amc::ByteTag *v1 = tag_cast<const amc::ByteTag*>(compoundTag2[0]);
+    const amc::ByteTag *v2 = tag_cast<const amc::ByteTag*>(compoundTag2[1]);
+    const amc::ByteTag *v3 = tag_cast<const amc::ByteTag*>(compoundTag2[2]);
 
     EXPECT_TRUE(*a == *v1);
     EXPECT_TRUE(*b == *v2);
@@ -648,11 +648,11 @@ TEST(CompoundTag, subscript_const)
 
 TEST(CompoundTag, hasChild)
 {
-    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
-    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
-    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+    amc::ByteTag *a     = new amc::ByteTag("A", 1);
+    amc::IntTag *b      = new amc::IntTag("B", 2000);
+    amc::FloatTag *c    = new amc::FloatTag("C", 3.f);
 
-    nbt::CompoundTag compoundTag({a, b, c});
+    amc::CompoundTag compoundTag({a, b, c});
     ASSERT_EQ(3, compoundTag.size());
 
     EXPECT_TRUE(compoundTag.hasChild("A"));
@@ -663,11 +663,11 @@ TEST(CompoundTag, hasChild)
 
 TEST(CompoundTag, getChildByName)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
-    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
-    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+    amc::ByteTag *a     = new amc::ByteTag("A", 1);
+    amc::IntTag *b      = new amc::IntTag("B", 2000);
+    amc::FloatTag *c    = new amc::FloatTag("C", 3.f);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -676,27 +676,27 @@ TEST(CompoundTag, getChildByName)
     ASSERT_EQ(3, compoundTag.size());
 
     // Test
-    nbt::AbstractTag *aTest = compoundTag.getChildByName("A");
+    amc::AbstractTag *aTest = compoundTag.getChildByName("A");
     EXPECT_EQ(3, compoundTag.size());
     EXPECT_EQ(a, aTest);
-    nbt::AbstractTag *bTest = compoundTag.getChildByName("B");
+    amc::AbstractTag *bTest = compoundTag.getChildByName("B");
     EXPECT_EQ(3, compoundTag.size());
     EXPECT_EQ(b, bTest);
-    nbt::AbstractTag *cTest = compoundTag.getChildByName("C");
+    amc::AbstractTag *cTest = compoundTag.getChildByName("C");
     EXPECT_EQ(3, compoundTag.size());
     EXPECT_EQ(c, cTest);
-    nbt::AbstractTag *dTest = compoundTag.getChildByName("D");
+    amc::AbstractTag *dTest = compoundTag.getChildByName("D");
     EXPECT_EQ(3, compoundTag.size());
     EXPECT_EQ(nullptr, dTest);
 }
 
 TEST(CompoundTag, getChildByName_const)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
-    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
-    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
+    amc::ByteTag *a     = new amc::ByteTag("A", 1);
+    amc::IntTag *b      = new amc::IntTag("B", 2000);
+    amc::FloatTag *c    = new amc::FloatTag("C", 3.f);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -705,29 +705,29 @@ TEST(CompoundTag, getChildByName_const)
     ASSERT_EQ(3, compoundTag.size());
 
     // Test
-    const nbt::CompoundTag *testTag = &compoundTag;
-    const nbt::AbstractTag *aTest = testTag->getChildByName("A");
+    const amc::CompoundTag *testTag = &compoundTag;
+    const amc::AbstractTag *aTest = testTag->getChildByName("A");
     EXPECT_EQ(3, testTag->size());
     EXPECT_EQ(a, aTest);
-    const nbt::AbstractTag *bTest = testTag->getChildByName("B");
+    const amc::AbstractTag *bTest = testTag->getChildByName("B");
     EXPECT_EQ(3, testTag->size());
     EXPECT_EQ(b, bTest);
-    const nbt::AbstractTag *cTest = testTag->getChildByName("C");
+    const amc::AbstractTag *cTest = testTag->getChildByName("C");
     EXPECT_EQ(3, testTag->size());
     EXPECT_EQ(c, cTest);
-    const nbt::AbstractTag *dTest = testTag->getChildByName("D");
+    const amc::AbstractTag *dTest = testTag->getChildByName("D");
     EXPECT_EQ(3, testTag->size());
     EXPECT_EQ(nullptr, dTest);
 }
 
 TEST(CompoundTag, getChildrenByName)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a     = new nbt::ByteTag("A", 1);
-    nbt::IntTag *b      = new nbt::IntTag("B", 2000);
-    nbt::FloatTag *c    = new nbt::FloatTag("C", 3.f);
-    nbt::FloatTag *d    = new nbt::FloatTag("C", 35.f);
+    amc::ByteTag *a     = new amc::ByteTag("A", 1);
+    amc::IntTag *b      = new amc::IntTag("B", 2000);
+    amc::FloatTag *c    = new amc::FloatTag("C", 3.f);
+    amc::FloatTag *d    = new amc::FloatTag("C", 35.f);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -737,31 +737,31 @@ TEST(CompoundTag, getChildrenByName)
     ASSERT_EQ(4, compoundTag.size());
 
     // Test
-    std::vector<nbt::AbstractTag*> aTest = compoundTag.getChildrenByName("A");
+    std::vector<amc::AbstractTag*> aTest = compoundTag.getChildrenByName("A");
     EXPECT_EQ(4, compoundTag.size());
     EXPECT_EQ(1, aTest.size());
     EXPECT_EQ(a, aTest[0]);
-    std::vector<nbt::AbstractTag*> bTest = compoundTag.getChildrenByName("B");
+    std::vector<amc::AbstractTag*> bTest = compoundTag.getChildrenByName("B");
     EXPECT_EQ(4, compoundTag.size());
     EXPECT_EQ(1, bTest.size());
     EXPECT_EQ(b, bTest[0]);
-    std::vector<nbt::AbstractTag*> cTest = compoundTag.getChildrenByName("C");
+    std::vector<amc::AbstractTag*> cTest = compoundTag.getChildrenByName("C");
     EXPECT_EQ(4, compoundTag.size());
     EXPECT_EQ(2, cTest.size());
     EXPECT_EQ(c, cTest[0]);
     EXPECT_EQ(d, cTest[1]);
-    std::vector<nbt::AbstractTag*> dTest = compoundTag.getChildrenByName("D");
+    std::vector<amc::AbstractTag*> dTest = compoundTag.getChildrenByName("D");
     EXPECT_EQ(4, compoundTag.size());
     EXPECT_EQ(0, dTest.size());
 }
 
 TEST(CompoundTag, getValue)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag    *a = new nbt::ByteTag("A", 1);
-    nbt::IntTag     *b = new nbt::IntTag("B", 2);
-    nbt::StringTag  *c = new nbt::StringTag("C", "B");
+    amc::ByteTag    *a = new amc::ByteTag("A", 1);
+    amc::IntTag     *b = new amc::IntTag("B", 2);
+    amc::StringTag  *c = new amc::StringTag("C", "B");
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -770,34 +770,34 @@ TEST(CompoundTag, getValue)
     ASSERT_EQ(3, compoundTag.size());
 
     // Test items
-    std::vector<nbt::AbstractTag*> data = compoundTag.getValue();
+    std::vector<amc::AbstractTag*> data = compoundTag.getValue();
 
-    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
+    amc::ByteTag *bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
-    EXPECT_EQ(nbt::TagType::Byte, bt->getType());
+    EXPECT_EQ(amc::TagType::Byte, bt->getType());
     EXPECT_EQ(1, bt->getValue());
     EXPECT_STREQ("A", bt->getName().c_str());
 
-    nbt::IntTag *it = tag_cast<nbt::IntTag*>(data[1]);
+    amc::IntTag *it = tag_cast<amc::IntTag*>(data[1]);
     EXPECT_TRUE(it != nullptr);
-    EXPECT_EQ(nbt::TagType::Int, it->getType());
+    EXPECT_EQ(amc::TagType::Int, it->getType());
     EXPECT_EQ(2, it->getValue());
     EXPECT_STREQ("B", it->getName().c_str());
 
-    nbt::StringTag *st = tag_cast<nbt::StringTag*>(data[2]);
+    amc::StringTag *st = tag_cast<amc::StringTag*>(data[2]);
     EXPECT_TRUE(st != nullptr);
-    EXPECT_EQ(nbt::TagType::String, st->getType());
+    EXPECT_EQ(amc::TagType::String, st->getType());
     EXPECT_STREQ("B", st->getValue().c_str());
     EXPECT_STREQ("C", st->getName().c_str());
 }
 
 TEST(CompoundTag, getValueCopy)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
     // Add 3 Items
     compoundTag.pushBack(a);
@@ -805,16 +805,16 @@ TEST(CompoundTag, getValueCopy)
     compoundTag.pushBack(c);
     ASSERT_EQ(3, compoundTag.size());
 
-    std::vector<nbt::AbstractTag*> data = compoundTag.getValueCopy();
-    nbt::ByteTag *bt = tag_cast<nbt::ByteTag*>(data[0]);
+    std::vector<amc::AbstractTag*> data = compoundTag.getValueCopy();
+    amc::ByteTag *bt = tag_cast<amc::ByteTag*>(data[0]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(1, bt->getValue());
     EXPECT_STREQ("A", bt->getName().c_str());
-    bt = tag_cast<nbt::ByteTag*>(data[1]);
+    bt = tag_cast<amc::ByteTag*>(data[1]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(2, bt->getValue());
     EXPECT_STREQ("B", bt->getName().c_str());
-    bt = tag_cast<nbt::ByteTag*>(data[2]);
+    bt = tag_cast<amc::ByteTag*>(data[2]);
     EXPECT_TRUE(bt != nullptr);
     EXPECT_EQ(3, bt->getValue());
     EXPECT_STREQ("C", bt->getName().c_str());
@@ -826,19 +826,19 @@ TEST(CompoundTag, getValueCopy)
 
 TEST(CompoundTag, setValue)
 {
-    nbt::CompoundTag compoundTag;
+    amc::CompoundTag compoundTag;
 
-    nbt::ByteTag *a = new nbt::ByteTag("A", 1);
-    nbt::ByteTag *b = new nbt::ByteTag("B", 2);
-    nbt::ByteTag *c = new nbt::ByteTag("C", 3);
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
 
-    std::vector<nbt::AbstractTag*> data({a, b, c});
+    std::vector<amc::AbstractTag*> data({a, b, c});
 
     EXPECT_EQ(0, compoundTag.size());
     compoundTag.setValue(data);
     EXPECT_EQ(3, compoundTag.size());
 
-    std::vector<nbt::AbstractTag*> data2 = compoundTag.getValue();
+    std::vector<amc::AbstractTag*> data2 = compoundTag.getValue();
 
     EXPECT_TRUE(*data2[0] == *data[0]);
     EXPECT_TRUE(*data2[1] == *data[1]);
@@ -851,12 +851,12 @@ TEST(CompoundTag, setValue)
 
 TEST(CompoundTag, tag_cast)
 {
-    nbt::AbstractTag *testTag = new nbt::CompoundTag("A");
+    amc::AbstractTag *testTag = new amc::CompoundTag("A");
 
-    nbt::CompoundTag *otherTag = tag_cast<nbt::CompoundTag*>(testTag);
+    amc::CompoundTag *otherTag = tag_cast<amc::CompoundTag*>(testTag);
     EXPECT_EQ(otherTag, testTag);
 
-    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    amc::IntTag *nullTag = tag_cast<amc::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
 
     delete testTag;

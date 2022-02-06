@@ -9,7 +9,7 @@
 #include <string>
 #include <initializer_list>
 
-namespace nbt
+namespace amc
 {
 
 class CompoundTag : public AbstractVectorTag
@@ -47,6 +47,6 @@ public:
     std::vector<AbstractTag*> getChildrenByName(const std::string &name) const;
 };
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_COMPOUND_TAG_HPP

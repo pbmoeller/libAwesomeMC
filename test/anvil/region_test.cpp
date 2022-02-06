@@ -23,7 +23,7 @@ protected:
     static void SetUpTestSuite() 
     {
         const std::string filename = testFolder + "libAwesomeMC_TestWorld_1_18_1/region/r.-1.-1.mca";
-        region = anvil::loadRegion(filename);
+        region = amc::loadRegion(filename);
     }
 
     virtual void TearDown() override
@@ -31,7 +31,7 @@ protected:
 
     }
 
-    const std::array<int, anvil::BlockCount> expectedHeights = {
+    const std::array<int, amc::BlockCount> expectedHeights = {
         64, 64, 64, 64, 64, 64,  64,  64,  64,  64, 64, 64, 64, 64, 64, 64, // 0
         64, 68, 68, 68, 68, 68,  68,  68,  68,  68, 68, 68, 68, 68, 68, 64, // 1
         64, 68, 73, 73, 73, 73,  73,  73,  73,  73, 73, 73, 73, 73, 68, 64, // 2
@@ -108,21 +108,21 @@ protected:
         {-1,  -33, "minecraft:black_terracotta"}
     };
 
-    static anvil::Region region;
+    static amc::Region region;
 };
 
-anvil::Region RegionFixture::region = anvil::Region();
+amc::Region RegionFixture::region = amc::Region();
 
 TEST(Region, Constructor)
 {
-    anvil::Region region;
+    amc::Region region;
     EXPECT_EQ(0, region.getX());
     EXPECT_EQ(0, region.getZ());
 }
 
 TEST(Region, Constructor_2)
 {
-    anvil::Region region(32, 12);
+    amc::Region region(32, 12);
     EXPECT_EQ(32, region.getX());
     EXPECT_EQ(12, region.getZ());
 }
@@ -159,7 +159,7 @@ TEST(Region, NotEqual)
 
 TEST(Region, getX)
 {
-    anvil::Region region(31, 11);
+    amc::Region region(31, 11);
     EXPECT_EQ(31, region.getX());
     region.setX(5);
     EXPECT_EQ(5, region.getX());
@@ -167,7 +167,7 @@ TEST(Region, getX)
 
 TEST(Region, setX)
 {
-    anvil::Region region;
+    amc::Region region;
     EXPECT_EQ(0, region.getX());
     region.setX(2);
     EXPECT_EQ(2, region.getX());
@@ -175,7 +175,7 @@ TEST(Region, setX)
 
 TEST(Region, getZ)
 {
-    anvil::Region region(31, 11);
+    amc::Region region(31, 11);
     EXPECT_EQ(11, region.getZ());
     region.setZ(4);
     EXPECT_EQ(4, region.getZ());
@@ -183,7 +183,7 @@ TEST(Region, getZ)
 
 TEST(Region, setZ)
 {
-    anvil::Region region;
+    amc::Region region;
     EXPECT_EQ(0, region.getZ());
     region.setZ(1);
     EXPECT_EQ(1, region.getZ());
@@ -234,7 +234,7 @@ TEST_F(RegionFixture, getBlockAt)
     // Test Row 1 Blocks
     for(const int y : yCoordinates1) {
         for(int xOffset = 0; xOffset < 16; ++xOffset) {
-            anvil::Block block = region.getBlockAt(-16 + xOffset, y, -48);
+            amc::Block block = region.getBlockAt(-16 + xOffset, y, -48);
             auto [expectedX, expectedZ, expectedName] = expectedBlocksRow1[xOffset];
             EXPECT_EQ(block.getX(), expectedX);
             EXPECT_EQ(block.getZ(), expectedZ);
@@ -245,7 +245,7 @@ TEST_F(RegionFixture, getBlockAt)
     // Test Row 2 Blocks
     for(const int y : yCoordinates2) {
         for(int xOffset = 0; xOffset < 16; ++xOffset) {
-            anvil::Block block = region.getBlockAt(-16 + xOffset, y, -47);
+            amc::Block block = region.getBlockAt(-16 + xOffset, y, -47);
             auto [expectedX, expectedZ, expectedName] = expectedBlocksRow2[xOffset];
             EXPECT_EQ(block.getX(), expectedX);
             EXPECT_EQ(block.getZ(), expectedZ);
@@ -255,7 +255,7 @@ TEST_F(RegionFixture, getBlockAt)
 
     // Test Row 16 Blocks
     for(int xOffset = 0; xOffset < 16; ++xOffset) {
-        anvil::Block block = region.getBlockAt(-16 + xOffset, yCoordinates16[0], -33);
+        amc::Block block = region.getBlockAt(-16 + xOffset, yCoordinates16[0], -33);
         auto [expectedX, expectedZ, expectedName] = expectedBlocksRow16[xOffset];
         EXPECT_EQ(block.getX(), expectedX);
         EXPECT_EQ(block.getZ(), expectedZ);
@@ -265,7 +265,7 @@ TEST_F(RegionFixture, getBlockAt)
 
 TEST_F(RegionFixture, getHeightMap)
 {
-    anvil::HeightMap heightmap = region.getHeightMap(-2, -2);
+    amc::HeightMap heightmap = region.getHeightMap(-2, -2);
 
     EXPECT_EQ(expectedHeights, heightmap.getData());
 }

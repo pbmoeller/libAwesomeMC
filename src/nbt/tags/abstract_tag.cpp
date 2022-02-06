@@ -4,7 +4,7 @@
 #include <utility>
 #include <typeinfo>
 
-namespace nbt
+namespace amc
 {
 
 AbstractTag::AbstractTag()
@@ -90,4 +90,4 @@ bool operator!=(const AbstractTag &lhs,
     return !(lhs == rhs);
 }
 
-} // namespace nbt
+} // namespace amc

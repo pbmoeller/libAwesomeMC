@@ -8,7 +8,7 @@
 // STL
 #include <utility>
 
-namespace nbt
+namespace amc
 {
 
 template<typename T, TagType TAG>
@@ -75,7 +75,7 @@ public:
 
     std::vector<unsigned char> getData(bool isListEntry) override
     {
-        util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
+        ByteStream stream(ByteStream::Swap::SwapEndian);
 
         if(!isListEntry) {
             stream << static_cast<int8_t>(getType());
@@ -109,6 +109,6 @@ private:
     T m_value;
 };
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_VALUE_TAG_HPP

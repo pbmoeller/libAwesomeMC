@@ -1,6 +1,6 @@
 #include <AwesomeMC/util/indent.hpp>
 
-namespace util
+namespace amc
 {
 
 Indent::Indent(int indentationSize, 
@@ -55,4 +55,4 @@ std::ostream& operator<<(std::ostream &out, const Indent &indent) {
     return out;
 }
 
-} // namespace util
+} // namespace amc

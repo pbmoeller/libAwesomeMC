@@ -9,7 +9,7 @@
 #include <array>
 #include <vector>
 
-namespace anvil
+namespace amc
 {
 
 class RegionHeader
@@ -41,6 +41,6 @@ private:
     std::array<ChunkInfo, ChunkCount> *m_chunkInfo;
 };
 
-} // namespace anvil
+} // namespace amc
 
 #endif // AWESOMEMC_ANVIL_REGION_HEADER_HPP

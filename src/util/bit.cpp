@@ -1,8 +1,8 @@
 #include <AwesomeMC/util/bit.hpp>
 
-namespace util
+namespace amc
 {
 
 
 
-} // namespace util
+} // namespace amc

@@ -1,7 +1,7 @@
 #ifndef AWESOMEMC_ANVIL_CONSTANTS_HPP
 #define AWESOMEMC_ANVIL_CONSTANTS_HPP
 
-namespace anvil
+namespace amc
 {
     constexpr unsigned int DataVersion      = 2865;
 
@@ -23,6 +23,7 @@ namespace anvil
     constexpr unsigned int ChunkDataOffset  = 8192;
     constexpr unsigned int HeaderSize       = 8192;
     constexpr unsigned int SectorSize       = 4096;
-}
+
+} // namespace amc
 
 #endif // AWESOMEMC_ANVIL_CONSTANTS_HPP

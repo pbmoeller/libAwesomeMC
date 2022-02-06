@@ -6,7 +6,7 @@
 #include <concepts>
 #include <cmath>
 
-namespace util
+namespace amc
 {
 
 inline bool almostEqualUlps(float a, float b, int32_t maxUlps)
@@ -65,6 +65,6 @@ inline bool almostEqualUlps(double a, double b, int64_t maxUlps)
     return false;
 }
 
-} // namespace util
+} // namespace amc
 
 #endif // AWESOMEMC_UTIL_FLOATING_POINT_HPP

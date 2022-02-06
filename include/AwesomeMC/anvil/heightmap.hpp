@@ -7,7 +7,7 @@
 // STL
 #include <array>
 
-namespace anvil
+namespace amc
 {
 
 class HeightMap
@@ -64,6 +64,6 @@ private:
     MapType m_mapType;
 };
 
-}
+} // namespace amc
 
 #endif // AESOMEMC_ANVIL_HEIGHTMAP_HPP

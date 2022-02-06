@@ -9,35 +9,35 @@
 
 TEST(FloatTag, Constructor)
 {
-    nbt::FloatTag floatTag;
+    amc::FloatTag floatTag;
     EXPECT_STREQ("", floatTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::Float, floatTag.getType());
+    EXPECT_EQ(amc::TagType::Float, floatTag.getType());
     EXPECT_EQ(0.0f, floatTag.getValue());
 }
 
 TEST(FloatTag, Constructor_2)
 {
-    nbt::FloatTag floatTag("TagName");
+    amc::FloatTag floatTag("TagName");
     EXPECT_STREQ("TagName", floatTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::Float, floatTag.getType());
+    EXPECT_EQ(amc::TagType::Float, floatTag.getType());
     EXPECT_EQ(0.0f, floatTag.getValue());
 }
 
 TEST(FloatTag, Constructor_3)
 {
     float value = 3.9f;
-    nbt::FloatTag floatTag(value);
+    amc::FloatTag floatTag(value);
     EXPECT_STREQ("", floatTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::Float, floatTag.getType());
+    EXPECT_EQ(amc::TagType::Float, floatTag.getType());
     EXPECT_EQ(value, floatTag.getValue());
 }
 
 TEST(FloatTag, Constructor_4)
 {
     float value = -1.2f;
-    nbt::FloatTag floatTag("TagName", value);
+    amc::FloatTag floatTag("TagName", value);
     EXPECT_STREQ("TagName", floatTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::Float, floatTag.getType());
+    EXPECT_EQ(amc::TagType::Float, floatTag.getType());
     EXPECT_EQ(value, floatTag.getValue());
 }
 
@@ -47,12 +47,12 @@ TEST(FloatTag, CopyConstructor)
     float value = 1.34e4f;
 
     // Init
-    nbt::FloatTag tagA(name, value);
+    amc::FloatTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_EQ(tagA.getValue(), value);
 
     // Test Copy
-    nbt::FloatTag tagB(tagA);
+    amc::FloatTag tagB(tagA);
     EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
     EXPECT_EQ(tagB.getValue(), tagA.getValue());
 }
@@ -63,12 +63,12 @@ TEST(FloatTag, MoveConstructor)
     float value = 1.34e-4f;
 
     // Init
-    nbt::FloatTag tagA(name, value);
+    amc::FloatTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_EQ(tagA.getValue(), value);
 
     // Test Move
-    nbt::FloatTag tagB(std::move(tagA));
+    amc::FloatTag tagB(std::move(tagA));
     EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
     EXPECT_EQ(tagB.getValue(), value);
 }
@@ -79,12 +79,12 @@ TEST(FloatTag, CopyAssignment)
     float value = 1.34e38f;
 
     // Init A
-    nbt::FloatTag tagA(name, value);
+    amc::FloatTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_EQ(tagA.getValue(), value);
 
     // Init B
-    nbt::FloatTag tagB;
+    amc::FloatTag tagB;
     ASSERT_STREQ(tagB.getName().c_str(), "");
     ASSERT_EQ(tagB.getValue(), 0);
 
@@ -100,12 +100,12 @@ TEST(FloatTag, MoveAssignment)
     float value = -1.34e-15f;
 
     // Init A
-    nbt::FloatTag tagA(name, value);
+    amc::FloatTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_EQ(tagA.getValue(), value);
 
     // Init B
-    nbt::FloatTag tagB;
+    amc::FloatTag tagB;
     ASSERT_STREQ(tagB.getName().c_str(), "");
     ASSERT_EQ(tagB.getValue(), 0);
 
@@ -117,9 +117,9 @@ TEST(FloatTag, MoveAssignment)
 
 TEST(FloatTag, clone)
 {
-    nbt::FloatTag floatTagA("Test1", 3.14f);
+    amc::FloatTag floatTagA("Test1", 3.14f);
 
-    nbt::FloatTag *floatTagB = tag_cast<nbt::FloatTag*>(floatTagA.clone());
+    amc::FloatTag *floatTagB = tag_cast<amc::FloatTag*>(floatTagA.clone());
     EXPECT_TRUE(floatTagA == *floatTagB);
 
     delete floatTagB;
@@ -127,12 +127,12 @@ TEST(FloatTag, clone)
 
 TEST(FloatTag, Equal)
 {
-    nbt::FloatTag floatTagA("Test1", 3.14f);
-    nbt::FloatTag floatTagB("Test1", 3.14f);
-    nbt::FloatTag floatTagC("Test1", 3.14f);
-    nbt::FloatTag floatTagD("Test2", 2);
-    nbt::FloatTag floatTagE;
-    nbt::EndTag endTag;
+    amc::FloatTag floatTagA("Test1", 3.14f);
+    amc::FloatTag floatTagB("Test1", 3.14f);
+    amc::FloatTag floatTagC("Test1", 3.14f);
+    amc::FloatTag floatTagD("Test2", 2);
+    amc::FloatTag floatTagE;
+    amc::EndTag endTag;
 
     EXPECT_TRUE(floatTagA == floatTagA);  // Test same object
     EXPECT_TRUE(floatTagA == floatTagB);  // Test same data #1
@@ -147,12 +147,12 @@ TEST(FloatTag, Equal)
 
 TEST(FloatTag, NotEqual)
 {
-    nbt::FloatTag floatTagA("Test1", -2.6f);
-    nbt::FloatTag floatTagB("Test1", -2.6f);
-    nbt::FloatTag floatTagC("Test1", -2.6f);
-    nbt::FloatTag floatTagD("Test2", 2);
-    nbt::FloatTag floatTagE;
-    nbt::EndTag endTag;
+    amc::FloatTag floatTagA("Test1", -2.6f);
+    amc::FloatTag floatTagB("Test1", -2.6f);
+    amc::FloatTag floatTagC("Test1", -2.6f);
+    amc::FloatTag floatTagD("Test2", 2);
+    amc::FloatTag floatTagE;
+    amc::EndTag endTag;
 
     EXPECT_FALSE(floatTagA != floatTagA);  // Test same object
     EXPECT_FALSE(floatTagA != floatTagB);  // Test same data #1
@@ -167,8 +167,8 @@ TEST(FloatTag, NotEqual)
 
 TEST(FloatTag, getType)
 {
-    nbt::FloatTag floatTag;
-    EXPECT_EQ(nbt::TagType::Float, floatTag.getType());
+    amc::FloatTag floatTag;
+    EXPECT_EQ(amc::TagType::Float, floatTag.getType());
 }
 
 TEST(FloatTag, getData)
@@ -178,7 +178,7 @@ TEST(FloatTag, getData)
         0x54, 0x65, 0x73, 0x74, 0x3E, 0xFF, 0x18, 0x32
     };
 
-    nbt::FloatTag floatTag("floatTest", 0.498231471f);
+    amc::FloatTag floatTag("floatTest", 0.498231471f);
     std::vector<unsigned char> data = floatTag.getData(false);
 
     EXPECT_EQ(data.size(), testData.size());
@@ -193,7 +193,7 @@ TEST(FloatTag, getValue)
 {
     float value = 12390.f;
     float value2 = -12878.f;
-    nbt::FloatTag floatTag;
+    amc::FloatTag floatTag;
     EXPECT_EQ(0.0f, floatTag.getValue());
     floatTag.setValue(value);
     EXPECT_EQ(value, floatTag.getValue());
@@ -205,7 +205,7 @@ TEST(FloatTag, setValue)
 {
     float value = 12311.f;
     float value2 = -12834.f;
-    nbt::FloatTag floatTag;
+    amc::FloatTag floatTag;
     EXPECT_EQ(0.0f, floatTag.getValue());
     floatTag.setValue(value);
     EXPECT_EQ(value, floatTag.getValue());
@@ -215,12 +215,12 @@ TEST(FloatTag, setValue)
 
 TEST(FloatTag, tag_cast)
 {
-    nbt::AbstractTag *testTag = new nbt::FloatTag("A", 2.f);
+    amc::AbstractTag *testTag = new amc::FloatTag("A", 2.f);
 
-    nbt::FloatTag *otherTag = tag_cast<nbt::FloatTag*>(testTag);
+    amc::FloatTag *otherTag = tag_cast<amc::FloatTag*>(testTag);
     EXPECT_EQ(otherTag, testTag);
 
-    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    amc::IntTag *nullTag = tag_cast<amc::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
 
     delete testTag;

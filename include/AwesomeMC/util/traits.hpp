@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-namespace util
+namespace amc
 {
 
 template<typename, template<typename...> typename>
@@ -27,6 +27,6 @@ concept StdStringOrStdVector = StdVector<T> || StdString<T>;
 template<typename T>
 concept Number = std::integral<T> || std::floating_point<T>;
 
-} // namespace util
+} // namespace amc
 
 #endif // AWESOMEMC_UTIL_TRAITS_HPP

@@ -5,7 +5,7 @@
 #include <AwesomeMC/nbt/tags/value_tag.hpp>
 #include <AwesomeMC/util/floating_point.hpp>
 
-namespace nbt
+namespace amc
 {
 
 template<>
@@ -15,11 +15,11 @@ inline bool ValueTag<double, TagType::Double>::isEqual(const AbstractTag &other)
 
     return m_name == otherTag.m_name
         && getType() == otherTag.getType()
-        && util::almostEqualUlps(m_value, otherTag.m_value, static_cast<int64_t>(10));
+        && almostEqualUlps(m_value, otherTag.m_value, static_cast<int64_t>(10));
 }
 
 using DoubleTag = ValueTag<double, TagType::Double>;
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_DOUBLE_TAG_HPP

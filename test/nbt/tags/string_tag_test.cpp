@@ -9,27 +9,27 @@
 
 TEST(StringTag, Constructor)
 {
-    nbt::StringTag stringTag;
+    amc::StringTag stringTag;
     EXPECT_STREQ("", stringTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::String, stringTag.getType());
+    EXPECT_EQ(amc::TagType::String, stringTag.getType());
     EXPECT_STREQ("", stringTag.getValue().c_str());
 }
 
 TEST(StringTag, Constructor_2)
 {
     std::string str("value");
-    nbt::StringTag stringTag(str);
+    amc::StringTag stringTag(str);
     EXPECT_STREQ("", stringTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::String, stringTag.getType());
+    EXPECT_EQ(amc::TagType::String, stringTag.getType());
     EXPECT_STREQ(str.c_str(), stringTag.getValue().c_str());
 }
 
 TEST(StringTag, Constructor_3)
 {
     std::string str("value");
-    nbt::StringTag stringTag("TagName", str);
+    amc::StringTag stringTag("TagName", str);
     EXPECT_STREQ("TagName", stringTag.getName().c_str());
-    EXPECT_EQ(nbt::TagType::String, stringTag.getType());
+    EXPECT_EQ(amc::TagType::String, stringTag.getType());
     EXPECT_STREQ(str.c_str(), stringTag.getValue().c_str());
 }
 
@@ -39,12 +39,12 @@ TEST(StringTag, CopyConstructor)
     std::string value = "Value CopyConstructor";
 
     // Init
-    nbt::StringTag tagA(name, value);
+    amc::StringTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_STREQ(tagA.getValue().c_str(), value.c_str());
 
     // Test Copy
-    nbt::StringTag tagB(tagA);
+    amc::StringTag tagB(tagA);
     EXPECT_STREQ(tagB.getName().c_str(), tagA.getName().c_str());
     EXPECT_STREQ(tagB.getValue().c_str(), tagA.getValue().c_str());
 }
@@ -55,12 +55,12 @@ TEST(StringTag, MoveConstructor)
     std::string value = "Value MoveConstructor";
 
     // Init
-    nbt::StringTag tagA(name, value);
+    amc::StringTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_STREQ(tagA.getValue().c_str(), value.c_str());
 
     // Test Move
-    nbt::StringTag tagB(std::move(tagA));
+    amc::StringTag tagB(std::move(tagA));
     EXPECT_STREQ(tagB.getName().c_str(), name.c_str());
     EXPECT_STREQ(tagB.getValue().c_str(), value.c_str());
 }
@@ -71,12 +71,12 @@ TEST(StringTag, CopyAssignment)
     std::string value = "Value CopyAssignment";
 
     // Init A
-    nbt::StringTag tagA(name, value);
+    amc::StringTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_STREQ(tagA.getValue().c_str(), value.c_str());
 
     // Init B
-    nbt::StringTag tagB;
+    amc::StringTag tagB;
     ASSERT_STREQ(tagB.getName().c_str(), "");
     ASSERT_STREQ(tagB.getValue().c_str(), "");
 
@@ -92,12 +92,12 @@ TEST(StringTag, MoveAssignment)
     std::string value = "Value MoveAssignment";
 
     // Init A
-    nbt::StringTag tagA(name, value);
+    amc::StringTag tagA(name, value);
     ASSERT_STREQ(tagA.getName().c_str(), name.c_str());
     ASSERT_STREQ(tagA.getValue().c_str(), value.c_str());
 
     // Init B
-    nbt::StringTag tagB;
+    amc::StringTag tagB;
     ASSERT_STREQ(tagB.getName().c_str(), "");
     ASSERT_STREQ(tagB.getValue().c_str(), "");
 
@@ -109,9 +109,9 @@ TEST(StringTag, MoveAssignment)
 
 TEST(StringTag, clone)
 {
-    nbt::StringTag stringTagA("Test1", "ABC");
+    amc::StringTag stringTagA("Test1", "ABC");
 
-    nbt::StringTag *stringTagB = tag_cast<nbt::StringTag*>(stringTagA.clone());
+    amc::StringTag *stringTagB = tag_cast<amc::StringTag*>(stringTagA.clone());
     EXPECT_TRUE(stringTagA == *stringTagB);
 
     delete stringTagB;
@@ -119,12 +119,12 @@ TEST(StringTag, clone)
 
 TEST(StringTag, Equal)
 {
-    nbt::StringTag stringTagA("Test1", "ABC");
-    nbt::StringTag stringTagB("Test1", "ABC");
-    nbt::StringTag stringTagC("Test1", "ABC");
-    nbt::StringTag stringTagD("Test2", "/adsjakjd");
-    nbt::StringTag stringTagE;
-    nbt::EndTag endTag;
+    amc::StringTag stringTagA("Test1", "ABC");
+    amc::StringTag stringTagB("Test1", "ABC");
+    amc::StringTag stringTagC("Test1", "ABC");
+    amc::StringTag stringTagD("Test2", "/adsjakjd");
+    amc::StringTag stringTagE;
+    amc::EndTag endTag;
 
     EXPECT_TRUE(stringTagA == stringTagA);  // Test same object
     EXPECT_TRUE(stringTagA == stringTagB);  // Test same data #1
@@ -139,12 +139,12 @@ TEST(StringTag, Equal)
 
 TEST(StringTag, NotEqual)
 {
-    nbt::StringTag stringTagA("Test1", "ABC");
-    nbt::StringTag stringTagB("Test1", "ABC");
-    nbt::StringTag stringTagC("Test1", "ABC");
-    nbt::StringTag stringTagD("Test2", "/adsjakjd");
-    nbt::StringTag stringTagE;
-    nbt::EndTag endTag;
+    amc::StringTag stringTagA("Test1", "ABC");
+    amc::StringTag stringTagB("Test1", "ABC");
+    amc::StringTag stringTagC("Test1", "ABC");
+    amc::StringTag stringTagD("Test2", "/adsjakjd");
+    amc::StringTag stringTagE;
+    amc::EndTag endTag;
 
     EXPECT_FALSE(stringTagA != stringTagA);  // Test same object
     EXPECT_FALSE(stringTagA != stringTagB);  // Test same data #1
@@ -159,8 +159,8 @@ TEST(StringTag, NotEqual)
 
 TEST(StringTag, getType)
 {
-    nbt::StringTag stringTag;
-    EXPECT_EQ(nbt::TagType::String, stringTag.getType());
+    amc::StringTag stringTag;
+    EXPECT_EQ(amc::TagType::String, stringTag.getType());
 }
 
 TEST(StringTag, getData)
@@ -175,7 +175,7 @@ TEST(StringTag, getData)
         0x21
     };
 
-    nbt::StringTag stringTag("stringTest", "HELLO WORLD THIS IS A TEST STRING!");
+    amc::StringTag stringTag("stringTest", "HELLO WORLD THIS IS A TEST STRING!");
     std::vector<unsigned char> data = stringTag.getData(false);
 
     EXPECT_EQ(data.size(), testData.size());
@@ -190,7 +190,7 @@ TEST(StringTag, getValue)
 {
     std::string value("123");
     std::string value2("TestString");
-    nbt::StringTag stringTag;
+    amc::StringTag stringTag;
     EXPECT_STREQ("", stringTag.getValue().c_str());
     stringTag.setValue(value);
     EXPECT_STREQ(value.c_str(), stringTag.getValue().c_str());
@@ -202,7 +202,7 @@ TEST(StringTag, setValue)
 {
     std::string value("123  other string");
     std::string value2("TestString#2");
-    nbt::StringTag stringTag;
+    amc::StringTag stringTag;
     EXPECT_STREQ("", stringTag.getValue().c_str());
     stringTag.setValue(value);
     EXPECT_STREQ(value.c_str(), stringTag.getValue().c_str());
@@ -212,12 +212,12 @@ TEST(StringTag, setValue)
 
 TEST(StringTag, tag_cast)
 {
-    nbt::AbstractTag *testTag = new nbt::StringTag("A", "ABC");
+    amc::AbstractTag *testTag = new amc::StringTag("A", "ABC");
 
-    nbt::StringTag *otherTag = tag_cast<nbt::StringTag*>(testTag);
+    amc::StringTag *otherTag = tag_cast<amc::StringTag*>(testTag);
     EXPECT_EQ(otherTag, testTag);
 
-    nbt::IntTag *nullTag = tag_cast<nbt::IntTag*>(testTag);
+    amc::IntTag *nullTag = tag_cast<amc::IntTag*>(testTag);
     EXPECT_EQ(nullTag, nullptr);
 
     delete testTag;

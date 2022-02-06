@@ -7,11 +7,11 @@
 // STL
 #include <cstdint>
 
-namespace nbt
+namespace amc
 {
 
 using IntTag = ValueTag<int32_t, TagType::Int>;
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_INT_TAG_HPP

@@ -8,7 +8,7 @@
 #include <utility>
 #include <stdexcept>
 
-namespace nbt
+namespace amc
 {
 
 CompoundTag::CompoundTag()
@@ -83,8 +83,8 @@ AbstractTag* CompoundTag::clone() const
 
 std::vector<unsigned char> CompoundTag::getData(bool isListEntry)
 {
-    nbt::EndTag endTag;
-    util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
+    EndTag endTag;
+    ByteStream stream(ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
         stream << static_cast<int8_t>(getType());
@@ -141,4 +141,4 @@ std::vector<AbstractTag*> CompoundTag::getChildrenByName(const std::string &name
     return vec;
 }
 
-} // namespace nbt
+} // namespace amc

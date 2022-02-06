@@ -11,7 +11,7 @@
 #include <vector>
 #include <stdexcept>
 
-namespace nbt
+namespace amc
 {
 
 class AbstractTag;
@@ -21,12 +21,12 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
                                        bool isCompressed);
 
 CompoundTag* readNbtData(const std::vector<unsigned char> &data);
-AbstractTag* readChildTag(util::ByteStream &stream, 
+AbstractTag* readChildTag(ByteStream &stream, 
                         bool isListItem, 
                         TagType listType);
 
 template<typename T>
-T readValue(util::ByteStream &stream)
+T readValue(ByteStream &stream)
 {
     T value;
 
@@ -39,7 +39,7 @@ T readValue(util::ByteStream &stream)
 }
 
 template<typename T>
-std::vector<T> readArrayValues(util::ByteStream &stream)
+std::vector<T> readArrayValues(ByteStream &stream)
 {
     std::vector<T> values;
 
@@ -55,8 +55,8 @@ std::vector<T> readArrayValues(util::ByteStream &stream)
     return values;
 }
 
-std::string readStringValue(util::ByteStream &stream);
+std::string readStringValue(ByteStream &stream);
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_NBT_READ_HPP

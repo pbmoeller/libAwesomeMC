@@ -62,126 +62,126 @@ using DoubleFixture = FloatingPointFixture<double, int64_t>;
 
 TEST_F(FloatFixture, zero_negZero)
 {
-    EXPECT_TRUE(util::almostEqualUlps(zero1, negZero, 10));
+    EXPECT_TRUE(amc::almostEqualUlps(zero1, negZero, 10));
 }
 
 TEST_F(FloatFixture, negZero_zero)
 {
-    EXPECT_TRUE(util::almostEqualUlps(negZero, zero1, 10));
+    EXPECT_TRUE(amc::almostEqualUlps(negZero, zero1, 10));
 }
 
 TEST_F(FloatFixture, nearbyNumbers)
 {
-    EXPECT_TRUE(util::almostEqualUlps(2.0f, 1.9999999f, 10));
+    EXPECT_TRUE(amc::almostEqualUlps(2.0f, 1.9999999f, 10));
 }
 
 TEST_F(FloatFixture, nearbyNumbersSwitched)
 {
-    EXPECT_TRUE(util::almostEqualUlps(1.9999999f, 2.0f, 10));
+    EXPECT_TRUE(amc::almostEqualUlps(1.9999999f, 2.0f, 10));
 }
 
 TEST_F(FloatFixture, closeNumbers)
 {
-    EXPECT_TRUE(util::almostEqualUlps(2.0f, 1.9999995f, 10));
+    EXPECT_TRUE(amc::almostEqualUlps(2.0f, 1.9999995f, 10));
 }
 
 TEST_F(FloatFixture, closeNumbersSwitched)
 {
-    EXPECT_TRUE(util::almostEqualUlps(1.9999995f, 2.0f, 10));
+    EXPECT_TRUE(amc::almostEqualUlps(1.9999995f, 2.0f, 10));
 }
 
 TEST_F(FloatFixture, closeNumbers_10ulp)
 {
-    EXPECT_FALSE(util::almostEqualUlps(2.0f, 1.9999988f, 9));
-    EXPECT_FALSE(util::almostEqualUlps(2.0f, 1.9999988f, 10));
-    EXPECT_TRUE(util::almostEqualUlps(2.0f, 1.9999988f, 11));
+    EXPECT_FALSE(amc::almostEqualUlps(2.0f, 1.9999988f, 9));
+    EXPECT_FALSE(amc::almostEqualUlps(2.0f, 1.9999988f, 10));
+    EXPECT_TRUE(amc::almostEqualUlps(2.0f, 1.9999988f, 11));
 }
 
 TEST_F(FloatFixture, inf_negInf)
 {
-    EXPECT_FALSE(util::almostEqualUlps(inf, -inf, 16 * 1024 * 1024));
+    EXPECT_FALSE(amc::almostEqualUlps(inf, -inf, 16 * 1024 * 1024));
 }
 
 TEST_F(FloatFixture, max_inf)
 {
-    EXPECT_FALSE(util::almostEqualUlps(FLT_MAX, inf, 10));
+    EXPECT_FALSE(amc::almostEqualUlps(FLT_MAX, inf, 10));
 }
 
 TEST_F(FloatFixture, same_nan)
 {
-    EXPECT_FALSE(util::almostEqualUlps(nan2, nan2, 10));
+    EXPECT_FALSE(amc::almostEqualUlps(nan2, nan2, 10));
 }
 
 TEST_F(FloatFixture, different_nan)
 {
-    EXPECT_FALSE(util::almostEqualUlps(nan2, nan3, 10));
+    EXPECT_FALSE(amc::almostEqualUlps(nan2, nan3, 10));
 }
 
 TEST_F(FloatFixture, smallestDenormal)
 {
-    EXPECT_FALSE(util::almostEqualUlps(smallestDenormal, -smallestDenormal, 10));
+    EXPECT_FALSE(amc::almostEqualUlps(smallestDenormal, -smallestDenormal, 10));
 }
 
 // Double
 
 TEST_F(DoubleFixture, zero_negZero)
 {
-    EXPECT_TRUE(util::almostEqualUlps(zero1, negZero, 10ULL));
+    EXPECT_TRUE(amc::almostEqualUlps(zero1, negZero, 10ULL));
 }
 
 TEST_F(DoubleFixture, negZero_zero)
 {
-    EXPECT_TRUE(util::almostEqualUlps(negZero, zero1, 10ULL));
+    EXPECT_TRUE(amc::almostEqualUlps(negZero, zero1, 10ULL));
 }
 
 TEST_F(DoubleFixture, nearbyNumbers)
 {
-    EXPECT_TRUE(util::almostEqualUlps(2.0, 1.9999999999999999, 9ULL));
+    EXPECT_TRUE(amc::almostEqualUlps(2.0, 1.9999999999999999, 9ULL));
 }
 
 TEST_F(DoubleFixture, nearbyNumbersSwitched)
 {
-    EXPECT_TRUE(util::almostEqualUlps(1.9999999999999999, 2.0, 9ULL));
+    EXPECT_TRUE(amc::almostEqualUlps(1.9999999999999999, 2.0, 9ULL));
 }
 
 TEST_F(DoubleFixture, closeNumbers)
 {
-    EXPECT_TRUE(util::almostEqualUlps(2.0, 1.9999999999999995, 9ULL));
+    EXPECT_TRUE(amc::almostEqualUlps(2.0, 1.9999999999999995, 9ULL));
 }
 
 TEST_F(DoubleFixture, closeNumbersSwitched)
 {
-    EXPECT_TRUE(util::almostEqualUlps(1.9999999999999995, 2.0, 9ULL));
+    EXPECT_TRUE(amc::almostEqualUlps(1.9999999999999995, 2.0, 9ULL));
 }
 
 TEST_F(DoubleFixture, closeNumbers_10ulp)
 {
-    EXPECT_FALSE(util::almostEqualUlps(2.0, 1.9999999999999977, 9ULL));
-    EXPECT_FALSE(util::almostEqualUlps(2.0, 1.9999999999999977, 10ULL));
-    EXPECT_TRUE(util::almostEqualUlps(2.0, 1.9999999999999977, 11ULL));
+    EXPECT_FALSE(amc::almostEqualUlps(2.0, 1.9999999999999977, 9ULL));
+    EXPECT_FALSE(amc::almostEqualUlps(2.0, 1.9999999999999977, 10ULL));
+    EXPECT_TRUE(amc::almostEqualUlps(2.0, 1.9999999999999977, 11ULL));
 }
 
 TEST_F(DoubleFixture, inf_negInf)
 {
-    EXPECT_FALSE(util::almostEqualUlps(inf, -inf, static_cast<int64_t>(16 * 1024 * 1024)));
+    EXPECT_FALSE(amc::almostEqualUlps(inf, -inf, static_cast<int64_t>(16 * 1024 * 1024)));
 }
 
 TEST_F(DoubleFixture, max_inf)
 {
-    EXPECT_FALSE(util::almostEqualUlps(DBL_MAX, inf, 10ULL));
+    EXPECT_FALSE(amc::almostEqualUlps(DBL_MAX, inf, 10ULL));
 }
 
 TEST_F(DoubleFixture, same_nan)
 {
-    EXPECT_FALSE(util::almostEqualUlps(nan2, nan2, 10ULL));
+    EXPECT_FALSE(amc::almostEqualUlps(nan2, nan2, 10ULL));
 }
 
 TEST_F(DoubleFixture, different_nan)
 {
-    EXPECT_FALSE(util::almostEqualUlps(nan2, nan3, 10ULL));
+    EXPECT_FALSE(amc::almostEqualUlps(nan2, nan3, 10ULL));
 }
 
 TEST_F(DoubleFixture, smallestDenormal)
 {
-    EXPECT_FALSE(util::almostEqualUlps(smallestDenormal, -smallestDenormal, 10ULL));
+    EXPECT_FALSE(amc::almostEqualUlps(smallestDenormal, -smallestDenormal, 10ULL));
 }

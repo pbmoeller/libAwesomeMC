@@ -4,11 +4,11 @@
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/array_tag.hpp>
 
-namespace nbt
+namespace amc
 {
 
 using IntArrayTag = ArrayTag<int32_t, TagType::IntArray>;
 
-} // namespace nbt
+} // namespace amc
 
 #endif // AWESOMEMC_NBT_TAGS_INT_ARRAY_TAG_HPP

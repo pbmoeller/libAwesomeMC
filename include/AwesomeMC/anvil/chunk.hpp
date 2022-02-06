@@ -9,7 +9,7 @@
 // STL
 #include <vector>
 
-namespace anvil
+namespace amc
 {
 
 class Chunk
@@ -28,12 +28,12 @@ public:
 
     void clear();
 
-    nbt::CompoundTag* getRootTag();
+    CompoundTag* getRootTag();
     // !!! Do not delete or reuse the item - the chunk keeps the ownership !!!
-    void setRootTag(nbt::CompoundTag *root);
+    void setRootTag(CompoundTag *root);
 
     // !!! Do not delete or reuse the item - the chunk keeps the ownership !!!
-    std::vector<nbt::AbstractTag*> getSubTagsByName(const std::string &name) const;
+    std::vector<AbstractTag*> getSubTagsByName(const std::string &name) const;
 
     std::vector<int32_t> getBiomes() const;
     int32_t getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
@@ -44,13 +44,13 @@ public:
 
 protected:
     void getSubTagsByName(const std::string &name,
-                          nbt::AbstractTag *currentSubTag,
-                          std::vector<nbt::AbstractTag*> &subTags) const;
+                          AbstractTag *currentSubTag,
+                          std::vector<AbstractTag*> &subTags) const;
 
 private:
-    nbt::CompoundTag *m_data;
+    CompoundTag *m_data;
 };
 
-} // namespace anvil
+} // namespace amc
 
 #endif // AWESOMEMC_ANVIL_CHUNK_HPP

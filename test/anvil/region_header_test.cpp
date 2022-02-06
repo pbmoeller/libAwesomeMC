@@ -8,10 +8,10 @@
 
 TEST(ReagionHeader, Constructor)
 {
-    const anvil::ChunkInfo defaultInfo;
-    anvil::RegionHeader regionHeader;
+    const amc::ChunkInfo defaultInfo;
+    amc::RegionHeader regionHeader;
 
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_TRUE(regionHeader.getChunkInfoAt(i) == defaultInfo);
     }
 }
@@ -19,20 +19,20 @@ TEST(ReagionHeader, Constructor)
 TEST(ReagionHeader, Constructor_2)
 {
     // Init test data
-    std::array<anvil::ChunkInfo, anvil::ChunkCount> *info = new std::array<anvil::ChunkInfo, anvil::ChunkCount>();
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
-        (*info)[i] = anvil::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, anvil::ChunkInfo::CompressionType::GZip);
+    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
+    for(int i = 0; i < amc::ChunkCount; ++i) {
+        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::ChunkInfo::CompressionType::GZip);
     }
 
     // Check
-    anvil::RegionHeader regionHeader(*info);
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeader(*info);
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ((*info)[i].getOffset(),      regionHeader.getChunkInfoAt(i).getOffset());
         EXPECT_EQ((*info)[i].getLength(),      regionHeader.getChunkInfoAt(i).getLength());
         EXPECT_EQ((*info)[i].getTimestamp(),   regionHeader.getChunkInfoAt(i).getTimestamp());
         EXPECT_EQ((*info)[i].getCompression(), regionHeader.getChunkInfoAt(i).getCompression());
     }
-    EXPECT_EQ(anvil::ChunkCount, static_cast<int>(regionHeader.getRegionCount()));
+    EXPECT_EQ(amc::ChunkCount, static_cast<int>(regionHeader.getRegionCount()));
 
     delete info;
 }
@@ -40,33 +40,33 @@ TEST(ReagionHeader, Constructor_2)
 TEST(ReagionHeader, CopyConstructor)
 {
     // Init test data
-    std::array<anvil::ChunkInfo, anvil::ChunkCount> *info = new std::array<anvil::ChunkInfo, anvil::ChunkCount>();
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
-        (*info)[i] = anvil::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, anvil::ChunkInfo::CompressionType::GZip);
+    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
+    for(int i = 0; i < amc::ChunkCount; ++i) {
+        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::ChunkInfo::CompressionType::GZip);
     }
 
     // Init A
-    anvil::RegionHeader regionHeaderA(*info);
-    ASSERT_EQ(anvil::ChunkCount, regionHeaderA.getRegionCount());
+    amc::RegionHeader regionHeaderA(*info);
+    ASSERT_EQ(amc::ChunkCount, regionHeaderA.getRegionCount());
 
     // Test Copy
-    anvil::RegionHeader regionHeaderB(regionHeaderA);
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeaderB(regionHeaderA);
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ((*info)[i].getOffset(),      regionHeaderB.getChunkInfoAt(i).getOffset());
         EXPECT_EQ((*info)[i].getLength(),      regionHeaderB.getChunkInfoAt(i).getLength());
         EXPECT_EQ((*info)[i].getTimestamp(),   regionHeaderB.getChunkInfoAt(i).getTimestamp());
         EXPECT_EQ((*info)[i].getCompression(), regionHeaderB.getChunkInfoAt(i).getCompression());
     }
-    ASSERT_EQ(anvil::ChunkCount, regionHeaderB.getRegionCount());
+    ASSERT_EQ(amc::ChunkCount, regionHeaderB.getRegionCount());
 
     // Test empty copy
-    anvil::RegionHeader regionHeaderC;
-    anvil::RegionHeader regionHeaderD(regionHeaderC);
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeaderC;
+    amc::RegionHeader regionHeaderD(regionHeaderC);
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getOffset());
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getLength());
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getTimestamp());
-        EXPECT_EQ(anvil::ChunkInfo::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
+        EXPECT_EQ(amc::ChunkInfo::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
     }
     ASSERT_EQ(0, regionHeaderD.getRegionCount());
 
@@ -76,33 +76,33 @@ TEST(ReagionHeader, CopyConstructor)
 TEST(ReagionHeader, MoveConstructor)
 {
     // Init test data
-    std::array<anvil::ChunkInfo, anvil::ChunkCount> *info = new std::array<anvil::ChunkInfo, anvil::ChunkCount>();
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
-        (*info)[i] = anvil::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, anvil::ChunkInfo::CompressionType::GZip);
+    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
+    for(int i = 0; i < amc::ChunkCount; ++i) {
+        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::ChunkInfo::CompressionType::GZip);
     }
 
     // Init A
-    anvil::RegionHeader regionHeaderA(*info);
-    ASSERT_EQ(anvil::ChunkCount, regionHeaderA.getRegionCount());
+    amc::RegionHeader regionHeaderA(*info);
+    ASSERT_EQ(amc::ChunkCount, regionHeaderA.getRegionCount());
 
     // Test Move
-    anvil::RegionHeader regionHeaderB(std::move(regionHeaderA));
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeaderB(std::move(regionHeaderA));
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ((*info)[i].getOffset(),      regionHeaderB.getChunkInfoAt(i).getOffset());
         EXPECT_EQ((*info)[i].getLength(),      regionHeaderB.getChunkInfoAt(i).getLength());
         EXPECT_EQ((*info)[i].getTimestamp(),   regionHeaderB.getChunkInfoAt(i).getTimestamp());
         EXPECT_EQ((*info)[i].getCompression(), regionHeaderB.getChunkInfoAt(i).getCompression());
     }
-    ASSERT_EQ(anvil::ChunkCount, regionHeaderB.getRegionCount());
+    ASSERT_EQ(amc::ChunkCount, regionHeaderB.getRegionCount());
 
     // Test empty move
-    anvil::RegionHeader regionHeaderC;
-    anvil::RegionHeader regionHeaderD(std::move(regionHeaderC));
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeaderC;
+    amc::RegionHeader regionHeaderD(std::move(regionHeaderC));
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getOffset());
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getLength());
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getTimestamp());
-        EXPECT_EQ(anvil::ChunkInfo::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
+        EXPECT_EQ(amc::ChunkInfo::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
     }
     ASSERT_EQ(0, regionHeaderD.getRegionCount());
 
@@ -112,33 +112,33 @@ TEST(ReagionHeader, MoveConstructor)
 TEST(ReagionHeader, CopyAssignment)
 {
     // Init test data
-    std::array<anvil::ChunkInfo, anvil::ChunkCount> *info = new std::array<anvil::ChunkInfo, anvil::ChunkCount>();
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
-        (*info)[i] = anvil::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, anvil::ChunkInfo::CompressionType::GZip);
+    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
+    for(int i = 0; i < amc::ChunkCount; ++i) {
+        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::ChunkInfo::CompressionType::GZip);
     }
 
     // Init A
-    anvil::RegionHeader regionHeaderA(*info);
-    ASSERT_EQ(anvil::ChunkCount, regionHeaderA.getRegionCount());
+    amc::RegionHeader regionHeaderA(*info);
+    ASSERT_EQ(amc::ChunkCount, regionHeaderA.getRegionCount());
 
     // Test Copy assignment
-    anvil::RegionHeader regionHeaderB = regionHeaderA;
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeaderB = regionHeaderA;
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ((*info)[i].getOffset(),      regionHeaderB.getChunkInfoAt(i).getOffset());
         EXPECT_EQ((*info)[i].getLength(),      regionHeaderB.getChunkInfoAt(i).getLength());
         EXPECT_EQ((*info)[i].getTimestamp(),   regionHeaderB.getChunkInfoAt(i).getTimestamp());
         EXPECT_EQ((*info)[i].getCompression(), regionHeaderB.getChunkInfoAt(i).getCompression());
     }
-    ASSERT_EQ(anvil::ChunkCount, regionHeaderB.getRegionCount());
+    ASSERT_EQ(amc::ChunkCount, regionHeaderB.getRegionCount());
 
     // Test empty copy assignment
-    anvil::RegionHeader regionHeaderC;
-    anvil::RegionHeader regionHeaderD = regionHeaderC;
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeaderC;
+    amc::RegionHeader regionHeaderD = regionHeaderC;
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getOffset());
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getLength());
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getTimestamp());
-        EXPECT_EQ(anvil::ChunkInfo::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
+        EXPECT_EQ(amc::ChunkInfo::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
     }
     ASSERT_EQ(0, regionHeaderD.getRegionCount());
 
@@ -148,33 +148,33 @@ TEST(ReagionHeader, CopyAssignment)
 TEST(ReagionHeader, MoveAssignment)
 {
     // Init test data
-    std::array<anvil::ChunkInfo, anvil::ChunkCount> *info = new std::array<anvil::ChunkInfo, anvil::ChunkCount>();
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
-        (*info)[i] = anvil::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, anvil::ChunkInfo::CompressionType::GZip);
+    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
+    for(int i = 0; i < amc::ChunkCount; ++i) {
+        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::ChunkInfo::CompressionType::GZip);
     }
 
     // Init A
-    anvil::RegionHeader regionHeaderA(*info);
-    ASSERT_EQ(anvil::ChunkCount, regionHeaderA.getRegionCount());
+    amc::RegionHeader regionHeaderA(*info);
+    ASSERT_EQ(amc::ChunkCount, regionHeaderA.getRegionCount());
 
     // Test Move assignment
-    anvil::RegionHeader regionHeaderB = std::move(regionHeaderA);
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeaderB = std::move(regionHeaderA);
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ((*info)[i].getOffset(),      regionHeaderB.getChunkInfoAt(i).getOffset());
         EXPECT_EQ((*info)[i].getLength(),      regionHeaderB.getChunkInfoAt(i).getLength());
         EXPECT_EQ((*info)[i].getTimestamp(),   regionHeaderB.getChunkInfoAt(i).getTimestamp());
         EXPECT_EQ((*info)[i].getCompression(), regionHeaderB.getChunkInfoAt(i).getCompression());
     }
-    ASSERT_EQ(anvil::ChunkCount, regionHeaderB.getRegionCount());
+    ASSERT_EQ(amc::ChunkCount, regionHeaderB.getRegionCount());
 
     // Test empty move assignment
-    anvil::RegionHeader regionHeaderC;
-    anvil::RegionHeader regionHeaderD = std::move(regionHeaderC);
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeaderC;
+    amc::RegionHeader regionHeaderD = std::move(regionHeaderC);
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getOffset());
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getLength());
         EXPECT_EQ(0, regionHeaderD.getChunkInfoAt(i).getTimestamp());
-        EXPECT_EQ(anvil::ChunkInfo::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
+        EXPECT_EQ(amc::ChunkInfo::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
     }
     ASSERT_EQ(0, regionHeaderD.getRegionCount());
 
@@ -183,34 +183,34 @@ TEST(ReagionHeader, MoveAssignment)
 
 TEST(ReagionHeader, Equal)
 {
-    anvil::RegionHeader regionHeaderA;
-    anvil::RegionHeader regionHeaderB;
+    amc::RegionHeader regionHeaderA;
+    amc::RegionHeader regionHeaderB;
 
     EXPECT_TRUE(regionHeaderA == regionHeaderA);
     EXPECT_TRUE(regionHeaderA == regionHeaderB);
 
-    regionHeaderB.setChunkInfoAt(0, anvil::ChunkInfo(1, 0, 0, anvil::ChunkInfo::CompressionType::GZip));
+    regionHeaderB.setChunkInfoAt(0, amc::ChunkInfo(1, 0, 0, amc::ChunkInfo::CompressionType::GZip));
     EXPECT_FALSE(regionHeaderA == regionHeaderB);
 }
 
 TEST(ReagionHeader, NotEqual)
 {
-    anvil::RegionHeader regionHeaderA;
-    anvil::RegionHeader regionHeaderB;
+    amc::RegionHeader regionHeaderA;
+    amc::RegionHeader regionHeaderB;
 
     EXPECT_FALSE(regionHeaderA != regionHeaderA);
     EXPECT_FALSE(regionHeaderA != regionHeaderB);
 
-    regionHeaderB.setChunkInfoAt(0, anvil::ChunkInfo(1, 0, 0, anvil::ChunkInfo::CompressionType::GZip));
+    regionHeaderB.setChunkInfoAt(0, amc::ChunkInfo(1, 0, 0, amc::ChunkInfo::CompressionType::GZip));
     EXPECT_TRUE(regionHeaderA != regionHeaderB);
 }
 
 TEST(ReagionHeader, getRegionCount)
 {
-    anvil::RegionHeader regionHeader;
+    amc::RegionHeader regionHeader;
     ASSERT_EQ(0, regionHeader.getRegionCount());
 
-    regionHeader.setChunkInfoAt(1, anvil::ChunkInfo(2, 2, 2, anvil::ChunkInfo::CompressionType::GZip));
+    regionHeader.setChunkInfoAt(1, amc::ChunkInfo(2, 2, 2, amc::ChunkInfo::CompressionType::GZip));
     EXPECT_EQ(1, regionHeader.getRegionCount());
 }
 
@@ -222,24 +222,24 @@ TEST(ReagionHeader, getRegionData)
 TEST(ReagionHeader, getChunkInfo)
 {
     // Init test data
-    std::array<anvil::ChunkInfo, anvil::ChunkCount> *info = new std::array<anvil::ChunkInfo, anvil::ChunkCount>();
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
-        (*info)[i] = anvil::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, anvil::ChunkInfo::CompressionType::GZip);
+    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
+    for(int i = 0; i < amc::ChunkCount; ++i) {
+        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::ChunkInfo::CompressionType::GZip);
     }
 
     // Check #1
-    anvil::RegionHeader regionHeader(*info);
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    amc::RegionHeader regionHeader(*info);
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         ASSERT_EQ((*info)[i].getOffset(),      regionHeader.getChunkInfoAt(i).getOffset());
         ASSERT_EQ((*info)[i].getLength(),      regionHeader.getChunkInfoAt(i).getLength());
         ASSERT_EQ((*info)[i].getTimestamp(),   regionHeader.getChunkInfoAt(i).getTimestamp());
         ASSERT_EQ((*info)[i].getCompression(), regionHeader.getChunkInfoAt(i).getCompression());
     }
-    ASSERT_EQ(anvil::ChunkCount, regionHeader.getRegionCount());
+    ASSERT_EQ(amc::ChunkCount, regionHeader.getRegionCount());
 
     // Check #2
-    const std::array<anvil::ChunkInfo, anvil::ChunkCount> *info2 = &(regionHeader.getChunkInfo());
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    const std::array<amc::ChunkInfo, amc::ChunkCount> *info2 = &(regionHeader.getChunkInfo());
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ((*info)[i].getOffset(),      (*info2)[i].getOffset());
         EXPECT_EQ((*info)[i].getLength(),      (*info2)[i].getLength());
         EXPECT_EQ((*info)[i].getTimestamp(),   (*info2)[i].getTimestamp());
@@ -251,70 +251,70 @@ TEST(ReagionHeader, getChunkInfo)
 
 TEST(ReagionHeader, getChunkInfoAt)
 {
-    anvil::RegionHeader regionHeader;
+    amc::RegionHeader regionHeader;
     ASSERT_EQ(0, regionHeader.getRegionCount());
 
-    anvil::ChunkInfo info = regionHeader.getChunkInfoAt(10);
+    amc::ChunkInfo info = regionHeader.getChunkInfoAt(10);
     EXPECT_EQ(0, regionHeader.getChunkInfoAt(10).getOffset());
     EXPECT_EQ(0, regionHeader.getChunkInfoAt(10).getLength());
     EXPECT_EQ(0, regionHeader.getChunkInfoAt(10).getTimestamp());
-    EXPECT_EQ(anvil::ChunkInfo::CompressionType::GZip, regionHeader.getChunkInfoAt(10).getCompression());
+    EXPECT_EQ(amc::ChunkInfo::CompressionType::GZip, regionHeader.getChunkInfoAt(10).getCompression());
 
-    regionHeader.setChunkInfoAt(10, anvil::ChunkInfo(2, 4, 6, anvil::ChunkInfo::CompressionType::Zlib));
+    regionHeader.setChunkInfoAt(10, amc::ChunkInfo(2, 4, 6, amc::ChunkInfo::CompressionType::Zlib));
     EXPECT_EQ(1, regionHeader.getRegionCount());
 
     info = regionHeader.getChunkInfoAt(10);
     EXPECT_EQ(2, regionHeader.getChunkInfoAt(10).getOffset());
     EXPECT_EQ(4, regionHeader.getChunkInfoAt(10).getLength());
     EXPECT_EQ(6, regionHeader.getChunkInfoAt(10).getTimestamp());
-    EXPECT_EQ(anvil::ChunkInfo::CompressionType::Zlib, regionHeader.getChunkInfoAt(10).getCompression());
+    EXPECT_EQ(amc::ChunkInfo::CompressionType::Zlib, regionHeader.getChunkInfoAt(10).getCompression());
 }
 
 TEST(ReagionHeader, getChunkInfoAt_const)
 {
-    anvil::RegionHeader regionHeader;
+    amc::RegionHeader regionHeader;
     ASSERT_EQ(0, regionHeader.getRegionCount());
 
-    const anvil::RegionHeader regionHeaderB = regionHeader;
-    anvil::ChunkInfo info = regionHeaderB.getChunkInfoAt(10);
+    const amc::RegionHeader regionHeaderB = regionHeader;
+    amc::ChunkInfo info = regionHeaderB.getChunkInfoAt(10);
     EXPECT_EQ(0, regionHeaderB.getChunkInfoAt(10).getOffset());
     EXPECT_EQ(0, regionHeaderB.getChunkInfoAt(10).getLength());
     EXPECT_EQ(0, regionHeaderB.getChunkInfoAt(10).getTimestamp());
-    EXPECT_EQ(anvil::ChunkInfo::CompressionType::GZip, regionHeaderB.getChunkInfoAt(10).getCompression());
+    EXPECT_EQ(amc::ChunkInfo::CompressionType::GZip, regionHeaderB.getChunkInfoAt(10).getCompression());
 
-    regionHeader.setChunkInfoAt(10, anvil::ChunkInfo(2, 4, 6, anvil::ChunkInfo::CompressionType::Zlib));
+    regionHeader.setChunkInfoAt(10, amc::ChunkInfo(2, 4, 6, amc::ChunkInfo::CompressionType::Zlib));
     EXPECT_EQ(1, regionHeader.getRegionCount());
 
-    const anvil::RegionHeader regionHeaderC = regionHeader;
+    const amc::RegionHeader regionHeaderC = regionHeader;
     info = regionHeaderC.getChunkInfoAt(10);
     EXPECT_EQ(2, regionHeaderC.getChunkInfoAt(10).getOffset());
     EXPECT_EQ(4, regionHeaderC.getChunkInfoAt(10).getLength());
     EXPECT_EQ(6, regionHeaderC.getChunkInfoAt(10).getTimestamp());
-    EXPECT_EQ(anvil::ChunkInfo::CompressionType::Zlib, regionHeaderC.getChunkInfoAt(10).getCompression());
+    EXPECT_EQ(amc::ChunkInfo::CompressionType::Zlib, regionHeaderC.getChunkInfoAt(10).getCompression());
 }
 
 TEST(ReagionHeader, setChunkInfo)
 {
     // Init test data
-    std::array<anvil::ChunkInfo, anvil::ChunkCount> *info = new std::array<anvil::ChunkInfo, anvil::ChunkCount>();
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
-        (*info)[i] = anvil::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, anvil::ChunkInfo::CompressionType::GZip);
+    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
+    for(int i = 0; i < amc::ChunkCount; ++i) {
+        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::ChunkInfo::CompressionType::GZip);
     }
 
     // Check #1
-    anvil::RegionHeader regionHeader;
+    amc::RegionHeader regionHeader;
     regionHeader.setChunkInfo(*info);
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         ASSERT_EQ((*info)[i].getOffset(),      regionHeader.getChunkInfoAt(i).getOffset());
         ASSERT_EQ((*info)[i].getLength(),      regionHeader.getChunkInfoAt(i).getLength());
         ASSERT_EQ((*info)[i].getTimestamp(),   regionHeader.getChunkInfoAt(i).getTimestamp());
         ASSERT_EQ((*info)[i].getCompression(), regionHeader.getChunkInfoAt(i).getCompression());
     }
-    ASSERT_EQ(anvil::ChunkCount, regionHeader.getRegionCount());
+    ASSERT_EQ(amc::ChunkCount, regionHeader.getRegionCount());
 
     // Check #2
-    const std::array<anvil::ChunkInfo, anvil::ChunkCount> *info2 = &(regionHeader.getChunkInfo());
-    for(int i = 0; i < anvil::ChunkCount; ++i) {
+    const std::array<amc::ChunkInfo, amc::ChunkCount> *info2 = &(regionHeader.getChunkInfo());
+    for(int i = 0; i < amc::ChunkCount; ++i) {
         EXPECT_EQ((*info)[i].getOffset(),      (*info2)[i].getOffset());
         EXPECT_EQ((*info)[i].getLength(),      (*info2)[i].getLength());
         EXPECT_EQ((*info)[i].getTimestamp(),   (*info2)[i].getTimestamp());
@@ -326,20 +326,20 @@ TEST(ReagionHeader, setChunkInfo)
 
 TEST(ReagionHeader, setChunkInfoAt)
 {
-    anvil::RegionHeader regionHeader;
+    amc::RegionHeader regionHeader;
     ASSERT_EQ(0, regionHeader.getRegionCount());
 
-    regionHeader.setChunkInfoAt(10, anvil::ChunkInfo(2, 4, 6, anvil::ChunkInfo::CompressionType::Zlib));
+    regionHeader.setChunkInfoAt(10, amc::ChunkInfo(2, 4, 6, amc::ChunkInfo::CompressionType::Zlib));
     EXPECT_EQ(2, regionHeader.getChunkInfoAt(10).getOffset());
     EXPECT_EQ(4, regionHeader.getChunkInfoAt(10).getLength());
     EXPECT_EQ(6, regionHeader.getChunkInfoAt(10).getTimestamp());
-    EXPECT_EQ(anvil::ChunkInfo::CompressionType::Zlib, regionHeader.getChunkInfoAt(10).getCompression());
+    EXPECT_EQ(amc::ChunkInfo::CompressionType::Zlib, regionHeader.getChunkInfoAt(10).getCompression());
     EXPECT_EQ(1, regionHeader.getRegionCount());
 
-    regionHeader.setChunkInfoAt(20, anvil::ChunkInfo(4, 8, 12, anvil::ChunkInfo::CompressionType::Uncompressed));
+    regionHeader.setChunkInfoAt(20, amc::ChunkInfo(4, 8, 12, amc::ChunkInfo::CompressionType::Uncompressed));
     EXPECT_EQ(4, regionHeader.getChunkInfoAt(20).getOffset());
     EXPECT_EQ(8, regionHeader.getChunkInfoAt(20).getLength());
     EXPECT_EQ(12, regionHeader.getChunkInfoAt(20).getTimestamp());
-    EXPECT_EQ(anvil::ChunkInfo::CompressionType::Uncompressed, regionHeader.getChunkInfoAt(20).getCompression());
+    EXPECT_EQ(amc::ChunkInfo::CompressionType::Uncompressed, regionHeader.getChunkInfoAt(20).getCompression());
     EXPECT_EQ(2, regionHeader.getRegionCount());
 }

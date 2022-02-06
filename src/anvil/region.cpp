@@ -5,7 +5,7 @@
 #include <utility>
 #include <stdexcept>
 
-namespace anvil
+namespace amc
 {
 
 Region::Region()
@@ -188,7 +188,7 @@ Block Region::getBlockAt(const int blockX,
     // Calculate the requested chunk
     int xRegion = 0;
     int zRegion = 0;
-    util::convertBlockWorld2ChunkRegion(blockX, blockZ, xRegion, zRegion);
+    convertBlockWorld2ChunkRegion(blockX, blockZ, xRegion, zRegion);
     unsigned chunkIdx = zRegion * ChunkWidth + xRegion;
 
     // Get data from chunk
@@ -201,8 +201,8 @@ HeightMap Region::getHeightMap(const int chunkWorldX,
 {
     int chunkX = 0;
     int chunkZ = 0;
-    util::convertChunkWorld2ChunkRegion(chunkWorldX, chunkWorldZ, chunkX, chunkZ);
+    convertChunkWorld2ChunkRegion(chunkWorldX, chunkWorldZ, chunkX, chunkZ);
     return getChunkAt(chunkZ * ChunkWidth + chunkX).getHeightMap(mapType);
 }
 
-} // namespace anvil
+} // namespace amc

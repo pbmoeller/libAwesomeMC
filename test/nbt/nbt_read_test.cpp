@@ -17,7 +17,7 @@ TEST(nbt_read, loadNbtData_error)
 
     EXPECT_THROW({
         try {
-            data = nbt::loadNbtData("fakeFileName.someExt", false);
+            data = amc::loadNbtData("fakeFileName.someExt", false);
         } catch(const std::runtime_error &err)
         {
             EXPECT_STREQ("Could not open file for reading: \"fakeFileName.someExt\"!", 
@@ -29,7 +29,7 @@ TEST(nbt_read, loadNbtData_error)
 
 TEST(nbt_read, loadNbtData_uncompressed)
 {
-    std::vector<unsigned char> data = nbt::loadNbtData(testFolder + "hello_world.nbt", false);
+    std::vector<unsigned char> data = amc::loadNbtData(testFolder + "hello_world.nbt", false);
     EXPECT_EQ(33, data.size());
 
     unsigned char rawData[33] = {
@@ -45,7 +45,7 @@ TEST(nbt_read, loadNbtData_uncompressed)
 
 TEST(nbt_read, loadNbtData_compressed)
 {
-    std::vector<unsigned char> data = nbt::loadNbtData(testFolder + "bigtest.nbt", true);
+    std::vector<unsigned char> data = amc::loadNbtData(testFolder + "bigtest.nbt", true);
     EXPECT_EQ(1544, data.size());
 
     unsigned char rawData[1544] = {
@@ -170,134 +170,134 @@ TEST(nbt_read, readNbtData_empty)
 {
     std::vector<unsigned char> data;
 
-    nbt::CompoundTag *compoundTag = nullptr;;
-    EXPECT_THROW(compoundTag = nbt::readNbtData(data), std::runtime_error);
+    amc::CompoundTag *compoundTag = nullptr;;
+    EXPECT_THROW(compoundTag = amc::readNbtData(data), std::runtime_error);
 }
 
 TEST(nbt_read, readNbtData_complete)
 {
-    std::vector<unsigned char> data = nbt::loadNbtData(testFolder + "bigtest.nbt", true);
+    std::vector<unsigned char> data = amc::loadNbtData(testFolder + "bigtest.nbt", true);
     ASSERT_EQ(1544, data.size());
 
     // Test complete sample file
-    nbt::CompoundTag *compoundTag = nbt::readNbtData(data);
+    amc::CompoundTag *compoundTag = amc::readNbtData(data);
     EXPECT_EQ(11, compoundTag->size());
 
     // Get first compound
-    nbt::AbstractTag *nestedCompoundTmp = compoundTag->getChildByName("nested compound test");
-    ASSERT_EQ(nbt::TagType::Compound, nestedCompoundTmp->getType());
-    nbt::CompoundTag *nestedCompound = tag_cast<nbt::CompoundTag*>(nestedCompoundTmp);
+    amc::AbstractTag *nestedCompoundTmp = compoundTag->getChildByName("nested compound test");
+    ASSERT_EQ(amc::TagType::Compound, nestedCompoundTmp->getType());
+    amc::CompoundTag *nestedCompound = tag_cast<amc::CompoundTag*>(nestedCompoundTmp);
     ASSERT_TRUE(nestedCompound != nullptr);
     EXPECT_EQ(2, nestedCompound->size());
 
-    nbt::AbstractTag *eggTest = nestedCompound->getChildByName("egg");
-    ASSERT_EQ(nbt::TagType::Compound, eggTest->getType());
-    nbt::CompoundTag *egg = tag_cast<nbt::CompoundTag*>(eggTest);
+    amc::AbstractTag *eggTest = nestedCompound->getChildByName("egg");
+    ASSERT_EQ(amc::TagType::Compound, eggTest->getType());
+    amc::CompoundTag *egg = tag_cast<amc::CompoundTag*>(eggTest);
     ASSERT_TRUE(egg != nullptr);
     EXPECT_EQ(2, egg->size());
 
-    nbt::AbstractTag *eggbertTest = egg->getChildByName("name");
-    ASSERT_EQ(nbt::TagType::String, eggbertTest->getType());
-    nbt::StringTag *eggbert = tag_cast<nbt::StringTag*>(eggbertTest);
+    amc::AbstractTag *eggbertTest = egg->getChildByName("name");
+    ASSERT_EQ(amc::TagType::String, eggbertTest->getType());
+    amc::StringTag *eggbert = tag_cast<amc::StringTag*>(eggbertTest);
     ASSERT_TRUE(eggbert != nullptr);
     EXPECT_STREQ(eggbert->getValue().c_str(), "Eggbert");
 
-    nbt::AbstractTag *valueEggTest = egg->getChildByName("value");
-    ASSERT_EQ(nbt::TagType::Float, valueEggTest->getType());
-    nbt::FloatTag *valueEgg = tag_cast<nbt::FloatTag*>(valueEggTest);
+    amc::AbstractTag *valueEggTest = egg->getChildByName("value");
+    ASSERT_EQ(amc::TagType::Float, valueEggTest->getType());
+    amc::FloatTag *valueEgg = tag_cast<amc::FloatTag*>(valueEggTest);
     ASSERT_TRUE(valueEgg != nullptr);
     EXPECT_EQ(valueEgg->getValue(), 0.5f);
 
-    nbt::AbstractTag *hamTest = nestedCompound->getChildByName("ham");
-    ASSERT_EQ(nbt::TagType::Compound, hamTest->getType());
-    nbt::CompoundTag *ham = tag_cast<nbt::CompoundTag*>(hamTest);
+    amc::AbstractTag *hamTest = nestedCompound->getChildByName("ham");
+    ASSERT_EQ(amc::TagType::Compound, hamTest->getType());
+    amc::CompoundTag *ham = tag_cast<amc::CompoundTag*>(hamTest);
     ASSERT_TRUE(ham != nullptr);
     EXPECT_EQ(2, ham->size());
 
-    nbt::AbstractTag *hampusTest = ham->getChildByName("name");
-    ASSERT_EQ(nbt::TagType::String, hampusTest->getType());
-    nbt::StringTag *hampus = tag_cast<nbt::StringTag*>(hampusTest);
+    amc::AbstractTag *hampusTest = ham->getChildByName("name");
+    ASSERT_EQ(amc::TagType::String, hampusTest->getType());
+    amc::StringTag *hampus = tag_cast<amc::StringTag*>(hampusTest);
     ASSERT_TRUE(hampus != nullptr);
     EXPECT_STREQ(hampus->getValue().c_str(), "Hampus");
 
-    nbt::AbstractTag *valueHamTest = ham->getChildByName("value");
-    ASSERT_EQ(nbt::TagType::Float, valueHamTest->getType());
-    nbt::FloatTag *valueHam = tag_cast<nbt::FloatTag*>(valueHamTest);
+    amc::AbstractTag *valueHamTest = ham->getChildByName("value");
+    ASSERT_EQ(amc::TagType::Float, valueHamTest->getType());
+    amc::FloatTag *valueHam = tag_cast<amc::FloatTag*>(valueHamTest);
     ASSERT_TRUE(valueHam != nullptr);
     EXPECT_EQ(valueHam->getValue(), 0.75f);
 
     // ByteTag
-    nbt::AbstractTag *byteTest = compoundTag->getChildByName("byteTest");
-    ASSERT_EQ(nbt::TagType::Byte, byteTest->getType());
-    nbt::ByteTag *byteTag = tag_cast<nbt::ByteTag*>(byteTest);
+    amc::AbstractTag *byteTest = compoundTag->getChildByName("byteTest");
+    ASSERT_EQ(amc::TagType::Byte, byteTest->getType());
+    amc::ByteTag *byteTag = tag_cast<amc::ByteTag*>(byteTest);
     ASSERT_TRUE(byteTag != nullptr);
     EXPECT_EQ(127, byteTag->getValue());
 
     // ShortTag
-    nbt::AbstractTag *shortTest = compoundTag->getChildByName("shortTest");
-    ASSERT_EQ(nbt::TagType::Short, shortTest->getType());
-    nbt::ShortTag *shortTag = tag_cast<nbt::ShortTag*>(shortTest);
+    amc::AbstractTag *shortTest = compoundTag->getChildByName("shortTest");
+    ASSERT_EQ(amc::TagType::Short, shortTest->getType());
+    amc::ShortTag *shortTag = tag_cast<amc::ShortTag*>(shortTest);
     ASSERT_TRUE(shortTag != nullptr);
     EXPECT_EQ(32767, shortTag->getValue());
 
     // IntTag
-    nbt::AbstractTag *intTest = compoundTag->getChildByName("intTest");
-    ASSERT_EQ(nbt::TagType::Int, intTest->getType());
-    nbt::IntTag *intTag = tag_cast<nbt::IntTag*>(intTest);
+    amc::AbstractTag *intTest = compoundTag->getChildByName("intTest");
+    ASSERT_EQ(amc::TagType::Int, intTest->getType());
+    amc::IntTag *intTag = tag_cast<amc::IntTag*>(intTest);
     ASSERT_TRUE(intTag != nullptr);
     EXPECT_EQ(2147483647, intTag->getValue());
 
     // LongTag
-    nbt::AbstractTag *longTest = compoundTag->getChildByName("longTest");
-    ASSERT_EQ(nbt::TagType::Long, longTest->getType());
-    nbt::LongTag *longTag = tag_cast<nbt::LongTag*>(longTest);
+    amc::AbstractTag *longTest = compoundTag->getChildByName("longTest");
+    ASSERT_EQ(amc::TagType::Long, longTest->getType());
+    amc::LongTag *longTag = tag_cast<amc::LongTag*>(longTest);
     ASSERT_TRUE(longTag != nullptr);
     EXPECT_EQ(9223372036854775807, longTag->getValue());
 
     // ByteArray
-    nbt::AbstractTag *byteArrayTest = compoundTag->getChildByName("byteArrayTest (the first 1000 values of (n*n*255+n*7)%100, starting with n=0 (0, 62, 34, 16, 8, ...))");
-    ASSERT_EQ(nbt::TagType::ByteArray, byteArrayTest->getType());
-    nbt::ByteArrayTag *byteArrayTag = tag_cast<nbt::ByteArrayTag*>(byteArrayTest);
+    amc::AbstractTag *byteArrayTest = compoundTag->getChildByName("byteArrayTest (the first 1000 values of (n*n*255+n*7)%100, starting with n=0 (0, 62, 34, 16, 8, ...))");
+    ASSERT_EQ(amc::TagType::ByteArray, byteArrayTest->getType());
+    amc::ByteArrayTag *byteArrayTag = tag_cast<amc::ByteArrayTag*>(byteArrayTest);
     EXPECT_EQ(1000, byteArrayTag->size());
 
     // List #1
-    nbt::AbstractTag *longListTest = compoundTag->getChildByName("listTest (long)");
-    ASSERT_EQ(nbt::TagType::List, longListTest->getType());
-    nbt::ListTag *longList = tag_cast<nbt::ListTag*>(longListTest);
+    amc::AbstractTag *longListTest = compoundTag->getChildByName("listTest (long)");
+    ASSERT_EQ(amc::TagType::List, longListTest->getType());
+    amc::ListTag *longList = tag_cast<amc::ListTag*>(longListTest);
     ASSERT_TRUE(longList != nullptr);
-    EXPECT_EQ(nbt::TagType::Long, longList->getListType());
+    EXPECT_EQ(amc::TagType::Long, longList->getListType());
     EXPECT_EQ(5, longList->size());
-    EXPECT_EQ(11, tag_cast<nbt::LongTag*>(longList->at(0))->getValue());
-    EXPECT_EQ(12, tag_cast<nbt::LongTag*>(longList->at(1))->getValue());
-    EXPECT_EQ(13, tag_cast<nbt::LongTag*>(longList->at(2))->getValue());
-    EXPECT_EQ(14, tag_cast<nbt::LongTag*>(longList->at(3))->getValue());
-    EXPECT_EQ(15, tag_cast<nbt::LongTag*>(longList->at(4))->getValue());
+    EXPECT_EQ(11, tag_cast<amc::LongTag*>(longList->at(0))->getValue());
+    EXPECT_EQ(12, tag_cast<amc::LongTag*>(longList->at(1))->getValue());
+    EXPECT_EQ(13, tag_cast<amc::LongTag*>(longList->at(2))->getValue());
+    EXPECT_EQ(14, tag_cast<amc::LongTag*>(longList->at(3))->getValue());
+    EXPECT_EQ(15, tag_cast<amc::LongTag*>(longList->at(4))->getValue());
 
     // List #2
-    nbt::AbstractTag *compoundListTest = compoundTag->getChildByName("listTest (compound)");
-    ASSERT_EQ(nbt::TagType::List, compoundListTest->getType());
-    nbt::ListTag *compoundList = tag_cast<nbt::ListTag*>(compoundListTest);
+    amc::AbstractTag *compoundListTest = compoundTag->getChildByName("listTest (compound)");
+    ASSERT_EQ(amc::TagType::List, compoundListTest->getType());
+    amc::ListTag *compoundList = tag_cast<amc::ListTag*>(compoundListTest);
     ASSERT_TRUE(compoundList != nullptr);
-    EXPECT_EQ(nbt::TagType::Compound, compoundList->getListType());
+    EXPECT_EQ(amc::TagType::Compound, compoundList->getListType());
     EXPECT_EQ(2, compoundList->size());
 
-    nbt::CompoundTag *listItem1 = tag_cast<nbt::CompoundTag*>(compoundList->at(0));
-    EXPECT_EQ(nbt::TagType::Long, listItem1->at(1)->getType());
-    EXPECT_EQ(nbt::TagType::String, listItem1->at(0)->getType());
-    nbt::LongTag *longTag1 = tag_cast<nbt::LongTag*>(listItem1->at(1));
+    amc::CompoundTag *listItem1 = tag_cast<amc::CompoundTag*>(compoundList->at(0));
+    EXPECT_EQ(amc::TagType::Long, listItem1->at(1)->getType());
+    EXPECT_EQ(amc::TagType::String, listItem1->at(0)->getType());
+    amc::LongTag *longTag1 = tag_cast<amc::LongTag*>(listItem1->at(1));
     EXPECT_STREQ(longTag1->getName().c_str(), "created-on");
     EXPECT_EQ(longTag1->getValue(), 1264099775885);
-    nbt::StringTag *stringTag = tag_cast<nbt::StringTag*>(listItem1->at(0));
+    amc::StringTag *stringTag = tag_cast<amc::StringTag*>(listItem1->at(0));
     EXPECT_STREQ(stringTag->getName().c_str(), "name");
     EXPECT_STREQ(stringTag->getValue().c_str(), "Compound tag #0");
 
-    nbt::CompoundTag *listItem2 = tag_cast<nbt::CompoundTag*>(compoundList->at(1));
-    EXPECT_EQ(nbt::TagType::Long, listItem2->at(1)->getType());
-    EXPECT_EQ(nbt::TagType::String, listItem2->at(0)->getType());
-    nbt::LongTag *longTag2 = tag_cast<nbt::LongTag*>(listItem2->at(1));
+    amc::CompoundTag *listItem2 = tag_cast<amc::CompoundTag*>(compoundList->at(1));
+    EXPECT_EQ(amc::TagType::Long, listItem2->at(1)->getType());
+    EXPECT_EQ(amc::TagType::String, listItem2->at(0)->getType());
+    amc::LongTag *longTag2 = tag_cast<amc::LongTag*>(listItem2->at(1));
     EXPECT_STREQ(longTag2->getName().c_str(), "created-on");
     EXPECT_EQ(longTag2->getValue(), 1264099775885);
-    nbt::StringTag *stringTag2 = tag_cast<nbt::StringTag*>(listItem2->at(0));
+    amc::StringTag *stringTag2 = tag_cast<amc::StringTag*>(listItem2->at(0));
     EXPECT_STREQ(stringTag2->getName().c_str(), "name");
     EXPECT_STREQ(stringTag2->getValue().c_str(), "Compound tag #1");
 

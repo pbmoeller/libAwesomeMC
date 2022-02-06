@@ -7,7 +7,7 @@
 #include <utility>
 #include <stdexcept>
 
-namespace nbt
+namespace amc
 {
 
 ListTag::ListTag()
@@ -104,7 +104,7 @@ AbstractTag* ListTag::clone() const
 
 std::vector<unsigned char> ListTag::getData(bool isListEntry)
 {
-    util::ByteStream stream(util::ByteStream::Swap::SwapEndian);
+    ByteStream stream(ByteStream::Swap::SwapEndian);
 
     if(!isListEntry) {
         stream << static_cast<int8_t>(getType());
@@ -147,4 +147,4 @@ bool ListTag::pushBack(AbstractTag* value)
     }
 }
 
-} // namespace nbt
+} // namespace amc
