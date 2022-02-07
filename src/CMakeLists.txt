@@ -82,7 +82,6 @@ set(NBT_SOURCES
 
 # util
 set(UTIL_SOURCES
-    "util/bit.cpp"
     "util/byte_stream.cpp"
     "util/compression.cpp"
     "util/conversion.cpp"
