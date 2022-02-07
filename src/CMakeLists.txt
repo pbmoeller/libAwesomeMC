@@ -1,60 +1,62 @@
 # ZLIB
 find_package(ZLIB REQUIRED)
 
+set(AWESOMEMC_HEADER_PATH "${AwesomeMC_SOURCE_DIR}/include/AwesomeMC")
+
 ### Includes
 # anvil
 set(ANVIL_INCLUDES
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/anvil_read.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/block.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/chunk_info.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/heightmap.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/anvil/region_header.hpp"
+    "${AWESOMEMC_HEADER_PATH}/anvil/anvil_read.hpp"
+    "${AWESOMEMC_HEADER_PATH}/anvil/block.hpp"
+    "${AWESOMEMC_HEADER_PATH}/anvil/chunk.hpp"
+    "${AWESOMEMC_HEADER_PATH}/anvil/chunk_info.hpp"
+    "${AWESOMEMC_HEADER_PATH}/anvil/heightmap.hpp"
+    "${AWESOMEMC_HEADER_PATH}/anvil/region.hpp"
+    "${AWESOMEMC_HEADER_PATH}/anvil/region_header.hpp"
 )
 
 # nbt
 set(NBT_INCLUDES
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/abstract_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/abstract_vector_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/array_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/byte_array_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/byte_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/compound_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/double_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/end_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/float_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/int_array_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/int_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/list_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/long_array_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/long_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/short_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/string_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/tags.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/tags/value_tag.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/nbt_print.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/nbt/nbt_read.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/abstract_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/abstract_vector_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/array_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/byte_array_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/byte_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/compound_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/double_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/end_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/float_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/int_array_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/int_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/list_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/long_array_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/long_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/short_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/string_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/tags.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/value_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/nbt_print.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/nbt_read.hpp"
 )
 
 # util
 set(UTIL_INCLUDES
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/bit.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/byte_stream.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/byte_swap.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/compression.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/conversion.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/floating_point.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/indent.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/util/traits.hpp"
+    "${AWESOMEMC_HEADER_PATH}/util/bit.hpp"
+    "${AWESOMEMC_HEADER_PATH}/util/byte_stream.hpp"
+    "${AWESOMEMC_HEADER_PATH}/util/byte_swap.hpp"
+    "${AWESOMEMC_HEADER_PATH}/util/compression.hpp"
+    "${AWESOMEMC_HEADER_PATH}/util/conversion.hpp"
+    "${AWESOMEMC_HEADER_PATH}/util/floating_point.hpp"
+    "${AWESOMEMC_HEADER_PATH}/util/indent.hpp"
+    "${AWESOMEMC_HEADER_PATH}/util/traits.hpp"
 )
 
 set(AWESOMEMC_INCLUDES
     ${ANVIL_INCLUDES}
     ${NBT_INCLUDES}
     ${UTIL_INCLUDES}
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/constants.hpp"
-    "${CMAKE_SOURCE_DIR}/include/AwesomeMC/version.hpp"
+    "${AWESOMEMC_HEADER_PATH}/constants.hpp"
+    "${AWESOMEMC_HEADER_PATH}/version.hpp"
 )
 
 ### Sources
@@ -104,7 +106,7 @@ add_library(AwesomeMC SHARED
 target_compile_definitions(AwesomeMC PUBLIC TEST_EXPORT)
 target_include_directories(AwesomeMC
     PRIVATE ${ZLIB_INCLUDE_DIRS}
-    PRIVATE ${CMAKE_SOURCE_DIR}/include
+    PRIVATE ${AwesomeMC_SOURCE_DIR}/include
 )
 target_link_libraries(AwesomeMC ${ZLIB_LIBRARIES})
 set_target_properties(AwesomeMC PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
