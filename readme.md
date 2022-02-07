@@ -28,6 +28,17 @@ Data format references:
 5. Header files path should be used with library name eg. `include/libname/headers`
 6. Use signed types where unsigned is not explicitly necessary.
     * "In particular, do not use unsigned types to say a number will never be negative. Instead, use assertions for this." - Google C++ Style Guide
+7. Naming
+    1. Classes -> PascalCase 
+    2. Members camelCase
+    3. private members m_ prefix + camelCase
+    4. Concepts -> PascalCase
+    5. Traits -> camelCase
+    6. Template Parameters -> PascalCase
+    7. Enum -> PascalCase
+    8. Abstract classes are prefixed with "Abstract"
+    9. Abbreviations with max 2 upper case letters in a row, i.e. ID but not TAG
+    10. Exceptions where necessary
 
 # TODO
 
