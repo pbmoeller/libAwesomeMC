@@ -57,4 +57,5 @@ if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
 
+install(FILES AwesomeMC-config.cmake DESTINATION "${AwesomeMC_INSTALL_LIBRARY_DIR}/cmake")
 install(EXPORT AwesomeMC DESTINATION "${AwesomeMC_INSTALL_LIBRARY_DIR}/cmake")
