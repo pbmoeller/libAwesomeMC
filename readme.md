@@ -28,6 +28,17 @@ Data format references:
 5. Header files path should be used with library name eg. `include/libname/headers`
 6. Use signed types where unsigned is not explicitly necessary.
     * "In particular, do not use unsigned types to say a number will never be negative. Instead, use assertions for this." - Google C++ Style Guide
+7. Naming
+    1. Classes -> PascalCase 
+    2. Members camelCase
+    3. private members m_ prefix + camelCase
+    4. Concepts -> PascalCase
+    5. Traits -> camelCase
+    6. Template Parameters -> PascalCase
+    7. Enum -> PascalCase
+    8. Abstract classes are prefixed with "Abstract"
+    9. Abbreviations with max 2 upper case letters in a row, i.e. ID but not TAG
+    10. Exceptions where necessary
 
 # TODO
 
@@ -47,7 +58,6 @@ Data format references:
   - Compileroptions
     - Set Warnings are Errors
     - Add more Warnings for cleaner code
-  - Test for memory leaks
   - Add clang_format
     - Extend Guidelines
   - CMake bring CMakeSettings.json information to CMakeLists-txt in root directory -> build, install, bin dir.
@@ -56,19 +66,14 @@ Data format references:
 - Source Code
   - Improve Examples.
     - Naming, functional test code.
-  - value_type for tags? -> see STL.
   - Unify the use of `char` / `unsigned char` for byte data
-  - Check namespaces, eventually put everything in a common library namespace, i.e. `AwesomeMC`, `amc`, ..., 
-    - Remove anvil namespace
   - Round vs. curly braces
   - Use size_t when dealing with sizes of containers
-  - Use instanciated unit tests to test the template types.
   - Evaluate Header initialization instead of Initialization in constructors
   - Evaluate getter/setter in hpp/cpp, inline?
   - Evaluate getter name without "get" and just the Type name, see. Qt
   - Check if StringTag is Unicode or ASCII (general implementation)
   - set passed pointers to `nullptr` after transfering ownership? Does this increase safety?
-  - ByteStream should use templated stream operators instead of multiple overrides.
 - Format & Documentation
   - Check all Comments for style, typos, case, etc.
   - Add Doxygen comments
