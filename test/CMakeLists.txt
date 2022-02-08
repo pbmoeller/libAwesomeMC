@@ -38,8 +38,8 @@ if(UNIX)
 endif()
 
 target_include_directories(tests
-    PRIVATE ${CMAKE_SOURCE_DIR}/include
-    PRIVATE ${CMAKE_SOURCE_DIR}/test
+    PRIVATE ${AwesomeMC_SOURCE_DIR}/include
+    PRIVATE ${AwesomeMC_SOURCE_DIR}/test
     PRIVATE ${GTEST_INCLUDE_DIRS}
     PRIVATE ${GMOCK_INCLUDE_DIRS}
 )
