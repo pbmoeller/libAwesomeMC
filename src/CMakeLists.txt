@@ -115,3 +115,7 @@ target_compile_options(AwesomeMC PRIVATE
           -std=c++20 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual -Wpedantic -Wno-psabi>
      $<$<CXX_COMPILER_ID:MSVC>:
           /W4>)
+
+install(TARGETS AwesomeMC DESTINATION "${AwesomeMC_INSTALL_LIBRARY_DIR}")
+install(DIRECTORY "${AWESOMEMC_HEADER_PATH}" DESTINATION "${AwesomeMC_INSTALL_INCLUDE_DIR}")
+
