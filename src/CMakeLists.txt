@@ -106,7 +106,9 @@ add_library(AwesomeMC SHARED
 target_compile_definitions(AwesomeMC PUBLIC TEST_EXPORT)
 target_include_directories(AwesomeMC
     PRIVATE ${ZLIB_INCLUDE_DIRS}
-    PRIVATE ${AwesomeMC_SOURCE_DIR}/include
+    PUBLIC $<BUILD_INTERFACE:${AwesomeMC_SOURCE_DIR}/include/>
+           $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+           $<INSTALL_INTERFACE:${AwesomeMC_INSTALL_INCLUDE_DIR}>
 )
 target_link_libraries(AwesomeMC ${ZLIB_LIBRARIES})
 set_target_properties(AwesomeMC PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
@@ -116,6 +118,6 @@ target_compile_options(AwesomeMC PRIVATE
      $<$<CXX_COMPILER_ID:MSVC>:
           /W4>)
 
-install(TARGETS AwesomeMC DESTINATION "${AwesomeMC_INSTALL_LIBRARY_DIR}")
+install(TARGETS AwesomeMC EXPORT AwesomeMC DESTINATION "${AwesomeMC_INSTALL_LIBRARY_DIR}")
 install(DIRECTORY "${AWESOMEMC_HEADER_PATH}" DESTINATION "${AwesomeMC_INSTALL_INCLUDE_DIR}")
 
