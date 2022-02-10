@@ -1,7 +1,20 @@
 # libAwesomeMC
 
-libAwesomeMC is a library to read and write Minecraft NBT and Level data.
-The current library version targets Minecraft 1.18.1.
+libAwesomeMC is a C++ library to read and write Minecraft NBT and Level data.
+
+The current library version targets Minecraft 1.18.1 and data version 2865.
+
+# Building the library
+
+libAwesomeMC requires a few third party libraries for the full build.
+
+- zlib (tested with version 1.2.11)
+- googletest (only for unit tests, tested with latest version > 1.11.0)
+
+Make sure that the libraries are built and can be found with the `find_package` command of CMake.
+You can also point CMake to the correct directory (see section about Windows).
+
+This library requires a compiler with C++20 support. (GCC 10.3.0, Visual Studio 16.9)
 
 # References
 
@@ -13,78 +26,12 @@ Data format references:
 * [Anvil-Format](https://minecraft.fandom.com/wiki/Anvil_file_format)
 * [NBT-Format](https://minecraft.fandom.com/wiki/NBT_format)
 
-# Style Guide
 
-1. Include Order: Local to global -> to prevent hidden dependencies
-    * (Prototype/Interface Header for implementation if in *.cpp file)
-    * Other headers from same project
-    * 3rd party library headers, eg. Qt
-    * 3rd party library headers that are almost STD, eg. boost
-    * C++ STL
-    * C STL 
-2. All header includes are based on library 'root/include' dir.
-3. Include paths must not be relative => '..'
-4. Include Guards 
-5. Header files path should be used with library name eg. `include/libname/headers`
-6. Use signed types where unsigned is not explicitly necessary.
-    * "In particular, do not use unsigned types to say a number will never be negative. Instead, use assertions for this." - Google C++ Style Guide
-7. Naming
-    1. Classes -> PascalCase 
-    2. Members camelCase
-    3. private members m_ prefix + camelCase
-    4. Concepts -> PascalCase
-    5. Traits -> camelCase
-    6. Template Parameters -> PascalCase
-    7. Enum -> PascalCase
-    8. Abstract classes are prefixed with "Abstract"
-    9. Abbreviations with max 2 upper case letters in a row, i.e. ID but not TAG
-    10. Exceptions where necessary
+# About the library
 
-# TODO
+I always wanted to be able to read and write Minecraft data to modify or use it in private custom projects.
+Because there are only a few libraries in C++ and many of them are outdated, I began to develop my own library.
+This is not only a library to support my own projects, but also for learning CMake and C++20 features in a practical way.
+I hope this library is also useful for other people.
 
-- Project Management
-  - Extend support for other compiler and processors
-    - Win64
-    - Win32
-    - Linux64 (WSL) GCC 10.3
-    - ARM (RaspberryPi) GCC 10.3
-  - Github Workflow?
-  - Improve Readme
-    - Requirements + Version
-    - Tested Versions
-    - Use cool batches.
-    - Image?
-    - Usage example
-  - Compileroptions
-    - Set Warnings are Errors
-    - Add more Warnings for cleaner code
-  - Add clang_format
-    - Extend Guidelines
-  - CMake bring CMakeSettings.json information to CMakeLists-txt in root directory -> build, install, bin dir.
-- Library Version
-  - Add Minecraft Target Version (1.18.1) + DataVersion (Current 2865)
-- Source Code
-  - Improve Examples.
-    - Naming, functional test code.
-  - Unify the use of `char` / `unsigned char` for byte data
-  - Round vs. curly braces
-  - Use size_t when dealing with sizes of containers
-  - Evaluate Header initialization instead of Initialization in constructors
-  - Evaluate getter/setter in hpp/cpp, inline?
-  - Evaluate getter name without "get" and just the Type name, see. Qt
-  - Check if StringTag is Unicode or ASCII (general implementation)
-  - set passed pointers to `nullptr` after transfering ownership? Does this increase safety?
-- Format & Documentation
-  - Check all Comments for style, typos, case, etc.
-  - Add Doxygen comments
-- Unit tests
-  - Implement tests for all missing functions
-  - Implement tests for all skipped tests
-  - Refactor unit tests
-    - Unify tests
-      - naming of variables, types
-    - Simplyfy tests
-    - Use more fixtures
-    - Use gmock or custom test functions for checking arrays etc.
-    - Use sample data
-  - Write unit test and/or example with mcr region test file.
+Please feel free to contact me if there are any bugs, feature requests or problems with the library.

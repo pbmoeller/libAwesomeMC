@@ -1,6 +1,7 @@
 # ZLIB
 find_package(ZLIB REQUIRED)
 
+# Header Path Prefix
 set(AWESOMEMC_HEADER_PATH "${AwesomeMC_SOURCE_DIR}/include/AwesomeMC")
 
 ### Includes
