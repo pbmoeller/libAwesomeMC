@@ -57,7 +57,6 @@ set(AWESOMEMC_INCLUDES
     ${NBT_INCLUDES}
     ${UTIL_INCLUDES}
     "${AWESOMEMC_HEADER_PATH}/constants.hpp"
-    "${AWESOMEMC_HEADER_PATH}/version.hpp"
 )
 
 ### Sources
@@ -108,7 +107,7 @@ target_compile_definitions(AwesomeMC PUBLIC TEST_EXPORT)
 target_include_directories(AwesomeMC
     PRIVATE ${ZLIB_INCLUDE_DIRS}
     PUBLIC $<BUILD_INTERFACE:${AwesomeMC_SOURCE_DIR}/include/>
-           $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
+           $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
            $<INSTALL_INTERFACE:${AwesomeMC_INSTALL_INCLUDE_DIR}>
 )
 target_link_libraries(AwesomeMC ${ZLIB_LIBRARIES})
@@ -121,4 +120,5 @@ target_compile_options(AwesomeMC PRIVATE
 
 install(TARGETS AwesomeMC EXPORT AwesomeMC DESTINATION "${AwesomeMC_INSTALL_LIBRARY_DIR}")
 install(DIRECTORY "${AWESOMEMC_HEADER_PATH}" DESTINATION "${AwesomeMC_INSTALL_INCLUDE_DIR}")
+install(FILES ${PROJECT_BINARY_DIR}/AwesomeMC/version.hpp DESTINATION "${AwesomeMC_INSTALL_INCLUDE_DIR}/AwesomeMC")
 

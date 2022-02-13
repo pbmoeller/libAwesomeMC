@@ -36,13 +36,15 @@ execute_process(
 
 configure_file(
     ${CMAKE_CURRENT_SOURCE_DIR}/version.hpp.in
-    ${CMAKE_CURRENT_SOURCE_DIR}/include/AwesomeMC/version.hpp
+    ${PROJECT_BINARY_DIR}/AwesomeMC/version.hpp
 )
 
 ### Installation directories
 set(AwesomeMC_INSTALL_BINARY_DIR "bin")
 set(AwesomeMC_INSTALL_INCLUDE_DIR "include")
 set(AwesomeMC_INSTALL_LIBRARY_DIR "lib/${CMAKE_BUILD_TYPE}")
+set(AwesomeMC_INSTALL_CMAKE_CONFIG_DIR "share/AwesomeMC/cmake")
+set(AwesomeMC_INSTALL_ADDITIONAL_FILES_DIR "share/AwesomeMC")
 
 ### AwesomeMC library
 add_subdirectory(src)
@@ -57,5 +59,6 @@ if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
 
-install(FILES AwesomeMC-config.cmake DESTINATION "${AwesomeMC_INSTALL_LIBRARY_DIR}/cmake")
-install(EXPORT AwesomeMC DESTINATION "${AwesomeMC_INSTALL_LIBRARY_DIR}/cmake")
+install(FILES AwesomeMC-config.cmake DESTINATION ${AwesomeMC_INSTALL_CMAKE_CONFIG_DIR})
+install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE" "${CMAKE_CURRENT_SOURCE_DIR}/readme.md" DESTINATION ${AwesomeMC_INSTALL_ADDITIONAL_FILES_DIR})
+install(EXPORT AwesomeMC DESTINATION ${AwesomeMC_INSTALL_CMAKE_CONFIG_DIR})
