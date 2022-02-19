@@ -9,6 +9,11 @@
 namespace amc
 {
 
+bool isGzipCompressed(std::vector<unsigned char> &data)
+{
+    return (data[0] == 0x1F && data[1] == 0x8F);
+}
+
 bool deflate_zlib(std::vector<unsigned char> &data)
 {
     int ret = 0;

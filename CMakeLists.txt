@@ -59,6 +59,7 @@ if(BUILD_TESTS)
     add_subdirectory(test)
 endif()
 
+### Install
 install(FILES AwesomeMC-config.cmake DESTINATION ${AwesomeMC_INSTALL_CMAKE_CONFIG_DIR})
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE" "${CMAKE_CURRENT_SOURCE_DIR}/readme.md" DESTINATION ${AwesomeMC_INSTALL_ADDITIONAL_FILES_DIR})
 install(EXPORT AwesomeMC DESTINATION ${AwesomeMC_INSTALL_CMAKE_CONFIG_DIR})

@@ -17,6 +17,8 @@ namespace amc
 class AbstractTag;
 class CompoundTag;
 
+bool isNbtFile(const std::string &filename);
+
 std::vector<unsigned char> loadNbtData(const std::string &filename, 
                                        bool isCompressed);
 

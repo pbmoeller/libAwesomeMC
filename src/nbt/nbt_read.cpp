@@ -14,6 +14,47 @@
 namespace amc
 {
 
+std::vector<unsigned char> fileReadAll(std::ifstream &strm)
+{
+    strm.seekg(0, std::ios::end);
+    size_t size = strm.tellg();
+    std::vector<unsigned char> data(size, 0);
+    strm.seekg(0);
+    strm.read((char*)&data[0], size);
+    return data;
+}
+
+bool isNbtFile(const std::string &filename)
+{
+    // Open filestream
+    std::ifstream file(filename, std::ios::binary);
+    if(file.is_open()) {
+        // Load first 2 bytes to check file header
+        std::vector<unsigned char> data;
+        file.read((char*)&data[0], 2);
+        if(!file) {
+            return false;
+        }
+        bool isCompressed = isGzipCompressed(data);
+        file.seekg(0);
+
+        // If the file is compressed, load it completely
+        if(isCompressed) {
+            data = fileReadAll(file);
+            bool ret = inflate_gzip(data);
+            if(!ret) {
+                return false;
+            }
+        }
+
+        // Check the first byte in the data. It must be a CompoundTag type
+        if(data[0] == static_cast<unsigned char>(TagType::Compound)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 std::vector<unsigned char> loadNbtData(const std::string &filename,
                                        bool isCompressed)
 {
@@ -23,11 +64,7 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
     if(!stream.is_open()) {
         throw std::runtime_error(std::string("Could not open file for reading: \"").append(filename).append("\"!"));
     } else {
-        stream.seekg(0, std::ios::end);
-        size_t size = stream.tellg();
-        std::vector<unsigned char> data(size, 0);
-        stream.seekg(0);
-        stream.read((char*)&data[0], size);
+        std::vector<unsigned char> data = fileReadAll(stream);
 
         if(isCompressed) {
             bool ret = inflate_gzip(data);

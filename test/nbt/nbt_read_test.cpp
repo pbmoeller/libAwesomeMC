@@ -11,6 +11,16 @@
 
 const std::string testFolder = "../../../test/testdata/nbt/";
 
+TEST(nbt_read, fileReadAll)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(nbt_read, isNbtFile)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
 TEST(nbt_read, loadNbtData_error)
 {
     std::vector<unsigned char> data;

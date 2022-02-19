@@ -10,22 +10,22 @@
 
 TEST(conversion, isValidWorldCoordinate)
 {
-
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
 TEST(conversion, isValidRegionCoordinate)
 {
-
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
 TEST(conversion, isValidChunkCoordinate)
 {
-
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
 TEST(conversion, isValidSectionCoordinate)
 {
-
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
 const std::vector<std::vector<int>> blockCoordinates1 = {
