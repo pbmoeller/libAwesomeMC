@@ -11,7 +11,7 @@ namespace amc
 
 bool isGzipCompressed(std::vector<unsigned char> &data)
 {
-    return (data[0] == 0x1F && data[1] == 0x8F);
+    return (data[0] == 0x1F && data[1] == 0x8B);
 }
 
 bool deflate_zlib(std::vector<unsigned char> &data)
