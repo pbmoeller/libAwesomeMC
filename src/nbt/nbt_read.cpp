@@ -30,7 +30,7 @@ bool isNbtFile(const std::string &filename)
     std::ifstream file(filename, std::ios::binary);
     if(file.is_open()) {
         // Load first 2 bytes to check file header
-        std::vector<unsigned char> data;
+        std::vector<unsigned char> data(2, 0);
         file.read((char*)&data[0], 2);
         if(!file) {
             return false;
