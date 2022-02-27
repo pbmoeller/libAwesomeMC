@@ -8,6 +8,7 @@
 
 // STL
 #include <vector>
+#include <memory>
 
 namespace amc
 {
@@ -28,8 +29,11 @@ public:
 
     void clear();
 
+    // !!! The Chunk keeps the ownership, but the Tag can be edited. !!!
     CompoundTag* getRootTag();
-    // !!! Do not delete or reuse the item - the chunk keeps the ownership !!!
+    // !!! Transfers ownership to Chunk. root will be moved to chunk internal !!!
+    void setRootTag(std::unique_ptr<CompoundTag> root);
+    // !!! Transfers ownership to Chunk. Data will be moved to chunk internal !!!
     void setRootTag(CompoundTag *root);
 
     // !!! Do not delete or reuse the item - the chunk keeps the ownership !!!
@@ -48,7 +52,7 @@ protected:
                           std::vector<AbstractTag*> &subTags) const;
 
 private:
-    CompoundTag *m_data;
+    std::unique_ptr<CompoundTag> m_data;
 };
 
 } // namespace amc

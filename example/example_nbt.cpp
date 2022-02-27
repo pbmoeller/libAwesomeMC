@@ -87,17 +87,16 @@ int main(int argc, char **argv)
         std::vector<unsigned char> data1 = amc::loadNbtData(file, compressed);
 
         // Read NBT data from data buffer.
-        amc::CompoundTag *tag1 = nullptr;
-        tag1 = amc::readNbtData(data1);
+        std::unique_ptr<amc::CompoundTag> tag1 = amc::readNbtData(data1);
 
         // Check if the NBT data should be printed to console or a given output file.
         if(outputFile.empty()) {
-            std::cout << amc::printNbtData(tag1)
+            std::cout << amc::printNbtData(tag1.get())
                       << std::endl;
         } else {
             std::ofstream fstrm(outputFile);
             if(fstrm) {
-                fstrm << amc::printNbtData(tag1);
+                fstrm << amc::printNbtData(tag1.get());
             }
         }
 

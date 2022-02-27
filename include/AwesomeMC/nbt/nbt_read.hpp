@@ -10,6 +10,7 @@
 #include <sstream>
 #include <vector>
 #include <stdexcept>
+#include <memory>
 
 namespace amc
 {
@@ -22,7 +23,7 @@ bool isNbtFile(const std::string &filename);
 std::vector<unsigned char> loadNbtData(const std::string &filename, 
                                        bool isCompressed);
 
-CompoundTag* readNbtData(const std::vector<unsigned char> &data);
+std::unique_ptr<CompoundTag> readNbtData(const std::vector<unsigned char> &data);
 AbstractTag* readChildTag(ByteStream &stream, 
                         bool isListItem, 
                         TagType listType);

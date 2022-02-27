@@ -47,7 +47,7 @@ Chunk& Chunk::operator=(const Chunk &other)
 {
     if(this != &other) {
         clear();
-        m_data = tag_cast<CompoundTag*>(other.m_data->clone());
+        m_data = std::unique_ptr<CompoundTag>(tag_cast<CompoundTag*>(other.m_data->clone()));
     }
     return *this;
 }
@@ -56,8 +56,8 @@ Chunk& Chunk::operator=(Chunk &&other) noexcept
 {
     if(this != &other) {
         clear();
-        m_data = other.m_data;
-        other.m_data = nullptr;
+        m_data = std::move(other.m_data);
+        assert(other.m_data == nullptr);
     }
     return *this;
 }
@@ -81,15 +81,21 @@ bool Chunk::operator!=(const Chunk &other)
 
 void Chunk::clear()
 {
-    if(m_data) {
-        delete m_data;
-        m_data = nullptr;
-    }
+    m_data.reset(nullptr);
 }
 
 CompoundTag* Chunk::getRootTag()
 {
-    return m_data;
+    return m_data.get();
+}
+
+void Chunk::setRootTag(std::unique_ptr<CompoundTag> root)
+{
+    // Delete old data
+    clear();
+
+    // Set new data
+    m_data = std::move(root);
 }
 
 void Chunk::setRootTag(CompoundTag *root)
@@ -98,13 +104,13 @@ void Chunk::setRootTag(CompoundTag *root)
     clear();
 
     // Set new data
-    m_data = root;
+    m_data = std::unique_ptr<CompoundTag>(root);
 }
 
 std::vector<AbstractTag*> Chunk::getSubTagsByName(const std::string &name) const
 {
     std::vector<AbstractTag*> subTags;
-    getSubTagsByName(name, m_data, subTags);
+    getSubTagsByName(name, m_data.get(), subTags);
     return subTags;
 }
 

@@ -180,7 +180,7 @@ TEST(nbt_read, readNbtData_empty)
 {
     std::vector<unsigned char> data;
 
-    amc::CompoundTag *compoundTag = nullptr;;
+    std::unique_ptr<amc::CompoundTag> compoundTag;
     EXPECT_THROW(compoundTag = amc::readNbtData(data), std::runtime_error);
 }
 
@@ -190,7 +190,7 @@ TEST(nbt_read, readNbtData_complete)
     ASSERT_EQ(1544, data.size());
 
     // Test complete sample file
-    amc::CompoundTag *compoundTag = amc::readNbtData(data);
+    std::unique_ptr<amc::CompoundTag> compoundTag = amc::readNbtData(data);
     EXPECT_EQ(11, compoundTag->size());
 
     // Get first compound
@@ -310,6 +310,4 @@ TEST(nbt_read, readNbtData_complete)
     amc::StringTag *stringTag2 = tag_cast<amc::StringTag*>(listItem2->at(0));
     EXPECT_STREQ(stringTag2->getName().c_str(), "name");
     EXPECT_STREQ(stringTag2->getValue().c_str(), "Compound tag #1");
-
-    delete compoundTag;
 }

@@ -77,10 +77,8 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
     }
 }
 
-CompoundTag* readNbtData(const std::vector<unsigned char> &data)
+std::unique_ptr<CompoundTag> readNbtData(const std::vector<unsigned char> &data)
 {
-    CompoundTag *root = nullptr;
-
     // Init the ByteStream object.
     ByteStream byteStream(data);
     byteStream.setSwap(ByteStream::Swap::SwapEndian);
@@ -91,14 +89,14 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
     if(type == static_cast<unsigned char>(TagType::Unknown)) {
         throw std::runtime_error("Invalid tag type.");
     } else if(type == static_cast<unsigned char>(TagType::End)) {
-        return root;
+        return std::unique_ptr<CompoundTag>(nullptr);
     } else {
         // Get the name
         std::string name = readStringValue(byteStream);
 
         // The first tag always is a CompoundTag.
         // So we expect to read child tags from here on.
-        root = new CompoundTag(name);
+        std::unique_ptr<CompoundTag> root = std::make_unique<CompoundTag>(name);
         AbstractTag *childTag = nullptr;
 
         // Keep reading sub tags as long there is no EndTag.
@@ -112,9 +110,9 @@ CompoundTag* readNbtData(const std::vector<unsigned char> &data)
             }
         } while(childTag->getType() != TagType::End);
         delete childTag;
+    
+        return root;
     }
-
-    return root;
 }
 
 AbstractTag* readChildTag(ByteStream &stream,
