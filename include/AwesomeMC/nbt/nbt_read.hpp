@@ -23,6 +23,7 @@ bool isNbtFile(const std::string &filename);
 std::vector<unsigned char> loadNbtData(const std::string &filename, 
                                        bool isCompressed);
 
+std::unique_ptr<CompoundTag> readNbtFile(const std::string &filename);
 std::unique_ptr<CompoundTag> readNbtData(const std::vector<unsigned char> &data);
 AbstractTag* readChildTag(ByteStream &stream, 
                         bool isListItem, 

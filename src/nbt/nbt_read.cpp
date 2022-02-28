@@ -10,6 +10,7 @@
 #include <fstream>
 #include <iomanip>
 #include <stdexcept>
+#include <filesystem>
 
 namespace amc
 {
@@ -75,6 +76,47 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
 
         return data;
     }
+}
+
+std::unique_ptr<CompoundTag> readNbtFile(const std::string &filename)
+{
+    // Check if file exists
+    if(!std::filesystem::exists(filename)) {
+        return std::unique_ptr<CompoundTag>();
+    }
+
+    // Open filestream
+    std::ifstream file(filename, std::ios::binary);
+    if(file.is_open()) {
+        // Check if file is compressed
+        // Load first 2 bytes to check file header
+        std::vector<unsigned char> data(2, 0);
+        file.read((char*)&data[0], 2);
+        if(!file) {
+            return std::unique_ptr<CompoundTag>();
+        }
+        bool isCompressed = isGzipCompressed(data);
+        file.seekg(0);
+
+        // Read all data from file
+        // If the file is compressed, load it completely
+        data = fileReadAll(file);
+        if(isCompressed) {
+            bool ret = inflate_gzip(data);
+            if(!ret) {
+                return std::unique_ptr<CompoundTag>();
+            }
+        }
+
+        // Check the first byte in the data. It must be a CompoundTag type
+        if(data[0] != static_cast<unsigned char>(TagType::Compound)) {
+            return std::unique_ptr<CompoundTag>();
+        }
+
+        return readNbtData(data);
+    }
+    
+    return std::unique_ptr<CompoundTag>();
 }
 
 std::unique_ptr<CompoundTag> readNbtData(const std::vector<unsigned char> &data)

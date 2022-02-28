@@ -176,6 +176,11 @@ TEST(nbt_read, readStringValue)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(nbt_read, readNbtFile)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
 TEST(nbt_read, readNbtData_empty)
 {
     std::vector<unsigned char> data;
