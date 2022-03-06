@@ -3,6 +3,7 @@
 
 // STL
 #include <cstdint>
+#include <tuple>
 
 namespace amc
 {
@@ -29,6 +30,10 @@ void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldY, 
                                   int &blockChunkX, int &blockChunkY, int &blockChunkZ);
 void convertChunkWorld2ChunkRegion(const int chunkWorldX, const int chunkWorldZ,
                                    int &cunkRegionX, int &chunKRegionZ);
+
+unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ);
+void xzFromChunkIndex(const unsigned int index, int &x, int &z);
+std::tuple<int, int> xzFromChunkIndex(const unsigned int index);
 
 } // namespace amc
 

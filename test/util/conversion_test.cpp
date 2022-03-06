@@ -198,3 +198,18 @@ TEST(conversion, convertBlockWorld2BlockChunk_2)
         EXPECT_EQ(blockChunkZ, blockCoordinatesChunk2[i][2]);
     }
 }
+
+TEST(conversion, chunkIndexFromXZ)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(conversion, xzFromChunkIndex)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(conversion, xzFromChunkIndex_tuple)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}

@@ -5,6 +5,7 @@
 
 // STL
 #include <cmath>
+#include <cassert>
 
 namespace amc
 {
@@ -109,6 +110,26 @@ void convertChunkWorld2ChunkRegion(const int chunkWorldX, const int chunkWorldZ,
 {
     chunkRegionX = (amc::ChunkWidth + (chunkWorldX % amc::ChunkWidth)) & 0x0000001F;
     chunkRegionZ = (amc::ChunkWidth + (chunkWorldZ % amc::ChunkWidth)) & 0x0000001F;
+}
+
+unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ)
+{
+    assert(regionChunkX >= 0 && regionChunkX < ChunkWidth 
+           && regionChunkZ >= 0 && regionChunkZ < ChunkWidth);
+    return regionChunkZ * ChunkWidth + regionChunkX;
+}
+
+void xzFromChunkIndex(const unsigned int index, int &x, int &z)
+{
+    assert(index >= 0 && index < ChunkCount);
+    x = index % ChunkWidth;
+    z = index / ChunkWidth;
+}
+
+std::tuple<int, int> xzFromChunkIndex(const unsigned int index)
+{
+    assert(index >= 0 && index < ChunkCount);
+    return {index % ChunkWidth, index / ChunkWidth};
 }
 
 } // namespace amc
