@@ -10,6 +10,8 @@
 // STL
 #include <array>
 #include <vector>
+#include <string>
+#include <fstream>
 
 namespace amc
 {
@@ -58,12 +60,29 @@ public:
                            const int chunkZ,
                            HeightMap::MapType mapType = HeightMap::MapType::WorldSurface) const;
 
+    void loadFromFile(const std::string &filename);
+    void loadPartiallyFromFile(const std::string &filename);
+    void loadChunkAt(unsigned int index);
+    void loadAllChunks();
+
+private:
+    void readChunkData(std::ifstream &filestream, ChunkInfo &chunkInfo, unsigned int index);
+    bool readRegionHeader(std::ifstream &filestream);
+
+    // Static functions
+public:
+    static bool validateRegionFilename(const std::string &filename);
+    static bool validateAndParseRegionFilename(const std::string &filename, int &x, int &z);
+
+    // Private variables
 private:
     int m_x;
     int m_z;
+    std::string m_filename;
 
     RegionHeader m_regionHeader;
     std::array<Chunk, ChunkCount> *m_chunks;
+    std::vector<bool> m_loadedChunks;
 };
 
 } // namespace amc

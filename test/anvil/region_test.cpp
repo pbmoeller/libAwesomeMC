@@ -269,3 +269,43 @@ TEST_F(RegionFixture, getHeightMap)
 
     EXPECT_EQ(expectedHeights, heightmap.getData());
 }
+
+TEST(Region, loadFromFile)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(Region, loadPartiallyFromFile)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(Region, loadChunkAt)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(Region, loadAllChunks)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(Region, readChunkData)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(Region, readRegionHeader)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(Region, validateRegionFilename)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(Region, parseRegionFilename)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
