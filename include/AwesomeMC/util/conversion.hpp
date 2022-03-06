@@ -29,7 +29,10 @@ void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldZ,
 void convertBlockWorld2BlockChunk(const int blockWorldX, const int blockWorldY, const int blockWorldZ,
                                   int &blockChunkX, int &blockChunkY, int &blockChunkZ);
 void convertChunkWorld2ChunkRegion(const int chunkWorldX, const int chunkWorldZ,
-                                   int &cunkRegionX, int &chunKRegionZ);
+                                   int &cunkRegionX, int &chunkRegionZ);
+void convertChunkRegion2ChunkWorld(const int chunkRegionX, const int chunkRegionZ,
+                                   const int regionX, const int regionZ,
+                                   int &chunkWorldX, int &chunkWorldZ);
 
 unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ);
 void xzFromChunkIndex(const unsigned int index, int &x, int &z);

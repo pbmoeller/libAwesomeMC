@@ -112,6 +112,14 @@ void convertChunkWorld2ChunkRegion(const int chunkWorldX, const int chunkWorldZ,
     chunkRegionZ = (amc::ChunkWidth + (chunkWorldZ % amc::ChunkWidth)) & 0x0000001F;
 }
 
+void convertChunkRegion2ChunkWorld(const int chunkRegionX, const int chunkRegionZ,
+                                   const int regionX, const int regionZ,
+                                   int &chunkWorldX, int &chunkWorldZ)
+{
+    chunkWorldX = regionX * ChunkWidth + chunkRegionX;
+    chunkWorldZ = regionZ * ChunkWidth + chunkRegionZ;
+}
+
 unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ)
 {
     assert(regionChunkX >= 0 && regionChunkX < ChunkWidth 

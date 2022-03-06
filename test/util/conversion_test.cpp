@@ -199,6 +199,16 @@ TEST(conversion, convertBlockWorld2BlockChunk_2)
     }
 }
 
+TEST(conversion, convertChunkWorld2ChunkRegion)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(conversion, convertChunkRegion2ChunkWorld)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
 TEST(conversion, chunkIndexFromXZ)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
