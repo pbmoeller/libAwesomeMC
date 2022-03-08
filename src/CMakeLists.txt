@@ -38,6 +38,7 @@ set(NBT_INCLUDES
     "${AWESOMEMC_HEADER_PATH}/nbt/tags/value_tag.hpp"
     "${AWESOMEMC_HEADER_PATH}/nbt/nbt_print.hpp"
     "${AWESOMEMC_HEADER_PATH}/nbt/nbt_read.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/nbt_write.hpp"
 )
 
 # util
@@ -80,6 +81,7 @@ set(NBT_SOURCES
     "nbt/tags/list_tag.cpp"
     "nbt/nbt_print.cpp"
     "nbt/nbt_read.cpp"
+    "nbt/nbt_write.cpp"
 )
 
 # util

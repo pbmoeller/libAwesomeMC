@@ -23,6 +23,7 @@ add_executable(tests
     "nbt/tags/short_tag_test.cpp"
     "nbt/tags/string_tag_test.cpp"
     "nbt/nbt_read_test.cpp"
+    "nbt/nbt_write_test.cpp"
     "util/bit_test.cpp"
     "util/byte_stream_test.cpp"
     "util/byte_swap_test.cpp"
