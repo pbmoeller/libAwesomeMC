@@ -83,6 +83,78 @@ bool inflate_zlib(std::vector<unsigned char> &data)
     return true;
 }
 
+bool deflate_gzip(std::vector<unsigned char> &data, int level)
+{
+    // Check if we have data
+    if(data.size() == 0) {
+        return true;
+    }
+
+    // Init zstream
+    z_stream zstrm;
+    zstrm.zalloc    = Z_NULL;
+    zstrm.zfree     = Z_NULL;
+    zstrm.opaque    = Z_NULL;
+    zstrm.next_in   = Z_NULL;
+    zstrm.avail_in  = 0;
+
+    int ret = deflateInit2(&zstrm, std::max(-1, std::min(9, level)), Z_DEFLATED, 15 + 16, 8, Z_DEFAULT_STRATEGY);
+    if(ret != Z_OK) {
+        return false;
+    }
+
+    // Reserve as much data as we have (should almost always be enough ?!?)
+    //std::vector<unsigned char> dataOut(data.size(), 0);
+    std::vector<unsigned char> dataOut;
+    char *inputData = (char *)data.data();
+    int remainingData = data.size();
+
+    // Compress
+    int flush = 0;
+    do {
+        // Get current chunk size
+        int chunkSize = std::min(GzipChunkSize, remainingData);
+
+        // Calculate new intermediate values
+        zstrm.next_in = (unsigned char*)inputData;
+        zstrm.avail_in = chunkSize;
+
+        inputData += chunkSize;
+        remainingData -= chunkSize;
+
+        // Check if this is the last chunk of data
+        flush = (remainingData <= 0 ? Z_FINISH : Z_NO_FLUSH);
+        
+        do {
+            std::vector<char> out(GzipChunkSize, 0);
+
+            zstrm.next_out = (unsigned char*)out.data();
+            zstrm.avail_out = GzipChunkSize;
+
+            ret = deflate(&zstrm, flush);
+
+            // Check errors
+            if(ret == Z_STREAM_ERROR) {
+                // Clean up and report error
+                deflateEnd(&zstrm);
+                return false;
+            }
+
+            int compressedDataSize = (GzipChunkSize - zstrm.avail_out);
+
+            if(compressedDataSize > 0) {
+                dataOut.insert(dataOut.end(), out.begin(), out.begin() + compressedDataSize);
+            }
+
+        } while(zstrm.avail_out == 0);
+    } while(flush != Z_FINISH);
+
+    deflateEnd(&zstrm);
+    dataOut.resize(zstrm.total_out);
+    data = std::move(dataOut);
+    return ret == Z_STREAM_END;
+}
+
 bool inflate_gzip(std::vector<unsigned char> &data)
 {
     if(data.size() == 0) {

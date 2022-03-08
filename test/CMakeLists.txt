@@ -26,6 +26,7 @@ add_executable(tests
     "util/bit_test.cpp"
     "util/byte_stream_test.cpp"
     "util/byte_swap_test.cpp"
+    "util/compression_test.cpp"
     "util/conversion_test.cpp"
     "util/floating_point_test.cpp"
     "test_main.cpp" 
