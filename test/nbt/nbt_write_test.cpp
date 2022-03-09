@@ -30,10 +30,11 @@ TEST(nbt_write, writeNbtFile)
     amc::CompoundTag *compoundTag_0     = new amc::CompoundTag("Level 0 - CompoundTag", {
         byteTag_1, shortTag_1, intTag_1, floatTag_1, stringTag_1
     });
+    // !!! Attention list items are stored (by defintion) without names or types, thats why the name must be empty.
     amc::ListTag * listTag_0            = new amc::ListTag("Level 0 - ListTag", amc::TagType::String, {
-        new amc::StringTag("StringTag #1", "#1"),
-        new amc::StringTag("StringTag #2", "#2"),
-        new amc::StringTag("StringTag #3", "#3")
+        new amc::StringTag("", "#1"),
+        new amc::StringTag("", "#2"),
+        new amc::StringTag("", "#3")
     });
     amc::CompoundTag *cTag = new amc::CompoundTag("Level 0", {
         byteTag_0, shortTag_0, intTag_0, longTag_0, floatTag_0, doubleTag_0, stringTag_0,
