@@ -41,6 +41,7 @@ public:
     constexpr TagType getListType() const {
         return m_listType;
     }
+    bool setListType(TagType newType);
 
     virtual AbstractTag* clone() const override;
     std::vector<unsigned char> getData(bool isListEntry) override;

@@ -4,6 +4,7 @@
 #include <AwesomeMC/nbt/tags/byte_tag.hpp>
 #include <AwesomeMC/nbt/tags/int_tag.hpp>
 #include <AwesomeMC/nbt/tags/float_tag.hpp>
+#include <AwesomeMC/nbt/tags/double_tag.hpp>
 #include <AwesomeMC/nbt/tags/long_tag.hpp>
 #include <AwesomeMC/util/byte_swap.hpp>
 
@@ -337,6 +338,18 @@ TEST(ListTag, getListType)
 
     amc::ListTag listTag2(amc::TagType::Float);
     EXPECT_EQ(amc::TagType::Float, listTag2.getListType());
+}
+
+TEST(ListTag, setListType)
+{
+    amc::ListTag listTag;
+    EXPECT_EQ(amc::TagType::Byte, listTag.getListType());
+
+    EXPECT_TRUE(listTag.setListType(amc::TagType::Double));
+    EXPECT_EQ(amc::TagType::Double, listTag.getListType());
+
+    listTag.pushBack(new amc::DoubleTag("Test", 3.4));
+    EXPECT_FALSE(listTag.setListType(amc::TagType::Float));
 }
 
 TEST(ListTag, getData)

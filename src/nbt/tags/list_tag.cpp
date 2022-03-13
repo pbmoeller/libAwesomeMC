@@ -97,6 +97,15 @@ ListTag& ListTag::operator=(ListTag &&other) noexcept
     return *this;
 }
 
+bool ListTag::setListType(TagType newType)
+{
+    if(m_value.empty()) {
+        m_listType = newType;
+        return true;
+    }
+    return false;
+}
+
 AbstractTag* ListTag::clone() const
 {
     return new ListTag(*this);
