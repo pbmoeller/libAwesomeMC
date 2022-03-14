@@ -4,7 +4,7 @@
 // gtest
 #include <gtest/gtest.h>
 
-TEST(AbstractTag, TagType)
+TEST(TagType, TypdeIds)
 {
     EXPECT_EQ(0,  static_cast<int>(amc::TagType::End));
     EXPECT_EQ(1,  static_cast<int>(amc::TagType::Byte));

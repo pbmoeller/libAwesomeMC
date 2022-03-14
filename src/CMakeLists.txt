@@ -34,6 +34,7 @@ set(NBT_INCLUDES
     "${AWESOMEMC_HEADER_PATH}/nbt/tags/long_tag.hpp"
     "${AWESOMEMC_HEADER_PATH}/nbt/tags/short_tag.hpp"
     "${AWESOMEMC_HEADER_PATH}/nbt/tags/string_tag.hpp"
+    "${AWESOMEMC_HEADER_PATH}/nbt/tags/tag_type.hpp"
     "${AWESOMEMC_HEADER_PATH}/nbt/tags/tags.hpp"
     "${AWESOMEMC_HEADER_PATH}/nbt/tags/value_tag.hpp"
     "${AWESOMEMC_HEADER_PATH}/nbt/nbt_print.hpp"
