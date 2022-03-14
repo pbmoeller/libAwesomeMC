@@ -226,11 +226,11 @@ TEST(CompoundTag, Equal)
     EXPECT_TRUE(compoundTagA == compoundTagB);
 
     // Change B
-    compoundTagB.erase(2);
+    compoundTagB.eraseAt(2);
     EXPECT_FALSE(compoundTagA == compoundTagB);
 
     // Make equal again
-    compoundTagA.erase(2);
+    compoundTagA.eraseAt(2);
     EXPECT_TRUE(compoundTagA == compoundTagB);
 
     compoundTagA.setName("bla");
@@ -259,11 +259,11 @@ TEST(CompoundTag, NotEqual)
     EXPECT_FALSE(compoundTagA != compoundTagB);
 
     // Change B
-    compoundTagB.erase(2);
+    compoundTagB.eraseAt(2);
     EXPECT_TRUE(compoundTagA != compoundTagB);
 
     // Make equal again
-    compoundTagA.erase(2);
+    compoundTagA.eraseAt(2);
     EXPECT_FALSE(compoundTagA != compoundTagB);
 
     // Change name
@@ -400,11 +400,11 @@ TEST(CompoundTag, erase)
     ASSERT_EQ(3, compoundTag.size());
 
     // Test index too high
-    EXPECT_FALSE(compoundTag.erase(3));
-    EXPECT_FALSE(compoundTag.erase(900));
+    EXPECT_FALSE(compoundTag.eraseAt(3));
+    EXPECT_FALSE(compoundTag.eraseAt(900));
 
     // Erase middle item
-    EXPECT_TRUE(compoundTag.erase(1));
+    EXPECT_TRUE(compoundTag.eraseAt(1));
     EXPECT_EQ(2, compoundTag.size());
 
     // Check that item 1 and 3 remain
@@ -417,7 +417,7 @@ TEST(CompoundTag, erase)
     EXPECT_EQ(3, bt->getValue());
 
     // Erase last item
-    EXPECT_TRUE(compoundTag.erase(1));
+    EXPECT_TRUE(compoundTag.eraseAt(1));
     EXPECT_EQ(1, compoundTag.size());
 
     // Check remaining item
@@ -427,9 +427,34 @@ TEST(CompoundTag, erase)
     EXPECT_EQ(1, bt->getValue());
 
     // Erase last item
-    EXPECT_TRUE(compoundTag.erase(0));
+    EXPECT_TRUE(compoundTag.eraseAt(0));
     EXPECT_EQ(0, compoundTag.size());
     EXPECT_TRUE(compoundTag.isEmpty());
+}
+
+TEST(CompoundTag, eraseByValue)
+{
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
+    amc::ByteTag *d = new amc::ByteTag("D", 4);
+
+    amc::CompoundTag compoundTag({a, b, c});
+    ASSERT_EQ(3, compoundTag.size());
+
+    EXPECT_FALSE(compoundTag.erase(d));
+    ASSERT_EQ(3, compoundTag.size());
+
+    EXPECT_TRUE(compoundTag.erase(b));
+    ASSERT_EQ(2, compoundTag.size());
+
+    EXPECT_TRUE(compoundTag.erase(c));
+    ASSERT_EQ(1, compoundTag.size());
+
+    EXPECT_TRUE(compoundTag.erase(a));
+    ASSERT_EQ(0, compoundTag.size());
+
+    delete d;
 }
 
 TEST(CompoundTag, insert)
@@ -502,7 +527,7 @@ TEST(CompoundTag, size)
     EXPECT_EQ(3, compoundTag.size());
 
     // Test erasing an item
-    ASSERT_TRUE(compoundTag.erase(0));
+    ASSERT_TRUE(compoundTag.eraseAt(0));
     EXPECT_EQ(2, compoundTag.size());
 
     // clear

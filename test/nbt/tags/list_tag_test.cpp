@@ -271,11 +271,11 @@ TEST(ListTag, Equal)
     EXPECT_FALSE(listTagA == listTagC);
 
     // Change B
-    listTagB.erase(2);
+    listTagB.eraseAt(2);
     EXPECT_FALSE(listTagA == listTagB);
 
     // Make equal again
-    listTagA.erase(2);
+    listTagA.eraseAt(2);
     EXPECT_TRUE(listTagA == listTagB);
 
     listTagA.setName("bla");
@@ -313,11 +313,11 @@ TEST(ListTag, NotEqual)
     EXPECT_TRUE(listTagA != listTagC);
 
     // Change B
-    listTagB.erase(2);
+    listTagB.eraseAt(2);
     EXPECT_TRUE(listTagA != listTagB);
 
     // Make equal again
-    listTagA.erase(2);
+    listTagA.eraseAt(2);
     EXPECT_FALSE(listTagA != listTagB);
 
     // Change name
@@ -481,11 +481,11 @@ TEST(ListTag, erase)
     ASSERT_EQ(3, listTag.size());
 
     // Test index too high
-    EXPECT_FALSE(listTag.erase(3));
-    EXPECT_FALSE(listTag.erase(900));
+    EXPECT_FALSE(listTag.eraseAt(3));
+    EXPECT_FALSE(listTag.eraseAt(900));
 
     // Erase middle item
-    EXPECT_TRUE(listTag.erase(1));
+    EXPECT_TRUE(listTag.eraseAt(1));
     EXPECT_EQ(2, listTag.size());
 
     // Check that item 1 and 3 remain
@@ -498,7 +498,7 @@ TEST(ListTag, erase)
     EXPECT_EQ(3, bt->getValue());
 
     // Erase last item
-    EXPECT_TRUE(listTag.erase(1));
+    EXPECT_TRUE(listTag.eraseAt(1));
     EXPECT_EQ(1, listTag.size());
 
     // Check remaining item
@@ -508,9 +508,34 @@ TEST(ListTag, erase)
     EXPECT_EQ(1, bt->getValue());
 
     // Erase last item
-    EXPECT_TRUE(listTag.erase(0));
+    EXPECT_TRUE(listTag.eraseAt(0));
     EXPECT_EQ(0, listTag.size());
     EXPECT_TRUE(listTag.isEmpty());
+}
+
+TEST(ListTag, eraseByValue)
+{
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
+    amc::ByteTag *d = new amc::ByteTag("C", 3);
+
+    amc::ListTag listTag(amc::TagType::Byte, {a, b, c});
+    ASSERT_EQ(3, listTag.size());
+
+    EXPECT_FALSE(listTag.erase(d));
+    ASSERT_EQ(3, listTag.size());
+
+    EXPECT_TRUE(listTag.erase(b));
+    ASSERT_EQ(2, listTag.size());
+
+    EXPECT_TRUE(listTag.erase(c));
+    ASSERT_EQ(1, listTag.size());
+
+    EXPECT_TRUE(listTag.erase(a));
+    ASSERT_EQ(0, listTag.size());
+
+    delete d;
 }
 
 TEST(ListTag, insert)
@@ -590,7 +615,7 @@ TEST(ListTag, size)
     EXPECT_EQ(3, listTag.size());
 
     // Test erasing an item
-    ASSERT_TRUE(listTag.erase(0));
+    ASSERT_TRUE(listTag.eraseAt(0));
     EXPECT_EQ(2, listTag.size());
 
     // clear

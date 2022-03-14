@@ -157,7 +157,7 @@ size_t AbstractVectorTag::size() const noexcept {
     return m_value.size();
 }
 
-bool AbstractVectorTag::erase(size_t index)
+bool AbstractVectorTag::eraseAt(size_t index)
 {
     if(index >= m_value.size()) {
         return false;
@@ -168,6 +168,17 @@ bool AbstractVectorTag::erase(size_t index)
         m_value.erase(m_value.begin() + index);
         return true;
     }
+}
+
+bool AbstractVectorTag::erase(AbstractTag *value)
+{
+    iterator it = std::find(m_value.begin(), m_value.end(), value);
+    if(it != m_value.end()) {
+        delete *it;
+        m_value.erase(it);
+        return true;
+    }
+    return false;
 }
 
 AbstractTag* AbstractVectorTag::takeAt(size_t index)

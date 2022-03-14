@@ -55,7 +55,8 @@ public:
     bool isEmpty() const noexcept;
     size_t size() const noexcept;
 
-    bool erase(size_t index);
+    bool eraseAt(size_t index);
+    bool erase(AbstractTag *value);
 
     // !!! This functions removes the item from the container - transfers ownership !!!
     AbstractTag* takeAt(size_t index);
