@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(AwesomeMC
-    VERSION 0.1.0
+    VERSION 0.1.1
     LANGUAGES C CXX
 )
+
+include(CMakePackageConfigHelpers)
 
 ### Options
 option(BUILD_TESTS "Build unit tests for AwesomeMC" TRUE)
@@ -39,6 +41,11 @@ configure_file(
     ${PROJECT_BINARY_DIR}/AwesomeMC/version.hpp
 )
 
+write_basic_package_version_file("${PROJECT_BINARY_DIR}/AwesomeMC-config-version.cmake"
+  VERSION ${PROJECT_VERSION}
+  COMPATIBILITY SameMajorVersion
+)
+
 ### Installation directories
 set(AwesomeMC_INSTALL_BINARY_DIR "bin")
 set(AwesomeMC_INSTALL_INCLUDE_DIR "include")
@@ -60,6 +67,6 @@ if(BUILD_TESTS)
 endif()
 
 ### Install
-install(FILES AwesomeMC-config.cmake DESTINATION ${AwesomeMC_INSTALL_CMAKE_CONFIG_DIR})
+install(FILES "AwesomeMC-config.cmake" "${PROJECT_BINARY_DIR}/AwesomeMC-config-version.cmake" DESTINATION ${AwesomeMC_INSTALL_CMAKE_CONFIG_DIR})
 install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE" "${CMAKE_CURRENT_SOURCE_DIR}/readme.md" DESTINATION ${AwesomeMC_INSTALL_ADDITIONAL_FILES_DIR})
 install(EXPORT AwesomeMC DESTINATION ${AwesomeMC_INSTALL_CMAKE_CONFIG_DIR})
