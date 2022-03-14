@@ -227,25 +227,25 @@ TEST(LongArrayTag, erase)
 {
     amc::LongArrayTag longArrayTagA("TestTag", {1, 2, 3});
     // Test index too high
-    EXPECT_FALSE(longArrayTagA.erase(3));
-    EXPECT_FALSE(longArrayTagA.erase(900));
+    EXPECT_FALSE(longArrayTagA.eraseAt(3));
+    EXPECT_FALSE(longArrayTagA.eraseAt(900));
 
     // successively erase first index until empty
     ASSERT_FALSE(longArrayTagA.isEmpty());
-    EXPECT_TRUE(longArrayTagA.erase(0));
-    EXPECT_TRUE(longArrayTagA.erase(0));
-    EXPECT_TRUE(longArrayTagA.erase(0));
+    EXPECT_TRUE(longArrayTagA.eraseAt(0));
+    EXPECT_TRUE(longArrayTagA.eraseAt(0));
+    EXPECT_TRUE(longArrayTagA.eraseAt(0));
     ASSERT_TRUE(longArrayTagA.isEmpty());
 
     // Expect false, when trying to erase from empty ByteAraryTag
-    EXPECT_FALSE(longArrayTagA.erase(0));
+    EXPECT_FALSE(longArrayTagA.eraseAt(0));
 
     // Erase from middle
     amc::LongArrayTag longArrayTagB("TestTag", {1, 2, 3});
     ASSERT_EQ(3, longArrayTagB.size());
     std::vector<int64_t> data1 = longArrayTagB.getValue();
     EXPECT_THAT(data1, testing::ElementsAre(1, 2, 3));
-    longArrayTagB.erase(1);
+    longArrayTagB.eraseAt(1);
     std::vector<int64_t> data2 = longArrayTagB.getValue();
     ASSERT_EQ(2, longArrayTagB.size());
     EXPECT_THAT(data2, testing::ElementsAre(1, 3));

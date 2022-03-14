@@ -117,7 +117,7 @@ public:
         m_value.clear();
     }
 
-    bool erase(size_t index)
+    bool eraseAt(size_t index)
     {
         if(index >= m_value.size()) {
             return false;
