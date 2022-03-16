@@ -80,6 +80,7 @@ set(NBT_SOURCES
     "nbt/tags/compound_tag.cpp"
     "nbt/tags/end_tag.cpp"
     "nbt/tags/list_tag.cpp"
+    "nbt/tags/tag_type.cpp"
     "nbt/nbt_print.cpp"
     "nbt/nbt_read.cpp"
     "nbt/nbt_write.cpp"

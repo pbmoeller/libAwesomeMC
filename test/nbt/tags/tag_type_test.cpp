@@ -20,3 +20,28 @@ TEST(TagType, TypdeIds)
     EXPECT_EQ(11, static_cast<int>(amc::TagType::IntArray));
     EXPECT_EQ(12, static_cast<int>(amc::TagType::LongArray));
 }
+
+TEST(TagType, isValueTag)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(TagType, isArrayTag)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(TagType, isContainerTag)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(TagType, getTagTypeName)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(TagType, getTagName)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}

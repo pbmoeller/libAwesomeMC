@@ -124,39 +124,4 @@ void printNbtChildTag(const AbstractTag *tag,
     }
 }
 
-std::string getTagName(TagType type)
-{
-    switch(type)
-    {
-        case TagType::End:
-            return "TAG_End";
-        case TagType::Byte:
-            return "TAG_Byte";
-        case TagType::Short:
-            return "TAG_Short";
-        case TagType::Int:
-            return "TAG_Int";
-        case TagType::Long:
-            return "TAG_Long";
-        case TagType::Float:
-            return "TAG_Float";
-        case TagType::Double:
-            return "TAG_Double";
-        case TagType::ByteArray:
-            return "TAG_ByteArray";
-        case TagType::String:
-            return "TAG_String";
-        case TagType::List:
-            return "TAG_List";
-        case TagType::Compound:
-            return "TAG_Compound";
-        case TagType::IntArray:
-            return "TAG_IntArray";
-        case TagType::LongArray:
-            return "TAG_LongArray";
-        default:
-            return "InvalidTag";
-    }
-}
-
 } // namespace amc

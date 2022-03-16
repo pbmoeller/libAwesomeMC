@@ -2,6 +2,7 @@
 #define AWESOMEMC_NBT_NBT_PRINT_HPP
 
 // AwesomeMC
+#include <AwesomeMC/nbt/tags/tag_type.hpp>
 #include <AwesomeMC/nbt/tags/tags.hpp>
 #include <AwesomeMC/util/indent.hpp>
 
@@ -20,34 +21,32 @@ void printNbtChildTag(const AbstractTag *tag,
                       Indent indent,
                       bool printArrayContent = false);
 
-std::string getTagName(TagType type);
-
 template<typename T, TagType TAG>
 std::string printTagName(const ValueTag<T, TAG> &tag) {
     std::stringstream sstr;
-    sstr << getTagName(TAG) << "(\"" << tag.getName() << "\"): ";
+    sstr << "TAG_" << getTagTypeName(TAG) << "(\"" << tag.getName() << "\"): ";
     return sstr.str();
 }
 
 template<typename T, TagType TAG>
 std::string printTagName(const ArrayTag<T, TAG> &tag) {
     std::stringstream sstr;
-    sstr << getTagName(TAG) << "(\"" << tag.getName() << "\"): " 
+    sstr << "TAG_" << getTagTypeName(TAG) << "(\"" << tag.getName() << "\"): "
          << tag.size() << " entries";
     return sstr.str();
 }
 
 std::string printTagName(const CompoundTag &tag) {
     std::stringstream sstr;
-    sstr << getTagName(tag.getType()) << "(\"" << tag.getName() << "\"): "
+    sstr << "TAG_" << getTagTypeName(tag.getType()) << "(\"" << tag.getName() << "\"): "
         << tag.size() << " entries";
     return sstr.str();
 }
 
 std::string printTagName(const ListTag &tag) {
     std::stringstream sstr;
-    sstr << getTagName(tag.getType()) << "(\"" << tag.getName() << "\"): " 
-         << tag.size() << " entries of type " << getTagName(tag.getListType());
+    sstr << "TAG_" << getTagTypeName(tag.getType()) << "(\"" << tag.getName() << "\"): "
+         << tag.size() << " entries of type " << getTagTypeName(tag.getListType());
     return sstr.str();
 }
 
