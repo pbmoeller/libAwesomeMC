@@ -123,6 +123,16 @@ TEST(compression, isGzipCompressed)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(compression, isZlibCompressed)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
+TEST(compression, getCompression)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
 TEST(compression, deflate_zlib)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";

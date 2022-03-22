@@ -14,6 +14,26 @@ bool isGzipCompressed(std::vector<unsigned char> &data)
     return (data[0] == 0x1F && data[1] == 0x8B);
 }
 
+bool isZlibCompressed(std::vector<unsigned char> &data)
+{
+    return (data[0] == 0x78 
+            && (data[1] == 0x01 
+                || data[1] == 0x5E
+                || data[1] == 0x9C
+                || data[1] == 0xDA));
+}
+
+CompressionType getCompression(std::vector<unsigned char> &data)
+{
+    if(isGzipCompressed(data)) {
+        return CompressionType::GZip;
+    } else if(isZlibCompressed(data)) {
+        return CompressionType::Zlib;
+    } else {
+        return CompressionType::Uncompressed;
+    }
+}
+
 bool deflate_zlib(std::vector<unsigned char> &data)
 {
     int ret = 0;
