@@ -43,7 +43,7 @@ TEST(nbt_write, writeNbtFile)
 
     // Save the file
     const std::string filename = "writeNbtFile_test.nbt";
-    bool ret = amc::writeNbtFile(filename, cTag, true);
+    bool ret = amc::writeNbtFile(filename, cTag, amc::CompressionType::GZip);
     EXPECT_TRUE(ret);
 
     // Read the file again

@@ -10,16 +10,22 @@
 namespace amc
 {
 
-bool writeNbtFile(const std::string &filename, CompoundTag *tag, bool compress)
+bool writeNbtFile(const std::string &filename, 
+                  CompoundTag *tag, 
+                  CompressionType compression)
 {
     // Get data from tag
     std::vector<unsigned char> data = tag->getData(false);
 
-    if(compress) {
-        bool ret = deflate_gzip(data);
-        if(!ret) {
-            return false;
-        }
+    // Check compression type and do compression if necessary
+    bool ret = true;
+    if(compression == CompressionType::GZip) {
+        ret = deflate_gzip(data);
+    } else if(compression == CompressionType::Zlib) {
+        ret = deflate_zlib(data);
+    }
+    if(!ret) {
+        return false;
     }
 
     // Open filestream
