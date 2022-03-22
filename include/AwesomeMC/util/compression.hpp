@@ -6,6 +6,13 @@
 
 namespace amc
 {
+    enum class CompressionType : char
+    {
+        GZip = 1,
+        Zlib = 2,
+        Uncompressed = 3,
+    };
+
     constexpr unsigned int ZlibChunkSize = 16384;
     constexpr int GzipChunkSize = 32 * 1024;
 

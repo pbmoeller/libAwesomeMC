@@ -119,7 +119,7 @@ bool readRegionChunks(std::ifstream &filestream, Region &region)
 
         // Get size of binary data and compression type
         uint32_t dataSize = 0;
-        ChunkInfo::CompressionType compressionType = ChunkInfo::CompressionType::Uncompressed;
+        CompressionType compressionType = CompressionType::Uncompressed;
         filestream.read((char*)&dataSize, sizeof(uint32_t));
         dataSize = bswap(dataSize);
         filestream.read((char*)&compressionType, sizeof(char));
@@ -131,17 +131,17 @@ bool readRegionChunks(std::ifstream &filestream, Region &region)
         filestream.read((char*)&chunkData[0], dataSize - 1);
 
         switch(compressionType) {
-            case ChunkInfo::CompressionType::GZip:
+            case CompressionType::GZip:
                 if(!inflate_gzip(chunkData)) {
                     throw std::runtime_error("Failed to uncompress chunk data (gzip).");
                 }
                 break;
-            case ChunkInfo::CompressionType::Zlib:
+            case CompressionType::Zlib:
                 if(!inflate_zlib(chunkData)) {
                     throw std::runtime_error("Failed to uncompress chunk data (zlib).");
                 }
                 break;
-            case ChunkInfo::CompressionType::Uncompressed:
+            case CompressionType::Uncompressed:
                 break;
             default:
                 throw std::runtime_error("Unknown compression type.");

@@ -111,6 +111,13 @@ unsigned char bigtestUncompressedData[1544] = {
     0xDF, 0x8F, 0x6B, 0xBB, 0xFF, 0x6A, 0x5E, 0x00
 };
 
+TEST(compression, CompressionType)
+{
+    EXPECT_EQ(1, static_cast<int>(amc::CompressionType::GZip));
+    EXPECT_EQ(2, static_cast<int>(amc::CompressionType::Zlib));
+    EXPECT_EQ(3, static_cast<int>(amc::CompressionType::Uncompressed));
+}
+
 TEST(compression, isGzipCompressed)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";

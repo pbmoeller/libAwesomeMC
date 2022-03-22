@@ -5,13 +5,6 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-TEST(ChunkInfo, CompressionType)
-{
-    EXPECT_EQ(1, static_cast<int>(amc::ChunkInfo::CompressionType::GZip));
-    EXPECT_EQ(2, static_cast<int>(amc::ChunkInfo::CompressionType::Zlib));
-    EXPECT_EQ(3, static_cast<int>(amc::ChunkInfo::CompressionType::Uncompressed));
-}
-
 TEST(ChunkInfo, Constructor)
 {
     amc::ChunkInfo chunkInfo;
@@ -19,28 +12,28 @@ TEST(ChunkInfo, Constructor)
     EXPECT_EQ(0u, chunkInfo.getOffset());
     EXPECT_EQ(0u, chunkInfo.getLength());
     EXPECT_EQ(0u, chunkInfo.getTimestamp());
-    EXPECT_EQ(amc::ChunkInfo::CompressionType::GZip, chunkInfo.getCompression());
+    EXPECT_EQ(amc::CompressionType::GZip, chunkInfo.getCompression());
 }
 
 TEST(ChunkInfo, Constructor_2)
 {
-    amc::ChunkInfo chunkInfo(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfo(345, 20, 0x12345678, amc::CompressionType::Zlib);
 
     EXPECT_EQ(345u, chunkInfo.getOffset());
     EXPECT_EQ(20u, chunkInfo.getLength());
     EXPECT_EQ(0x12345678u, chunkInfo.getTimestamp());
-    EXPECT_EQ(amc::ChunkInfo::CompressionType::Zlib, chunkInfo.getCompression());
+    EXPECT_EQ(amc::CompressionType::Zlib, chunkInfo.getCompression());
 }
 
 TEST(ChunkInfo, CopyConstructor)
 {
     // Init A
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
 
     ASSERT_EQ(345u, chunkInfoA.getOffset());
     ASSERT_EQ(20u, chunkInfoA.getLength());
     ASSERT_EQ(0x12345678u, chunkInfoA.getTimestamp());
-    ASSERT_EQ(amc::ChunkInfo::CompressionType::Zlib, chunkInfoA.getCompression());
+    ASSERT_EQ(amc::CompressionType::Zlib, chunkInfoA.getCompression());
 
     // Test Copy
     amc::ChunkInfo chunkInfoB(chunkInfoA);
@@ -53,12 +46,12 @@ TEST(ChunkInfo, CopyConstructor)
 TEST(ChunkInfo, MoveConstructor)
 {
     // Init A
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
 
     ASSERT_EQ(345u, chunkInfoA.getOffset());
     ASSERT_EQ(20u, chunkInfoA.getLength());
     ASSERT_EQ(0x12345678u, chunkInfoA.getTimestamp());
-    ASSERT_EQ(amc::ChunkInfo::CompressionType::Zlib, chunkInfoA.getCompression());
+    ASSERT_EQ(amc::CompressionType::Zlib, chunkInfoA.getCompression());
 
     // Test Move
     amc::ChunkInfo chunkInfoB(std::move(chunkInfoA));
@@ -71,12 +64,12 @@ TEST(ChunkInfo, MoveConstructor)
 TEST(ChunkInfo, CopyAssignment)
 {
     // Init A
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
 
     ASSERT_EQ(345u, chunkInfoA.getOffset());
     ASSERT_EQ(20u, chunkInfoA.getLength());
     ASSERT_EQ(0x12345678u, chunkInfoA.getTimestamp());
-    ASSERT_EQ(amc::ChunkInfo::CompressionType::Zlib, chunkInfoA.getCompression());
+    ASSERT_EQ(amc::CompressionType::Zlib, chunkInfoA.getCompression());
 
     // Test Copy
     amc::ChunkInfo chunkInfoB = chunkInfoA;
@@ -89,12 +82,12 @@ TEST(ChunkInfo, CopyAssignment)
 TEST(ChunkInfo, MoveAssignment)
 {
     // Init A
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
 
     ASSERT_EQ(345u, chunkInfoA.getOffset());
     ASSERT_EQ(20u, chunkInfoA.getLength());
     ASSERT_EQ(0x12345678u, chunkInfoA.getTimestamp());
-    ASSERT_EQ(amc::ChunkInfo::CompressionType::Zlib, chunkInfoA.getCompression());
+    ASSERT_EQ(amc::CompressionType::Zlib, chunkInfoA.getCompression());
 
     // Test Move
     amc::ChunkInfo chunkInfoB = std::move(chunkInfoA);
@@ -107,12 +100,12 @@ TEST(ChunkInfo, MoveAssignment)
 TEST(ChunkInfo, Equal)
 {
     // Init
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoB(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoC(346, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoD(345, 21, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoE(345, 20, 0x12345679, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoF(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::GZip);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoB(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoC(346, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoD(345, 21, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoE(345, 20, 0x12345679, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoF(345, 20, 0x12345678, amc::CompressionType::GZip);
     amc::ChunkInfo chunkInfoG;
 
     // Check
@@ -127,12 +120,12 @@ TEST(ChunkInfo, Equal)
 TEST(ChunkInfo, NotEqual)
 {
     // Init
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoB(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoC(346, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoD(345, 21, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoE(345, 20, 0x12345679, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoF(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::GZip);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoB(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoC(346, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoD(345, 21, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoE(345, 20, 0x12345679, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoF(345, 20, 0x12345678, amc::CompressionType::GZip);
     amc::ChunkInfo chunkInfoG;
 
     // Check
@@ -146,8 +139,8 @@ TEST(ChunkInfo, NotEqual)
 
 TEST(ChunkInfo, isEmpty)
 {
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoB(0, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoB(0, 20, 0x12345678, amc::CompressionType::Zlib);
     amc::ChunkInfo chunkInfoC;
 
     EXPECT_FALSE(chunkInfoA.isEmpty());
@@ -157,8 +150,8 @@ TEST(ChunkInfo, isEmpty)
 
 TEST(ChunkInfo, getOffset)
 {
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoB(0, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoB(0, 20, 0x12345678, amc::CompressionType::Zlib);
     amc::ChunkInfo chunkInfoC;
 
     EXPECT_EQ(chunkInfoA.getOffset(), 345u);
@@ -176,8 +169,8 @@ TEST(ChunkInfo, setOffset)
 
 TEST(ChunkInfo, getLength)
 {
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoB(0, 0, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoB(0, 0, 0x12345678, amc::CompressionType::Zlib);
     amc::ChunkInfo chunkInfoC;
 
     EXPECT_EQ(chunkInfoA.getLength(), 20u);
@@ -195,8 +188,8 @@ TEST(ChunkInfo, setLength)
 
 TEST(ChunkInfo, getTimestamp)
 {
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoB(0, 0, 0, amc::ChunkInfo::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoB(0, 0, 0, amc::CompressionType::Zlib);
     amc::ChunkInfo chunkInfoC;
 
     EXPECT_EQ(chunkInfoA.getTimestamp(), 0x12345678u);
@@ -214,19 +207,19 @@ TEST(ChunkInfo, setTimestamp)
 
 TEST(ChunkInfo, getCompression)
 {
-    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::ChunkInfo::CompressionType::Zlib);
-    amc::ChunkInfo chunkInfoB(0, 0, 0, amc::ChunkInfo::CompressionType::GZip);
+    amc::ChunkInfo chunkInfoA(345, 20, 0x12345678, amc::CompressionType::Zlib);
+    amc::ChunkInfo chunkInfoB(0, 0, 0, amc::CompressionType::GZip);
     amc::ChunkInfo chunkInfoC;
 
-    EXPECT_EQ(chunkInfoA.getCompression(), amc::ChunkInfo::CompressionType::Zlib);
-    EXPECT_EQ(chunkInfoB.getCompression(), amc::ChunkInfo::CompressionType::GZip);
-    EXPECT_EQ(chunkInfoC.getCompression(), amc::ChunkInfo::CompressionType::GZip);
+    EXPECT_EQ(chunkInfoA.getCompression(), amc::CompressionType::Zlib);
+    EXPECT_EQ(chunkInfoB.getCompression(), amc::CompressionType::GZip);
+    EXPECT_EQ(chunkInfoC.getCompression(), amc::CompressionType::GZip);
 }
 
 TEST(ChunkInfo, setCompression)
 {
     amc::ChunkInfo chunkInfo;
-    ASSERT_EQ(chunkInfo.getCompression(), amc::ChunkInfo::CompressionType::GZip);
-    chunkInfo.setCompression(amc::ChunkInfo::CompressionType::Zlib);
-    EXPECT_EQ(chunkInfo.getCompression(), amc::ChunkInfo::CompressionType::Zlib);
+    ASSERT_EQ(chunkInfo.getCompression(), amc::CompressionType::GZip);
+    chunkInfo.setCompression(amc::CompressionType::Zlib);
+    EXPECT_EQ(chunkInfo.getCompression(), amc::CompressionType::Zlib);
 }

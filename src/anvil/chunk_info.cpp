@@ -114,12 +114,12 @@ void ChunkInfo::setTimestamp(unsigned int timestamp)
     m_timestamp = timestamp;
 }
 
-ChunkInfo::CompressionType ChunkInfo::getCompression() const
+CompressionType ChunkInfo::getCompression() const
 {
     return m_compression;
 }
 
-void ChunkInfo::setCompression(ChunkInfo::CompressionType compression)
+void ChunkInfo::setCompression(CompressionType compression)
 {
     m_compression = compression;
 }

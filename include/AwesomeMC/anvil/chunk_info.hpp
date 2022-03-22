@@ -1,19 +1,15 @@
 #ifndef AWESOMEMC_ANVIL_CHUNK_INFO_HPP
 #define AWESOMEMC_ANVIL_CHUNK_INFO_HPP
 
+// AwesomeMC
+#include <AwesomeMC/util/compression.hpp>
+
 namespace amc
 {
 
 class ChunkInfo
 {
 public:
-    enum class CompressionType : char
-    {
-        GZip            = 1,
-        Zlib            = 2,
-        Uncompressed    = 3,
-    };
-
     ChunkInfo();
     ChunkInfo(const ChunkInfo &other);
     ChunkInfo(ChunkInfo &&other) noexcept;
