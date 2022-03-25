@@ -38,7 +38,7 @@ bool deflate_zlib(std::vector<unsigned char> &data)
 {
     int ret = 0;
     z_stream zstrm;
-    unsigned char buffer[ZlibChunkSize] = { 0 };
+    std::vector<unsigned char> buffer(ZlibChunkSize, 0);
     std::vector<unsigned char> dataOut;
 
     std::memset(&zstrm, 0, sizeof(zstrm));
@@ -50,11 +50,11 @@ bool deflate_zlib(std::vector<unsigned char> &data)
 
     // deflate
     do {
-        zstrm.next_out = reinterpret_cast<Bytef*>(buffer);
+        zstrm.next_out = reinterpret_cast<Bytef*>(buffer.data());
         zstrm.avail_out = ZlibChunkSize;
 
         ret = deflate(&zstrm, Z_FINISH);
-        dataOut.insert(dataOut.end(), buffer, buffer + zstrm.total_out);
+        dataOut.insert(dataOut.end(), buffer.begin(), buffer.begin() + zstrm.total_out);
     } while(ret == Z_OK);
 
     deflateEnd(&zstrm);
