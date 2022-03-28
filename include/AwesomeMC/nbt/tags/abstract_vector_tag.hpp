@@ -60,6 +60,8 @@ public:
 
     // !!! This functions removes the item from the container - transfers ownership !!!
     AbstractTag* takeAt(size_t index);
+    // !!! This functions removes the item from the container - transfers ownership !!!
+    AbstractTag* take(AbstractTag *value);
     // !!! Do not delete the item - the container keeps the ownership !!!
     // Does range checking -> throws
     AbstractTag* at(size_t index);

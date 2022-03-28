@@ -188,6 +188,17 @@ AbstractTag* AbstractVectorTag::takeAt(size_t index)
     return tag;
 }
 
+AbstractTag* AbstractVectorTag::take(AbstractTag *value)
+{
+    AbstractTag *tag = nullptr;
+    iterator it = std::find(m_value.begin(), m_value.end(), value);
+    if(it != m_value.end()) {
+        tag = *it;
+        m_value.erase(it);
+    }
+    return tag;
+}
+
 AbstractTag* AbstractVectorTag::at(size_t index)
 {
     if(index >= m_value.size()) {

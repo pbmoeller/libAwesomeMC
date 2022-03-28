@@ -709,6 +709,33 @@ TEST(ListTag, takeAt)
     delete cTest;
 }
 
+TEST(ListTag, take)
+{
+    amc::ListTag listTag(amc::TagType::Float);
+
+    amc::FloatTag *a = new amc::FloatTag("A", 1.4f);
+    amc::FloatTag *b = new amc::FloatTag("B", 2000.6f);
+    amc::FloatTag *c = new amc::FloatTag("C", 3.f);
+    amc::FloatTag *d = new amc::FloatTag("C", 3.f);
+
+    // Add 3 Items
+    listTag.pushBack(a);
+    listTag.pushBack(b);
+    listTag.pushBack(c);
+    ASSERT_EQ(3, listTag.size());
+
+    // Test
+    amc::AbstractTag *invalidTag = listTag.take(d);
+    EXPECT_TRUE(invalidTag == nullptr);
+    
+    amc::AbstractTag *aRet = listTag.take(a);
+    EXPECT_EQ(aRet, a);
+    EXPECT_EQ(2, listTag.size());
+
+    delete a;
+    delete d;
+}
+
 TEST(ListTag, subscript)
 {
     amc::ListTag listTag(amc::TagType::Byte);
