@@ -4,6 +4,7 @@
 // AwesomeMC
 #include <AwesomeMC/nbt/tags/abstract_tag.hpp>
 #include <AwesomeMC/util/byte_stream.hpp>
+#include <AwesomeMC/util/compression.hpp>
 
 // STL
 #include <string>
@@ -24,6 +25,7 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
                                        bool isCompressed);
 
 std::unique_ptr<CompoundTag> readNbtFile(const std::string &filename);
+std::unique_ptr<CompoundTag> readNbtFile(const std::string &filename, CompressionType &compressionType);
 std::unique_ptr<CompoundTag> readNbtData(const std::vector<unsigned char> &data);
 AbstractTag* readChildTag(ByteStream &stream, 
                         bool isListItem, 
