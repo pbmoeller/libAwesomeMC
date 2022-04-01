@@ -50,9 +50,9 @@ int main(int argc, char **argv)
         // Check single parameters
         std::string arg = argv[1];
         if(arg == "-v" || arg == "--version") {
-            std::cout << "AwesomeMC Version: " << AwesomeMC_Version 
-                      << "-" << AwesomeMC_GitHash 
-                      << "(" << AwesomeMC_GitBranch << ")" << std::endl;
+            std::cout << "AwesomeMC Version: " << amc::getVersion()
+                      << "-" << amc::getGitHash()
+                      << "(" << amc::getGitBranch() << ")" << std::endl;
             return 0;
         } else if(arg == "-h" || arg == "--help") {
             printUsage();
