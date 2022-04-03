@@ -635,6 +635,23 @@ TEST(ListTag, indexOf)
     EXPECT_EQ(2, listTag.indexOf(c));
 }
 
+TEST(ListTag, swap)
+{
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
+    amc::ListTag listTag(amc::TagType::Byte, {a, b, c});
+
+    ASSERT_EQ(0, listTag.indexOf(a));
+    ASSERT_EQ(1, listTag.indexOf(b));
+    ASSERT_EQ(2, listTag.indexOf(c));
+
+    listTag.swap(0, 1);
+
+    ASSERT_EQ(0, listTag.indexOf(b));
+    ASSERT_EQ(1, listTag.indexOf(a));
+}
+
 TEST(ListTag, at)
 {
     amc::ListTag listTag(amc::TagType::Byte);

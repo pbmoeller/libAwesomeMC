@@ -167,6 +167,13 @@ int64_t AbstractVectorTag::indexOf(AbstractTag *value) const
     return -1;
 }
 
+void AbstractVectorTag::swap(int64_t indexA, int64_t indexB)
+{
+    assert(indexA >= 0 && indexA < size());
+    assert(indexB >= 0 && indexB < size());
+    std::swap(m_value[indexA], m_value[indexB]);
+}
+
 bool AbstractVectorTag::eraseAt(size_t index)
 {
     if(index >= m_value.size()) {

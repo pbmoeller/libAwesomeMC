@@ -56,6 +56,8 @@ public:
     size_t size() const noexcept;
     int64_t indexOf(AbstractTag *value) const;
 
+    void swap(int64_t indexA, int64_t indexB);
+
     bool eraseAt(size_t index);
     bool erase(AbstractTag *value);
 

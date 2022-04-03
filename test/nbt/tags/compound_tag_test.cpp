@@ -547,6 +547,23 @@ TEST(CompoundTag, indexOf)
     EXPECT_EQ(2, compoundTag.indexOf(c));
 }
 
+TEST(CompoundTag, swap)
+{
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
+    amc::CompoundTag compoundTag({a, b, c});
+
+    ASSERT_EQ(0, compoundTag.indexOf(a));
+    ASSERT_EQ(1, compoundTag.indexOf(b));
+    ASSERT_EQ(2, compoundTag.indexOf(c));
+
+    compoundTag.swap(0, 1);
+
+    ASSERT_EQ(0, compoundTag.indexOf(b));
+    ASSERT_EQ(1, compoundTag.indexOf(a));
+}
+
 TEST(CompoundTag, at)
 {
     amc::CompoundTag compoundTag;
