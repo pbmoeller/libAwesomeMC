@@ -54,6 +54,7 @@ public:
 
     bool isEmpty() const noexcept;
     size_t size() const noexcept;
+    int64_t indexOf(AbstractTag *value) const;
 
     bool eraseAt(size_t index);
     bool erase(AbstractTag *value);

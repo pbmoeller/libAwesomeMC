@@ -157,6 +157,16 @@ size_t AbstractVectorTag::size() const noexcept {
     return m_value.size();
 }
 
+int64_t AbstractVectorTag::indexOf(AbstractTag *value) const
+{
+    for(size_t idx = 0; idx < m_value.size(); ++idx) {
+        if(m_value[idx] == value) {
+            return idx;
+        }
+    }
+    return -1;
+}
+
 bool AbstractVectorTag::eraseAt(size_t index)
 {
     if(index >= m_value.size()) {

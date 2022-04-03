@@ -623,6 +623,18 @@ TEST(ListTag, size)
     EXPECT_EQ(0, listTag.size());
 }
 
+TEST(ListTag, indexOf)
+{
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
+    amc::ListTag listTag(amc::TagType::Byte, {a, b, c});
+
+    EXPECT_EQ(0, listTag.indexOf(a));
+    EXPECT_EQ(1, listTag.indexOf(b));
+    EXPECT_EQ(2, listTag.indexOf(c));
+}
+
 TEST(ListTag, at)
 {
     amc::ListTag listTag(amc::TagType::Byte);

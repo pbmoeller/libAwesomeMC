@@ -535,6 +535,18 @@ TEST(CompoundTag, size)
     EXPECT_EQ(0, compoundTag.size());
 }
 
+TEST(CompoundTag, indexOf)
+{
+    amc::ByteTag *a = new amc::ByteTag("A", 1);
+    amc::ByteTag *b = new amc::ByteTag("B", 2);
+    amc::ByteTag *c = new amc::ByteTag("C", 3);
+    amc::CompoundTag compoundTag({a, b, c});
+
+    EXPECT_EQ(0, compoundTag.indexOf(a));
+    EXPECT_EQ(1, compoundTag.indexOf(b));
+    EXPECT_EQ(2, compoundTag.indexOf(c));
+}
+
 TEST(CompoundTag, at)
 {
     amc::CompoundTag compoundTag;
