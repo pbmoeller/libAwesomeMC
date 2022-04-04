@@ -2,12 +2,11 @@
 
 // STL
 #include <cassert>
-#include <string_view>
 
 namespace amc
 {
 
-constexpr std::string_view tagTypeNames[14] = {
+const std::string tagTypeNames[14] = {
     "End",
     "Byte",
     "Short",
@@ -24,7 +23,7 @@ constexpr std::string_view tagTypeNames[14] = {
     "Unknown"
 };
 
-constexpr std::string_view tagNames[14] = {
+const std::string tagNames[14] = {
     "EndTag",
     "ByteTag",
     "ShortTag",
@@ -41,7 +40,7 @@ constexpr std::string_view tagNames[14] = {
     "UnknownTag"
 };
 
-std::string_view getTagTypeName(TagType type)
+std::string getTagTypeName(TagType type)
 {
     assert(static_cast<unsigned char>(type) <= static_cast<unsigned char>(TagType::LongArray));
     if(static_cast<unsigned char>(type) <= static_cast<unsigned char>(TagType::LongArray)) {
@@ -51,7 +50,7 @@ std::string_view getTagTypeName(TagType type)
     }
 }
 
-std::string_view getTagName(TagType type)
+std::string getTagName(TagType type)
 {
     assert(static_cast<unsigned char>(type) <= static_cast<unsigned char>(TagType::LongArray));
     if(static_cast<unsigned char>(type) <= static_cast<unsigned char>(TagType::LongArray)) {
@@ -61,4 +60,4 @@ std::string_view getTagName(TagType type)
     }
 }
 
-}
+} // namespace amc

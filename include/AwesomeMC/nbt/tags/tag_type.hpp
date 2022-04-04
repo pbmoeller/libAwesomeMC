@@ -2,7 +2,7 @@
 #define AWESOMEMC_NBT_TAGS_TAG_TYPE_HPP
 
 // STL
-#include <string_view>
+#include <string>
 
 namespace amc
 {
@@ -50,8 +50,8 @@ constexpr bool isContainerTag(TagType type)
         || type == TagType::Compound;
 }
 
-std::string_view getTagTypeName(TagType type);
-std::string_view getTagName(TagType type);
+std::string getTagTypeName(TagType type);
+std::string getTagName(TagType type);
 
 }
 
