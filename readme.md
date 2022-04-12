@@ -8,7 +8,7 @@ The current library version targets Minecraft 1.18.1 and data version 2865.
 
 libAwesomeMC requires a few third party libraries for the full build.
 
-- zlib (tested with version 1.2.11)
+- zlib (tested with version 1.2.11, 1.2.12)
 - googletest (only for unit tests, tested with latest version > 1.11.0)
 
 Make sure that the libraries are built and can be found with the `find_package` command of CMake.
