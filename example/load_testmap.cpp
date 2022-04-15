@@ -15,7 +15,5 @@ int main(int argc, char **argv)
 
     amc::Block b = region.getBlockAt(-15, -16, -48);
 
-
-
     return 0;
 }

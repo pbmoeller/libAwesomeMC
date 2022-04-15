@@ -1,20 +1,6 @@
 # ZLIB
 find_package(ZLIB REQUIRED)
 
-### Example 1
-add_executable(example1 "example1.cpp")
-target_include_directories(example1
-    PRIVATE ${ZLIB_INCLUDE_DIRS}
-    PRIVATE ${AwesomeMC_SOURCE_DIR}/include
-)
-target_link_libraries(example1 AwesomeMC)
-set_target_properties(example1 PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
-target_compile_options(example1 PRIVATE
-     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:GNU>>:
-          -std=c++20 -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wold-style-cast -Wcast-align -Woverloaded-virtual -Wpedantic>
-     $<$<CXX_COMPILER_ID:MSVC>:
-          /W4>)
-
 ### Example 2
 add_executable(example_nbt "example_nbt.cpp")
 target_include_directories(example_nbt

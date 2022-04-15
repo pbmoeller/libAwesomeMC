@@ -1,4 +1,4 @@
-# libAwesomeMC
+# libAwesomeMC - v0.3.6
 
 libAwesomeMC is a cross-platform C++ library to read and write Minecraft NBT and Level data.
 
@@ -58,6 +58,33 @@ Running the tests.
 $ cd out/build/Debug
 $ ./tests.exe
 ```
+
+# Examples of use
+
+The library has a few very simple example projects to illustrate the use of the library.
+
+The following code snippets will show the basic usage of reading a NBT file and printing it to the console.
+For this task the function `readNbtFile` can be used, which can be found in the `amc` namespace like all other functions and classes of AwesomeMC.
+This function automatically checks if the file is gzip or zlib compressed and loads its contents to a root CompoundTag.
+Also uncompressed files can be read with this function. This function might throw if there are any errors reading the file.
+
+``` cpp
+
+#include <AwesomeMC/nbt/nbt_read.hpp>
+
+/* ... */
+
+std::string = filename = "level.dat";
+std::unique_ptr<amc::CompoundTag> rootTag = amc::readNbtFile(filename);
+```
+
+NBT data can be printed with the function `printNbtData`. The function will construct a std::string.
+
+``` cpp
+std::cout << amc::printNbtData(rootTag.get())
+          << std::endl;
+```
+
 
 
 # References
