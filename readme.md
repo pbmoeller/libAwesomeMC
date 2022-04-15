@@ -85,7 +85,16 @@ std::cout << amc::printNbtData(rootTag.get())
           << std::endl;
 ```
 
+# Outlook
 
+So far the reading and writing of NBT files, as well as modifying the tags has been tested a lot.
+
+However this library is currently a work in progress. There are still some major tasks to do:
+
+* The documentation must be improved. Maybe I will add Doxygen at a later point.
+* The Reading/Writing of Region/Level data is incomplete. This topic will be focussed on a future update.
+* There are still some essential unit tests missing for important functions.
+* Finding more bugs and errors.
 
 # References
 
