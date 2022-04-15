@@ -262,6 +262,13 @@ TEST(nbt_read, readNbtData_complete)
     ASSERT_TRUE(intTag != nullptr);
     EXPECT_EQ(2147483647, intTag->getValue());
 
+    // StringTag
+    amc::AbstractTag *stringTest = compoundTag->getChildByName("stringTest");
+    ASSERT_EQ(amc::TagType::String, stringTest->getType());
+    amc::StringTag *stringTag = tag_cast<amc::StringTag*>(stringTest);
+    ASSERT_TRUE(stringTag != nullptr);
+    EXPECT_EQ("HELLO WORLD THIS IS A TEST STRING \xC3\x85\xC3\x84\xC3\x96!", stringTag->getValue());
+
     // LongTag
     amc::AbstractTag *longTest = compoundTag->getChildByName("longTest");
     ASSERT_EQ(amc::TagType::Long, longTest->getType());
@@ -302,9 +309,9 @@ TEST(nbt_read, readNbtData_complete)
     amc::LongTag *longTag1 = tag_cast<amc::LongTag*>(listItem1->at(1));
     EXPECT_STREQ(longTag1->getName().c_str(), "created-on");
     EXPECT_EQ(longTag1->getValue(), 1264099775885);
-    amc::StringTag *stringTag = tag_cast<amc::StringTag*>(listItem1->at(0));
-    EXPECT_STREQ(stringTag->getName().c_str(), "name");
-    EXPECT_STREQ(stringTag->getValue().c_str(), "Compound tag #0");
+    amc::StringTag *stringTag1 = tag_cast<amc::StringTag*>(listItem1->at(0));
+    EXPECT_STREQ(stringTag1->getName().c_str(), "name");
+    EXPECT_STREQ(stringTag1->getValue().c_str(), "Compound tag #0");
 
     amc::CompoundTag *listItem2 = tag_cast<amc::CompoundTag*>(compoundList->at(1));
     EXPECT_EQ(amc::TagType::Long, listItem2->at(1)->getType());
