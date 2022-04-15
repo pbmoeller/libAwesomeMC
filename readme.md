@@ -1,3 +1,6 @@
+[![libAwesomeMC Version v0.3.6](https://img.shields.io/badge/libAwesomeMC-v0.3.6-green)]()
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://github.com/AwesomeCodingGuy/libAwesomeMC/blob/main/LICENSE)
+
 # libAwesomeMC - v0.3.6
 
 libAwesomeMC is a cross-platform C++ library to read and write Minecraft NBT and Level data.
@@ -59,7 +62,7 @@ $ cd out/build/Debug
 $ ./tests.exe
 ```
 
-# Examples of use
+## Examples of use
 
 The library has a few very simple example projects to illustrate the use of the library.
 
@@ -85,7 +88,7 @@ std::cout << amc::printNbtData(rootTag.get())
           << std::endl;
 ```
 
-# Outlook
+## Outlook
 
 So far the reading and writing of NBT files, as well as modifying the tags has been tested a lot.
 
@@ -96,7 +99,7 @@ However this library is currently a work in progress. There are still some major
 * There are still some essential unit tests missing for important functions.
 * Finding more bugs and errors.
 
-# References
+## References
 
 This library is mainly based on the information of various references and further researches.
 
@@ -108,7 +111,7 @@ This library is mainly based on the information of various references and furthe
 * [NBT-Format](https://minecraft.fandom.com/wiki/NBT_format)
 
 
-# About the library
+## About the library
 
 I always wanted to be able to read and write Minecraft data to modify or use it in private projects.
 Because there are only a few libraries in C++ and many of them are outdated, I began to develop my own library.
