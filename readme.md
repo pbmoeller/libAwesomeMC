@@ -12,7 +12,7 @@ The current library version targets Minecraft 1.18.1 and data version 2865.
 libAwesomeMC requires a compiler compliant with the C++20 standard and has been tested on:
 
 * Windows (MSVC 2019 - 16.9 or higher) (64bit)
-* Linux (GCC 10.3.0 or higher) (ARM64 and 64bit)
+* Linux (GCC - 10.3.0 or higher) (ARM64 and 64bit)
 
 This project uses CMake (3.15 or higher) as build system.
 To build this library, additional dependencies are required and have to be installed.
@@ -59,7 +59,7 @@ Running the tests.
 
 ```
 $ cd out/build/Debug
-$ ./tests.exe
+$ ./tests
 ```
 
 ## Examples of use
