@@ -95,7 +95,7 @@ So far the reading and writing of NBT files, as well as modifying the tags has b
 However this library is currently a work in progress. There are still some major tasks to do:
 
 * The documentation must be improved. Maybe I will add Doxygen at a later point.
-* The Reading/Writing of Region/Level data is incomplete. This topic will be focussed on a future update.
+* The Reading/Writing of Region (Anvil)/Level data is incomplete. This topic will be focussed on a future update.
 * There are still some essential unit tests missing for important functions.
 * Finding more bugs and errors.
 
@@ -113,7 +113,7 @@ This library is mainly based on the information of various references and furthe
 
 ## About the library
 
-I always wanted to be able to read and write Minecraft data to modify or use it in private projects.
+I wrote this libAwesomeMC to read and write Minecraft data to modify or use it in private projects.
 Because there are only a few libraries in C++ and many of them are outdated, I began to develop my own library.
 This is not only a library to support my own projects, but also for learning CMake and C++20 features in a practical way.
 I hope this library is also useful for other people.
