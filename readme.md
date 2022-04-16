@@ -113,9 +113,10 @@ This library is mainly based on the information of various references and furthe
 
 ## About the library
 
-I wrote this libAwesomeMC to read and write Minecraft data to modify or use it in private projects.
+I wrote libAwesomeMC to read and write Minecraft data to use it in private projects.
 Because there are only a few libraries in C++ and many of them are outdated, I began to develop my own library.
 This is not only a library to support my own projects, but also for learning CMake and C++20 features in a practical way.
+
 I hope this library is also useful for other people.
 
 Please feel free to contact me if there are any bugs, feature requests or problems with the library.
