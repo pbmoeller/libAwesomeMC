@@ -6,7 +6,7 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-TEST(ReagionHeader, Constructor)
+TEST(RegionHeader, Constructor)
 {
     const amc::ChunkInfo defaultInfo;
     amc::RegionHeader regionHeader;
@@ -16,7 +16,7 @@ TEST(ReagionHeader, Constructor)
     }
 }
 
-TEST(ReagionHeader, Constructor_2)
+TEST(RegionHeader, Constructor_2)
 {
     // Init test data
     std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
@@ -37,7 +37,7 @@ TEST(ReagionHeader, Constructor_2)
     delete info;
 }
 
-TEST(ReagionHeader, CopyConstructor)
+TEST(RegionHeader, CopyConstructor)
 {
     // Init test data
     std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
@@ -73,7 +73,7 @@ TEST(ReagionHeader, CopyConstructor)
     delete info;
 }
 
-TEST(ReagionHeader, MoveConstructor)
+TEST(RegionHeader, MoveConstructor)
 {
     // Init test data
     std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
@@ -109,7 +109,7 @@ TEST(ReagionHeader, MoveConstructor)
     delete info;
 }
 
-TEST(ReagionHeader, CopyAssignment)
+TEST(RegionHeader, CopyAssignment)
 {
     // Init test data
     std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
@@ -145,7 +145,7 @@ TEST(ReagionHeader, CopyAssignment)
     delete info;
 }
 
-TEST(ReagionHeader, MoveAssignment)
+TEST(RegionHeader, MoveAssignment)
 {
     // Init test data
     std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
@@ -181,7 +181,7 @@ TEST(ReagionHeader, MoveAssignment)
     delete info;
 }
 
-TEST(ReagionHeader, Equal)
+TEST(RegionHeader, Equal)
 {
     amc::RegionHeader regionHeaderA;
     amc::RegionHeader regionHeaderB;
@@ -193,7 +193,7 @@ TEST(ReagionHeader, Equal)
     EXPECT_FALSE(regionHeaderA == regionHeaderB);
 }
 
-TEST(ReagionHeader, NotEqual)
+TEST(RegionHeader, NotEqual)
 {
     amc::RegionHeader regionHeaderA;
     amc::RegionHeader regionHeaderB;
@@ -205,7 +205,7 @@ TEST(ReagionHeader, NotEqual)
     EXPECT_TRUE(regionHeaderA != regionHeaderB);
 }
 
-TEST(ReagionHeader, getRegionCount)
+TEST(RegionHeader, getRegionCount)
 {
     amc::RegionHeader regionHeader;
     ASSERT_EQ(0, regionHeader.getRegionCount());
@@ -214,12 +214,12 @@ TEST(ReagionHeader, getRegionCount)
     EXPECT_EQ(1, regionHeader.getRegionCount());
 }
 
-TEST(ReagionHeader, getRegionData)
+TEST(RegionHeader, getRegionData)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
-TEST(ReagionHeader, getChunkInfo)
+TEST(RegionHeader, getChunkInfo)
 {
     // Init test data
     std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
@@ -249,7 +249,7 @@ TEST(ReagionHeader, getChunkInfo)
     delete info;
 }
 
-TEST(ReagionHeader, getChunkInfoAt)
+TEST(RegionHeader, getChunkInfoAt)
 {
     amc::RegionHeader regionHeader;
     ASSERT_EQ(0, regionHeader.getRegionCount());
@@ -270,7 +270,7 @@ TEST(ReagionHeader, getChunkInfoAt)
     EXPECT_EQ(amc::CompressionType::Zlib, regionHeader.getChunkInfoAt(10).getCompression());
 }
 
-TEST(ReagionHeader, getChunkInfoAt_const)
+TEST(RegionHeader, getChunkInfoAt_const)
 {
     amc::RegionHeader regionHeader;
     ASSERT_EQ(0, regionHeader.getRegionCount());
@@ -293,7 +293,7 @@ TEST(ReagionHeader, getChunkInfoAt_const)
     EXPECT_EQ(amc::CompressionType::Zlib, regionHeaderC.getChunkInfoAt(10).getCompression());
 }
 
-TEST(ReagionHeader, setChunkInfo)
+TEST(RegionHeader, setChunkInfo)
 {
     // Init test data
     std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
@@ -324,7 +324,7 @@ TEST(ReagionHeader, setChunkInfo)
     delete info;
 }
 
-TEST(ReagionHeader, setChunkInfoAt)
+TEST(RegionHeader, setChunkInfoAt)
 {
     amc::RegionHeader regionHeader;
     ASSERT_EQ(0, regionHeader.getRegionCount());
