@@ -59,6 +59,7 @@ set(AWESOMEMC_INCLUDES
     ${NBT_INCLUDES}
     ${UTIL_INCLUDES}
     "${AWESOMEMC_HEADER_PATH}/constants.hpp"
+    "${AWESOMEMC_HEADER_PATH}/global.hpp"
 )
 
 ### Sources
