@@ -33,7 +33,7 @@ bool writeNbtFile(const std::string &filename,
     if(!stream.is_open()) {
         throw std::runtime_error(std::string("Could not open file for writing:").append(filename));
     } else {
-        stream.write((char*)data.data(), data.size());
+        stream.write(reinterpret_cast<char*>(data.data()), data.size());
         return true;
     }
 }
