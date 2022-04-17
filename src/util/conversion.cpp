@@ -129,14 +129,14 @@ unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ)
 
 void xzFromChunkIndex(const unsigned int index, int &x, int &z)
 {
-    assert(index >= 0 && index < ChunkCount);
+    assert(index > 0 && index < ChunkCount);
     x = index % ChunkWidth;
     z = index / ChunkWidth;
 }
 
 std::tuple<int, int> xzFromChunkIndex(const unsigned int index)
 {
-    assert(index >= 0 && index < ChunkCount);
+    assert(index > 0 && index < ChunkCount);
     return {index % ChunkWidth, index / ChunkWidth};
 }
 
