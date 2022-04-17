@@ -303,15 +303,15 @@ void Region::readChunkData(std::ifstream &filestream, ChunkInfo &chunkInfo, unsi
     // Get size of binary data and compression type
     uint32_t dataSize = 0;
     CompressionType compressionType = CompressionType::Uncompressed;
-    filestream.read((char*)&dataSize, sizeof(uint32_t));
+    filestream.read(reinterpret_cast<char*>(&dataSize), sizeof(uint32_t));
     dataSize = bswap(dataSize);
-    filestream.read((char*)&compressionType, sizeof(char));
+    filestream.read(reinterpret_cast<char*>(&compressionType), sizeof(char));
 
     chunkInfo.setCompression(compressionType);
 
     // Read the chunk data
     std::vector<unsigned char> chunkData(dataSize, 0);
-    filestream.read((char*)&chunkData[0], dataSize - 1);
+    filestream.read(reinterpret_cast<char*>(&chunkData[0]), dataSize - 1);
 
     switch(compressionType) {
         case CompressionType::GZip:
@@ -345,7 +345,7 @@ bool Region::readRegionHeader(std::ifstream &filestream)
     // Read first half of header data (Chunk Location Data) => Bytes 0 - 4095
     uint32_t value = 0;
     for(unsigned int i = 0; i < ChunkCount; ++i) {
-        filestream.read((char*)&value, sizeof(uint32_t));
+        filestream.read(reinterpret_cast<char*>(&value), sizeof(uint32_t));
         value = bswap(value);
         uint32_t size = value & 0x000000FF;
         uint32_t offset = (value & 0xFFFFFF00) >> 8;
@@ -355,7 +355,7 @@ bool Region::readRegionHeader(std::ifstream &filestream)
 
     // Read second half of header data (Chunk Timestamp Data) => Bytes 4096 - 8191
     for(unsigned int i = 0; i < ChunkCount; ++i) {
-        filestream.read((char*)&value, sizeof(uint32_t));
+        filestream.read(reinterpret_cast<char*>(&value), sizeof(uint32_t));
         value = bswap(value);
         m_regionHeader.getChunkInfoAt(i).setTimestamp(value);
     }
