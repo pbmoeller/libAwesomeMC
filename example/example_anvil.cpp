@@ -1,6 +1,7 @@
 // AwesomeMC
 #include <AwesomeMC/anvil/anvil_read.hpp>
 #include <AwesomeMC/constants.hpp>
+#include <AwesomeMC/global.hpp>
 #include <AwesomeMC/nbt/nbt_print.hpp>
 
 // STL
@@ -10,6 +11,9 @@
 
 int main(int argc, char **argv)
 {
+    AMC_UNUSED(argc);
+    AMC_UNUSED(argv);
+
     const std::string testFolderPath = "..\\..\\..\\test\\testdata\\world\\libAwesomeMC_TestWorld_1_18_1\\region\\";
     std::string filename = testFolderPath + "r.-1.-1.mca";
 
