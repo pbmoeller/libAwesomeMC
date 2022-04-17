@@ -77,7 +77,7 @@ TEST(conversion, convertBlockWorld2Region)
     int regionX = std::numeric_limits<int>::max();
     int regionZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates1.size(), regionCoordinates1.size());
-    for(int i = 0; i < blockCoordinates1.size(); ++i) {
+    for(size_t i = 0; i < blockCoordinates1.size(); ++i) {
         amc::convertBlockWorld2Region(blockCoordinates1[i][0],
                                       blockCoordinates1[i][2],
                                       regionX,
@@ -92,7 +92,7 @@ TEST(conversion, convertBlockWorld2ChunkWorld)
     int chunkX = std::numeric_limits<int>::max();
     int chunkZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates1.size(), chunkCoordinates1.size());
-    for(int i = 0; i < blockCoordinates1.size(); ++i) {
+    for(size_t i = 0; i < blockCoordinates1.size(); ++i) {
         amc::convertBlockWorld2ChunkWorld(blockCoordinates1[i][0],
                                           blockCoordinates1[i][2],
                                           chunkX,
@@ -107,7 +107,7 @@ TEST(conversion, convertBlockWorld2ChunkRegion)
     int chunkX = std::numeric_limits<int>::max();
     int chunkZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates1.size(), relativeChunkCoordinates1.size());
-    for(int i = 0; i < blockCoordinates1.size(); ++i) {
+    for(size_t i = 0; i < blockCoordinates1.size(); ++i) {
         amc::convertBlockWorld2ChunkRegion(blockCoordinates1[i][0],
                                            blockCoordinates1[i][2],
                                            chunkX,
@@ -155,7 +155,7 @@ TEST(conversion, convertBlockWorld2BlockRegion)
     int blockRegionX = std::numeric_limits<int>::max();
     int blockRegionZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates2.size(), blockCoordinatesRegion2.size());
-    for(int i = 0; i < blockCoordinates2.size(); ++i) {
+    for(size_t i = 0; i < blockCoordinates2.size(); ++i) {
         amc::convertBlockWorld2BlockRegion(blockCoordinates2[i][0],
                                            blockCoordinates2[i][2],
                                            blockRegionX,
@@ -170,7 +170,7 @@ TEST(conversion, convertBlockWorld2BlockChunk)
     int blockChunkX = std::numeric_limits<int>::max();
     int blockChunkZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates2.size(), blockCoordinatesChunk2.size());
-    for(int i = 0; i < blockCoordinates2.size(); ++i) {
+    for(size_t i = 0; i < blockCoordinates2.size(); ++i) {
         amc::convertBlockWorld2BlockChunk(blockCoordinates2[i][0],
                                           blockCoordinates2[i][2],
                                           blockChunkX,
@@ -186,7 +186,7 @@ TEST(conversion, convertBlockWorld2BlockChunk_2)
     int blockChunkY = std::numeric_limits<int>::max();
     int blockChunkZ = std::numeric_limits<int>::max();
     ASSERT_EQ(blockCoordinates2.size(), blockCoordinatesChunk2.size());
-    for(int i = 0; i < blockCoordinates2.size(); ++i) {
+    for(size_t i = 0; i < blockCoordinates2.size(); ++i) {
         amc::convertBlockWorld2BlockChunk(blockCoordinates2[i][0],
                                           blockCoordinates2[i][1],
                                           blockCoordinates2[i][2],
