@@ -53,34 +53,34 @@ public:
     const_iterator end() const noexcept;
 
     bool isEmpty() const noexcept;
-    size_t size() const noexcept;
+    int64_t size() const noexcept;
     int64_t indexOf(AbstractTag *value) const;
 
     void swap(int64_t indexA, int64_t indexB);
 
-    bool eraseAt(size_t index);
+    bool eraseAt(int64_t index);
     bool erase(AbstractTag *value);
 
     // !!! This functions removes the item from the container - transfers ownership !!!
-    AbstractTag* takeAt(size_t index);
+    AbstractTag* takeAt(int64_t index);
     // !!! This functions removes the item from the container - transfers ownership !!!
     AbstractTag* take(AbstractTag *value);
     // !!! Do not delete the item - the container keeps the ownership !!!
     // Does range checking -> throws
-    AbstractTag* at(size_t index);
+    AbstractTag* at(int64_t index);
     // !!! Do not delete the item - the container keeps the ownership !!!
     // Does range checking -> throws
-    const AbstractTag* at(size_t index) const;
+    const AbstractTag* at(int64_t index) const;
 
     // !!! Do not delete the item - the container keeps the ownership !!!
     // Does not do range checking. Assert in debug
-    AbstractTag* operator[](const size_t index);
+    AbstractTag* operator[](const int64_t index);
     // !!! Do not delete the item - the container keeps the ownership !!!
     // Does not do range checking. Assert in debug
-    const AbstractTag* operator[](const size_t index) const;
+    const AbstractTag* operator[](const int64_t index) const;
 
     // !!! Takes ownership of value - do not delete the object after !!!
-    virtual bool insert(size_t index, AbstractTag *value);
+    virtual bool insert(int64_t index, AbstractTag *value);
     // !!! Takes ownership of value - do not delete the object after !!!
     virtual bool pushBack(AbstractTag* value);
 

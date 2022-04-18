@@ -225,7 +225,7 @@ Block Chunk::getBlockAt(const int blockX, const int blockY, const int blockZ) co
         int localY = 0;
         int localZ = 0;
         convertBlockWorld2BlockChunk(blockX, blockY, blockZ, localX, localY, localZ);
-        char bitWidth = static_cast<char>(std::bit_width(palette->size() - 1));
+        char bitWidth = static_cast<char>(std::bit_width((static_cast<uint64_t>(palette->size())) - 1));
         int blocksPerLong = static_cast<int>(64 / bitWidth);
 
         int blockIndex = localY * BlockCount + localZ * BlockWidth + localX;
