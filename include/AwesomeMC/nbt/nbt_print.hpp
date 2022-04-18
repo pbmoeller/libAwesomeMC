@@ -75,7 +75,7 @@ std::string printTagValue(const ArrayTag<T, TAG> &tag,
     std::stringstream sstr;
     if(printArrayContent) {
         sstr << "\n" << indent << "{\n";
-        size_t i = 0;
+        int64_t i = 0;
         for(i = 0; i < tag.size() - 1; ++i) {
             sstr << " " << static_cast<int64_t>(tag[i]) << ",";
         }
