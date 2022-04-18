@@ -589,28 +589,28 @@ static std::tuple<
 {
     {
         std::make_tuple(std::numeric_limits<int8_t>::min()),
-        std::make_tuple(-34),
-        std::make_tuple(0),
-        std::make_tuple(115),
+        std::make_tuple(static_cast<int8_t>(-34)),
+        std::make_tuple(static_cast<int8_t>(0)),
+        std::make_tuple(static_cast<int8_t>(115)),
         std::make_tuple(std::numeric_limits<int8_t>::max())
     },
     {
         std::make_tuple(std::numeric_limits<uint8_t>::min()),
-        std::make_tuple(0),
-        std::make_tuple(222),
+        std::make_tuple(static_cast<uint8_t>(0)),
+        std::make_tuple(static_cast<uint8_t>(222)),
         std::make_tuple(std::numeric_limits<uint8_t>::max())
     },
     {
         std::make_tuple(std::numeric_limits<int16_t>::min()),
-        std::make_tuple(-1234),
-        std::make_tuple(0),
-        std::make_tuple(413),
+        std::make_tuple(static_cast<int16_t>(-1234)),
+        std::make_tuple(static_cast<int16_t>(0)),
+        std::make_tuple(static_cast<int16_t>(413)),
         std::make_tuple(std::numeric_limits<int16_t>::max())
     },
     {
         std::make_tuple(std::numeric_limits<uint16_t>::min()),
-        std::make_tuple(0),
-        std::make_tuple(37899),
+        std::make_tuple(static_cast<uint16_t>(0)),
+        std::make_tuple(static_cast<uint16_t>(37899)),
         std::make_tuple(std::numeric_limits<uint16_t>::max())
     },
     {
@@ -622,20 +622,20 @@ static std::tuple<
     },
     {
         std::make_tuple(std::numeric_limits<uint32_t>::min()),
-        std::make_tuple(0),
-        std::make_tuple(100000000),
+        std::make_tuple(static_cast<uint32_t>(0)),
+        std::make_tuple(static_cast<uint32_t>(100000000)),
         std::make_tuple(std::numeric_limits<uint32_t>::max())
     },
     {
         std::make_tuple(std::numeric_limits<int64_t>::min()),
         std::make_tuple(-(0x1234567890ABCDEF)),
-        std::make_tuple(0),
+        std::make_tuple(0ll),
         std::make_tuple(0x1234567890ABCDEF),
         std::make_tuple(std::numeric_limits<int64_t>::max())
     },
     {
         std::make_tuple(std::numeric_limits<uint64_t>::min()),
-        std::make_tuple(0),
+        std::make_tuple(0ull),
         std::make_tuple(0xFFFFFFFF12345678),
         std::make_tuple(std::numeric_limits<uint64_t>::max())
     },
@@ -691,10 +691,10 @@ TYPED_TEST_P(RightShiftFixture, right_shift)
         EXPECT_EQ(input1, value1);
 
         // Read invalid
-        EXPECT_EQ(0, byteStream.availableBytes());
+        EXPECT_EQ(0u, byteStream.availableBytes());
         ret = byteStream >> value2;
         EXPECT_EQ(amc::ByteStream::EndOfStream, ret);
-        EXPECT_EQ(0, value2);
+        EXPECT_EQ(static_cast<TypeParam>(0), value2);
     }
 }
 
