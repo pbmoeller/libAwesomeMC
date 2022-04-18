@@ -399,7 +399,7 @@ static std::tuple<
         std::make_tuple(char(-98), 1, char(52), 2),
     },
     {
-        std::make_tuple((unsigned char)(3), 1, (unsigned char)(222), 2),
+        std::make_tuple(static_cast<unsigned char>(3), 1, static_cast<unsigned char>(222), 2),
     },
     {
         std::make_tuple(int8_t(-8), 1, int8_t(56), 2),
