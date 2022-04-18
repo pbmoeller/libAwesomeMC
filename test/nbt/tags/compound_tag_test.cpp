@@ -11,6 +11,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(CompoundTag, value_type)
+{
+    bool check = std::is_same<amc::AbstractTag*, amc::CompoundTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(CompoundTag, Constructor)
 {
     amc::CompoundTag compoundTag;

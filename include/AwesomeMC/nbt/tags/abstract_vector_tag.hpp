@@ -13,6 +13,7 @@ namespace amc
 class AbstractVectorTag : public AbstractTag
 {
 public:
+    using value_type        = AbstractTag*;
     using iterator          = typename std::vector<AbstractTag*>::iterator;
     using const_iterator    = typename std::vector<AbstractTag*>::const_iterator;
 

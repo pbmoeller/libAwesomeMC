@@ -8,6 +8,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(LongArrayTag, value_type)
+{
+    bool check = std::is_same<int64_t, amc::LongArrayTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(LongArrayTag, Constructor)
 {
     amc::LongArrayTag longArrayTag;

@@ -7,6 +7,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(ShortTag, value_type)
+{
+    bool check = std::is_same<int16_t, amc::ShortTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(ShortTag, Constructor)
 {
     amc::ShortTag shortTag;

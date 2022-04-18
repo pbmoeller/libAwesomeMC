@@ -7,6 +7,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(IntTag, value_type)
+{
+    bool check = std::is_same<int32_t, amc::IntTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(IntTag, Constructor)
 {
     amc::IntTag intTag;

@@ -12,6 +12,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(ListTag, value_type)
+{
+    bool check = std::is_same<amc::AbstractTag*, amc::ListTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(ListTag, Constructor)
 {
     amc::ListTag listTag;
