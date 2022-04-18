@@ -127,7 +127,7 @@ bool deflate_gzip(std::vector<unsigned char> &data, int level)
     //std::vector<unsigned char> dataOut(data.size(), 0);
     std::vector<unsigned char> dataOut;
     char *inputData = reinterpret_cast<char*>(data.data());
-    int remainingData = data.size();
+    int remainingData = static_cast<int>(data.size());
 
     // Compress
     int flush = 0;
