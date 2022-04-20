@@ -10,22 +10,95 @@
 
 TEST(conversion, isValidWorldCoordinate)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Test valid coordinates
+    EXPECT_TRUE(amc::isValidWorldCoordinate(0, 0, 0));
+    EXPECT_TRUE(amc::isValidWorldCoordinate(120000, 120, 5131311));
+
+    // Test X Coodinate
+    EXPECT_FALSE(amc::isValidWorldCoordinate(-30000000, 0, 0));
+    EXPECT_TRUE(amc::isValidWorldCoordinate(-500000, 0, 0));
+    EXPECT_TRUE(amc::isValidWorldCoordinate(1250000, 0, 0));
+    EXPECT_FALSE(amc::isValidWorldCoordinate(30000000, 0, 0));
+
+    // Test Z Coodinate
+    EXPECT_FALSE(amc::isValidWorldCoordinate(0, 0, -30000000));
+    EXPECT_TRUE(amc::isValidWorldCoordinate(0, 0, -500000));
+    EXPECT_TRUE(amc::isValidWorldCoordinate(0, 0, 2500000));
+    EXPECT_FALSE(amc::isValidWorldCoordinate(0, 0, 30000000));
+
+    // Test Y Coodinate
+    EXPECT_FALSE(amc::isValidWorldCoordinate(0, -65, 0));
+    EXPECT_TRUE(amc::isValidWorldCoordinate(0, -64, 0));
+    EXPECT_TRUE(amc::isValidWorldCoordinate(0, 319, 0));
+    EXPECT_FALSE(amc::isValidWorldCoordinate(0, 320, 0));
 }
 
 TEST(conversion, isValidRegionCoordinate)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Test valid coordinates
+    EXPECT_TRUE(amc::isValidRegionCoordinate(0, 0, 0));
+    EXPECT_TRUE(amc::isValidRegionCoordinate(511, 120, 511));
+
+    // Test X Coodinate
+    EXPECT_FALSE(amc::isValidRegionCoordinate(-1, 0, 0));
+    EXPECT_TRUE(amc::isValidRegionCoordinate(345, 0, 0));
+    EXPECT_FALSE(amc::isValidRegionCoordinate(512, 0, 0));
+
+    // Test Z Coodinate
+    EXPECT_FALSE(amc::isValidRegionCoordinate(0, 0, -1));
+    EXPECT_TRUE(amc::isValidRegionCoordinate(0, 0, 75));
+    EXPECT_FALSE(amc::isValidRegionCoordinate(0, 0, 512));
+
+    // Test Y Coodinate
+    EXPECT_FALSE(amc::isValidRegionCoordinate(0, -65, 0));
+    EXPECT_TRUE(amc::isValidRegionCoordinate(0, -64, 0));
+    EXPECT_TRUE(amc::isValidRegionCoordinate(0, 319, 0));
+    EXPECT_FALSE(amc::isValidRegionCoordinate(0, 320, 0));
 }
 
 TEST(conversion, isValidChunkCoordinate)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Test valid coordinates
+    EXPECT_TRUE(amc::isValidChunkCoordinate(0, 0, 0));
+    EXPECT_TRUE(amc::isValidChunkCoordinate(15, 120, 15));
+    
+    // Test X Coodinate
+    EXPECT_FALSE(amc::isValidChunkCoordinate(-1, 0, 0));
+    EXPECT_TRUE(amc::isValidChunkCoordinate(5, 0, 0));
+    EXPECT_FALSE(amc::isValidChunkCoordinate(16, 0, 0));
+    
+    // Test Z Coodinate
+    EXPECT_FALSE(amc::isValidChunkCoordinate(0, 0, -1));
+    EXPECT_TRUE(amc::isValidChunkCoordinate(0, 0, 6));
+    EXPECT_FALSE(amc::isValidChunkCoordinate(0, 0, 16));
+
+    // Test Y Coodinate
+    EXPECT_FALSE(amc::isValidChunkCoordinate(0, -65, 0));
+    EXPECT_TRUE(amc::isValidChunkCoordinate(0, -64, 0));
+    EXPECT_TRUE(amc::isValidChunkCoordinate(0, 319, 0));
+    EXPECT_FALSE(amc::isValidChunkCoordinate(0, 320, 0));
 }
 
 TEST(conversion, isValidSectionCoordinate)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    // Test valid coordinates
+    EXPECT_TRUE(amc::isValidSectionCoordinate(0, 0, 0));
+    EXPECT_TRUE(amc::isValidSectionCoordinate(15, 15, 15));
+
+    // Test X Coordinates
+    EXPECT_FALSE(amc::isValidSectionCoordinate(-1, 0, 0));
+    EXPECT_TRUE(amc::isValidSectionCoordinate(5, 0, 0));
+    EXPECT_FALSE(amc::isValidSectionCoordinate(16, 0, 0));
+
+    // Test Z Coordinates
+    EXPECT_FALSE(amc::isValidSectionCoordinate(0, -1, 0));
+    EXPECT_TRUE(amc::isValidSectionCoordinate(0, 4, 0));
+    EXPECT_FALSE(amc::isValidSectionCoordinate(0, 16, 0));
+
+    // Test Y Coordinates
+    EXPECT_FALSE(amc::isValidSectionCoordinate(0, 0, -1));
+    EXPECT_TRUE(amc::isValidSectionCoordinate(0, 0, 7));
+    EXPECT_FALSE(amc::isValidSectionCoordinate(0, 0, 16));
 }
 
 const std::vector<std::vector<int>> blockCoordinates1 = {
