@@ -162,33 +162,34 @@ const Chunk& Region::getChunkAt(unsigned int index) const
     return (*m_chunks)[index];
 }
 
-std::vector<int32_t> Region::getBiomesAt(unsigned int x, unsigned int z) const
+std::vector<int32_t> Region::getBiomesAt(unsigned int chunkX,
+                                         unsigned int chunkZ) const
 {
     // Check if chunk coodinates are valid
-    if(x >= ChunkWidth || z >= ChunkWidth) {
+    if(chunkX >= ChunkWidth || chunkZ >= ChunkWidth) {
         throw std::out_of_range("Coordinates out of range");
     }
 
     // Calculate the requested chunk
-    unsigned chunkIdx = z * ChunkWidth + x;
+    unsigned int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
 
     // Get data from chunk
     return getChunkAt(chunkIdx).getBiomes();
 }
 
-int32_t Region::getBiomeAt(unsigned int x,
-                           unsigned int z, 
+int32_t Region::getBiomeAt(unsigned int chunkX,
+                           unsigned int chunkZ,
                            unsigned int blockX, 
                            int blockY, 
                            unsigned int blockZ) const
 {
     // Check if chunk coodinates are valid
-    if(x >= ChunkWidth || z >= ChunkWidth) {
+    if(chunkX >= ChunkWidth || chunkZ >= ChunkWidth) {
         throw std::out_of_range("Coordinates out of range");
     }
 
     // Calculate the requested chunk
-    unsigned chunkIdx = z * ChunkWidth + x;
+    unsigned int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
 
     // Get data from chunk
     return getChunkAt(chunkIdx).getBiomeAt(blockX, blockY, blockZ);
@@ -204,10 +205,10 @@ Block Region::getBlockAt(const int blockX,
     //}
 
     // Calculate the requested chunk
-    int xRegion = 0;
-    int zRegion = 0;
-    convertBlockWorld2ChunkRegion(blockX, blockZ, xRegion, zRegion);
-    unsigned chunkIdx = zRegion * ChunkWidth + xRegion;
+    int chunkX = 0;
+    int chunkZ = 0;
+    convertBlockWorld2ChunkRegion(blockX, blockZ, chunkX, chunkZ);
+    unsigned int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
 
     // Get data from chunk
     return getChunkAt(chunkIdx).getBlockAt(blockX, blockY, blockZ);
@@ -220,7 +221,8 @@ HeightMap Region::getHeightMap(const int chunkWorldX,
     int chunkX = 0;
     int chunkZ = 0;
     convertChunkWorld2ChunkRegion(chunkWorldX, chunkWorldZ, chunkX, chunkZ);
-    return getChunkAt(chunkZ * ChunkWidth + chunkX).getHeightMap(mapType);
+    unsigned int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
+    return getChunkAt(chunkIdx).getHeightMap(mapType);
 }
 
 void Region::loadFromFile(const std::string &filename)
