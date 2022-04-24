@@ -284,15 +284,84 @@ TEST(conversion, convertChunkRegion2ChunkWorld)
 
 TEST(conversion, chunkIndexFromXZ)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_EQ(0u, amc::chunkIndexFromXZ(0, 0));
+    EXPECT_EQ(31u, amc::chunkIndexFromXZ(31, 0));
+    EXPECT_EQ(992u, amc::chunkIndexFromXZ(0, 31));
+    EXPECT_EQ(1023u, amc::chunkIndexFromXZ(31, 31));
 }
 
 TEST(conversion, xzFromChunkIndex)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    int chunkX = -1;
+    int chunkZ = -1;
+
+    amc::xzFromChunkIndex(0, chunkX, chunkZ);
+    EXPECT_EQ(0, chunkX);
+    EXPECT_EQ(0, chunkZ);
+    amc::xzFromChunkIndex(31, chunkX, chunkZ);
+    EXPECT_EQ(31, chunkX);
+    EXPECT_EQ(0, chunkZ);
+    amc::xzFromChunkIndex(992, chunkX, chunkZ);
+    EXPECT_EQ(0, chunkX);
+    EXPECT_EQ(31, chunkZ);
+    amc::xzFromChunkIndex(1023, chunkX, chunkZ);
+    EXPECT_EQ(31, chunkX);
+    EXPECT_EQ(31, chunkZ);
 }
 
 TEST(conversion, xzFromChunkIndex_tuple)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    {
+        auto [chunkX, chunkZ] = amc::xzFromChunkIndex(0);
+        EXPECT_EQ(0, chunkX);
+        EXPECT_EQ(0, chunkZ);
+    }
+    {
+        auto [chunkX, chunkZ] = amc::xzFromChunkIndex(31);
+        EXPECT_EQ(31, chunkX);
+        EXPECT_EQ(0, chunkZ);
+    }
+    {
+        auto [chunkX, chunkZ] = amc::xzFromChunkIndex(992);
+        EXPECT_EQ(0, chunkX);
+        EXPECT_EQ(31, chunkZ);
+    }
+    {
+        auto [chunkX, chunkZ] = amc::xzFromChunkIndex(1023);
+        EXPECT_EQ(31, chunkX);
+        EXPECT_EQ(31, chunkZ);
+    }
 }
+
+// Death Tests (Only Debug)
+#ifndef NDEBUG
+
+TEST(conversion, chunkIndexFromXZ_death)
+{
+    // less
+    EXPECT_DEATH(amc::chunkIndexFromXZ(-1, -1), "");
+    EXPECT_DEATH(amc::chunkIndexFromXZ(-1, 0), "");
+    EXPECT_DEATH(amc::chunkIndexFromXZ(0, -1), "");
+
+    // greater
+    EXPECT_DEATH(amc::chunkIndexFromXZ(1023, 1024), "");
+    EXPECT_DEATH(amc::chunkIndexFromXZ(1024, 1023), "");
+    EXPECT_DEATH(amc::chunkIndexFromXZ(1024, 1024), "");
+}
+
+TEST(conversion, xzFromChunkIndex_death)
+{
+    int chunkX = -1;
+    int chunkZ = -1;
+
+    EXPECT_DEATH(amc::xzFromChunkIndex(-1, chunkX, chunkZ), "");
+    EXPECT_DEATH(amc::xzFromChunkIndex(1024, chunkX, chunkZ), "");
+}
+
+TEST(conversion, xzFromChunkIndex_tuple_death)
+{
+    EXPECT_DEATH(amc::xzFromChunkIndex(-1), "");
+    EXPECT_DEATH(amc::xzFromChunkIndex(1024), "");
+}
+
+#endif // DEBUG
