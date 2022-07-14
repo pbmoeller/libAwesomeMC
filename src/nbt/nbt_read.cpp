@@ -68,9 +68,20 @@ std::vector<unsigned char> loadNbtData(const std::string &filename,
         std::vector<unsigned char> data = fileReadAll(stream);
 
         if(isCompressed) {
-            bool ret = inflate_gzip(data);
-            if(!ret) {
-                throw std::runtime_error("Error: inflate_gzip failed.");
+            bool ret = false;
+            CompressionType compressionType = getCompression(data);
+            
+            if(compressionType == CompressionType::GZip) {
+                ret = inflate_gzip(data);
+                if(!ret) {
+                    throw std::runtime_error("Error: inflate_gzip failed.");
+                }
+            }
+            else if(compressionType == CompressionType::Zlib) {
+                ret = inflate_zlib(data);
+                if(!ret) {
+                    throw std::runtime_error("Error: inflate_zlib failed.");
+                }
             }
         }
 

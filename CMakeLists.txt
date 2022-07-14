@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(AwesomeMC
-    VERSION 0.3.6
+    VERSION 0.3.7
     LANGUAGES C CXX
 )
 

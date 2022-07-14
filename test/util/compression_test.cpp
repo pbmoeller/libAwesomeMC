@@ -1,5 +1,7 @@
 // AwesomeMC
 #include <AwesomeMC/util/compression.hpp>
+#include <AwesomeMC/nbt/nbt_read.hpp>
+#include <AwesomeMC/nbt/tags/tags.hpp>
 
 // gtest
 #include <gtest/gtest.h>
@@ -9,7 +11,7 @@
 #include <string>
 #include <fstream>
 
-const std::string testFolder = "../../../test/testdata/nbt/";
+const std::string testFolderNbt = "../../../test/testdata/nbt/";
 
 unsigned char bigtestUncompressedData[1544] = {
     0x0A, 0x00, 0x05, 0x4C, 0x65, 0x76, 0x65, 0x6C, 0x04, 0x00, 0x08, 0x6C, 0x6F, 0x6E, 0x67, 0x54,
@@ -111,6 +113,71 @@ unsigned char bigtestUncompressedData[1544] = {
     0xDF, 0x8F, 0x6B, 0xBB, 0xFF, 0x6A, 0x5E, 0x00
 };
 
+class CompressionFixture : public ::testing::Test
+{
+protected:
+    virtual void SetUp() override
+    {
+
+    }
+
+    static void SetUpTestSuite()
+    {
+        gzipRawData = readFile(testFolderNbt + "testfile_gzip.dat");
+        zlibRawData = readFile(testFolderNbt + "testfile_zlib.dat");
+        uncompressedRawData = readFile(testFolderNbt + "testfile_uncompressed.dat");
+
+        gzipNbtData = amc::loadNbtData(testFolderNbt + "testfile_gzip.dat", true);
+        zlibNbtData = amc::loadNbtData(testFolderNbt + "testfile_zlib.dat", true);
+        uncompressedNbtData = amc::loadNbtData(testFolderNbt + "testfile_uncompressed.dat", false);
+
+        gzipFileCompound = amc::readNbtFile(testFolderNbt + "testfile_gzip.dat");
+        zlibFileCompound = amc::readNbtFile(testFolderNbt + "testfile_zlib.dat");
+        uncompressedFileCompound = amc::readNbtFile(testFolderNbt + "testfile_uncompressed.dat");
+    }
+
+    static std::vector<unsigned char> readFile(const std::string &filename)
+    {
+        std::ifstream stream(filename, std::ios::binary);
+
+        if(stream.is_open()) {
+            stream.seekg(0, std::ios::end);
+            size_t size = stream.tellg();
+            std::vector<unsigned char> data(size, 0);
+            stream.seekg(0);
+            stream.read(reinterpret_cast<char *>(&data[0]), size);
+            return data;
+        } else {
+            throw std::runtime_error(std::string("Could not open file for reading: \"").append(filename).append("\"!"));
+        }
+    }
+
+    virtual void TearDown() override
+    {
+
+    }
+
+    static std::vector<unsigned char> gzipRawData;
+    static std::vector<unsigned char> zlibRawData;
+    static std::vector<unsigned char> uncompressedRawData;
+    static std::vector<unsigned char> gzipNbtData;
+    static std::vector<unsigned char> zlibNbtData;
+    static std::vector<unsigned char> uncompressedNbtData;
+    static std::unique_ptr<amc::CompoundTag> gzipFileCompound;
+    static std::unique_ptr<amc::CompoundTag> zlibFileCompound;
+    static std::unique_ptr<amc::CompoundTag> uncompressedFileCompound;
+};
+
+std::vector<unsigned char> CompressionFixture::gzipRawData = std::vector<unsigned char>();
+std::vector<unsigned char> CompressionFixture::zlibRawData = std::vector<unsigned char>();
+std::vector<unsigned char> CompressionFixture::uncompressedRawData = std::vector<unsigned char>();
+std::vector<unsigned char> CompressionFixture::gzipNbtData = std::vector<unsigned char>();
+std::vector<unsigned char> CompressionFixture::zlibNbtData = std::vector<unsigned char>();
+std::vector<unsigned char> CompressionFixture::uncompressedNbtData = std::vector<unsigned char>();
+std::unique_ptr<amc::CompoundTag> CompressionFixture::gzipFileCompound = nullptr;
+std::unique_ptr<amc::CompoundTag> CompressionFixture::zlibFileCompound = nullptr;
+std::unique_ptr<amc::CompoundTag> CompressionFixture::uncompressedFileCompound = nullptr;
+
 TEST(compression, CompressionType)
 {
     EXPECT_EQ(1, static_cast<int>(amc::CompressionType::GZip));
@@ -118,35 +185,78 @@ TEST(compression, CompressionType)
     EXPECT_EQ(3, static_cast<int>(amc::CompressionType::Uncompressed));
 }
 
-TEST(compression, isGzipCompressed)
+TEST_F(CompressionFixture, dataCheck)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_EQ(gzipNbtData.size(), zlibNbtData.size());
+    EXPECT_EQ(zlibNbtData.size(), uncompressedNbtData.size());
+    EXPECT_EQ(uncompressedNbtData.size(), gzipNbtData.size());
+
+    EXPECT_TRUE(*gzipFileCompound == *zlibFileCompound);
+    EXPECT_TRUE(*zlibFileCompound == *uncompressedFileCompound);
+    EXPECT_TRUE(*uncompressedFileCompound == *gzipFileCompound);
 }
 
-TEST(compression, isZlibCompressed)
+TEST_F(CompressionFixture, isGzipCompressed)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_TRUE(amc::isGzipCompressed(gzipRawData));
+    EXPECT_FALSE(amc::isGzipCompressed(zlibRawData));
+    EXPECT_FALSE(amc::isGzipCompressed(uncompressedRawData));
 }
 
-TEST(compression, getCompression)
+TEST_F(CompressionFixture, isZlibCompressed)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_FALSE(amc::isZlibCompressed(gzipRawData));
+    EXPECT_TRUE(amc::isZlibCompressed(zlibRawData));
+    EXPECT_FALSE(amc::isZlibCompressed(uncompressedRawData));
 }
 
-TEST(compression, deflate_zlib)
+TEST_F(CompressionFixture, isUncompressed)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_FALSE(amc::isUncompressed(gzipRawData));
+    EXPECT_FALSE(amc::isUncompressed(zlibRawData));
+    EXPECT_TRUE(amc::isUncompressed(uncompressedRawData));
 }
 
-TEST(compression, inflate_zlib)
+TEST_F(CompressionFixture, getCompression)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    EXPECT_EQ(amc::CompressionType::GZip, amc::getCompression(gzipRawData));
+    EXPECT_EQ(amc::CompressionType::Zlib, amc::getCompression(zlibRawData));
+    EXPECT_EQ(amc::CompressionType::Uncompressed, amc::getCompression(uncompressedRawData));
+}
+
+TEST_F(CompressionFixture, deflate_zlib)
+{
+    // Compress known data
+    std::vector<unsigned char> compressedData(uncompressedRawData.begin(),
+                                              uncompressedRawData.begin() + uncompressedRawData.size());
+    bool ret = amc::deflate_zlib(compressedData);
+    EXPECT_TRUE(ret);
+    EXPECT_EQ(compressedData.size(), zlibRawData.size());
+
+    // Compare with known data
+    EXPECT_THAT(std::vector<unsigned char>(compressedData.begin(),
+                                           compressedData.begin() + compressedData.size()),
+                ::testing::ElementsAreArray(zlibRawData.begin(),
+                                            zlibRawData.begin() + zlibRawData.size()));
+}
+
+TEST_F(CompressionFixture, inflate_zlib)
+{
+    // Uncompress known data
+    bool ret = amc::inflate_zlib(zlibRawData);
+
+    // Check for known size
+    EXPECT_TRUE(ret);
+    EXPECT_EQ(zlibNbtData.size(), zlibRawData.size());
+
+    // Compare with known data
+    EXPECT_THAT(zlibRawData, ::testing::ElementsAreArray(zlibNbtData.data(), zlibNbtData.size()));
 }
 
 TEST(compression, deflate_gzip)
 {
     // Open file
-    std::string filename = testFolder + "bigtest.nbt";
+    std::string filename = testFolderNbt + "bigtest.nbt";
     std::ifstream stream(filename, std::ios::binary);
     ASSERT_TRUE(stream.is_open());
 
@@ -181,7 +291,7 @@ TEST(compression, deflate_gzip)
 TEST(compression, inflate_gzip)
 {
     // Open file
-    std::string filename = testFolder + "bigtest.nbt";
+    std::string filename = testFolderNbt + "bigtest.nbt";
     std::ifstream stream(filename, std::ios::binary);
     ASSERT_TRUE(stream.is_open());
     
@@ -206,7 +316,7 @@ TEST(compression, inflate_gzip)
 TEST(compression, inflate_gzip2)
 {
     // Open file
-    std::string filename = testFolder + "bigtest.nbt";
+    std::string filename = testFolderNbt + "bigtest.nbt";
     std::ifstream stream(filename, std::ios::binary);
     ASSERT_TRUE(stream.is_open());
 

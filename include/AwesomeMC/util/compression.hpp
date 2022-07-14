@@ -18,6 +18,7 @@ namespace amc
 
     bool isGzipCompressed(std::vector<unsigned char> &data);
     bool isZlibCompressed(std::vector<unsigned char> &data);
+    bool isUncompressed(std::vector<unsigned char> &data);
     CompressionType getCompression(std::vector<unsigned char> &data);
 
     bool deflate_zlib(std::vector<unsigned char> &data);

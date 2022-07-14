@@ -23,6 +23,12 @@ bool isZlibCompressed(std::vector<unsigned char> &data)
                 || data[1] == 0xDA));
 }
 
+bool isUncompressed(std::vector<unsigned char> &data)
+{
+    return !isGzipCompressed(data)
+        && !isZlibCompressed(data);
+}
+
 CompressionType getCompression(std::vector<unsigned char> &data)
 {
     if(isGzipCompressed(data)) {
