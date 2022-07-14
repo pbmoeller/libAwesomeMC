@@ -15,6 +15,8 @@ template<typename T, TagType TAG>
 class ValueTag : public AbstractTag
 {
 public:
+    using value_type = T;
+
     enum { Type = static_cast<int>(TAG) };
 
 public:

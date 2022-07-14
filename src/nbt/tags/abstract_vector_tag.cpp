@@ -153,13 +153,13 @@ AbstractVectorTag::const_iterator AbstractVectorTag::end() const noexcept
 bool AbstractVectorTag::isEmpty() const noexcept {
     return m_value.empty();
 }
-size_t AbstractVectorTag::size() const noexcept {
-    return m_value.size();
+int64_t AbstractVectorTag::size() const noexcept {
+    return static_cast<int64_t>(m_value.size());
 }
 
 int64_t AbstractVectorTag::indexOf(AbstractTag *value) const
 {
-    for(size_t idx = 0; idx < m_value.size(); ++idx) {
+    for(int64_t idx = 0; idx < size(); ++idx) {
         if(m_value[idx] == value) {
             return idx;
         }
@@ -174,9 +174,9 @@ void AbstractVectorTag::swap(int64_t indexA, int64_t indexB)
     std::swap(m_value[indexA], m_value[indexB]);
 }
 
-bool AbstractVectorTag::eraseAt(size_t index)
+bool AbstractVectorTag::eraseAt(int64_t index)
 {
-    if(index >= m_value.size()) {
+    if(index < 0 || index >= size()) {
         return false;
     } else {
         if(m_value[index] != nullptr) {
@@ -198,7 +198,7 @@ bool AbstractVectorTag::erase(AbstractTag *value)
     return false;
 }
 
-AbstractTag* AbstractVectorTag::takeAt(size_t index)
+AbstractTag* AbstractVectorTag::takeAt(int64_t index)
 {
     AbstractTag *tag = at(index);
     m_value.erase(m_value.begin() + index);
@@ -216,37 +216,37 @@ AbstractTag* AbstractVectorTag::take(AbstractTag *value)
     return tag;
 }
 
-AbstractTag* AbstractVectorTag::at(size_t index)
+AbstractTag* AbstractVectorTag::at(int64_t index)
 {
-    if(index >= m_value.size()) {
+    if(index < 0 || index >= size()) {
         throw std::out_of_range("Index out of range!");
     }
     return m_value.at(index);
 }
 
-const AbstractTag* AbstractVectorTag::at(size_t index) const
+const AbstractTag* AbstractVectorTag::at(int64_t index) const
 {
-    if(index >= m_value.size()) {
+    if(index < 0 || index >= size()) {
         throw std::out_of_range("Index out of range!");
     }
     return m_value.at(index);
 }
 
-AbstractTag* AbstractVectorTag::operator[](const size_t index)
+AbstractTag* AbstractVectorTag::operator[](const int64_t index)
 {
-    assert(index < m_value.size());
+    assert(index >= 0 && index < size());
     return m_value[index];
 }
 
-const AbstractTag* AbstractVectorTag::operator[](const size_t index) const
+const AbstractTag* AbstractVectorTag::operator[](const int64_t index) const
 {
-    assert(index < m_value.size());
+    assert(index >= 0 && index < size());
     return m_value[index];
 }
 
-bool AbstractVectorTag::insert(size_t index, AbstractTag *value)
+bool AbstractVectorTag::insert(int64_t index, AbstractTag *value)
 {
-    if(!value || index > m_value.size()) {
+    if(!value || index < 0 || index > size()) {
         return false;
     } else {
         m_value.insert(m_value.begin() + index, value);

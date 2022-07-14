@@ -13,6 +13,7 @@ TEST(Types, Size)
     EXPECT_EQ(sizeof(unsigned long long), 8);
     EXPECT_EQ(sizeof(float), 4);
     EXPECT_EQ(sizeof(double), 8);
+    EXPECT_EQ(sizeof(size_t), 8);
 
 #if defined(_MSC_VER) && defined(_WIN64)
     EXPECT_EQ(sizeof(long), 4);

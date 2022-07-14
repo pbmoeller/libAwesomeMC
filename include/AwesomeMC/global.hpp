@@ -1,0 +1,6 @@
+#ifndef AWESOMEMC_GLOBAL_HPP
+#define AWESOMEMC_GLOBAL_HPP
+
+#define AMC_UNUSED(x) (void)x;
+
+#endif // AWESOMEMC_GLOBAL_HPP

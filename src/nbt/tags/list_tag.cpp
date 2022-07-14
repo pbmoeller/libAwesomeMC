@@ -138,7 +138,7 @@ bool ListTag::isEqual(const AbstractTag &other) const
         && AbstractVectorTag::isEqual(other);
 }
 
-bool ListTag::insert(size_t index, AbstractTag *value)
+bool ListTag::insert(int64_t index, AbstractTag *value)
 {
     if(!value || value->getType() != m_listType) {
         return false;

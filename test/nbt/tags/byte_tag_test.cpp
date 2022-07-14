@@ -7,6 +7,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(ByteTag, value_type)
+{
+    bool check = std::is_same<int8_t, amc::ByteTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(ByteTag, Constructor)
 {
     amc::ByteTag byteTag;

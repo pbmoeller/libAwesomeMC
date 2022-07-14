@@ -19,6 +19,8 @@ template<typename T, TagType TAG>
 class ArrayTag : public AbstractTag
 {
 public:
+    using value_type = T;
+
     enum { Type = static_cast<int>(TAG) };
 
 public:
@@ -86,8 +88,8 @@ public:
             stream << m_name;
         }
 
-        stream << static_cast<int32_t>(m_value.size());
-        for(size_t i = 0; i < m_value.size(); ++i) {
+        stream << static_cast<int32_t>(size());
+        for(int64_t i = 0; i < size(); ++i) {
             stream << m_value[i];
         }
 
@@ -109,17 +111,17 @@ public:
         return m_value.empty();
     }
 
-    constexpr size_t size() const noexcept{
-        return m_value.size();
+    constexpr int64_t size() const noexcept{
+        return static_cast<int64_t>(m_value.size());
     }
 
     constexpr void clear() noexcept {
         m_value.clear();
     }
 
-    bool eraseAt(size_t index)
+    bool eraseAt(int64_t index)
     {
-        if(index >= m_value.size()) {
+        if(index < 0 || index >= size()) {
             return false;
         } else {
             m_value.erase(m_value.begin() + index);
@@ -127,9 +129,9 @@ public:
         }
     }
 
-    bool insert(size_t index, T value)
+    bool insert(int64_t index, T value)
     {
-        if(index > m_value.size()) {
+        if(index < 0 || index > size()) {
             return false;
         } else {
             m_value.insert(m_value.begin() + index, value);
@@ -144,31 +146,31 @@ public:
         m_value.push_back(std::move(value));
     }
 
-    T& at(size_t index)
+    T& at(int64_t index)
     {
-        if(index >= m_value.size()) {
+        if(index < 0 || index >= size()) {
             throw std::out_of_range("Index out of range!");
         }
         return m_value.at(index);
     }
 
-    const T& at(size_t index) const
+    const T& at(int64_t index) const
     {
-        if(index >= m_value.size()) {
+        if(index < 0 || index >= size()) {
             throw std::out_of_range("Index out of range!");
         }
         return m_value.at(index);
     }
 
-    T& operator[](size_t index)
+    T& operator[](int64_t index)
     {
-        assert(index < m_value.size());
+        assert(index >= 0 && index < size());
         return m_value[index];
     }
 
-    const T& operator[](size_t index) const
+    const T& operator[](int64_t index) const
     {
-        assert(index < m_value.size());
+        assert(index >= 0 && index < size());
         return m_value[index];
     }
 
@@ -183,7 +185,7 @@ protected:
             return false;
         }
 
-        for(size_t i = 0; i < m_value.size(); ++i) {
+        for(int64_t i = 0; i < size(); ++i) {
             if(m_value[i] != otherTag.m_value[i]) {
                 return false;
             }

@@ -45,7 +45,7 @@ bool deflate_zlib(std::vector<unsigned char> &data)
     if(deflateInit(&zstrm, Z_BEST_COMPRESSION) != Z_OK) {
         return false;
     }
-    zstrm.next_in   = (Bytef*)data.data();
+    zstrm.next_in   = reinterpret_cast<Bytef*>(data.data());
     zstrm.avail_in  = static_cast<uInt>(data.size());
 
     // deflate
@@ -80,12 +80,12 @@ bool inflate_zlib(std::vector<unsigned char> &data)
     }
 
     dataIn.insert(dataIn.end(), data.begin(), data.end());
-    zstrm.next_in = (Bytef*)dataIn.data();
+    zstrm.next_in = reinterpret_cast<Bytef*>(dataIn.data());
     zstrm.avail_in = static_cast<uInt>(dataIn.size());
 
     do {
         std::vector<char> buffer(ZlibChunkSize, 0);
-        zstrm.next_out = (Bytef*)buffer.data();
+        zstrm.next_out = reinterpret_cast<Bytef*>(buffer.data());
         zstrm.avail_out = ZlibChunkSize;
 
         ret = inflate(&zstrm, 0);
@@ -126,8 +126,8 @@ bool deflate_gzip(std::vector<unsigned char> &data, int level)
     // Reserve as much data as we have (should almost always be enough ?!?)
     //std::vector<unsigned char> dataOut(data.size(), 0);
     std::vector<unsigned char> dataOut;
-    char *inputData = (char *)data.data();
-    int remainingData = data.size();
+    char *inputData = reinterpret_cast<char*>(data.data());
+    int remainingData = static_cast<int>(data.size());
 
     // Compress
     int flush = 0;
@@ -136,7 +136,7 @@ bool deflate_gzip(std::vector<unsigned char> &data, int level)
         int chunkSize = std::min(GzipChunkSize, remainingData);
 
         // Calculate new intermediate values
-        zstrm.next_in = (unsigned char*)inputData;
+        zstrm.next_in = reinterpret_cast<unsigned char*>(inputData);
         zstrm.avail_in = chunkSize;
 
         inputData += chunkSize;
@@ -148,7 +148,7 @@ bool deflate_gzip(std::vector<unsigned char> &data, int level)
         do {
             std::vector<char> out(GzipChunkSize, 0);
 
-            zstrm.next_out = (unsigned char*)out.data();
+            zstrm.next_out = reinterpret_cast<unsigned char*>(out.data());
             zstrm.avail_out = GzipChunkSize;
 
             ret = deflate(&zstrm, flush);
@@ -186,7 +186,7 @@ bool inflate_gzip(std::vector<unsigned char> &data)
     const size_t halfLength = data.size() / 2;
 
     z_stream zstrm;
-    zstrm.next_in   = (Bytef*)data.data();
+    zstrm.next_in   = reinterpret_cast<Bytef*>(data.data());
     zstrm.avail_in  = static_cast<uInt>(data.size());
     zstrm.total_out = 0;
     zstrm.zalloc    = Z_NULL;
@@ -200,7 +200,7 @@ bool inflate_gzip(std::vector<unsigned char> &data)
         if(zstrm.total_out >= dataOut.size()) {
             dataOut.resize(dataOut.size() + halfLength);
         }
-        zstrm.next_out = (Bytef*)(dataOut.data() + zstrm.total_out);
+        zstrm.next_out = reinterpret_cast<Bytef*>(dataOut.data() + zstrm.total_out);
         zstrm.avail_out = static_cast<uInt>(dataOut.size() - zstrm.total_out);
 
         int err = inflate(&zstrm, Z_SYNC_FLUSH);
@@ -233,10 +233,10 @@ bool inflate_gzip2(std::vector<unsigned char> &data)
     size_t halfLength = data.size() / 2;
 
     size_t uncompressedLength = fullLength;
-    char *uncompressed = (char*)calloc(uncompressedLength, sizeof(char));
+    char *uncompressed = reinterpret_cast<char*>(calloc(uncompressedLength, sizeof(char)));
 
     z_stream zstrm;
-    zstrm.next_in = (Bytef*)data.data();
+    zstrm.next_in = reinterpret_cast<Bytef*>(data.data());
     zstrm.avail_in = static_cast<uInt>(data.size());
     zstrm.total_out = 0;
     zstrm.zalloc = Z_NULL;
@@ -250,13 +250,13 @@ bool inflate_gzip2(std::vector<unsigned char> &data)
 
     while(!done) {
         if(zstrm.total_out >= uncompressedLength) {
-            char* uncompressed2 = (char*) calloc(uncompressedLength + halfLength, sizeof(char));
+            char* uncompressed2 = reinterpret_cast<char*>(calloc(uncompressedLength + halfLength, sizeof(char)));
             std::memcpy(uncompressed2, uncompressed, uncompressedLength);
             uncompressedLength += halfLength;
             free(uncompressed);
             uncompressed = uncompressed2;
         }
-        zstrm.next_out = (Bytef*)(uncompressed + zstrm.total_out);
+        zstrm.next_out = reinterpret_cast<Bytef*>(uncompressed + zstrm.total_out);
         zstrm.avail_out = static_cast<uInt>(uncompressedLength - zstrm.total_out);
 
         int err = inflate(&zstrm, Z_SYNC_FLUSH);

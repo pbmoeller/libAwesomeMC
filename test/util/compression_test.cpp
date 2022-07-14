@@ -155,13 +155,13 @@ TEST(compression, deflate_gzip)
     size_t size = stream.tellg();
     std::vector<unsigned char> data(size, 0);
     stream.seekg(0);
-    stream.read((char*)&data[0], size);
+    stream.read(reinterpret_cast<char*>(&data[0]), size);
 
     // Compress known data
     std::vector<unsigned char> compressedData(bigtestUncompressedData,
                                               bigtestUncompressedData + 1544);
     bool ret = amc::deflate_gzip(compressedData);
-
+    EXPECT_TRUE(ret);
     EXPECT_EQ(compressedData.size(), data.size());
 
     // Compare with known data
@@ -190,7 +190,7 @@ TEST(compression, inflate_gzip)
     size_t size = stream.tellg();
     std::vector<unsigned char> data(size, 0);
     stream.seekg(0);
-    stream.read((char*)&data[0], size);
+    stream.read(reinterpret_cast<char*>(&data[0]), size);
 
     // Uncompress data
     bool ret = amc::inflate_gzip(data);
@@ -215,7 +215,7 @@ TEST(compression, inflate_gzip2)
     size_t size = stream.tellg();
     std::vector<unsigned char> data(size, 0);
     stream.seekg(0);
-    stream.read((char*)&data[0], size);
+    stream.read(reinterpret_cast<char*>(&data[0]), size);
 
     // Uncompress data
     bool ret = amc::inflate_gzip2(data);

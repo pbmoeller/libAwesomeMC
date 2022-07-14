@@ -51,4 +51,6 @@ TEST(nbt_write, writeNbtFile)
 
     // Compare Read and Constructed CompoundTag
     EXPECT_TRUE(*compoundPtr.get() == *cTag);
+
+    delete cTag;
 }

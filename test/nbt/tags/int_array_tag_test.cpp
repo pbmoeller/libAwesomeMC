@@ -7,6 +7,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(IntArrayTag, value_type)
+{
+    bool check = std::is_same<int32_t, amc::IntArrayTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(IntArrayTag, Constructor)
 {
     amc::IntArrayTag intArrayTag;

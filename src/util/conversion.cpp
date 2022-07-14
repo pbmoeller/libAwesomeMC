@@ -12,7 +12,6 @@ namespace amc
 
 bool isValidWorldCoordinate(const int worldX, const int worldY, const int worldZ)
 {
-    // TODO: Validate the values
     return worldY >= amc::MinimumBlockHeight
         && worldY <= amc::MaximumBlockHeight
         && worldX < amc::WorldBorder
@@ -23,7 +22,6 @@ bool isValidWorldCoordinate(const int worldX, const int worldY, const int worldZ
 
 bool isValidRegionCoordinate(const int regionX, const int regionY, const int regionZ)
 {
-        // TODO: Validate the values
     return regionY >= amc::MinimumBlockHeight
         && regionY <= amc::MaximumBlockHeight
         && regionX < amc::RegionWidth

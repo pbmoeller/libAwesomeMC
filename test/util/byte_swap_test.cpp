@@ -64,7 +64,7 @@ TEST(bswap, 2B)
     int16_t value_2     = 0x0000;
     int16_t value_2_exp = 0x0000;
     int16_t value_3     = 0x7FFF;
-    int16_t value_3_exp = 0xFF7Fu;
+    int16_t value_3_exp = -129;
 
     uint16_t value_4        = 0x1000;
     uint16_t value_4_exp    = 0x0010;

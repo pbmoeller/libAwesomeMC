@@ -21,7 +21,7 @@ std::vector<unsigned char> fileReadAll(std::ifstream &strm)
     size_t size = strm.tellg();
     std::vector<unsigned char> data(size, 0);
     strm.seekg(0);
-    strm.read((char*)&data[0], size);
+    strm.read(reinterpret_cast<char*>(&data[0]), size);
     return data;
 }
 
@@ -32,7 +32,7 @@ bool isNbtFile(const std::string &filename)
     if(file.is_open()) {
         // Load first 2 bytes to check file header
         std::vector<unsigned char> data(2, 0);
-        file.read((char*)&data[0], 2);
+        file.read(reinterpret_cast<char*>(&data[0]), 2);
         if(!file) {
             return false;
         }
@@ -97,7 +97,7 @@ std::unique_ptr<CompoundTag> readNbtFile(const std::string &filename, Compressio
         // Check if file is compressed and which compression is used
         // Load first 2 bytes to check file header
         std::vector<unsigned char> data(2, 0);
-        file.read((char*)&data[0], 2);
+        file.read(reinterpret_cast<char*>(&data[0]), 2);
         if(!file) {
             return std::unique_ptr<CompoundTag>();
         }

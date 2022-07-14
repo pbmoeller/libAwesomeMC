@@ -1,5 +1,5 @@
-#ifndef AWESOMEMC_ANVIL_CONSTANTS_HPP
-#define AWESOMEMC_ANVIL_CONSTANTS_HPP
+#ifndef AWESOMEMC_CONSTANTS_HPP
+#define AWESOMEMC_CONSTANTS_HPP
 
 namespace amc
 {
@@ -26,4 +26,4 @@ namespace amc
 
 } // namespace amc
 
-#endif // AWESOMEMC_ANVIL_CONSTANTS_HPP
+#endif // AWESOMEMC_CONSTANTS_HPP

@@ -51,7 +51,7 @@ protected:
 
 public:
     // Vector Operations
-    virtual bool insert(size_t index, AbstractTag *value) override;
+    virtual bool insert(int64_t index, AbstractTag *value) override;
     virtual bool pushBack(AbstractTag* value) override;
 
 private:

@@ -7,6 +7,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(FloatTag, value_type)
+{
+    bool check = std::is_same<float, amc::FloatTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(FloatTag, Constructor)
 {
     amc::FloatTag floatTag;

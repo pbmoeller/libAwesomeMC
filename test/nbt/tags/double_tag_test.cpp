@@ -7,6 +7,15 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
+// STL
+#include <type_traits>
+
+TEST(DoubleTag, value_type)
+{
+    bool check = std::is_same<double, amc::DoubleTag::value_type>::value;
+    EXPECT_TRUE(check);
+}
+
 TEST(DoubleTag, Constructor)
 {
     amc::DoubleTag doubleTag;
