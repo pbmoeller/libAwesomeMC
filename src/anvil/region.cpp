@@ -9,6 +9,8 @@
 #include <stdexcept>
 #include <regex>
 #include <filesystem>
+#include <fstream>
+#include <iomanip>
 
 namespace amc
 {
@@ -19,39 +21,42 @@ Region::Region()
     : m_x{0}
     , m_z{0}
     , m_filename{""}
-    , m_chunks{new std::array<Chunk, ChunkCount>()}
+    , m_chunks()
     , m_loadedChunks(ChunkCount, false)
+    , m_regionHeader(nullptr)
+    , m_chunkCompression(ChunkCount, CompressionType::Zlib)
 {
-
+    m_chunks.resize(ChunkCount);
 }
 
 Region::Region(int x, int z)
     : m_x{x}
     , m_z{z}
     , m_filename{""}
-    , m_chunks{new std::array<Chunk, ChunkCount>()}
     , m_loadedChunks(ChunkCount, false)
+    , m_regionHeader(nullptr)
+    , m_chunkCompression(ChunkCount, CompressionType::Zlib)
 {
-
+    m_chunks.resize(ChunkCount);
 }
 
 Region::Region(const Region &other)
-    : m_chunks{new std::array<Chunk, ChunkCount>()}
+    : m_chunks()
 {
+    m_chunks.resize(ChunkCount);
     *this = other;
 }
 
 Region::Region(Region &&other) noexcept
-    : m_chunks(nullptr)
+    : m_chunks()
 {
+    m_chunks.resize(ChunkCount);
     *this = std::move(other);
 }
 
 Region::~Region()
 {
-    if(m_chunks) {
-        delete m_chunks;
-    }
+    
 }
 
 Region& Region::operator=(const Region &other)
@@ -59,13 +64,15 @@ Region& Region::operator=(const Region &other)
     if(this != &other) {
         m_x                 = other.m_x;
         m_z                 = other.m_z;
-        m_regionHeader      = other.m_regionHeader;
+        *m_regionHeader     = *other.m_regionHeader;    // TODO: Check !!!
         m_filename          = other.m_filename;
         m_loadedChunks      = other.m_loadedChunks;
+        m_chunks            = other.m_chunks;
+        m_chunkCompression  = other.m_chunkCompression;
 
-        for(unsigned int i = 0; i < ChunkCount; ++i) {
-            (*m_chunks)[i] = (*other.m_chunks)[i];
-        }
+        /*for(unsigned int i = 0; i < ChunkCount; ++i) {
+            (m_chunks)[i] = (other.m_chunks)[i];
+        }*/
     }
     return *this;
 }
@@ -78,7 +85,8 @@ Region& Region::operator=(Region &&other) noexcept
         m_regionHeader      = std::move(other.m_regionHeader);
         m_filename          = std::move(other.m_filename);
         m_loadedChunks      = std::move(other.m_loadedChunks);
-        std::swap(m_chunks, other.m_chunks);
+        m_chunks            = std::move(other.m_chunks);
+        m_chunkCompression  = std::move(other.m_chunkCompression);
     }
     return *this;
 }
@@ -92,14 +100,20 @@ bool Region::operator==(const Region &other)
     // TODO: Check if partiallyLoaded and filename should be compared or only the "real" data, maybe second function.
     if(m_x != other.m_x
        || m_z != other.m_z
-       || m_regionHeader != other.m_regionHeader
-       || m_filename != other.m_filename
-       || m_loadedChunks != other.m_loadedChunks) {
+       // || m_regionHeader != other.m_regionHeader
+       // || m_filename != other.m_filename
+       // || m_loadedChunks != other.m_loadedChunks
+       // || m_chunkCompression != other.m_chunkCompression
+       ) {
         return false;
     }
 
     for(unsigned int i = 0; i < ChunkCount; ++i) {
-        if((*m_chunks)[i] != (*other.m_chunks)[i]) {
+        if(m_chunks[i].isEmpty() && other.m_chunks[i].isEmpty()) {
+            continue;
+        }
+
+        if(m_chunks[i] != other.m_chunks[i]) {
             return false;
         }
     }
@@ -132,34 +146,14 @@ void Region::setZ(int z)
     m_z = z;
 }
 
-RegionHeader& Region::getRegionHeader()
-{
-    return m_regionHeader;
-}
-
-const RegionHeader& Region::getRegionHeader() const
-{
-    return m_regionHeader;
-}
-
-void Region::setRegionHeader(const RegionHeader &header)
-{
-    m_regionHeader = header;
-}
-
-const std::array<Chunk, ChunkCount>& Region::getChunks() const
-{
-    return *m_chunks;
-}
-
 Chunk& Region::getChunkAt(unsigned int index)
 {
-    return (*m_chunks)[index];
+    return m_chunks[index];
 }
 
 const Chunk& Region::getChunkAt(unsigned int index) const
 {
-    return (*m_chunks)[index];
+    return m_chunks[index];
 }
 
 std::vector<int32_t> Region::getBiomesAt(unsigned int chunkX,
@@ -259,10 +253,8 @@ void Region::loadPartiallyFromFile(const std::string &filename)
 
 void Region::loadChunkAt(unsigned int index)
 {
-    ChunkInfo &info = m_regionHeader.getChunkInfoAt(index);
-
     // If the info is empty, we are done here
-    if(info.isEmpty()) {
+    if(m_regionHeader->isEmpty(index)) {
         return;
     }
 
@@ -272,7 +264,7 @@ void Region::loadChunkAt(unsigned int index)
         throw std::runtime_error("Failed to open region file.");
     }
 
-    readChunkData(stream, info, index);
+    readChunkData(stream, index);
 }
 
 void Region::loadAllChunks()
@@ -285,21 +277,22 @@ void Region::loadAllChunks()
 
     // Read Chunks from file and set it to region
     for(unsigned int index = 0; index < ChunkCount; ++index) {
-        ChunkInfo &info = m_regionHeader.getChunkInfoAt(index);
-
         // If chunk is already loaded or the info is empty, skip this chunk
-        if(m_loadedChunks[index] || info.isEmpty()) {
+        if(m_loadedChunks[index] || m_regionHeader->isEmpty(index)) {
             continue;
         }
 
-        readChunkData(stream, info, index);
+        readChunkData(stream, index);
     }
+
+    // Not needed anymore
+    m_regionHeader.reset();
 }
 
-void Region::readChunkData(std::ifstream &filestream, ChunkInfo &chunkInfo, unsigned int index)
+void Region::readChunkData(std::ifstream &filestream, unsigned int index)
 {
     // Seek to beginning of chunk data
-    uint32_t offset = chunkInfo.getOffset() * SectorSize;
+    uint32_t offset = m_regionHeader->getByteOffset(index);
     filestream.seekg(offset, std::ios::beg);
 
     // Get size of binary data and compression type
@@ -309,10 +302,8 @@ void Region::readChunkData(std::ifstream &filestream, ChunkInfo &chunkInfo, unsi
     dataSize = bswap(dataSize);
     filestream.read(reinterpret_cast<char*>(&compressionType), sizeof(char));
 
-    chunkInfo.setCompression(compressionType);
-
     // Read the chunk data
-    std::vector<unsigned char> chunkData(dataSize, 0);
+    std::vector<unsigned char> chunkData(dataSize - 1, 0);
     filestream.read(reinterpret_cast<char*>(&chunkData[0]), dataSize - 1);
 
     switch(compressionType) {
@@ -334,34 +325,26 @@ void Region::readChunkData(std::ifstream &filestream, ChunkInfo &chunkInfo, unsi
 
     // Parse nbt data.
     getChunkAt(index).setRootTag(readNbtData(chunkData));
+    m_chunkCompression[index] = compressionType;
     m_loadedChunks[index] = true;
 }
 
 bool Region::readRegionHeader(std::ifstream &filestream)
 {
-        // Check if file is still open
+    // Check if file is still open
     if(!filestream.is_open()) {
         throw std::runtime_error("Failed to read from region file.");
     }
 
-    // Read first half of header data (Chunk Location Data) => Bytes 0 - 4095
-    uint32_t value = 0;
-    for(unsigned int i = 0; i < ChunkCount; ++i) {
-        filestream.read(reinterpret_cast<char*>(&value), sizeof(uint32_t));
-        value = bswap(value);
-        uint32_t size = value & 0x000000FF;
-        uint32_t offset = (value & 0xFFFFFF00) >> 8;
-        m_regionHeader.getChunkInfoAt(i).setOffset(offset);
-        m_regionHeader.getChunkInfoAt(i).setLength(size);
-    }
+    std::vector<unsigned char> data(HeaderSize, 0);
+    filestream.read(reinterpret_cast<char *>(data.data()), HeaderSize);
 
-    // Read second half of header data (Chunk Timestamp Data) => Bytes 4096 - 8191
-    for(unsigned int i = 0; i < ChunkCount; ++i) {
-        filestream.read(reinterpret_cast<char*>(&value), sizeof(uint32_t));
-        value = bswap(value);
-        m_regionHeader.getChunkInfoAt(i).setTimestamp(value);
+    // Delete old header before setting the new.
+    if(m_regionHeader) {
+        m_regionHeader.reset();
     }
-
+    m_regionHeader = std::make_unique<RegionHeader>(std::move(data));
+    
     return true;
 }
 
@@ -395,6 +378,77 @@ bool Region::validateAndParseRegionFilename(const std::string &filename, int &x,
     // If the pattern was found set X and Z values and return success
     x = std::atoi(ref[1].str().c_str());
     z = std::atoi(ref[2].str().c_str());
+    return true;
+}
+
+bool Region::saveToFile(const std::string &filename)
+{
+    // Init data vector for region data
+    std::vector<unsigned char> regionData(HeaderSize, 0);
+    int storageDataIndex = ChunkDataOffset;
+
+    // Init RegionHeader
+    RegionHeader regionHeader;
+
+    // Iterate over all Chunks in region and write them to the data vector
+    for(int index = 0; index < ChunkCount; ++index) {
+        // get chunks compression information
+        CompressionType compression = m_chunkCompression[index];
+        CompoundTag *rootTag = m_chunks[index].getRootTag();
+
+        if(!rootTag) {
+            regionHeader.setChunkData(index, 0, 0, 0);
+        } else {
+            // Get data and compress
+            std::vector<unsigned char> chunkData = rootTag->getData(false);
+            if(compression == CompressionType::Zlib) {
+                if(!deflate_zlib(chunkData)) {
+                    throw std::runtime_error("Failed to compress chunk data (zlib).");
+                }
+            } else if(compression == CompressionType::GZip) {
+                // this is super rarly used for region data,
+                // but just in case someone asks for it.
+                if(!deflate_gzip(chunkData)) {
+                    throw std::runtime_error("Failed to compress chunk data (gzip).");
+                }
+            } else if(compression == CompressionType::Uncompressed) {
+                // this is even more rarly used for region data,
+                // but luckily we have to do nothing.
+            }
+
+            // Calculate chunk storage space
+            int length          = 1 + static_cast<int>(chunkData.size());
+            int payload         = 4 + length;
+            int paddingSector   = (((payload % SectorSize) > 0) ? 1 : 0);
+            int sectors         = payload / SectorSize + paddingSector;
+            int storageSize     = sectors * SectorSize;
+
+            // Set header data
+            regionHeader.setChunkData(index, storageDataIndex / SectorSize, sectors, 0);
+
+            // Append chunk data to region data
+            regionData.resize(regionData.size() + storageSize, 0);
+            length = bswap(length);
+            std::memcpy(&regionData[storageDataIndex], reinterpret_cast<char *>(&length), 4);
+            std::memcpy(&regionData[storageDataIndex + 4], reinterpret_cast<char *>(&compression), 1);
+            std::memcpy(&regionData[storageDataIndex + 5], chunkData.data(), chunkData.size());
+
+            // Increase the data index
+            storageDataIndex += storageSize;
+        }
+    }
+
+    // Write region header data
+    std::memcpy(&regionData[0], regionHeader.getData().data(), HeaderSize);
+
+    // Write data to file
+    std::ofstream stream(filename, std::ios::binary);
+    if(!stream.is_open()) {
+        throw std::runtime_error("Failed to open new file.");
+    }
+    stream.write(reinterpret_cast<char *>(regionData.data()), regionData.size());
+    stream.close();
+
     return true;
 }
 

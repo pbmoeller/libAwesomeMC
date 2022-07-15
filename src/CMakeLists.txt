@@ -7,10 +7,8 @@ set(AWESOMEMC_HEADER_PATH "${AwesomeMC_SOURCE_DIR}/include/AwesomeMC")
 ### Includes
 # anvil
 set(ANVIL_INCLUDES
-    "${AWESOMEMC_HEADER_PATH}/anvil/anvil_read.hpp"
     "${AWESOMEMC_HEADER_PATH}/anvil/block.hpp"
     "${AWESOMEMC_HEADER_PATH}/anvil/chunk.hpp"
-    "${AWESOMEMC_HEADER_PATH}/anvil/chunk_info.hpp"
     "${AWESOMEMC_HEADER_PATH}/anvil/heightmap.hpp"
     "${AWESOMEMC_HEADER_PATH}/anvil/region.hpp"
     "${AWESOMEMC_HEADER_PATH}/anvil/region_header.hpp"
@@ -65,10 +63,8 @@ set(AWESOMEMC_INCLUDES
 ### Sources
 # anvil
 set(ANVIL_SOURCES
-    "anvil/anvil_read.cpp"
     "anvil/block.cpp"
     "anvil/chunk.cpp"
-    "anvil/chunk_info.cpp"
     "anvil/heightmap.cpp"
     "anvil/region.cpp"
     "anvil/region_header.cpp"

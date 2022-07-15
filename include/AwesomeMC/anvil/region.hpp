@@ -6,12 +6,14 @@
 #include <AwesomeMC/anvil/region_header.hpp>
 #include <AwesomeMC/anvil/chunk.hpp>
 #include <AwesomeMC/anvil/heightmap.hpp>
+#include <AwesomeMC/util/compression.hpp>
 
 // STL
 #include <array>
 #include <vector>
 #include <string>
 #include <fstream>
+#include <memory>
 
 namespace amc
 {
@@ -37,11 +39,6 @@ public:
     int getZ() const;
     void setZ(int z);
 
-    RegionHeader& getRegionHeader();
-    const RegionHeader& getRegionHeader() const;
-    void setRegionHeader(const RegionHeader &header);
-
-    const std::array<Chunk, ChunkCount>& getChunks() const;
     Chunk& getChunkAt(unsigned int index);
     const Chunk& getChunkAt(unsigned int index) const;
 
@@ -66,9 +63,10 @@ public:
     void loadChunkAt(unsigned int index);
     void loadAllChunks();
 
+    bool saveToFile(const std::string &filename);
+
 private:
     void readChunkData(std::ifstream &filestream,
-                       ChunkInfo &chunkInfo,
                        unsigned int index);
     bool readRegionHeader(std::ifstream &filestream);
 
@@ -83,9 +81,12 @@ private:
     int m_z;
     std::string m_filename;
 
-    RegionHeader m_regionHeader;
-    std::array<Chunk, ChunkCount> *m_chunks;
     std::vector<bool> m_loadedChunks;
+    std::vector<Chunk> m_chunks;
+    std::vector<CompressionType> m_chunkCompression;
+
+    // Only used during loading
+    std::unique_ptr<RegionHeader> m_regionHeader;
 };
 
 } // namespace amc

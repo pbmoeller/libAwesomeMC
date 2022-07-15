@@ -3,7 +3,6 @@
 
 // AwesomeMC
 #include <AwesomeMC/constants.hpp>
-#include <AwesomeMC/anvil/chunk_info.hpp>
 
 // STL
 #include <array>
@@ -18,27 +17,34 @@ public:
     RegionHeader();
     RegionHeader(const RegionHeader &other);
     RegionHeader(RegionHeader &&other) noexcept;
-    RegionHeader(const std::array<ChunkInfo, ChunkCount> &info);
+    RegionHeader(const std::vector<unsigned char> &data);
+    RegionHeader(std::vector<unsigned char> &&data);
     virtual ~RegionHeader();
 
-    RegionHeader& operator=(const RegionHeader &other);
-    RegionHeader& operator=(RegionHeader &&other) noexcept;
+    RegionHeader &operator=(const RegionHeader &other);
+    RegionHeader &operator=(RegionHeader &&other) noexcept;
 
     bool operator==(const RegionHeader &other);
     bool operator!=(const RegionHeader &other);
 
-    unsigned int getRegionCount() const;
-    std::vector<char> getRegionData() const;
+    int getChunkCount() const;
+    std::vector<unsigned char> getData() const;
 
-    const std::array<ChunkInfo, ChunkCount>& getChunkInfo() const;
-    ChunkInfo& getChunkInfoAt(unsigned int index);
-    const ChunkInfo& getChunkInfoAt(unsigned int index) const;
+    bool isEmpty(const int index) const;
 
-    void setChunkInfo(const std::array<ChunkInfo, ChunkCount> &info);
-    void setChunkInfoAt(unsigned int index, const ChunkInfo &info);
+    int getOffset(const int index) const;
+    int getByteOffset(const int index) const;
+    int getSize(const int index) const;
+    int getByteSize(const int index) const;
+    int getTimestamp(const int index) const;
+
+    void setChunkData(const int index,
+                      const int offset,
+                      const int size,
+                      const int timestamp);
 
 private:
-    std::array<ChunkInfo, ChunkCount> *m_chunkInfo;
+    std::vector<unsigned char> m_data;
 };
 
 } // namespace amc

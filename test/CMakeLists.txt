@@ -3,7 +3,6 @@ find_package(GTest REQUIRED)
 
 add_executable(tests 
     "anvil/block_test.cpp"
-    "anvil/chunk_info_test.cpp"
     "anvil/chunk_test.cpp"
     "anvil/heightmap_test.cpp"
     "anvil/region_header_test.cpp"

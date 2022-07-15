@@ -1,7 +1,6 @@
 // AwesomeMC
 #include <AwesomeMC/anvil/region.hpp>
 #include <AwesomeMC/anvil/heightmap.hpp>
-#include <AwesomeMC/anvil/anvil_read.hpp>
 
 // gtest
 #include <gtest/gtest.h>
@@ -23,7 +22,7 @@ protected:
     static void SetUpTestSuite() 
     {
         const std::string filename = testFolder + "libAwesomeMC_TestWorld_1_18_1/region/r.-1.-1.mca";
-        region = amc::loadRegion(filename);
+        region.loadFromFile(filename);
     }
 
     virtual void TearDown() override
@@ -189,26 +188,6 @@ TEST(Region, setZ)
     EXPECT_EQ(1, region.getZ());
 }
 
-TEST(Region, getRegionHeader)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
-TEST(Region, getRegionHeader_const)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
-TEST(Region, setRegionHeader)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
-TEST(Region, getChunks)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
 TEST(Region, getChunkAt)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
@@ -290,6 +269,11 @@ TEST(Region, loadAllChunks)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(Region, saveToFile)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
 TEST(Region, readChunkData)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
@@ -305,7 +289,7 @@ TEST(Region, validateRegionFilename)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
-TEST(Region, parseRegionFilename)
+TEST(Region, validateAndParseRegionFilename)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
