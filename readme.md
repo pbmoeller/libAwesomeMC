@@ -1,7 +1,7 @@
-[![libAwesomeMC Version v0.3.6](https://img.shields.io/badge/libAwesomeMC-v0.3.6-green)](https://github.com/AwesomeCodingGuy/libAwesomeMC)
+[![libAwesomeMC Version v0.4.0](https://img.shields.io/badge/libAwesomeMC-v0.4.0-green)](https://github.com/AwesomeCodingGuy/libAwesomeMC)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://github.com/AwesomeCodingGuy/libAwesomeMC/blob/main/LICENSE)
 
-# libAwesomeMC - v0.3.6
+# libAwesomeMC - v0.4.0
 
 libAwesomeMC is a cross-platform C++ library to read and write Minecraft NBT and Level data.
 
