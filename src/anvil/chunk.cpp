@@ -84,6 +84,11 @@ void Chunk::clear()
     m_data.reset(nullptr);
 }
 
+bool Chunk::isEmpty() const
+{
+    return m_data == nullptr;
+}
+
 CompoundTag* Chunk::getRootTag()
 {
     return m_data.get();

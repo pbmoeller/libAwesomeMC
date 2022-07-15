@@ -28,6 +28,7 @@ public:
     bool operator!=(const Chunk &other);
 
     void clear();
+    bool isEmpty() const;
 
     // !!! The Chunk keeps the ownership, but the Tag can be edited. !!!
     CompoundTag* getRootTag();
