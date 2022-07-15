@@ -48,7 +48,7 @@ bool deflate_zlib(std::vector<unsigned char> &data)
     std::vector<unsigned char> dataOut;
 
     std::memset(&zstrm, 0, sizeof(zstrm));
-    if(deflateInit(&zstrm, Z_BEST_COMPRESSION) != Z_OK) {
+    if(deflateInit(&zstrm, Z_DEFAULT_COMPRESSION) != Z_OK) {
         return false;
     }
     zstrm.next_in   = reinterpret_cast<Bytef*>(data.data());
