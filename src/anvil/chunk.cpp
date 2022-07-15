@@ -47,7 +47,9 @@ Chunk& Chunk::operator=(const Chunk &other)
 {
     if(this != &other) {
         clear();
-        m_data = std::unique_ptr<CompoundTag>(tag_cast<CompoundTag*>(other.m_data->clone()));
+        if(other.m_data) {
+            m_data = std::unique_ptr<CompoundTag>(tag_cast<CompoundTag *>(other.m_data->clone()));
+        }
     }
     return *this;
 }
