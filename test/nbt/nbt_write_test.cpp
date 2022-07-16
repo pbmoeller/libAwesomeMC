@@ -10,10 +10,10 @@ TEST(nbt_write, writeNbtFile)
 {
     // Setup CompoundTag Level 1
     amc::ByteTag *byteTag_1             = new amc::ByteTag("Level 1 - ByteTag", 123);
-    amc::ShortTag *shortTag_1           = new amc::ShortTag("Level 0 - ShortTag", 0x1234);
-    amc::IntTag *intTag_1               = new amc::IntTag("Level 0 - IntTag", 0x12345678);
-    amc::FloatTag *floatTag_1           = new amc::FloatTag("Level 0 - FloatTag", -555.666f);
-    amc::StringTag *stringTag_1         = new amc::StringTag("Level 0 - StringTag", "String");
+    amc::ShortTag *shortTag_1           = new amc::ShortTag("Level 1 - ShortTag", 0x1234);
+    amc::IntTag *intTag_1               = new amc::IntTag("Level 1 - IntTag", 0x12345678);
+    amc::FloatTag *floatTag_1           = new amc::FloatTag("Level 1 - FloatTag", -555.666f);
+    amc::StringTag *stringTag_1         = new amc::StringTag("Level 1 - StringTag", "String");
 
 
     // Setup NBT structure Level 0
