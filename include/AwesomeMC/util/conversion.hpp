@@ -35,8 +35,8 @@ void convertChunkRegion2ChunkWorld(const int chunkRegionX, const int chunkRegion
                                    int &chunkWorldX, int &chunkWorldZ);
 
 unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ);
-void xzFromChunkIndex(const unsigned int index, int &x, int &z);
-std::tuple<int, int> xzFromChunkIndex(const unsigned int index);
+void xzFromChunkIndex(const int index, int &x, int &z);
+std::tuple<int, int> xzFromChunkIndex(const int index);
 
 } // namespace amc
 
