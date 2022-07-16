@@ -1,434 +1,280 @@
 // AwesomeMC
+#include <AwesomeMC/constants.hpp>
 #include <AwesomeMC/anvil/region_header.hpp>
 
 // gtest
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 
-TEST(RegionHeader, Constructor)
+// STL
+#include <exception>
+#include <fstream>
+
+const std::string testFolder = "../../../test/testdata/world/";
+
+class RegionHeaderFixture : public ::testing::Test
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+protected:
+    virtual void SetUp() override
+    {
+
+    }
+
+    static void SetUpTestSuite()
+    {
+        const std::string filename = testFolder + "libAwesomeMC_TestWorld_1_18_1/region/r.-1.-1.mca";
+        
+        std::ifstream ifs(filename, std::ios::binary);
+        if(!ifs.is_open()) {
+            throw std::runtime_error(std::string("Could not open data file: ") + filename);
+        }
+        m_data = std::vector<unsigned char>(amc::HeaderSize, 0);
+        ifs.read(reinterpret_cast<char*>(m_data.data()), amc::HeaderSize);
+    }
+
+    virtual void TearDown() override
+    {
+
+    }
+
+    const std::vector<unsigned char>& getTestData() const
+    {
+        return m_data;
+    }
+
+private:
+    static std::vector<unsigned char> m_data;
+};
+
+std::vector<unsigned char> RegionHeaderFixture::m_data;
+
+TEST_F(RegionHeaderFixture, Constructor)
+{
+    amc::RegionHeader rHeader;
+    EXPECT_EQ(rHeader.getData().size(), amc::HeaderSize);
+    ASSERT_THAT(rHeader.getData(), ::testing::Each(::testing::Eq(0)));
 }
 
-TEST(RegionHeader, Constructor_2)
+TEST_F(RegionHeaderFixture, Constructor_2_throw)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    const std::vector<unsigned char> data(2, 0);
+    EXPECT_THROW(amc::RegionHeader rHeader(data), std::runtime_error);
 }
 
-TEST(RegionHeader, Constructor_3)
+TEST_F(RegionHeaderFixture, Constructor_2)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::vector<unsigned char> data(amc::HeaderSize, 2);
+    amc::RegionHeader rHeader(data);
+    EXPECT_EQ(rHeader.getData().size(), amc::HeaderSize);
+    EXPECT_EQ(data.size(), amc::HeaderSize);
+    ASSERT_THAT(rHeader.getData(), ::testing::Each(::testing::Eq(2)));
 }
 
-TEST(RegionHeader, CopyConstructor)
+TEST_F(RegionHeaderFixture, Constructor_3_throw)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::vector<unsigned char> data(2, 0);
+    EXPECT_THROW(amc::RegionHeader rHeader(std::move(data)), std::runtime_error);
 }
 
-TEST(RegionHeader, MoveConstructor)
+TEST_F(RegionHeaderFixture, Constructor_3)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::vector<unsigned char> data(amc::HeaderSize, 3);
+    amc::RegionHeader rHeader(std::move(data));
+    EXPECT_EQ(rHeader.getData().size(), amc::HeaderSize);
+    EXPECT_EQ(data.size(), 0);
+    ASSERT_THAT(rHeader.getData(), ::testing::Each(::testing::Eq(3)));
 }
 
-TEST(RegionHeader, CopyAssignment)
+TEST_F(RegionHeaderFixture, CopyConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1(getTestData());
+    amc::RegionHeader rHeader2(rHeader1);
+    EXPECT_EQ(rHeader2.getData().size(), amc::HeaderSize);
+    ASSERT_THAT(rHeader2.getData(), ::testing::Not(::testing::Each(::testing::Eq(3))));
+    EXPECT_EQ(rHeader1.getData().size(), amc::HeaderSize);
+    EXPECT_EQ(rHeader2.getData().size(), amc::HeaderSize);
 }
 
-TEST(RegionHeader, MoveAssignment)
+TEST_F(RegionHeaderFixture, MoveConstructor)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1(getTestData());
+    amc::RegionHeader rHeader2(std::move(rHeader1));
+    EXPECT_EQ(rHeader2.getData().size(), amc::HeaderSize);
+    ASSERT_THAT(rHeader2.getData(), ::testing::Not(::testing::Each(::testing::Eq(0))));
+    EXPECT_EQ(rHeader1.getData().size(), 0);
+    EXPECT_EQ(rHeader2.getData().size(), amc::HeaderSize);
 }
 
-TEST(RegionHeader, Equal)
+TEST_F(RegionHeaderFixture, CopyAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1(getTestData());
+    amc::RegionHeader rHeader2 = rHeader1;
+    EXPECT_EQ(rHeader2.getData().size(), amc::HeaderSize);
+    ASSERT_THAT(rHeader2.getData(), ::testing::Not(::testing::Each(::testing::Eq(0))));
+    EXPECT_EQ(rHeader1.getData().size(), amc::HeaderSize);
+    EXPECT_EQ(rHeader2.getData().size(), amc::HeaderSize);
 }
 
-TEST(RegionHeader, NotEqual)
+TEST_F(RegionHeaderFixture, MoveAssignment)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1(getTestData());
+    amc::RegionHeader rHeader2 = std::move(rHeader1);
+    EXPECT_EQ(rHeader2.getData().size(), amc::HeaderSize);
+    ASSERT_THAT(rHeader2.getData(), ::testing::Not(::testing::Each(::testing::Eq(0))));
+    EXPECT_EQ(rHeader1.getData().size(), 0);
+    EXPECT_EQ(rHeader2.getData().size(), amc::HeaderSize);
 }
 
-TEST(RegionHeader, getChunkCount)
+TEST_F(RegionHeaderFixture, Equal)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1;
+    amc::RegionHeader rHeader2;
+    amc::RegionHeader rHeader3(getTestData());
+
+    EXPECT_TRUE(rHeader1 == rHeader2);
+    EXPECT_FALSE(rHeader2 == rHeader3);
+    EXPECT_FALSE(rHeader1 == rHeader3);
+
+    rHeader2 = rHeader3;
+
+    EXPECT_FALSE(rHeader1 == rHeader2);
+    EXPECT_TRUE(rHeader2 == rHeader3);
+    EXPECT_FALSE(rHeader1 == rHeader3);
 }
 
-TEST(RegionHeader, getData)
+TEST_F(RegionHeaderFixture, NotEqual)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1;
+    amc::RegionHeader rHeader2;
+    amc::RegionHeader rHeader3(getTestData());
+
+    EXPECT_FALSE(rHeader1 != rHeader2);
+    EXPECT_TRUE(rHeader2 != rHeader3);
+    EXPECT_TRUE(rHeader1 != rHeader3);
+
+    rHeader2 = rHeader3;
+
+    EXPECT_TRUE(rHeader1 != rHeader2);
+    EXPECT_FALSE(rHeader2 != rHeader3);
+    EXPECT_TRUE(rHeader1 != rHeader3);
 }
 
-TEST(RegionHeader, isEmpty)
+TEST_F(RegionHeaderFixture, getChunkCount)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1;
+    EXPECT_EQ(0, rHeader1.getChunkCount());
+
+    amc::RegionHeader rHeader2(getTestData());
+    EXPECT_EQ(993, rHeader2.getChunkCount());
 }
 
-TEST(RegionHeader, getOffset)
+TEST_F(RegionHeaderFixture, getData)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1;
+    EXPECT_EQ(amc::HeaderSize, rHeader1.getData().size());
 }
 
-TEST(RegionHeader, getByteOffset)
+TEST_F(RegionHeaderFixture, isEmpty)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader1;
+    for(int index = 0; index < amc::ChunkCount; ++index) {
+        EXPECT_TRUE(rHeader1.isEmpty(index));
+    }
+
+    amc::RegionHeader rHeader2(getTestData());
+    EXPECT_FALSE(rHeader2.isEmpty(0));
+    EXPECT_TRUE(rHeader2.isEmpty(265));
 }
 
-TEST(RegionHeader, getSize)
+TEST_F(RegionHeaderFixture, getOffset)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader(getTestData());
+
+    // Test known chunk data in test file
+    EXPECT_EQ(198,  rHeader.getOffset(0));
+    EXPECT_EQ(8,    rHeader.getOffset(32));
+    EXPECT_EQ(94,   rHeader.getOffset(92));
+    EXPECT_EQ(0,    rHeader.getOffset(265));
+    EXPECT_EQ(1514, rHeader.getOffset(970));
+    EXPECT_EQ(53,   rHeader.getOffset(1023));
 }
 
-TEST(RegionHeader, getByteSize)
+TEST_F(RegionHeaderFixture, getByteOffset)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader(getTestData());
+
+    // Test known chunk data in test file
+    EXPECT_EQ(811008,   rHeader.getByteOffset(0));
+    EXPECT_EQ(32768,    rHeader.getByteOffset(32));
+    EXPECT_EQ(385024,   rHeader.getByteOffset(92));
+    EXPECT_EQ(0,        rHeader.getByteOffset(265));
+    EXPECT_EQ(6201344,  rHeader.getByteOffset(970));
+    EXPECT_EQ(217088,   rHeader.getByteOffset(1023));
 }
 
-TEST(RegionHeader, getTimestamp)
+TEST_F(RegionHeaderFixture, getSize)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader(getTestData());
+
+    // Test known chunk data in test file
+    EXPECT_EQ(1, rHeader.getSize(0));
+    EXPECT_EQ(1, rHeader.getSize(32));
+    EXPECT_EQ(1, rHeader.getSize(92));
+    EXPECT_EQ(0, rHeader.getSize(265));
+    EXPECT_EQ(4, rHeader.getSize(970));
+    EXPECT_EQ(2, rHeader.getSize(1023));
 }
 
-TEST(RegionHeader, setChunkData)
+TEST_F(RegionHeaderFixture, getByteSize)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    amc::RegionHeader rHeader(getTestData());
+
+    // Test known chunk data in test file
+    EXPECT_EQ(4096,     rHeader.getByteSize(0));
+    EXPECT_EQ(4096,     rHeader.getByteSize(32));
+    EXPECT_EQ(4096,     rHeader.getByteSize(92));
+    EXPECT_EQ(0,        rHeader.getByteSize(265));
+    EXPECT_EQ(16384,    rHeader.getByteSize(970));
+    EXPECT_EQ(8192,     rHeader.getByteSize(1023));
 }
 
-//TEST(RegionHeader, Constructor)
-//{
-//    const amc::ChunkInfo defaultInfo;
-//    amc::RegionHeader regionHeader;
-//
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_TRUE(regionHeader.getChunkInfoAt(i) == defaultInfo);
-//    }
-//}
-//
-//TEST(RegionHeader, Constructor_2)
-//{
-//    // Init test data
-//    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::CompressionType::GZip);
-//    }
-//
-//    // Check
-//    amc::RegionHeader regionHeader(*info);
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ((*info)[i].getOffset(),      regionHeader.getChunkInfoAt(i).getOffset());
-//        EXPECT_EQ((*info)[i].getLength(),      regionHeader.getChunkInfoAt(i).getLength());
-//        EXPECT_EQ((*info)[i].getTimestamp(),   regionHeader.getChunkInfoAt(i).getTimestamp());
-//        EXPECT_EQ((*info)[i].getCompression(), regionHeader.getChunkInfoAt(i).getCompression());
-//    }
-//    EXPECT_EQ(amc::ChunkCount, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    delete info;
-//}
-//
-//TEST(RegionHeader, CopyConstructor)
-//{
-//    // Init test data
-//    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::CompressionType::GZip);
-//    }
-//
-//    // Init A
-//    amc::RegionHeader regionHeaderA(*info);
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeaderA.getRegionCount()));
-//
-//    // Test Copy
-//    amc::RegionHeader regionHeaderB(regionHeaderA);
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ((*info)[i].getOffset(),      regionHeaderB.getChunkInfoAt(i).getOffset());
-//        EXPECT_EQ((*info)[i].getLength(),      regionHeaderB.getChunkInfoAt(i).getLength());
-//        EXPECT_EQ((*info)[i].getTimestamp(),   regionHeaderB.getChunkInfoAt(i).getTimestamp());
-//        EXPECT_EQ((*info)[i].getCompression(), regionHeaderB.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeaderB.getRegionCount()));
-//
-//    // Test empty copy
-//    amc::RegionHeader regionHeaderC;
-//    amc::RegionHeader regionHeaderD(regionHeaderC);
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ(0, static_cast<int>(regionHeaderD.getChunkInfoAt(i).getOffset()));
-//        EXPECT_EQ(0, static_cast<int>(regionHeaderD.getChunkInfoAt(i).getLength()));
-//        EXPECT_EQ(0, static_cast<int>(regionHeaderD.getChunkInfoAt(i).getTimestamp()));
-//        EXPECT_EQ(amc::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(0, static_cast<int>(regionHeaderD.getRegionCount()));
-//
-//    delete info;
-//}
-//
-//TEST(RegionHeader, MoveConstructor)
-//{
-//    // Init test data
-//    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::CompressionType::GZip);
-//    }
-//
-//    // Init A
-//    amc::RegionHeader regionHeaderA(*info);
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeaderA.getRegionCount()));
-//
-//    // Test Move
-//    amc::RegionHeader regionHeaderB(std::move(regionHeaderA));
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ((*info)[i].getOffset(),      regionHeaderB.getChunkInfoAt(i).getOffset());
-//        EXPECT_EQ((*info)[i].getLength(),      regionHeaderB.getChunkInfoAt(i).getLength());
-//        EXPECT_EQ((*info)[i].getTimestamp(),   regionHeaderB.getChunkInfoAt(i).getTimestamp());
-//        EXPECT_EQ((*info)[i].getCompression(), regionHeaderB.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeaderB.getRegionCount()));
-//
-//    // Test empty move
-//    amc::RegionHeader regionHeaderC;
-//    amc::RegionHeader regionHeaderD(std::move(regionHeaderC));
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getOffset());
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getLength());
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getTimestamp());
-//        EXPECT_EQ(amc::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(0, static_cast<int>(regionHeaderD.getRegionCount()));
-//
-//    delete info;
-//}
-//
-//TEST(RegionHeader, CopyAssignment)
-//{
-//    // Init test data
-//    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::CompressionType::GZip);
-//    }
-//
-//    // Init A
-//    amc::RegionHeader regionHeaderA(*info);
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeaderA.getRegionCount()));
-//
-//    // Test Copy assignment
-//    amc::RegionHeader regionHeaderB = regionHeaderA;
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ((*info)[i].getOffset(),      regionHeaderB.getChunkInfoAt(i).getOffset());
-//        EXPECT_EQ((*info)[i].getLength(),      regionHeaderB.getChunkInfoAt(i).getLength());
-//        EXPECT_EQ((*info)[i].getTimestamp(),   regionHeaderB.getChunkInfoAt(i).getTimestamp());
-//        EXPECT_EQ((*info)[i].getCompression(), regionHeaderB.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeaderB.getRegionCount()));
-//
-//    // Test empty copy assignment
-//    amc::RegionHeader regionHeaderC;
-//    amc::RegionHeader regionHeaderD = regionHeaderC;
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getOffset());
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getLength());
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getTimestamp());
-//        EXPECT_EQ(amc::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(0, static_cast<int>(regionHeaderD.getRegionCount()));
-//
-//    delete info;
-//}
-//
-//TEST(RegionHeader, MoveAssignment)
-//{
-//    // Init test data
-//    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::CompressionType::GZip);
-//    }
-//
-//    // Init A
-//    amc::RegionHeader regionHeaderA(*info);
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeaderA.getRegionCount()));
-//
-//    // Test Move assignment
-//    amc::RegionHeader regionHeaderB = std::move(regionHeaderA);
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ((*info)[i].getOffset(),      regionHeaderB.getChunkInfoAt(i).getOffset());
-//        EXPECT_EQ((*info)[i].getLength(),      regionHeaderB.getChunkInfoAt(i).getLength());
-//        EXPECT_EQ((*info)[i].getTimestamp(),   regionHeaderB.getChunkInfoAt(i).getTimestamp());
-//        EXPECT_EQ((*info)[i].getCompression(), regionHeaderB.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeaderB.getRegionCount()));
-//
-//    // Test empty move assignment
-//    amc::RegionHeader regionHeaderC;
-//    amc::RegionHeader regionHeaderD = std::move(regionHeaderC);
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getOffset());
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getLength());
-//        EXPECT_EQ(0u, regionHeaderD.getChunkInfoAt(i).getTimestamp());
-//        EXPECT_EQ(amc::CompressionType::GZip, regionHeaderD.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(0, static_cast<int>(regionHeaderD.getRegionCount()));
-//
-//    delete info;
-//}
-//
-//TEST(RegionHeader, Equal)
-//{
-//    amc::RegionHeader regionHeaderA;
-//    amc::RegionHeader regionHeaderB;
-//
-//    EXPECT_TRUE(regionHeaderA == regionHeaderA);
-//    EXPECT_TRUE(regionHeaderA == regionHeaderB);
-//
-//    regionHeaderB.setChunkInfoAt(0, amc::ChunkInfo(1, 0, 0, amc::CompressionType::GZip));
-//    EXPECT_FALSE(regionHeaderA == regionHeaderB);
-//}
-//
-//TEST(RegionHeader, NotEqual)
-//{
-//    amc::RegionHeader regionHeaderA;
-//    amc::RegionHeader regionHeaderB;
-//
-//    EXPECT_FALSE(regionHeaderA != regionHeaderA);
-//    EXPECT_FALSE(regionHeaderA != regionHeaderB);
-//
-//    regionHeaderB.setChunkInfoAt(0, amc::ChunkInfo(1, 0, 0, amc::CompressionType::GZip));
-//    EXPECT_TRUE(regionHeaderA != regionHeaderB);
-//}
-//
-//TEST(RegionHeader, getRegionCount)
-//{
-//    amc::RegionHeader regionHeader;
-//    ASSERT_EQ(0, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    regionHeader.setChunkInfoAt(1, amc::ChunkInfo(2, 2, 2, amc::CompressionType::GZip));
-//    EXPECT_EQ(1, static_cast<int>(regionHeader.getRegionCount()));
-//}
-//
-//TEST(RegionHeader, getRegionData)
-//{
-//    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-//}
-//
-//TEST(RegionHeader, getChunkInfo)
-//{
-//    // Init test data
-//    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::CompressionType::GZip);
-//    }
-//
-//    // Check #1
-//    amc::RegionHeader regionHeader(*info);
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        ASSERT_EQ((*info)[i].getOffset(),      regionHeader.getChunkInfoAt(i).getOffset());
-//        ASSERT_EQ((*info)[i].getLength(),      regionHeader.getChunkInfoAt(i).getLength());
-//        ASSERT_EQ((*info)[i].getTimestamp(),   regionHeader.getChunkInfoAt(i).getTimestamp());
-//        ASSERT_EQ((*info)[i].getCompression(), regionHeader.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    // Check #2
-//    const std::array<amc::ChunkInfo, amc::ChunkCount> *info2 = &(regionHeader.getChunkInfo());
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ((*info)[i].getOffset(),      (*info2)[i].getOffset());
-//        EXPECT_EQ((*info)[i].getLength(),      (*info2)[i].getLength());
-//        EXPECT_EQ((*info)[i].getTimestamp(),   (*info2)[i].getTimestamp());
-//        EXPECT_EQ((*info)[i].getCompression(), (*info2)[i].getCompression());
-//    }
-//
-//    delete info;
-//}
-//
-//TEST(RegionHeader, getChunkInfoAt)
-//{
-//    amc::RegionHeader regionHeader;
-//    ASSERT_EQ(0, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    amc::ChunkInfo info = regionHeader.getChunkInfoAt(10);
-//    EXPECT_EQ(0u, regionHeader.getChunkInfoAt(10).getOffset());
-//    EXPECT_EQ(0u, regionHeader.getChunkInfoAt(10).getLength());
-//    EXPECT_EQ(0u, regionHeader.getChunkInfoAt(10).getTimestamp());
-//    EXPECT_EQ(amc::CompressionType::GZip, regionHeader.getChunkInfoAt(10).getCompression());
-//
-//    regionHeader.setChunkInfoAt(10, amc::ChunkInfo(2, 4, 6, amc::CompressionType::Zlib));
-//    EXPECT_EQ(1, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    info = regionHeader.getChunkInfoAt(10);
-//    EXPECT_EQ(2u, regionHeader.getChunkInfoAt(10).getOffset());
-//    EXPECT_EQ(4u, regionHeader.getChunkInfoAt(10).getLength());
-//    EXPECT_EQ(6u, regionHeader.getChunkInfoAt(10).getTimestamp());
-//    EXPECT_EQ(amc::CompressionType::Zlib, regionHeader.getChunkInfoAt(10).getCompression());
-//}
-//
-//TEST(RegionHeader, getChunkInfoAt_const)
-//{
-//    amc::RegionHeader regionHeader;
-//    ASSERT_EQ(0, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    const amc::RegionHeader regionHeaderB = regionHeader;
-//    amc::ChunkInfo info = regionHeaderB.getChunkInfoAt(10);
-//    EXPECT_EQ(0u, regionHeaderB.getChunkInfoAt(10).getOffset());
-//    EXPECT_EQ(0u, regionHeaderB.getChunkInfoAt(10).getLength());
-//    EXPECT_EQ(0u, regionHeaderB.getChunkInfoAt(10).getTimestamp());
-//    EXPECT_EQ(amc::CompressionType::GZip, regionHeaderB.getChunkInfoAt(10).getCompression());
-//
-//    regionHeader.setChunkInfoAt(10, amc::ChunkInfo(2, 4, 6, amc::CompressionType::Zlib));
-//    EXPECT_EQ(1, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    const amc::RegionHeader regionHeaderC = regionHeader;
-//    info = regionHeaderC.getChunkInfoAt(10);
-//    EXPECT_EQ(2u, regionHeaderC.getChunkInfoAt(10).getOffset());
-//    EXPECT_EQ(4u, regionHeaderC.getChunkInfoAt(10).getLength());
-//    EXPECT_EQ(6u, regionHeaderC.getChunkInfoAt(10).getTimestamp());
-//    EXPECT_EQ(amc::CompressionType::Zlib, regionHeaderC.getChunkInfoAt(10).getCompression());
-//}
-//
-//TEST(RegionHeader, setChunkInfo)
-//{
-//    // Init test data
-//    std::array<amc::ChunkInfo, amc::ChunkCount> *info = new std::array<amc::ChunkInfo, amc::ChunkCount>();
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        (*info)[i] = amc::ChunkInfo((i + 1) * 2, (i + 1), (i + 1) * 3, amc::CompressionType::GZip);
-//    }
-//
-//    // Check #1
-//    amc::RegionHeader regionHeader;
-//    regionHeader.setChunkInfo(*info);
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        ASSERT_EQ((*info)[i].getOffset(),      regionHeader.getChunkInfoAt(i).getOffset());
-//        ASSERT_EQ((*info)[i].getLength(),      regionHeader.getChunkInfoAt(i).getLength());
-//        ASSERT_EQ((*info)[i].getTimestamp(),   regionHeader.getChunkInfoAt(i).getTimestamp());
-//        ASSERT_EQ((*info)[i].getCompression(), regionHeader.getChunkInfoAt(i).getCompression());
-//    }
-//    ASSERT_EQ(amc::ChunkCount, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    // Check #2
-//    const std::array<amc::ChunkInfo, amc::ChunkCount> *info2 = &(regionHeader.getChunkInfo());
-//    for(int i = 0; i < amc::ChunkCount; ++i) {
-//        EXPECT_EQ((*info)[i].getOffset(),      (*info2)[i].getOffset());
-//        EXPECT_EQ((*info)[i].getLength(),      (*info2)[i].getLength());
-//        EXPECT_EQ((*info)[i].getTimestamp(),   (*info2)[i].getTimestamp());
-//        EXPECT_EQ((*info)[i].getCompression(), (*info2)[i].getCompression());
-//    }
-//
-//    delete info;
-//}
-//
-//TEST(RegionHeader, setChunkInfoAt)
-//{
-//    amc::RegionHeader regionHeader;
-//    ASSERT_EQ(0u, regionHeader.getRegionCount());
-//
-//    regionHeader.setChunkInfoAt(10, amc::ChunkInfo(2, 4, 6, amc::CompressionType::Zlib));
-//    EXPECT_EQ(2u, regionHeader.getChunkInfoAt(10).getOffset());
-//    EXPECT_EQ(4u, regionHeader.getChunkInfoAt(10).getLength());
-//    EXPECT_EQ(6u, regionHeader.getChunkInfoAt(10).getTimestamp());
-//    EXPECT_EQ(amc::CompressionType::Zlib, regionHeader.getChunkInfoAt(10).getCompression());
-//    EXPECT_EQ(1, static_cast<int>(regionHeader.getRegionCount()));
-//
-//    regionHeader.setChunkInfoAt(20, amc::ChunkInfo(4, 8, 12, amc::CompressionType::Uncompressed));
-//    EXPECT_EQ(4u, regionHeader.getChunkInfoAt(20).getOffset());
-//    EXPECT_EQ(8u, regionHeader.getChunkInfoAt(20).getLength());
-//    EXPECT_EQ(12u, regionHeader.getChunkInfoAt(20).getTimestamp());
-//    EXPECT_EQ(amc::CompressionType::Uncompressed, regionHeader.getChunkInfoAt(20).getCompression());
-//    EXPECT_EQ(2, static_cast<int>(regionHeader.getRegionCount()));
-//}
+TEST_F(RegionHeaderFixture, getTimestamp)
+{
+    amc::RegionHeader rHeader(getTestData());
+
+    // Test known chunk data in test file
+    EXPECT_EQ(1641405230,   rHeader.getTimestamp(0));
+    EXPECT_EQ(1641405230,   rHeader.getTimestamp(32));
+    EXPECT_EQ(1641405231,   rHeader.getTimestamp(92));
+    EXPECT_EQ(0,            rHeader.getTimestamp(265));
+    EXPECT_EQ(1641405237,   rHeader.getTimestamp(970));
+    EXPECT_EQ(1642363205,   rHeader.getTimestamp(1023));
+}
+
+TEST_F(RegionHeaderFixture, setChunkData)
+{
+    amc::RegionHeader rHeader;
+    EXPECT_EQ(rHeader.getData().size(), amc::HeaderSize);
+    ASSERT_THAT(rHeader.getData(),
+                ::testing::Each(::testing::Eq(0)));
+
+    rHeader.setChunkData(0, 198, 1, 1641405230);
+    ASSERT_THAT(rHeader.getData(),
+                ::testing::Not(::testing::Each(::testing::Eq(0))));
+
+    EXPECT_EQ(198,          rHeader.getOffset(0));
+    EXPECT_EQ(811008,       rHeader.getByteOffset(0));
+    EXPECT_EQ(1,            rHeader.getSize(0));
+    EXPECT_EQ(4096,         rHeader.getByteSize(0));
+    EXPECT_EQ(1641405230,   rHeader.getTimestamp(0));
+
+    rHeader.setChunkData(0, 0, 0, 0);
+    ASSERT_THAT(rHeader.getData(),
+                ::testing::Each(::testing::Eq(0)));
+
+    EXPECT_EQ(0, rHeader.getOffset(0));
+    EXPECT_EQ(0, rHeader.getByteOffset(0));
+    EXPECT_EQ(0, rHeader.getSize(0));
+    EXPECT_EQ(0, rHeader.getByteSize(0));
+    EXPECT_EQ(0, rHeader.getTimestamp(0));
+}

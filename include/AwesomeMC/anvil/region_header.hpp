@@ -28,7 +28,7 @@ public:
     bool operator!=(const RegionHeader &other);
 
     int getChunkCount() const;
-    std::vector<unsigned char> getData() const;
+    const std::vector<unsigned char>& getData() const;
 
     bool isEmpty(const int index) const;
 
