@@ -110,6 +110,34 @@ bool ret = amc::writeNbtFile(filename, tag, amc::CompressionType::GZip);
 
 ```
 
+### NBT - Editing
+
+NBT data is stored in a hierarchical structure, where the root element is always a CompoundTag. The following example shows a minimal example how to setup new NBT data.
+
+``` cpp
+
+#include <AwesomeMC/nbt/tags/tags.hpp>
+
+/* ... */
+
+amc::ByteTag *byteTag = new amc::ByteTag("ByteTag Name", 123);
+amc::CompoundTag *compoundTag = new amc::CompoundTag("CompoundTag Name", {
+    byteTag,
+    new amc::StringTag("StringTag Name", "StringTag Value")
+});
+
+```
+
+All tag classes support several functions to access and modify their data. Notice that the parent tag always keeps the ownership of its children. You must not delete them yourself and you should be carefull to keep pointers to tags if the parent gets deleted. 
+
+Classes that hold NBT root objects always store the root as a unique_ptr, so that when they go out of scope or get deleted the tags will be too.
+
+If you want to have a copy of a tag (and its children) you should use the `clone` function.
+When adding tags, via the `Constructors`, `insert` or `pushBack` to a `CompoundTag` or a `ListTag` the ownership is transfered.
+If you want to remove a tag from `CompoundTag` or `ListTag` and keep the object the functions `take` or `takeAt` should be used and the ownership is transfered to the new object.
+Accessing with `at` or index operator will not transfer ownership.
+ 
+
 ### Region - reading and writing
 
 The library also supports reading and writing of Minecraft level data, namely region files (*.mca). A complete region file can be read with the `loadFromFile` member function. The current implementation checks the pattern of the filename, which should match the Minecraft region file pattern.
