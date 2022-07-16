@@ -254,7 +254,7 @@ void Region::loadPartiallyFromFile(const std::string &filename)
 
 void Region::loadChunkAt(unsigned int index)
 {
-    // If the info is empty, we are done here
+    // If the chunk is marked as empty, we are done here
     if(m_regionHeader->isEmpty(index)) {
         return;
     }
