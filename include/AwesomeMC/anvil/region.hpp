@@ -39,16 +39,16 @@ public:
     int getZ() const;
     void setZ(int z);
 
-    Chunk& getChunkAt(unsigned int index);
-    const Chunk& getChunkAt(unsigned int index) const;
+    Chunk& getChunkAt(int index);
+    const Chunk& getChunkAt(int index) const;
 
-    std::vector<int32_t> getBiomesAt(unsigned int chunkX,
-                                     unsigned int chunkZ) const;
-    int32_t getBiomeAt(unsigned int chunkX,
-                       unsigned int chunkZ,
-                       unsigned int blockX,
+    std::vector<int32_t> getBiomesAt(int chunkX,
+                                     int chunkZ) const;
+    int32_t getBiomeAt(int chunkX,
+                       int chunkZ,
+                       int blockX,
                        int blockY,
-                       unsigned int blockZ) const;
+                       int blockZ) const;
 
     Block getBlockAt(const int blockX,
                      const int blockY,
@@ -60,14 +60,13 @@ public:
 
     void loadFromFile(const std::string &filename);
     void loadPartiallyFromFile(const std::string &filename);
-    void loadChunkAt(unsigned int index);
+    void loadChunkAt(int index);
     void loadAllChunks();
 
     bool saveToFile(const std::string &filename);
 
 private:
-    void readChunkData(std::ifstream &filestream,
-                       unsigned int index);
+    void readChunkData(std::ifstream &filestream, int index);
     bool readRegionHeader(std::ifstream &filestream);
 
     // Static functions

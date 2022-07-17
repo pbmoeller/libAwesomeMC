@@ -167,10 +167,11 @@ std::vector<int32_t> Chunk::getBiomes() const
     return tag_cast<IntArrayTag*>(biomesArray[0])->getValue();
 }
 
-int32_t Chunk::getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const
+int32_t Chunk::getBiomeAt(int blockX, int blockY, int blockZ) const
 {
     // Check ranges of block coordinates
-    if(blockX >= BlockWidth || blockZ >= BlockWidth
+    if(blockX < 0 || blockX >= BlockWidth 
+       || blockZ < 0 || blockZ >= BlockWidth
        || blockY < MinimumBlockHeight || blockY > MaximumBlockHeight) {
         throw std::out_of_range("Block Coordinates out of range");
     }

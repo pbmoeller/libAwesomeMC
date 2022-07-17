@@ -34,7 +34,7 @@ void convertChunkRegion2ChunkWorld(const int chunkRegionX, const int chunkRegion
                                    const int regionX, const int regionZ,
                                    int &chunkWorldX, int &chunkWorldZ);
 
-unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ);
+int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ);
 void xzFromChunkIndex(const int index, int &x, int &z);
 std::tuple<int, int> xzFromChunkIndex(const int index);
 

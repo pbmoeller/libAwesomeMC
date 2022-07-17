@@ -5,6 +5,7 @@
 #include <AwesomeMC/util/compression.hpp>
 
 // STL
+#include <cassert>
 #include <utility>
 #include <stdexcept>
 #include <regex>
@@ -147,44 +148,54 @@ void Region::setZ(int z)
     m_z = z;
 }
 
-Chunk& Region::getChunkAt(unsigned int index)
+Chunk& Region::getChunkAt(int index)
 {
+    if(index < 0 || index >= ChunkCount) {
+        throw std::out_of_range("Index is out of range.");
+    }
+
     return m_chunks[index];
 }
 
-const Chunk& Region::getChunkAt(unsigned int index) const
+const Chunk& Region::getChunkAt(int index) const
 {
+    if(index < 0 || index >= ChunkCount) {
+        throw std::out_of_range("Index is out of range.");
+    }
+
     return m_chunks[index];
 }
 
-std::vector<int32_t> Region::getBiomesAt(unsigned int chunkX,
-                                         unsigned int chunkZ) const
+std::vector<int32_t> Region::getBiomesAt(int chunkX,
+                                         int chunkZ) const
 {
     // Check if chunk coodinates are valid
-    if(chunkX >= ChunkWidth || chunkZ >= ChunkWidth) {
-        throw std::out_of_range("Coordinates out of range");
+    if(chunkX < 0 || chunkX >= ChunkWidth 
+       || chunkZ < 0 || chunkZ >= ChunkWidth) {
+        throw std::out_of_range("Chunk Coordinates out of range.");
     }
 
     // Calculate the requested chunk
-    unsigned int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
+    int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
 
     // Get data from chunk
     return getChunkAt(chunkIdx).getBiomes();
 }
 
-int32_t Region::getBiomeAt(unsigned int chunkX,
-                           unsigned int chunkZ,
-                           unsigned int blockX, 
+int32_t Region::getBiomeAt(int chunkX,
+                           int chunkZ,
+                           int blockX, 
                            int blockY, 
-                           unsigned int blockZ) const
+                           int blockZ) const
 {
     // Check if chunk coodinates are valid
-    if(chunkX >= ChunkWidth || chunkZ >= ChunkWidth) {
-        throw std::out_of_range("Coordinates out of range");
+    if(chunkX < 0 || chunkX >= ChunkWidth
+       || chunkZ < 0 || chunkZ >= ChunkWidth) {
+        throw std::out_of_range("Chunk Coordinates out of range.");
     }
 
     // Calculate the requested chunk
-    unsigned int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
+    int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
 
     // Get data from chunk
     return getChunkAt(chunkIdx).getBiomeAt(blockX, blockY, blockZ);
@@ -203,7 +214,7 @@ Block Region::getBlockAt(const int blockX,
     int chunkX = 0;
     int chunkZ = 0;
     convertBlockWorld2ChunkRegion(blockX, blockZ, chunkX, chunkZ);
-    unsigned int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
+    int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
 
     // Get data from chunk
     return getChunkAt(chunkIdx).getBlockAt(blockX, blockY, blockZ);
@@ -216,7 +227,7 @@ HeightMap Region::getHeightMap(const int chunkWorldX,
     int chunkX = 0;
     int chunkZ = 0;
     convertChunkWorld2ChunkRegion(chunkWorldX, chunkWorldZ, chunkX, chunkZ);
-    unsigned int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
+    int chunkIdx = chunkIndexFromXZ(chunkX, chunkZ);
     return getChunkAt(chunkIdx).getHeightMap(mapType);
 }
 
@@ -252,8 +263,12 @@ void Region::loadPartiallyFromFile(const std::string &filename)
     }
 }
 
-void Region::loadChunkAt(unsigned int index)
+void Region::loadChunkAt(int index)
 {
+    if(index < 0 || index >= ChunkCount) {
+        throw std::out_of_range("Index is out of range.");
+    }
+
     // If the chunk is marked as empty, we are done here
     if(m_regionHeader->isEmpty(index)) {
         return;
@@ -290,8 +305,10 @@ void Region::loadAllChunks()
     m_regionHeader.reset();
 }
 
-void Region::readChunkData(std::ifstream &filestream, unsigned int index)
+void Region::readChunkData(std::ifstream &filestream, int index)
 {
+    assert(0 <= index && index < ChunkCount);
+
     // Seek to beginning of chunk data
     uint32_t offset = m_regionHeader->getByteOffset(index);
     filestream.seekg(offset, std::ios::beg);

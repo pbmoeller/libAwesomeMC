@@ -284,10 +284,10 @@ TEST(conversion, convertChunkRegion2ChunkWorld)
 
 TEST(conversion, chunkIndexFromXZ)
 {
-    EXPECT_EQ(0u, amc::chunkIndexFromXZ(0, 0));
-    EXPECT_EQ(31u, amc::chunkIndexFromXZ(31, 0));
-    EXPECT_EQ(992u, amc::chunkIndexFromXZ(0, 31));
-    EXPECT_EQ(1023u, amc::chunkIndexFromXZ(31, 31));
+    EXPECT_EQ(0, amc::chunkIndexFromXZ(0, 0));
+    EXPECT_EQ(31, amc::chunkIndexFromXZ(31, 0));
+    EXPECT_EQ(992, amc::chunkIndexFromXZ(0, 31));
+    EXPECT_EQ(1023, amc::chunkIndexFromXZ(31, 31));
 }
 
 TEST(conversion, xzFromChunkIndex)

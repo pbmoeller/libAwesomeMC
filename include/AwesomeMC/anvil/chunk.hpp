@@ -41,7 +41,7 @@ public:
     std::vector<AbstractTag*> getSubTagsByName(const std::string &name) const;
 
     std::vector<int32_t> getBiomes() const;
-    int32_t getBiomeAt(unsigned int blockX, int blockY, unsigned int blockZ) const;
+    int32_t getBiomeAt(int blockX, int blockY, int blockZ) const;
 
     Block getBlockAt(const int blockX, const int blockY, const int blockZ) const;
 

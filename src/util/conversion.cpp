@@ -118,7 +118,7 @@ void convertChunkRegion2ChunkWorld(const int chunkRegionX, const int chunkRegion
     chunkWorldZ = regionZ * ChunkWidth + chunkRegionZ;
 }
 
-unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ)
+int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ)
 {
     assert(regionChunkX >= 0 && regionChunkX < ChunkWidth 
            && regionChunkZ >= 0 && regionChunkZ < ChunkWidth);
