@@ -23,11 +23,11 @@ Region::Region()
     , m_z{0}
     , m_filename{""}
     , m_loadedChunks(ChunkCount, false)
-    , m_chunks()
+    , m_chunks(ChunkCount, Chunk())
     , m_chunkCompression(ChunkCount, CompressionType::Zlib)
     , m_regionHeader(nullptr)
 {
-    m_chunks.resize(ChunkCount);
+    
 }
 
 Region::Region(int x, int z)
@@ -35,24 +35,22 @@ Region::Region(int x, int z)
     , m_z{z}
     , m_filename{""}
     , m_loadedChunks(ChunkCount, false)
-    , m_chunks()
+    , m_chunks(ChunkCount, Chunk())
     , m_chunkCompression(ChunkCount, CompressionType::Zlib)
     , m_regionHeader(nullptr)
 {
-    m_chunks.resize(ChunkCount);
+    
 }
 
 Region::Region(const Region &other)
-    : m_chunks()
+    : m_chunks(ChunkCount, Chunk())
 {
-    m_chunks.resize(ChunkCount);
     *this = other;
 }
 
 Region::Region(Region &&other) noexcept
-    : m_chunks()
+    : m_chunks(ChunkCount, Chunk())
 {
-    m_chunks.resize(ChunkCount);
     *this = std::move(other);
 }
 
@@ -71,10 +69,6 @@ Region& Region::operator=(const Region &other)
         m_chunks            = other.m_chunks;
         m_chunkCompression  = other.m_chunkCompression;
         *m_regionHeader     = *other.m_regionHeader;    // TODO: Check !!!
-
-        /*for(unsigned int i = 0; i < ChunkCount; ++i) {
-            (m_chunks)[i] = (other.m_chunks)[i];
-        }*/
     }
     return *this;
 }
