@@ -146,6 +146,20 @@ TEST(Chunk, clear)
     EXPECT_EQ(nullptr, rootGet);
 }
 
+TEST(Chunk, isEmpty)
+{
+    amc::CompoundTag *root = new amc::CompoundTag("clear");
+
+    amc::Chunk chunk;
+    EXPECT_TRUE(chunk.isEmpty());
+
+    chunk.setRootTag(root);
+    EXPECT_FALSE(chunk.isEmpty());
+
+    chunk.clear();
+    EXPECT_TRUE(chunk.isEmpty());
+}
+
 TEST(Chunk, getRootTag)
 {
     amc::CompoundTag *root = new amc::CompoundTag("getRootTag");

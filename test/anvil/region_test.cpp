@@ -1,7 +1,6 @@
 // AwesomeMC
 #include <AwesomeMC/anvil/region.hpp>
 #include <AwesomeMC/anvil/heightmap.hpp>
-#include <AwesomeMC/anvil/anvil_read.hpp>
 
 // gtest
 #include <gtest/gtest.h>
@@ -23,7 +22,7 @@ protected:
     static void SetUpTestSuite() 
     {
         const std::string filename = testFolder + "libAwesomeMC_TestWorld_1_18_1/region/r.-1.-1.mca";
-        region = amc::loadRegion(filename);
+        region.loadFromFile(filename);
     }
 
     virtual void TearDown() override
@@ -189,26 +188,6 @@ TEST(Region, setZ)
     EXPECT_EQ(1, region.getZ());
 }
 
-TEST(Region, getRegionHeader)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
-TEST(Region, getRegionHeader_const)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
-TEST(Region, setRegionHeader)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
-TEST(Region, getChunks)
-{
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
-}
-
 TEST(Region, getChunkAt)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
@@ -290,6 +269,11 @@ TEST(Region, loadAllChunks)
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
 }
 
+TEST(Region, saveToFile)
+{
+    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+}
+
 TEST(Region, readChunkData)
 {
     GTEST_SKIP() << "<<<  Test not implemented  >>>";
@@ -302,10 +286,167 @@ TEST(Region, readRegionHeader)
 
 TEST(Region, validateRegionFilename)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string correctFilenames[10] = {
+        "r.1.1.mca",
+        "r.-1.1.mca",
+        "r.1.-1.mca",
+        "r.-1.-1.mca",
+        "r.100000.-100000.mca",
+        "r.0.0.mca",
+        "r.0.1.mca",
+        "r.1.0.mca",
+        "r.-1.0.mca",
+        "r.0.-1.mca"
+    };
+    std::string invalidFilesnames[] = {
+        "",
+        "a.1.1.mca",
+        "r1.1.mca",
+        "r.01.1.mca",
+        "r.2.3.nbt",
+        "r.-2.+3.mca"
+    };
+
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[0]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[1]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[2]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[3]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[4]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[5]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[6]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[7]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[8]));
+    EXPECT_TRUE(amc::Region::validateRegionFilename(correctFilenames[9]));
+
+    EXPECT_FALSE(amc::Region::validateRegionFilename(invalidFilesnames[0]));
+    EXPECT_FALSE(amc::Region::validateRegionFilename(invalidFilesnames[1]));
+    EXPECT_FALSE(amc::Region::validateRegionFilename(invalidFilesnames[2]));
+    EXPECT_FALSE(amc::Region::validateRegionFilename(invalidFilesnames[3]));
+    EXPECT_FALSE(amc::Region::validateRegionFilename(invalidFilesnames[4]));
+    EXPECT_FALSE(amc::Region::validateRegionFilename(invalidFilesnames[5]));
 }
 
-TEST(Region, parseRegionFilename)
+TEST(Region, validateAndParseRegionFilename)
 {
-    GTEST_SKIP() << "<<<  Test not implemented  >>>";
+    std::string correctFilenames[10] = {
+        "r.1.1.mca",
+        "r.-1.1.mca",
+        "r.1.-1.mca",
+        "r.-1.-1.mca",
+        "r.100000.-100000.mca",
+        "r.0.0.mca",
+        "r.0.1.mca",
+        "r.1.0.mca",
+        "r.-1.0.mca",
+        "r.0.-1.mca"
+    };
+    std::string invalidFilesnames[] = {
+        "",
+        "a.1.1.mca",
+        "r1.1.mca",
+        "r.01.1.mca",
+        "r.2.3.nbt",
+        "r.-2.+3.mca"
+    };
+
+    int x = 0;
+    int z = 0;
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[0], x, z));
+    EXPECT_EQ(x, 1);
+    EXPECT_EQ(z, 1);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[1], x, z));
+    EXPECT_EQ(x, -1);
+    EXPECT_EQ(z, 1);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[2], x, z));
+    EXPECT_EQ(x, 1);
+    EXPECT_EQ(z, -1);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[3], x, z));
+    EXPECT_EQ(x, -1);
+    EXPECT_EQ(z, -1);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[4], x, z));
+    EXPECT_EQ(x, 100000);
+    EXPECT_EQ(z, -100000);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[5], x, z));
+    EXPECT_EQ(x, 0);
+    EXPECT_EQ(z, 0);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[6], x, z));
+    EXPECT_EQ(x, 0);
+    EXPECT_EQ(z, 1);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[7], x, z));
+    EXPECT_EQ(x, 1);
+    EXPECT_EQ(z, 0);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[8], x, z));
+    EXPECT_EQ(x, -1);
+    EXPECT_EQ(z, 0);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_TRUE(amc::Region::validateAndParseRegionFilename(correctFilenames[9], x, z));
+    EXPECT_EQ(x, 0);
+    EXPECT_EQ(z, -1);
+
+    // Invalid file names
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_FALSE(amc::Region::validateAndParseRegionFilename(invalidFilesnames[0], x, z));
+    EXPECT_EQ(x, INT_MAX);
+    EXPECT_EQ(z, INT_MAX);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_FALSE(amc::Region::validateAndParseRegionFilename(invalidFilesnames[1], x, z));
+    EXPECT_EQ(x, INT_MAX);
+    EXPECT_EQ(z, INT_MAX);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_FALSE(amc::Region::validateAndParseRegionFilename(invalidFilesnames[2], x, z));
+    EXPECT_EQ(x, INT_MAX);
+    EXPECT_EQ(z, INT_MAX);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_FALSE(amc::Region::validateAndParseRegionFilename(invalidFilesnames[3], x, z));
+    EXPECT_EQ(x, INT_MAX);
+    EXPECT_EQ(z, INT_MAX);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_FALSE(amc::Region::validateAndParseRegionFilename(invalidFilesnames[4], x, z));
+    EXPECT_EQ(x, INT_MAX);
+    EXPECT_EQ(z, INT_MAX);
+
+    x = INT_MAX;
+    z = INT_MAX;
+    EXPECT_FALSE(amc::Region::validateAndParseRegionFilename(invalidFilesnames[5], x, z));
+    EXPECT_EQ(x, INT_MAX);
+    EXPECT_EQ(z, INT_MAX);
+
 }

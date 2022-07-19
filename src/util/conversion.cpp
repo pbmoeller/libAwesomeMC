@@ -118,21 +118,21 @@ void convertChunkRegion2ChunkWorld(const int chunkRegionX, const int chunkRegion
     chunkWorldZ = regionZ * ChunkWidth + chunkRegionZ;
 }
 
-unsigned int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ)
+int chunkIndexFromXZ(const int regionChunkX, const int regionChunkZ)
 {
     assert(regionChunkX >= 0 && regionChunkX < ChunkWidth 
            && regionChunkZ >= 0 && regionChunkZ < ChunkWidth);
     return regionChunkZ * ChunkWidth + regionChunkX;
 }
 
-void xzFromChunkIndex(const unsigned int index, int &x, int &z)
+void xzFromChunkIndex(const int index, int &x, int &z)
 {
     assert(index >= 0 && index < ChunkCount);
     x = index % ChunkWidth;
     z = index / ChunkWidth;
 }
 
-std::tuple<int, int> xzFromChunkIndex(const unsigned int index)
+std::tuple<int, int> xzFromChunkIndex(const int index)
 {
     assert(index >= 0 && index < ChunkCount);
     return {index % ChunkWidth, index / ChunkWidth};

@@ -6,12 +6,14 @@
 #include <AwesomeMC/anvil/region_header.hpp>
 #include <AwesomeMC/anvil/chunk.hpp>
 #include <AwesomeMC/anvil/heightmap.hpp>
+#include <AwesomeMC/util/compression.hpp>
 
 // STL
 #include <array>
 #include <vector>
 #include <string>
 #include <fstream>
+#include <memory>
 
 namespace amc
 {
@@ -37,21 +39,16 @@ public:
     int getZ() const;
     void setZ(int z);
 
-    RegionHeader& getRegionHeader();
-    const RegionHeader& getRegionHeader() const;
-    void setRegionHeader(const RegionHeader &header);
+    Chunk& getChunkAt(int index);
+    const Chunk& getChunkAt(int index) const;
 
-    const std::array<Chunk, ChunkCount>& getChunks() const;
-    Chunk& getChunkAt(unsigned int index);
-    const Chunk& getChunkAt(unsigned int index) const;
-
-    std::vector<int32_t> getBiomesAt(unsigned int chunkX,
-                                     unsigned int chunkZ) const;
-    int32_t getBiomeAt(unsigned int chunkX,
-                       unsigned int chunkZ,
-                       unsigned int blockX,
+    std::vector<int32_t> getBiomesAt(int chunkX,
+                                     int chunkZ) const;
+    int32_t getBiomeAt(int chunkX,
+                       int chunkZ,
+                       int blockX,
                        int blockY,
-                       unsigned int blockZ) const;
+                       int blockZ) const;
 
     Block getBlockAt(const int blockX,
                      const int blockY,
@@ -63,13 +60,13 @@ public:
 
     void loadFromFile(const std::string &filename);
     void loadPartiallyFromFile(const std::string &filename);
-    void loadChunkAt(unsigned int index);
+    void loadChunkAt(int index);
     void loadAllChunks();
 
+    bool saveToFile(const std::string &filename);
+
 private:
-    void readChunkData(std::ifstream &filestream,
-                       ChunkInfo &chunkInfo,
-                       unsigned int index);
+    void readChunkData(std::ifstream &filestream, const int index);
     bool readRegionHeader(std::ifstream &filestream);
 
     // Static functions
@@ -83,9 +80,12 @@ private:
     int m_z;
     std::string m_filename;
 
-    RegionHeader m_regionHeader;
-    std::array<Chunk, ChunkCount> *m_chunks;
     std::vector<bool> m_loadedChunks;
+    std::vector<Chunk> m_chunks;
+    std::vector<CompressionType> m_chunkCompression;
+
+    // Only used during loading
+    std::unique_ptr<RegionHeader> m_regionHeader;
 };
 
 } // namespace amc

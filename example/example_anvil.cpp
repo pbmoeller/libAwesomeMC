@@ -1,8 +1,9 @@
 // AwesomeMC
-#include <AwesomeMC/anvil/anvil_read.hpp>
 #include <AwesomeMC/constants.hpp>
+#include <AwesomeMC/util/conversion.hpp>
 #include <AwesomeMC/global.hpp>
 #include <AwesomeMC/nbt/nbt_print.hpp>
+#include <AwesomeMC/anvil/region.hpp>
 
 // STL
 #include <iostream>
@@ -16,22 +17,23 @@ int main(int argc, char **argv)
 
     const std::string testFolderPath = "..\\..\\..\\test\\testdata\\world\\libAwesomeMC_TestWorld_1_18_1\\region\\";
     std::string filename = testFolderPath + "r.-1.-1.mca";
+    std::string filenameSave = testFolderPath + "tmp\\r.-1.-1.mca";
 
-    amc::Region region = amc::loadRegion(filename);
+    amc::Region region;
+    region.loadFromFile(filename);
 
-    std::ofstream stream(testFolderPath + "r.-1.-1.mca.txt");
+    // Save Region to new file
+    region.saveToFile(filenameSave);
 
-    const amc::RegionHeader &rHeader = region.getRegionHeader();
-    for(unsigned int i = 0; i < amc::ChunkCount; ++i) {
-        if(rHeader.getChunkInfoAt(i).isEmpty()) {
-            continue;
-        }
-
-        amc::Chunk c = region.getChunkAt(i);
-        stream << "\n\n----- " << i << " -----\n\n" << std::endl;
+    // print data of Chunk 31, 31
+    std::ofstream stream(testFolderPath + "tmp\\r.-1.-1.mca_chunk_31_31.txt");
+    const int index = amc::chunkIndexFromXZ(31, 31);
+    if(!region.getChunkAt(index).isEmpty()) {
+        amc::Chunk c = region.getChunkAt(index);
         stream << amc::printNbtData(c.getRootTag(), true);
     }
     stream.close();
 
     return 0;
 }
+
