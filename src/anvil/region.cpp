@@ -16,7 +16,7 @@
 namespace amc
 {
 
-const std::regex RegionFilePattern = std::regex("r\\.([-]?[0-9]+)\\.([-]?[0-9]+)\\.mca");
+const std::regex RegionFilePattern = std::regex("r\\.(0|[-]?[1-9][0-9]*)\\.(0|[-]?[1-9][0-9]*)\\.mca");
 
 Region::Region()
     : m_x{0}
