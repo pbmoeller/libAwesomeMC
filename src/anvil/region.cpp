@@ -68,7 +68,7 @@ Region& Region::operator=(const Region &other)
         m_loadedChunks      = other.m_loadedChunks;
         m_chunks            = other.m_chunks;
         m_chunkCompression  = other.m_chunkCompression;
-        *m_regionHeader     = *other.m_regionHeader;    // TODO: Check !!!
+        *m_regionHeader     = *other.m_regionHeader;
     }
     return *this;
 }
@@ -93,13 +93,15 @@ bool Region::operator==(const Region &other)
         return true;
     }
 
-    // TODO: Check if partiallyLoaded and filename should be compared or only the "real" data, maybe second function.
+    // Compare all elements.
+    // Consider only comparing real data and skip meta data, like loading state or file header
+    // since, the header can be different although the data is the same.
     if(m_x != other.m_x
        || m_z != other.m_z
-       // || m_regionHeader != other.m_regionHeader
-       // || m_filename != other.m_filename
-       // || m_loadedChunks != other.m_loadedChunks
-       // || m_chunkCompression != other.m_chunkCompression
+       || m_filename != other.m_filename
+       || m_loadedChunks != other.m_loadedChunks
+       || m_chunkCompression != other.m_chunkCompression
+       || m_regionHeader != other.m_regionHeader
        ) {
         return false;
     }
@@ -199,11 +201,6 @@ Block Region::getBlockAt(const int blockX,
                          const int blockY,
                          const int blockZ) const
 {
-    // Check if chunk coodinates are valid
-    //if(x >= ChunkWidth || z >= ChunkWidth) {
-    //    throw std::out_of_range("Coordinates out of range");
-    //}
-
     // Calculate the requested chunk
     int chunkX = 0;
     int chunkZ = 0;
@@ -263,8 +260,8 @@ void Region::loadChunkAt(int index)
         throw std::out_of_range("Index is out of range.");
     }
 
-    // If the chunk is marked as empty, we are done here
-    if(m_regionHeader->isEmpty(index)) {
+    // If the chunk is already loaded or marked as empty, we are done here
+    if(m_loadedChunks[index] || m_regionHeader->isEmpty(index)) {
         return;
     }
 
@@ -287,7 +284,7 @@ void Region::loadAllChunks()
 
     // Read Chunks from file and set it to region
     for(unsigned int index = 0; index < ChunkCount; ++index) {
-        // If chunk is already loaded or the info is empty, skip this chunk
+        // If chunk is already loaded or the header is empty, skip this chunk
         if(m_loadedChunks[index] || m_regionHeader->isEmpty(index)) {
             continue;
         }
@@ -299,7 +296,7 @@ void Region::loadAllChunks()
     m_regionHeader.reset();
 }
 
-void Region::readChunkData(std::ifstream &filestream, int index)
+void Region::readChunkData(std::ifstream &filestream, const int index)
 {
     assert(0 <= index && index < ChunkCount);
 

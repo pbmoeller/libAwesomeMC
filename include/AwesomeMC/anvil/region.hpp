@@ -66,7 +66,7 @@ public:
     bool saveToFile(const std::string &filename);
 
 private:
-    void readChunkData(std::ifstream &filestream, int index);
+    void readChunkData(std::ifstream &filestream, const int index);
     bool readRegionHeader(std::ifstream &filestream);
 
     // Static functions
