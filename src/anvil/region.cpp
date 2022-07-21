@@ -144,6 +144,11 @@ void Region::setZ(int z)
     m_z = z;
 }
 
+bool Region::isChunkLoadable(int index) const
+{
+    return m_regionHeader && !m_regionHeader->isEmpty(index);
+}
+
 Chunk& Region::getChunkAt(int index)
 {
     if(index < 0 || index >= ChunkCount) {
