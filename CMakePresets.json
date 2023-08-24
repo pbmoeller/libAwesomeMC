@@ -139,7 +139,7 @@
     },
     {
       "name": "linux-wsl-x86_64-release",
-      "displayName": "Linux x86_64 Release",
+      "displayName": "Linux x86_x64 Release",
       "description": "Target the Windows Subsystem for Linux.",
       "inherits": [
         "linux-wsl", "Release"
