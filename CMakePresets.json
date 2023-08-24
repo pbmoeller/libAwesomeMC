@@ -1,0 +1,152 @@
+{
+  "version": 5,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "windows-base",
+      "description": "Target Windows with the Visual Studio development environment.",
+      "hidden": true,
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "x64",
+      "hidden": true,
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      }
+    },
+    {
+      "name": "Debug",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "Release",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "RelWithDebInfo",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
+      }
+    },
+    {
+      "name": "win-x64-debug",
+      "displayName": "Win x64 Debug",
+      "description": "Target Windows (64-bit) with the Visual Studio development environment (Debug).",
+      "inherits": [ "windows-base", "Debug", "x64" ],
+      "cacheVariables": {
+
+      }
+    },
+    {
+      "name": "win-x64-release",
+      "displayName": "Win x64 Release",
+      "description": "Target Windows (64-bit) with the Visual Studio development environment (Release).",
+      "inherits": [
+        "windows-base",
+        "Release",
+        "x64"
+      ],
+      "cacheVariables": {
+
+      }
+    },
+    {
+      "name": "linux-base",
+      "description": "Target the Linux system.",
+      "generator": "Ninja",
+      "hidden": true,
+      "binaryDir": "${sourceDir}/out/build/${presetName}",
+      "installDir": "${sourceDir}/out/install/${presetName}",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "vendor": {
+        "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+          "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+        }
+      }
+    },
+    {
+      "name": "linux-rpi",
+      "hidden": true,
+      "cmakeExecutable": "/opt/cmake-3.27.0-linux-aarch64/bin/cmake",
+      "inherits": [ "linux-base" ]
+    },
+    {
+      "name": "linux-wsl",
+      "hidden": true,
+      "cmakeExecutable": "/opt/cmake-3.27.0-linux-x86_64/bin/cmake",
+      "inherits": [ "linux-base" ]
+    },
+    {
+      "name": "linux-rpi-aarch64-debug",
+      "displayName": "Linux ARM64 Debug",
+      "description": "Target the Raspberry Pi Native.",
+      "inherits": [
+        "linux-rpi", "Debug"
+      ],
+      "cacheVariables": {
+        
+      }
+    },
+    {
+      "name": "linux-rpi-aarch64-release",
+      "displayName": "Linux ARM64 Release",
+      "description": "Target the Raspberry Pi Native.",
+      "inherits": [
+        "linux-rpi", "Release"
+      ],
+      "cacheVariables": {
+        
+      }
+    },
+    {
+      "name": "linux-wsl-x86_64-debug",
+      "displayName": "Linux x86_x64 Debug",
+      "description": "Target the Subsystem for Linux.",
+      "inherits": [
+        "linux-wsl", "Debug"
+      ],
+      "cacheVariables": {
+        
+      }
+    },
+    {
+      "name": "linux-wsl-x86_64-release",
+      "displayName": "Linux x86_64 Release",
+      "description": "Target the Windows Subsystem for Linux.",
+      "inherits": [
+        "linux-wsl", "Release"
+      ],
+      "cacheVariables": {
+        
+      }
+    }
+  ]
+}
