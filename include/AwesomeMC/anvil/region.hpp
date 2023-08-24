@@ -39,6 +39,8 @@ public:
     int getZ() const;
     void setZ(int z);
 
+    bool isChunkLoadable(int index) const;
+
     Chunk& getChunkAt(int index);
     const Chunk& getChunkAt(int index) const;
 
